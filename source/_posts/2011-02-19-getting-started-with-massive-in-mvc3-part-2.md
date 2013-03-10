@@ -1,0 +1,164 @@
+---
+title: 'Getting Started with Massive in MVC3 &#8211; Part 2'
+author: Rob
+layout: post
+permalink: /archives/getting-started-with-massive-in-mvc3-part-2/
+dsq_thread_id:
+  - 888404968
+categories:
+  - AppDev
+  - MVC
+---
+# 
+
+If you read over my first post on this you probably have some questions going through your mind.... I know I did... So lets ask them:
+
+**Rob, your queries make no sense to me because I have no idea about this 'drinks' table you're hitting.**  
+I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I'll be using [Adventure Works 2008 R2][1]
+
+ [1]: http://msftdbprodsamples.codeplex.com/releases/view/59211
+
+**All this stuff is dynamic and I don't know how to deal with it.** I'm just as strongly typed as the next guy so this was an emotional hurdle. But we're not here for therapy so lets code using one of my favorite examples - Credit Cards!  
+Class:
+
+    1.  public class CreditCard : DynamicModel
+    
+    2.  	&#123;  public CreditCard&#40;&#41;	: base&#40;"AW_Sales_ConnStr"&#41;
+    
+    3.  		&#123; 
+    
+    4.  			PrimaryKeyField = "CreditCardID"; 
+    
+    5.  		&#125;
+    
+    6.  	&#125;
+
+ViewModel:
+
+    1.  public class CreditCardViewModel
+    
+    2.  	&#123;public IEnumerable&#123; get; set; &#125; &#125;
+
+Controller:
+
+    1.  public ActionResult Index&#40;&#41;
+    
+    2.  &#123;
+    
+    3.        var table = [new][2] CreditCard&#40;&#41;;
+    
+    4.        var cards = table.All&#40;&#41;;
+    
+    5.  &nbsp;
+    
+    6.  	var viewModel = [new][2] CreditCardViewModel
+    
+    7.  	&#123;
+    
+    8.            Cards = cards
+    
+    9.           &#125;;
+    
+    10. 	return View&#40;viewModel&#41;;
+    
+    11. &#125;
+
+ [2]: http://www.google.com/search?q=new msdn.microsoft.com
+
+View:
+
+    1.  @model Kona.Web.Models.CreditCardViewModel
+    
+    2.  @&#123;ViewBag.Title = "Adventure Works Card Stealer";&#125;
+    
+    3.  &nbsp;
+    
+    4.  
+    
+    5.  @foreach &#40;var item in Model.Cards&#41;
+    
+    6.  &#123;
+    
+    7.  
+    
+    8.  
+    
+    9.  @item.CardType
+    
+    10. @item.CardNumber
+    
+    11. @item.ExpMonth
+    
+    12. @item.ExpYear
+    
+    13. 
+    
+    14. &#125;
+    
+    15. 
+    
+    16. &nbsp;
+    
+    17. &nbsp;
+
+So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing.... So since we have a special case where we care a whole bunch about not returning that data... lets change our controller:
+
+    1.  var table = [new][2] CreditCard&#40;&#41;;
+    
+    2.  //var cards = table.All();
+    
+    3.  var cards = table.Query&#40;@"SELECT CardType, ExpMonth ,ExpYear from CreditCard"&#41;;
+
+Sweet! it compiles, we're ready to check in and go grab a beer right? Heh, nope.... refresh your app:  
+*'System.Dynamic.ExpandoObject' does not contain a definition for 'CardNumber'*
+
+So we update our view....
+
+    1.  &#123;
+    
+    2.  &nbsp;
+    
+    3.  @item.CardType
+    
+    4.  @item.ExpMonth
+    
+    5.  @item.ExpYear
+    
+    6.  &nbsp;
+    
+    7.  &#125;
+
+and all is well again. 
+
+Make no mistake about it... Massive will give you all the rope you want to easily swing around your apps data jungle... it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 ([And don't get me wrong, I like EF4][3]) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I'll get it done.
+
+ [3]: http://thisdeveloperslife.com/post/1-0-8-motivation
+
+Welcome to dynamic!
+
+One last bit because this is getting lengthy:  
+**Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can't figure out how make my class take "advantage" of that**  
+This is a fun thing we DBA's like to do for the sole purpose of driving AppDev's nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
+
+    1.  public CreditCard&#40;&#41; : base&#40;"AW_Sales_ConnStr"&#41;
+    
+    2.  		&#123; 
+    
+    3.  			TableName = "[Sales].[CreditCard]";
+    
+    4.  			PrimaryKeyField = "CreditCardID"; 
+    
+    5.  		&#125;
+
+That setting in the base() maps to my web.config:
+
+    1.  add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
+
+and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:
+
+    1.  CREATE USER &#91;aw_Kona_Sales&#93; FOR LOGIN &#91;aw_Kona_Sales&#93; WITH DEFAULT_SCHEMA=&#91;Sales&#93;
+    
+    2.  &nbsp;
+
+Last thing, I promise ... In my first post, I included how the commands were rendering out in the SQL Server. I didn't this time because this edition is more focused on a "getting things done in MVC" side of things.  
+Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.
