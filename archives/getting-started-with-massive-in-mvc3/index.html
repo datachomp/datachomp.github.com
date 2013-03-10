@@ -1,0 +1,272 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Getting Started with Massive in MVC3 - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="Rob Conery has created a new ORM of sorts   and as a DBA, I must say I like what I see so far. Getting started:  So some of you might be noob &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/getting-started-with-massive-in-mvc3">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Getting Started With Massive in MVC3</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p><a href="http://blog.wekeroad.com/">Rob Conery</a> has created a new ORM of sorts   and as a DBA, I must say I like what I see so far.</p>
+
+<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&#8217;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&#8230; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
+
+<p>We DBA&#8217;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &#8216;plan cache poisoning&#8217;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &#8216;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&#8230; it doesn&#8217;t have to compile a new plan&#8230; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&#8230;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&#8230;  it would compile a plan for &#8216;Rob&#8217;, a plan for &#8216;Robert&#8217;,  a plan for &#8216;Mike&#8217; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&#8217;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
+
+<p>To make  basic call with Massive on a Drinks Table (DrinkID, DrinkName) we do this:</p>
+
+<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
+
+2.  var drinks = table.All&amp;#40;&amp;#41;;
+</code></pre>
+
+<p>If you have done any Linq or EF you know that even a basic call like that is going to cause Linq or EF to create<br/>
+the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &#8216;hey look at me&#8217;<br/>
+Does Massive have this problem? Nope, looking at profiler we get straight forward SQL -</p>
+
+<pre><code>1.  SELECT * FROM DRINKS
+</code></pre>
+
+<p>Well, that&#8217;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
+Rarely, so lets move to some conditions&#8230; lets look up a drink name:</p>
+
+<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
+
+2.  var drinks = table.All&amp;#40;where: "WHERE DrinkName=@0", args: "Fire Rock Pale Ale"&amp;#41;;
+</code></pre>
+
+<p>Knowing EF, we&#8217;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
+In Massive, we get:</p>
+
+<pre><code>1.  EXEC SP_EXECUTESQL N'SELECT * FROM Drinks WHERE DrinkName=@0',N'@0 nvarchar(4000)',@=N'Fire Rock Pale Ale'
+</code></pre>
+
+<p>In addition to a simple to grok TSQL, we also start getting reusable query plans.</p>
+
+<p>More examples to come as I start to peel back the covers a bit on this new tool.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/appdev/'>AppDev</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/getting-started-with-massive-in-mvc3/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/getting-started-with-massive-in-mvc3/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/security-and-code-analysis-tools-i-use/" title="Previous Post: Security and Code Analysis tools I use">&laquo; Security and Code Analysis tools I use</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/getting-started-with-massive-in-mvc3-part-2/" title="Next Post: Getting Started with Massive in MVC3 &#8211; Part 2">Getting Started with Massive in MVC3 &#8211; Part 2 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

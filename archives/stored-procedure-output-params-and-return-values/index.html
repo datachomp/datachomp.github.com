@@ -1,0 +1,418 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Stored Procedure Output Params and Return Values - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/stored-procedure-output-params-and-return-values">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Stored Procedure Output Params and Return Values</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  SET @TheID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+3.  RETURN @TheID
+
+4.  &amp;nbsp;
+</code></pre>
+
+<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  --drop table dbo.pizza
+
+3.  CREATE TABLE Pizza &amp;#40;pizzaid TINYINT IDENTITY&amp;#40;1,1&amp;#41;, pizzasize VARCHAR&amp;#40;10&amp;#41;, numberoftoppings TINYINT, pizzaname VARCHAR&amp;#40;40&amp;#41; &amp;#41;
+
+4.  &amp;nbsp;
+
+5.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+
+6.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
+
+7.  AS
+
+8.  &amp;nbsp;
+
+9.  BEGIN TRY
+
+10. INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
+
+11. VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
+
+12. &amp;nbsp;
+
+13. SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+14. RETURN ;
+
+15. END Try
+
+16. BEGIN Catch
+
+17.     RETURN -1
+
+18. END Catch
+
+19. GO
+
+20. &amp;nbsp;
+
+21. DECLARE @InsertedID TINYINT, @RunOK INT;
+
+22. EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
+
+23. SELECT @RunOK, @InsertedID
+
+24. &amp;nbsp;
+</code></pre>
+
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&#8217;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &#8220;Fine, in that case don&#8217;t do the above&#8221; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+
+3.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
+
+4.  AS
+
+5.  &amp;nbsp;
+
+6.  IF EXISTS &amp;#40;SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName&amp;#41;
+
+7.  BEGIN
+
+8.      SET @PizzaID = NULL;
+
+9.      RETURN 1;   
+
+10. END
+
+11. ELSE
+
+12. BEGIN TRY
+
+13.     INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
+
+14.     VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
+
+15. &amp;nbsp;
+
+16.     SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+17.     RETURN ;
+
+18. END TRY
+
+19. BEGIN CATCH
+
+20.     RETURN -1
+
+21. END CATCH
+
+22. &amp;nbsp;
+
+23. GO
+
+24. &amp;nbsp;
+</code></pre>
+
+<p>Without catching the Return Values&#8230; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&#8217;t from an error, but that a certain business rule had been met.</p>
+
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&#8217;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  SqlCommand databaseCMD = [new][1] SqlCommand &amp;#40;"asp_InsertNewPizza", pizzaConn&amp;#41;;
+
+3.  &amp;nbsp;
+
+4.  databaseCMD.CommandType = CommandType.StoredProcedure;
+
+5.  &amp;nbsp;
+
+6.  SqlParameter PizzaSize = databaseCMD.Parameters.Add &amp;#40;"@pizzaSize", SqlDbType.VarChar, 10&amp;#41;;
+
+7.  PizzaSize.Direction = ParameterDirection.Input;
+
+8.  SqlParameter NumberOfToppings = databaseCMD.Parameters.Add &amp;#40;"@NumberOfToppings", SqlDbType.TinyInt&amp;#41;;
+
+9.  NumberOfToppings.Direction = ParameterDirection.Input;
+
+10. SqlParameter PizzaName = databaseCMD.Parameters.Add &amp;#40;"@PizzaName", SqlDbType.VarChar, 40&amp;#41;;
+
+11. PizzaName.Direction = ParameterDirection.Input;
+
+12. &amp;nbsp;
+
+13. &amp;nbsp;
+
+14. SqlParameter PizzaID = databaseCMD.Parameters.Add &amp;#40;"@PizzaID", SqlDbType.TinyInt&amp;#41;;
+
+15. PizzaID.Direction = ParameterDirection.Output ;
+
+16. SqlParameter ReturnValue = databaseCMD.Parameters.Add &amp;#40;"RetVal", SqlDbType.Int&amp;#41;;
+
+17. RetVal.Direction = ParameterDirection.ReturnValue;
+
+18. &amp;nbsp;
+
+19. int pizzaID;
+
+20. pizzaConn.Open&amp;#40;&amp;#41;;
+
+21. &amp;nbsp;
+
+22. pizzaID =databaseCMD.ExecuteScalar &amp;#40;&amp;#41;.ToString&amp;#40;&amp;#41; ;
+
+23. &amp;nbsp;
+
+24. if &amp;#40;ReturnValue == &amp;#41;&amp;#123;
+
+25. ResponseWrite&amp;#40;"The Pizza was added. The pizzaID is : "   pizzaID.ToString&amp;#40;&amp;#41; &amp;#41;;
+
+26. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
+
+27. &amp;#125;
+
+28. else if&amp;#123; ReturnValue == 1&amp;#41; &amp;#123;
+
+29. ResponseWrite&amp;#40;"Sorry friend, that pizza name already exists."&amp;#41;;
+
+30. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
+
+31. &amp;#125;
+
+32. else &amp;#123; FreakOut&amp;#40;&amp;#41;; &amp;#125;
+
+33. &amp;nbsp;
+</code></pre>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/stored-procedure-output-params-and-return-values/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/stored-procedure-output-params-and-return-values/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/virtual-victory-aws-gives-out-a-year-of-usage/" title="Previous Post: Virtual Victory &#8211; AWS gives out a year of usage">&laquo; Virtual Victory &#8211; AWS gives out a year of usage</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/sql-server-variety-hour/" title="Next Post: SQL Server Variety Hour">SQL Server Variety Hour &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

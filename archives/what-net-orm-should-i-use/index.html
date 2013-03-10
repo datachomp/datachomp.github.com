@@ -1,0 +1,274 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>What .NET ORM should I use? - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/what-net-orm-should-i-use">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">What .NET ORM Should I Use?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p>I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&#8217;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&#8217;m &#8220;picking&#8221; one per situation as a way of helping someone avoid the paradox of choice.</p>
+
+<p><strong>&#8220;Should I hand-roll my DAL?&#8221;</strong></p>
+
+<p>No. Unless you just want an academic/code exercise. The libraries I&#8217;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&#8217;t waste time reinventing this wheel.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want something easy or rapid prototyping&#8221;</strong></p>
+
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+
+<p><strong>&#8220;I want POCOs, an old school feel and Stored Procs&#8221;</strong></p>
+
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+
+<p><strong>&#8220;I want POCOs with some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+
+<p><strong>&#8220;I&#8217;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+
+<p><strong>&#8220;I am a huge fan of T4 and code gen&#8221;</strong></p>
+
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+
+<p><strong>&#8220;I want POCOs and I might be doing some MongoDB in my app&#8221;</strong></p>
+
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+
+<p><strong>&#8220;My boss says we just have to use something ~Enterprisey~&#8221;</strong></p>
+
+<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
+
+<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/appdev/'>AppDev</a>, <a class='category' href='/blog/categories/databases/'>Databases</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/what-net-orm-should-i-use/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/what-net-orm-should-i-use/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/" title="Previous Post: Using Unicorn with Sinatra or Padrino on Heroku">&laquo; Using Unicorn with Sinatra or Padrino on Heroku</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/a-little-bit-more-about-sorting/" title="Next Post: A little bit more about sorting">A little bit more about sorting &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

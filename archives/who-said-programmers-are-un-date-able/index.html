@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Who said programmers are un-date-able ? - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy,&amp;nbsp;DATEPART &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/who-said-programmers-are-un-date-able">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Who Said Programmers Are Un-date-able ?</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p><strong>First day of the month:</strong></p>
+
+<p><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))</code></p>
+
+<p><strong>First day of the week:</strong></p>
+
+<p><code>DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1,0)</code></p>
+
+<p><strong>Last day of the month:</strong></p>
+
+<p><code>DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))</code></p>
+
+<p><strong>Last Business Day of the Month:  (buckle up for this one)<br/>
+</strong></p>
+
+<p><code>CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7&amp;nbsp;</code></p>
+
+<p><code>THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6&amp;nbsp;</code></p>
+
+<p><code>THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month&amp;nbsp;</code></p>
+
+<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong></p>
+
+<p><code>ALTER&amp;nbsp;PROCEDURE&amp;nbsp;usp_CommonDates_Report AS BEGIN
+SET&amp;nbsp;DATEFIRST&amp;nbsp;1 DECLARE&amp;nbsp;@Now&amp;nbsp;DATETIME &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;,@LDOTM&amp;nbsp;DATETIME&amp;nbsp;--Last&amp;nbsp;Day&amp;nbsp;Of&amp;nbsp;The&amp;nbsp;Month
+SET&amp;nbsp;@Now=&amp;nbsp;GETDATE() SET&amp;nbsp;@LDOTM&amp;nbsp;=&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
+SELECT @Now&amp;nbsp;AS&amp;nbsp;Today ,&amp;nbsp;DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1,0)&amp;nbsp;AS&amp;nbsp;Week_Start ,&amp;nbsp;@LDOTM&amp;nbsp;AS&amp;nbsp;Last_day_of_month
+,&amp;nbsp;CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=7&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=6&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;@LDOTM&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month END</code></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/who-said-programmers-are-un-date-able/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/who-said-programmers-are-un-date-able/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/unregister-language-bar/" title="Previous Post: Unregister Language Bar">&laquo; Unregister Language Bar</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/you-literaled-my-css/" title="Next Post: You Literaled my CSS">You Literaled my CSS &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

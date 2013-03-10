@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content=" Blog Archives Recent Posts ">
+  <meta name="description" content="This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,7 +81,607 @@
       <div class="blog-index">
   
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/stopping-spam-in-contact-form-7/">Stopping Spam in Contact Form 7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&#8217;ve had around 2,000 spam entries and gmail hasn&#8217;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
+Ha, having issues getting the code to display properly so just check this link:</p>
+
+<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
+
+<p>Haven&#8217;t had any spam since, form works fine, and no CAPTCHA&#8217;s needed!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/running-the-right-rubies-on-heroku/">Running the Right Rubies on Heroku</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
+<code>
+source "https://rubygems.org"
+ruby '1.9.3'
+</code></p>
+
+<p>You can get a list of the latest rubies supported by Heroku here:<br/>
+<a href="https://devcenter.heroku.com/articles/ruby-support#ruby-versions" title="Heroku Rubies">Heroku Rubies</a></p>
+
+<p>If you are an RVM user like myself, feel free to add an .rvmrc file that will match what version Heroku is on for even more consistency goodness.<br/>
+<code>
+rvm --create --rvmrc 1.9.3-p327@mycoolproject
+</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/a-little-bit-more-about-sorting/">A Little Bit More About Sorting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-01T00:00:00-06:00" pubdate data-updated="true">Dec 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&#8217;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+
+<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
+
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&#8217;t thought of it. &#8220;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&#8221; Advantages of this are that I&#8217;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+
+<p><strong>Code Time<br/>
+Controller:</strong></p>
+
+<pre><code>var burritos = db.Select("select name,price from burritos");
+var tacos = db.Select("select name,price from tacos");
+
+var viewModel = new viewmodel_Food
+{
+  burritos = burritos
+  , tacos = tacos
+};
+return View(viewModel);
+</code></pre>
+
+<p><strong>View:</strong></p>
+
+<pre><code>@model burritoroll.web.Models.viewmodel_Food
+@{
+    ViewBag.Title = "Index";
+}
+
+Index
+
+Can you dig our burritos?
+BurritoPrice
+
+
+
+Can you dig our tacos?
+
+
+  TacoPrice
+
+
+
+
+
+@section scripts{
+
+    function viewModel() {
+        var self = this;
+
+        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
+        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
+
+        var sortitFunction = function (a, b) {
+            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
+        };
+
+        self.tacosarray.sort(sortitFunction);
+        self.burritosarray.sort(sortitFunction);
+    }
+
+    ko.applyBindings(new viewModel());
+
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/what-net-orm-should-i-use/">What .NET ORM Should I Use?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-11-29T00:00:00-06:00" pubdate data-updated="true">Nov 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&#8217;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&#8217;m &#8220;picking&#8221; one per situation as a way of helping someone avoid the paradox of choice.</p>
+
+<p><strong>&#8220;Should I hand-roll my DAL?&#8221;</strong></p>
+
+<p>No. Unless you just want an academic/code exercise. The libraries I&#8217;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&#8217;t waste time reinventing this wheel.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want something easy or rapid prototyping&#8221;</strong></p>
+
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+
+<p><strong>&#8220;I want POCOs, an old school feel and Stored Procs&#8221;</strong></p>
+
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+
+<p><strong>&#8220;I want POCOs with some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+
+<p><strong>&#8220;I&#8217;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+
+<p><strong>&#8220;I am a huge fan of T4 and code gen&#8221;</strong></p>
+
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+
+<p><strong>&#8220;I want POCOs and I might be doing some MongoDB in my app&#8221;</strong></p>
+
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+
+<p><strong>&#8220;My boss says we just have to use something ~Enterprisey~&#8221;</strong></p>
+
+<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
+
+<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn With Sinatra or Padrino on Heroku</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-15T00:00:00-05:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
+
+<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
+<code>worker_processes 3
+timeout 30
+preload_app true
+</code></p>
+
+<p>2nd: I added Unicorn to my GemFile:<br/>
+<code>#rack server
+gem 'unicorn'</code></p>
+
+<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
+<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
+
+<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/content-length-issue-on-404-pages-in-padrino-10-7/">Content Length Issue on 404 Pages in Padrino 10.7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-15T00:00:00-05:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I&#8217;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&#8217;ve hit is that when I define a view for my 404 errors:<br/>
+<code>
+error 404 do
+  response.status = 404
+  render 'errors/404', :layout=&gt;:applayout
+end
+</code><br/>
+It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
+<code>
+gem 'rake'
+gem 'sinatra', '1.3.2'
+gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
+</code><br/>
+Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&#8217;t now how to serve up error pages properly.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/ci-with-mvc4-and-linux-no-problem/">CI With MVC4 and Linux? No Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-02T00:00:00-05:00" pubdate data-updated="true">May 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &#8216;important&#8217; to essential. There are various products out there that can accomplish this; I&#8217;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
+
+<p>On our Ubuntu box, after we finish the easy as candy install, we&#8217;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
+
+<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&#8217;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
+<code>
+sudo apt-get install openjdk-7-jre
+wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
+tar xfz TeamCity-7.0.2a.tar.gz
+cd Teamcity
+sudo ./bin/runAll.bat start
+</code></p>
+
+<p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
+
+<p>Yay! Everything works! You&#8217;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&#8217;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&#8217;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/running-asp-net-mvc4-on-ubuntu-12-04/">Running ASP.NET MVC4 on Ubuntu 12.04</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-24T00:00:00-05:00" pubdate data-updated="true">Apr 24<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &#8220;How are you running your app on Linux?&#8221; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&#8217;s best interest if I just blog it out. Technology moves fast&#8230; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &#8220;has been&#8221; Ubuntu 11.10, we&#8217;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&#8217;re so bleeding edge you can call us cutters!</p>
+
+<p>I&#8217;m not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together&#8230; at last.</p>
+
+<p>SSH into your fancy new Ubuntu box with <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" title="Putty">Putty</a> and Run this:<br/>
+<code>sudo apt-get update &amp;&amp; sudo apt-get -y install git-core curl python-software-properties</code></p>
+
+<p>This is going to let us add the ppa(think of this as a package location) to install a current nginx:<br/>
+<code>sudo add-apt-repository ppa:nginx/stable
+sudo apt-get update &amp;&amp; sudo apt-get -y install nginx</code></p>
+
+<p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let&#8217;s kick some other processes to the curb&#8230; like that skank MySQL and that wet blanket Apache:<br/>
+<code>sudo update-rc.d mysql remove &amp;&amp;
+sudo update-rc.d apache2 remove &amp;&amp; mkdir mycoolapp</code></p>
+
+<p>Now for the fun part, let&#8217;s get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
+<code>mkdir mono-2.11
+cd mono-2.11
+wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
+chmod 755 install_mono-2.11.sh
+./install_mono-2.11.sh
+</code></p>
+
+<p>Now to check that we have the current version, we just run the following:<br/>
+<code>/opt/mono-2.11/bin/mono -V</code></p>
+
+<p>Cool! We&#8217;re current, but what we really need is to just be able to run &#8220;mono -V&#8221; anywhere we want. We can do that by modifying our /etc/environment file:<br/>
+`sudo nano /etc/environment</p>
+
+<h1>then insert &#8220;:/opt/mono-2.11/bin&#8221;  at the end of that path string. Log out, log in for it to take effect.`</h1>
+
+<p>I don&#8217;t now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we&#8217;re going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new&#8217;ed up:</p>
+
+<ul>
+<li>Add a controller</li>
+<li>Add a view based on that controller</li>
+<li>Hit F5 and make sure it works</li>
+<li>Remove the EntityFramework.dll because we love our data and don&#8217;t want to give our app a low self esteem</li>
+<li>Once removed, hit F5 again</li>
+</ul>
+
+
+<p>If everything is still running, then do a file system deploy to a local folder of your choice. Go check out what was just deployed, specifically the &#8216;/bin&#8217; folder. We want to remove the Web.Infrastructure.dll because Mono already has this built into its GAC. High Five Mono! With that out of the way, we are going to copy that deployment over to the &#8216;mycoolapp&#8217; folder on our Linux server using <a href="http://winscp.net/eng/index.php" title="Winscp">WinsCP</a>. While I don&#8217;t have a WordPress plugin to read your mind, I hear you thinking &#8220;Rob, surely there are better ways to do this.&#8221; and you are right. However, this post is long enough and that topic will likely go into its own post.</p>
+
+<p>SSH back into your linux box, and &#8216;cd mycoolapp&#8217;. &#8220;cd&#8221; into your &#8220;mycoolapp&#8221; directory, type in &#8216;ls&#8217; to see the contents and make sure your app made it over. Once we see it, we can do a cassini like run of it by typeing out xsp4 and hitting enter. Try and hit your box on the port 8080 (xsp4 should tell you what it is running on) and see if you can see your app:</p>
+
+<p><img src="http://files.datachomp.com/AppDev/mono/monoapp.png" alt="" /></p>
+
+<p>Yay! Our code works and we&#8217;re so open source now that we can wear tight jeans at Starbucks and put Bon Iver on our ipod&#8230; just like those <a href="http://wekeroad.com/" title="Lead Rails Wanker">Rails wankers</a>! As for nginx and running our site as a Mono service, we can just use some of the nice documentation over at the Mono site:</p>
+
+<p>Nginx config:<br/>
+<a href="http://www.mono-project.com/FastCGI_Nginx" title="FastCGI_Nginx">http://www.mono-project.com/FastCGI_Nginx</a></p>
+
+<p>Mono as a service:<br/>
+<a href="http://yojimbo87.github.com/2010/03/14/mono-startup-script.html" title="Monoserve">http://yojimbo87.github.com/2010/03/14/mono-startup-script.html</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/">TSQL Tuesday #28 &#8211; Jack of All Trades, Master of One</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-13T00:00:00-05:00" pubdate data-updated="true">Mar 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>If you want the back story on what this topic is all about -</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/im-leaving-sql-server-for-postgres/">I&#8217;m Leaving SQL Server for Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Ok, well I&#8217;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&#8217;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&#8217;s right friends, it isn&#8217;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &#8220;The Robs&#8221; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -92,6 +692,26 @@
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
+      </li>
     
   </ul>
 </section>
