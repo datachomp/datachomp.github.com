@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Amazon has just done something amazing&#8230; Amazingness&#8230; They are essentially doing a conditional year free of their services. While I am a &hellip;">
+  <meta name="description" content="Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,226 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/stored-procedure-output-params-and-return-values/">Stored Procedure Output Params and Return Values</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  SET @TheID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+3.  RETURN @TheID
+
+4.  &amp;nbsp;
+</code></pre>
+
+<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  --drop table dbo.pizza
+
+3.  CREATE TABLE Pizza &amp;#40;pizzaid TINYINT IDENTITY&amp;#40;1,1&amp;#41;, pizzasize VARCHAR&amp;#40;10&amp;#41;, numberoftoppings TINYINT, pizzaname VARCHAR&amp;#40;40&amp;#41; &amp;#41;
+
+4.  &amp;nbsp;
+
+5.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+
+6.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
+
+7.  AS
+
+8.  &amp;nbsp;
+
+9.  BEGIN TRY
+
+10. INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
+
+11. VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
+
+12. &amp;nbsp;
+
+13. SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+14. RETURN ;
+
+15. END Try
+
+16. BEGIN Catch
+
+17.     RETURN -1
+
+18. END Catch
+
+19. GO
+
+20. &amp;nbsp;
+
+21. DECLARE @InsertedID TINYINT, @RunOK INT;
+
+22. EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
+
+23. SELECT @RunOK, @InsertedID
+
+24. &amp;nbsp;
+</code></pre>
+
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&#8217;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &#8220;Fine, in that case don&#8217;t do the above&#8221; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+
+3.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
+
+4.  AS
+
+5.  &amp;nbsp;
+
+6.  IF EXISTS &amp;#40;SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName&amp;#41;
+
+7.  BEGIN
+
+8.      SET @PizzaID = NULL;
+
+9.      RETURN 1;   
+
+10. END
+
+11. ELSE
+
+12. BEGIN TRY
+
+13.     INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
+
+14.     VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
+
+15. &amp;nbsp;
+
+16.     SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
+
+17.     RETURN ;
+
+18. END TRY
+
+19. BEGIN CATCH
+
+20.     RETURN -1
+
+21. END CATCH
+
+22. &amp;nbsp;
+
+23. GO
+
+24. &amp;nbsp;
+</code></pre>
+
+<p>Without catching the Return Values&#8230; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&#8217;t from an error, but that a certain business rule had been met.</p>
+
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&#8217;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  SqlCommand databaseCMD = [new][1] SqlCommand &amp;#40;"asp_InsertNewPizza", pizzaConn&amp;#41;;
+
+3.  &amp;nbsp;
+
+4.  databaseCMD.CommandType = CommandType.StoredProcedure;
+
+5.  &amp;nbsp;
+
+6.  SqlParameter PizzaSize = databaseCMD.Parameters.Add &amp;#40;"@pizzaSize", SqlDbType.VarChar, 10&amp;#41;;
+
+7.  PizzaSize.Direction = ParameterDirection.Input;
+
+8.  SqlParameter NumberOfToppings = databaseCMD.Parameters.Add &amp;#40;"@NumberOfToppings", SqlDbType.TinyInt&amp;#41;;
+
+9.  NumberOfToppings.Direction = ParameterDirection.Input;
+
+10. SqlParameter PizzaName = databaseCMD.Parameters.Add &amp;#40;"@PizzaName", SqlDbType.VarChar, 40&amp;#41;;
+
+11. PizzaName.Direction = ParameterDirection.Input;
+
+12. &amp;nbsp;
+
+13. &amp;nbsp;
+
+14. SqlParameter PizzaID = databaseCMD.Parameters.Add &amp;#40;"@PizzaID", SqlDbType.TinyInt&amp;#41;;
+
+15. PizzaID.Direction = ParameterDirection.Output ;
+
+16. SqlParameter ReturnValue = databaseCMD.Parameters.Add &amp;#40;"RetVal", SqlDbType.Int&amp;#41;;
+
+17. RetVal.Direction = ParameterDirection.ReturnValue;
+
+18. &amp;nbsp;
+
+19. int pizzaID;
+
+20. pizzaConn.Open&amp;#40;&amp;#41;;
+
+21. &amp;nbsp;
+
+22. pizzaID =databaseCMD.ExecuteScalar &amp;#40;&amp;#41;.ToString&amp;#40;&amp;#41; ;
+
+23. &amp;nbsp;
+
+24. if &amp;#40;ReturnValue == &amp;#41;&amp;#123;
+
+25. ResponseWrite&amp;#40;"The Pizza was added. The pizzaID is : "   pizzaID.ToString&amp;#40;&amp;#41; &amp;#41;;
+
+26. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
+
+27. &amp;#125;
+
+28. else if&amp;#123; ReturnValue == 1&amp;#41; &amp;#123;
+
+29. ResponseWrite&amp;#40;"Sorry friend, that pizza name already exists."&amp;#41;;
+
+30. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
+
+31. &amp;#125;
+
+32. else &amp;#123; FreakOut&amp;#40;&amp;#41;; &amp;#125;
+
+33. &amp;nbsp;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -795,54 +1015,6 @@ Once that was completed, I added a few methods like:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/change-iphone-root-password-after-jailbreak/">Change iPhone Root Password After Jailbreak</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-07T00:00:00-05:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
-
-<p>In Cydia, go to the &#8220;Search&#8221; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
-From there, type in <strong><em>su root</em></strong> and hit return. This changes us to the root user so we can access/change the password for it. It will then prompt you to type in that global root password of <strong><em>alpine</em></strong> . Once you are root, just type <strong><em>passwd</em></strong> then hit return. From there, you will need to enter, then re-enter your password and the change should take place. Simply type in <strong><em>exit</em></strong> to leave the root account and get back to the standard prompt.</p>
-
-<p><strong>Another Notch: Changing the Mobile User</strong><br/>
-You should also consider doing the same thing for your Mobile user as it uses a global password of &#8220;alpine&#8221; as well<br/>
-You start the MobileTerminal app as the Mobile user, so to change the password for it simply type <strong>*passwd</strong> Then type alpine when it prompts, then fill out the stuff for the new password and start sleeping better at night knowing that you have just put up a basic security fence for your sweet sweet jailbroken phone.
-For more information, check out these handy posts:</p>
-
-<p>and</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -861,6 +1033,10 @@ For more information, check out these handy posts:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/later-wordpress/">Later Wordpress</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
       </li>
     
@@ -874,10 +1050,6 @@ For more information, check out these handy posts:</p>
     
       <li class="post">
         <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn with Sinatra or Padrino on Heroku</a>
       </li>
     
   </ul>
