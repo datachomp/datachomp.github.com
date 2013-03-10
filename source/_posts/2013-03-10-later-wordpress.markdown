@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 
-I finally did it. I [imported all of my wordpress][1] entries into [Octopress][2] and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than 40 concurrent users... and yes, that was with a configured supercache. Get what you pay for right?
+I finally did it. I [imported all of my wordpress][1] entries into [Octopress][2] and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than [40 concurrent users][3]... and yes, that was with a configured supercache. Get what you pay for right?
 
 Right Tool for the Right Blog
 ---------------------
@@ -14,3 +14,4 @@ I have really wanted another level of simplicity that wordpress can't provide. U
 
  [1]: https://github.com/benbalter/wordpress-to-jekyll-exporter
  [2]: http://octopress.org
+ [3]: http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ
