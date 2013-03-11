@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-03-10T22:59:01-05:00</updated>
+  <updated>2013-03-10T23:13:45-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.github.com/archives/so-long-and-thanks-for-all-the-deadlocks/"/>
     <updated>2013-03-10T21:54:00-05:00</updated>
     <id>http://datachomp.github.com/archives/so-long-and-thanks-for-all-the-deadlocks</id>
-    <content type="html"><![CDATA[<p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&#8230;it is less joking and more foreshadowing.</p>
+    <content type="html"><![CDATA[<p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&#8230;it was less joking and more foreshadowing.</p>
 
 <p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
 
