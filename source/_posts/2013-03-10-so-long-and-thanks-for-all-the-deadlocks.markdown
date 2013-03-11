@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Im really leaving SQL Server for Postgres"
+title: "So Long and Thanks For All The Deadlocks"
 date: 2013-03-10 21:54
 comments: true
 categories: 
