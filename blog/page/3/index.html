@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition. Quick tool to handle basic &hellip;">
+  <meta name="description" content="The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/">Tekpub &#8211; Full Throttle With Rob Sullivan Show Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &#8220;we&#8217;ll see this later&#8221; (like with SQL Server Profiler) and we never see it&#8230; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&#8217;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
+
+<p><strong>Questions:</strong>*<br/>
+<strong>How do you get the stats to appear in the &#8220;messages&#8221; window?</strong><br/>
+Those stats come from the following commands:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;<br/>
+If you don&#8217;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
+Tools -> Options -> Query Execution -> SQL Server -> Advanced<br/>
+then check:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;
+<strong>Lock Pages in Memory, is that always good?</strong><br/>
+No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/
+<strong>Why no filtered index on Posts?</strong><br/>
+In our first scenario, to get the front page up&#8230; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
+
+<p><strong>What were you using for &#8220;Intellisense&#8221; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
+
+<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
+
+<p><strong>Tech used in the series:</strong><br/>
+Visual Studio 2010 / MVC3 / EF 4.1<br/>
+SQL Server 2008 R2 / Management Studio<br/>
+<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &#8220;Intellisense&#8221; and &#8220;snippets&#8221; in Management Studio<br/>
+<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
+<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
+<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
+
+<p><strong>Source code:</strong></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -719,60 +786,6 @@ In Massive, we get:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/sql-server-variety-hour/">SQL Server Variety Hour</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-14T00:00:00-06:00" pubdate data-updated="true">Dec 14<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&#8217;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
-
-<p>WhoIsActive - <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
-
-<p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
-
-<p>SQL SourceControl- <a href="http://www.red-gate.com/products/sql-development/sql-source-control/" title="http://www.red-gate.com/products/sql-development/sql-source-control/">http://www.red-gate.com/products/sql-development/sql-source-control/</a></p>
-
-<p>.Net Reflector- <a href="http://www.red-gate.com/products/dotnet-development/reflector/" title="http://www.red-gate.com/products/dotnet-development/reflector/">http://www.red-gate.com/products/dotnet-development/reflector/</a></p>
-
-<p>LinqPad- <a href="http://linqpad.net/" title="http://linqpad.net/">http://linqpad.net/</a></p>
-
-<p>EF Profiler- <a href="http://efprof.com/" title="http://efprof.com/">http://efprof.com/</a></p>
-
-<p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
-
-<p>Virtualization - <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -791,6 +804,10 @@ In Massive, we get:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
@@ -804,10 +821,6 @@ In Massive, we get:</p>
     
       <li class="post">
         <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
       </li>
     
   </ul>

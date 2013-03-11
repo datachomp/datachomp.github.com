@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH &hellip;">
+  <meta name="description" content="Trust me when I say I&#8217;m no stranger to abusing repeat methods in code behinds&#8230; however, it does reach a point where something has to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,77 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/helper-classes/">Helper Classes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-20T00:00:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Trust me when I say I&#8217;m no stranger to abusing repeat methods in code behinds&#8230; however, it does reach a point where something has to give. When you reach that point, your solution is a &#8216;helper&#8217; class.</p>
+
+<p>Below is a quick/basic example of how to get started with helper classes.<br/>
+In my solution, I created a folder called &#8216;Helpers&#8217; and added a new class object called &#8216;StringManip&#8217;.<br/>
+Once that was completed, I added a few methods like:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  public static string UpperString&amp;#40;string val&amp;#41;
+
+3.  &amp;#123; return val.ToUpper&amp;#40;&amp;#41;; &amp;#125; 
+
+4.  &amp;nbsp;
+</code></pre>
+
+<p>In my code behind, I reference the class through a using statement:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  using HelperClass.Helpers;
+
+3.  &amp;nbsp;
+</code></pre>
+
+<p>And then I can call the methods:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  lbl_aspnet.Text = StringManip.UpperString&amp;#40;lbl_aspnet.Text&amp;#41;;
+
+3.  &amp;nbsp;
+</code></pre>
+
+<p>If the above isn&#8217;t enough to get you rolling&#8230;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -559,58 +630,6 @@ DROP TABLE #temper;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/database-tools-i-use/">Database Tools I Use</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This is a living document of tools I use:<br/>
-SQL Server-<br/>
-SQL Server 2000 Query Analyzer<br/>
-SQL Server 2005<br/>
-SQL Server 2008<br/>
-<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
-<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
-SQL Examiner- http://www.sqlaccessories.com/SQL_Examiner/<br/>
-SQLPing3- http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx<br/>
-<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
-SQLIO- http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</p>
-
-<p><a href="http://www.sqlite.org/">SQLite</a><br/>
-<a href="http://www.postgresql.org/">PostGre</a><br/>
-<a href="http://www.mongodb.org/">MongoDB</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -629,6 +648,10 @@ SQLIO- http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
@@ -642,10 +665,6 @@ SQLIO- http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f
     
       <li class="post">
         <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
       </li>
     
   </ul>

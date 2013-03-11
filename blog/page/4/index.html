@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an &hellip;">
+  <meta name="description" content="Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&#8217;t have any &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-server-variety-hour/">SQL Server Variety Hour</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-14T00:00:00-06:00" pubdate data-updated="true">Dec 14<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&#8217;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
+
+<p>WhoIsActive - <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
+
+<p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
+
+<p>SQL SourceControl- <a href="http://www.red-gate.com/products/sql-development/sql-source-control/" title="http://www.red-gate.com/products/sql-development/sql-source-control/">http://www.red-gate.com/products/sql-development/sql-source-control/</a></p>
+
+<p>.Net Reflector- <a href="http://www.red-gate.com/products/dotnet-development/reflector/" title="http://www.red-gate.com/products/dotnet-development/reflector/">http://www.red-gate.com/products/dotnet-development/reflector/</a></p>
+
+<p>LinqPad- <a href="http://linqpad.net/" title="http://linqpad.net/">http://linqpad.net/</a></p>
+
+<p>EF Profiler- <a href="http://efprof.com/" title="http://efprof.com/">http://efprof.com/</a></p>
+
+<p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
+
+<p>Virtualization - <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -944,77 +998,6 @@ In Part 3, I will likely look at performance and some other items to help round 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/helper-classes/">Helper Classes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-20T00:00:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Trust me when I say I&#8217;m no stranger to abusing repeat methods in code behinds&#8230; however, it does reach a point where something has to give. When you reach that point, your solution is a &#8216;helper&#8217; class.</p>
-
-<p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called &#8216;Helpers&#8217; and added a new class object called &#8216;StringManip&#8217;.<br/>
-Once that was completed, I added a few methods like:</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  public static string UpperString&amp;#40;string val&amp;#41;
-
-3.  &amp;#123; return val.ToUpper&amp;#40;&amp;#41;; &amp;#125; 
-
-4.  &amp;nbsp;
-</code></pre>
-
-<p>In my code behind, I reference the class through a using statement:</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  using HelperClass.Helpers;
-
-3.  &amp;nbsp;
-</code></pre>
-
-<p>And then I can call the methods:</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  lbl_aspnet.Text = StringManip.UpperString&amp;#40;lbl_aspnet.Text&amp;#41;;
-
-3.  &amp;nbsp;
-</code></pre>
-
-<p>If the above isn&#8217;t enough to get you rolling&#8230;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -1033,6 +1016,10 @@ Once that was completed, I added a few methods like:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
@@ -1046,10 +1033,6 @@ Once that was completed, I added a few methods like:</p>
     
       <li class="post">
         <a href="/archives/a-little-bit-more-about-sorting/">A little bit more about sorting</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/what-net-orm-should-i-use/">What .NET ORM should I use?</a>
       </li>
     
   </ul>
