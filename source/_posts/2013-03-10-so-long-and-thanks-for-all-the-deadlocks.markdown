@@ -5,7 +5,7 @@ date: 2013-03-10 21:54
 comments: true
 categories: 
 ---
-It was about a year ago today when we launched the [Postgres episode][1] over at [Tekpub][2], and it is some of the most fun I have had building software. I even joked about [quitting SQL Server for Postgres][4]. Fast forward 12 months...it is less joking and more foreshadowing.
+It was about a year ago today when we launched the [Postgres episode][1] over at [Tekpub][2], and it is some of the most fun I have had building software. I even joked about [quitting SQL Server for Postgres][4]. Fast forward 12 months...it was less joking and more foreshadowing.
 
 While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.
 <blockquote class="twitter-tweet"><p>Right, now I'm wiser but too heavily invested. Either I or the platform has to change, I'm lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
