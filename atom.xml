@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-04-07T22:18:52-05:00</updated>
+  <updated>2013-04-08T11:22:14-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -19,7 +19,7 @@
     <updated>2013-04-07T10:46:00-05:00</updated>
     <id>http://datachomp.github.com/archives/top-10-reasons-i-like-postgres-over-sql-server</id>
     <content type="html"><![CDATA[<p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my sfriend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
+While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
 
 <br />
 
