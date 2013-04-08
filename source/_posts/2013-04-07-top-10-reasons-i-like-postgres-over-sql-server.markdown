@@ -6,7 +6,7 @@ comments: true
 categories: 
 ---
 {% img left http://static.datachomp.com/robandguillaume.jpg Rob and Guillaume %}
-While at [Waza][1] this year, I had a chance to talk to my sfriend [Guillaume Roques][2]. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of [The Gu][3] and how far Azure has come along in the last 18 months... and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I'm favoring Postgres over SQL Server from a technical/business aspect.
+While at [Waza][1] this year, I had a chance to talk to my friend [Guillaume Roques][2]. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of [The Gu][3] and how far Azure has come along in the last 18 months... and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I'm favoring Postgres over SQL Server from a technical/business aspect.
   
 <br />
   
