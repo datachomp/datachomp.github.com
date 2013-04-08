@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="While at Waza this year, I had a chance to talk to my friend Guillaume Roques. In addition to talking about SalesForce, we took advantage of our &hellip;">
+  <meta name="description" content="While at Waza this year, I had a chance to talk to my sfriend Guillaume Roques. In addition to talking about SalesForce, we took advantage of our &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -107,7 +107,7 @@
 
 
 <div class="entry-content"><p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
+While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my sfriend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
 
 <br />
 
@@ -121,11 +121,11 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 <li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &#8220;feature&#8221; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via it&#8217;s MVCC feature and is a joy to work with.</p></li>
 <li><p>Compression out of the box. With SQL Server, compression is an &#8220;Enterprise Edition and Up&#8221; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
 <li><p>Concurrent Index Creation. You are going to find a recurring theme there&#8230;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
-<li><p>Partitioning out of the box. Our data is growing and we need to do something about it but perhaps don&#8217;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&#8217;re writing huge checks to pull this off.</p></li>
+<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&#8217;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&#8217;re writing huge checks to pull this off.</p></li>
 <li><p>Indexable functions - In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&#8217;re stuck in the cruel world of table scans when this happens.</p></li>
-<li><p>Modules/Extensions - Tech moves fast. The fact that Postgres has an extensions systems means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&#8230; It quickly becomes your grandparents database.</p></li>
+<li><p>Modules/Extensions - Tech moves fast. The fact that Postgres has an extensions systems means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&#8230; It quickly becomes your grandparents&#8217; database.</p></li>
 <li><p>Works everywhere - Linux, Mac, BSD, Windows&#8230; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
-<li><p>Arrays - Everyone loves arrays and they are a core part of programming&#8230;except in SQL Server where they don&#8217;t exist.</p></li>
+<li><p>Arrays - Everyone loves arrays and they are a core part of programming&#8230;except in SQL Server, where they don&#8217;t exist.</p></li>
 <li><p>JSON / V8 support - You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
 <li><p>Unicode by default - No longer do you have to play the nvarchar / varchar game or silly collation battles like you do in SQL Server. Postgres is UTF-8 out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
 </ol>
