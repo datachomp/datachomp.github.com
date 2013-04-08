@@ -29,7 +29,7 @@ While at [Waza][1] this year, I had a chance to talk to my friend [Guillaume Roq
 
 9. JSON / V8 support - You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.
 
-10. Unicode by default - No longer do you have to play the nvarchar / varchar game or silly collation battles like you do in SQL Server. Postgres is UTF-8 out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.
+10. Unicode by default - No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.
 
 [1]: http://waza.heroku.com/2013/
 [2]: http://twitter.com/groques/
