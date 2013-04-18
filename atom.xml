@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-04-18T09:00:51-05:00</updated>
+  <updated>2013-04-18T16:02:26-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -28,7 +28,7 @@
 <td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
 </tr>
 <tr>
-<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td> </td>
+<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
 </tr>
 <tr>
 <td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td> </td>
