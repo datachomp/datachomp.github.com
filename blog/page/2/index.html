@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="The single most question I get regarding our Hello Postgres series over Tekpub is &#8220;How are you running your app on Linux?&#8221; As much as I &hellip;">
+  <meta name="description" content="There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/ci-with-mvc4-and-linux-no-problem/">CI With MVC4 and Linux? No Problem</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-02T00:00:00-05:00" pubdate data-updated="true">May 2<span>nd</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &#8216;important&#8217; to essential. There are various products out there that can accomplish this; I&#8217;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
+
+<p>On our Ubuntu box, after we finish the easy as candy install, we&#8217;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
+
+<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&#8217;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
+<code>
+sudo apt-get install openjdk-7-jre
+wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
+tar xfz TeamCity-7.0.2a.tar.gz
+cd Teamcity
+sudo ./bin/runAll.bat start
+</code></p>
+
+<p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
+
+<p>Yay! Everything works! You&#8217;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&#8217;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&#8217;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -741,66 +794,6 @@ Start run live.sysinternals.comtools</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/osx-tools-i-use/">OSX Tools I Use</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-21T00:00:00-05:00" pubdate data-updated="true">Jul 21<span>st</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p><strong>Misc:</strong><br/>
-<a href="http://www.clamxav.com/">ClamXav</a> - antivirus<br/>
-<a href="http://www.evernote.com/">Evernote</a> - for note taking<br/>
-<a href="http://handbrake.fr/">Handbrake</a> - for media conversion<br/>
-<a href="http://www.libreoffice.org/download/">LibreOffice</a> - for working on office docs&#8230; though starting to use Keynote for presentations<br/>
-<a href="http://www.titanium.free.fr/">Onyx</a> - mac maintenance app<br/>
-<a href="http://www.videolan.org/vlc/">VLC</a> - for watching media on the mac<br/>
-<a href="http://www.transmissionbt.com/" title="Transmission">Transmission</a> - for bittorrent</p>
-
-<p><strong>Internet:</strong><br/>
-<a href="http://adium.im/">Adium</a> - for XMPP and stuff<br/>
-<a href="http://colloquy.info/">Colloquy</a> - for IRC<br/>
-<a href="http://cyberduck.ch/">CyberDuck</a> - for FTPness<br/>
-<a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a> - for browsing<br/>
-<a href="http://www.opera.com/">Opera</a> - for fast browsing<br/>
-Skype<br/>
-- <a href="http://www.ecamm.com/mac/callrecorder/">Call Recorder</a> - for recording Skype calls</p>
-
-<p><strong>Dev:</strong><br/>
-<a href="http://www.mono-project.com/Main_Page">Mono</a> - because I&#8217;m a C# hack<br/>
-<a href="http://www.jetbrains.com/ruby/">RubyMine</a> - to help me feel less bad at Ruby<br/>
-<a href="http://macromates.com/">TextMate</a> - Editing things<br/>
-<a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> to virtualize things</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -822,6 +815,10 @@ Skype<br/>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
       </li>
     
@@ -835,10 +832,6 @@ Skype<br/>
     
       <li class="post">
         <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
       </li>
     
   </ul>

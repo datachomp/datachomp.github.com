@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Do you have this problem:   Multiple connections from various applications and you don&#8217;t know which is which.  There is a fix to this.  It &hellip;">
+  <meta name="description" content="Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples: -- send a  &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,78 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/databasemail-man/">DatabaseMail Man</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:</p>
+
+<pre><code>-- send a normal mail
+EXEC msdb.dbo.sp_send_dbmail
+@Profile_Name = @@ServerName
+,@recipients='name@domain.com;number@cingularme.com'
+,@subject = 'Dev Transfer to 19'
+,@body = 'Task Complete'
+,@body_format = 'HTML'
+</code></pre>
+
+<p>&#8211; send with an attachment<br/>
+EXEC msdb.dbo.sp_send_dbmail<br/>
+@Profile_Name = @@SERVERNAME<br/>
+,@recipients=&#8217;name@domain.com&#8217;<br/>
+,@subject = &#8216;Dev Transfer to 19&#8217;<br/>
+,@body = &#8216;Task Complete&#8217;<br/>
+,@body_format = &#8216;HTML&#8217;<br/>
+,@file_attachments = @SourcePath;</p>
+
+<p>/*<br/>
+&#8211;Odds and Ends<br/>
+If sending to multiple peeps and one fails to send&#8230; queued up and resends to all.</p>
+
+<p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
+
+<p>&#8211; SMTP Authentication<br/>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for name@domain.com). )</p>
+
+<p>&#8211; antivirus port 25 block<br/>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
+
+<p>&#8211;Select * from sysmail_allitems order by mailitem_id desc   &#8211; look up mails<br/>
+&#8211;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &#8211; look up the mails details<br/>
+*/</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -188,6 +260,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
       </li>
     
@@ -201,10 +277,6 @@
     
       <li class="post">
         <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
       </li>
     
   </ul>

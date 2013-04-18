@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-04-09T10:32:57-05:00</updated>
+  <updated>2013-04-18T08:57:44-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[More Nerdy Hipchat Emoticons]]></title>
+    <link href="http://datachomp.github.com/archives/more-nerdy-hipchat-emoticons/"/>
+    <updated>2013-04-17T22:43:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/more-nerdy-hipchat-emoticons</id>
+    <content type="html"><![CDATA[<p>There are a lot of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed some nerdier&#8230; more work related ones. Here they are:</p>
+
+<div style="text-align: center;">
+<table style="margin: 0px auto; table-layout: fixed; width: 650px;">
+<tr>
+<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
+</tr>
+<tr>
+<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td> </td>
+</tr>
+<tr>
+<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td> </td>
+</tr>
+<tr>
+<td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td> </td>
+</tr>
+</table>
+</div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Top 10 Reasons I like Postgres Over SQL Server]]></title>
@@ -736,39 +765,6 @@ Start run live.sysinternals.comtools</p>
 <p>If you are already a gigantic nerd like me and have various login scripts that run, it is way easy to simply map that share by throwing the following into your login scripts:</p>
 
 <p>net use s: live.sysinternals.comtools</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[OSX Tools I use]]></title>
-    <link href="http://datachomp.github.com/archives/osx-tools-i-use/"/>
-    <updated>2011-07-21T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/osx-tools-i-use</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p><strong>Misc:</strong><br/>
-<a href="http://www.clamxav.com/">ClamXav</a> - antivirus<br/>
-<a href="http://www.evernote.com/">Evernote</a> - for note taking<br/>
-<a href="http://handbrake.fr/">Handbrake</a> - for media conversion<br/>
-<a href="http://www.libreoffice.org/download/">LibreOffice</a> - for working on office docs&#8230; though starting to use Keynote for presentations<br/>
-<a href="http://www.titanium.free.fr/">Onyx</a> - mac maintenance app<br/>
-<a href="http://www.videolan.org/vlc/">VLC</a> - for watching media on the mac<br/>
-<a href="http://www.transmissionbt.com/" title="Transmission">Transmission</a> - for bittorrent</p>
-
-<p><strong>Internet:</strong><br/>
-<a href="http://adium.im/">Adium</a> - for XMPP and stuff<br/>
-<a href="http://colloquy.info/">Colloquy</a> - for IRC<br/>
-<a href="http://cyberduck.ch/">CyberDuck</a> - for FTPness<br/>
-<a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a> - for browsing<br/>
-<a href="http://www.opera.com/">Opera</a> - for fast browsing<br/>
-Skype<br/>
-- <a href="http://www.ecamm.com/mac/callrecorder/">Call Recorder</a> - for recording Skype calls</p>
-
-<p><strong>Dev:</strong><br/>
-<a href="http://www.mono-project.com/Main_Page">Mono</a> - because I&#8217;m a C# hack<br/>
-<a href="http://www.jetbrains.com/ruby/">RubyMine</a> - to help me feel less bad at Ruby<br/>
-<a href="http://macromates.com/">TextMate</a> - Editing things<br/>
-<a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> to virtualize things</p>
 ]]></content>
   </entry>
   

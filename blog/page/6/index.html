@@ -9,8 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="This is a living document of Applications you will find on my Windows OS: FileZilla - great FTP client and server
-Firefox Adblock plus colorzilla &hellip;">
+  <meta name="description" content="Anyone who has to do reporting on a recurring basis knows what a pain it can be when you have to provide columns totals for the app. Treatment for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,73 @@ Firefox Adblock plus colorzilla &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/with-fruit-rollup/">With Fruit Rollup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Anyone who has to do reporting on a recurring basis knows what a pain it can be when you have to provide columns totals for the app. Treatment for this pain can be found with the ROLLUP command.<br/>
+Run this example to see what I mean:</p>
+
+<p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
+   , Account_Name VARCHAR(50), balance smallmoney);<br/>
+INSERT INTO #temper <br/>
+VALUES (&#8216;Jimmy Johns&#8217;, 50),(&#8216;Qdoba&#8217;,60)<br/>
+   ,(&#8216;Big Truck Tacos&#8217;, 70),(&#8216;Hideaway&#8217;, 80),(&#8216;Teds&#8217;, 90);<br/>
+SELECT Account_Name, SUM(balance) AS BALANCE<br/>
+FROM #temper<br/>
+GROUP BY Account_Name WITH ROLLUP;<br/>
+DROP TABLE #temper;</p>
+
+<p>Pretty cool right?  The downside being that there is a NULL to deal with and that isn&#8217;t a very descript name for the total.  So maybe we plaster on a CASE statement to replace the NULL with something a little digestible to a user:</p>
+
+<p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
+   , Account_Name VARCHAR(50), balance smallmoney);<br/>
+INSERT INTO #temper <br/>
+VALUES (&#8216;Jimmy Johns&#8217;, 50),(&#8216;Qdoba&#8217;,60)<br/>
+   ,(&#8216;Big Truck Tacos&#8217;, 70),(&#8216;Hideaway&#8217;, 80),(&#8216;Teds&#8217;, 90);<br/>
+SELECT CASE<br/>
+   WHEN (Grouping(Account_Name)=1) THEN &#8217;Total&#8217;<br/>
+   ELSE Account_Name<br/>
+   END AS Account_Name<br/>
+   , SUM(balance) AS BALANCE<br/>
+FROM #temper<br/>
+GROUP BY Account_Name WITH ROLLUP;<br/>
+DROP TABLE #temper;</p>
+
+<p>For more a more wordy version of this, consult the 4 Guys:</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -571,78 +637,6 @@ Example.com</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/databasemail-man/">DatabaseMail Man</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:</p>
-
-<pre><code>-- send a normal mail
-EXEC msdb.dbo.sp_send_dbmail
-@Profile_Name = @@ServerName
-,@recipients='name@domain.com;number@cingularme.com'
-,@subject = 'Dev Transfer to 19'
-,@body = 'Task Complete'
-,@body_format = 'HTML'
-</code></pre>
-
-<p>&#8211; send with an attachment<br/>
-EXEC msdb.dbo.sp_send_dbmail<br/>
-@Profile_Name = @@SERVERNAME<br/>
-,@recipients=&#8217;name@domain.com&#8217;<br/>
-,@subject = &#8216;Dev Transfer to 19&#8217;<br/>
-,@body = &#8216;Task Complete&#8217;<br/>
-,@body_format = &#8216;HTML&#8217;<br/>
-,@file_attachments = @SourcePath;</p>
-
-<p>/*<br/>
-&#8211;Odds and Ends<br/>
-If sending to multiple peeps and one fails to send&#8230; queued up and resends to all.</p>
-
-<p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
-
-<p>&#8211; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for name@domain.com). )</p>
-
-<p>&#8211; antivirus port 25 block<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
-
-<p>&#8211;Select * from sysmail_allitems order by mailitem_id desc   &#8211; look up mails<br/>
-&#8211;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &#8211; look up the mails details<br/>
-*/</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -664,6 +658,10 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
       </li>
     
@@ -677,10 +675,6 @@ The mail could not be sent to the recipients because of the mail server failure.
     
       <li class="post">
         <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/running-the-right-rubies-on-heroku/">Running the right rubies on Heroku</a>
       </li>
     
   </ul>
