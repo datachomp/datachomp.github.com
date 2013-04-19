@@ -12,13 +12,18 @@ Here is what I have so far:
 <div style="text-align: center;">
 <table style="margin: 0px auto; table-layout: fixed; width: 650px;">
 <tr>
-<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
+<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(css)<br/><img src="http://static.datachomp.com/emoticons/css.png" /></td><td>(jquery)<br/><img src="http://static.datachomp.com/emoticons/jquery.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
+</tr>
+<td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(poshgit)<br/><img src="http://static.datachomp.com/emoticons/poshgit.png" /></td><td> </td>
 </tr>
 <tr>
 <td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
 </tr>
 <tr>
-<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td> </td>
+<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(ruby)<br/><img src="http://static.datachomp.com/emoticons/ruby.png" /></td><td> </td>
+</tr>
+<tr>
+<td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td>(vs)<br/><img src="http://static.datachomp.com/emoticons/vs.png" /></td><td>(xamarin)<br/><img src="http://static.datachomp.com/emoticons/xamarinhq.png" /></td><td>(sublime)<br/><img src="http://static.datachomp.com/emoticons/sublimetext.png" /></td>
 </tr>
 <tr>
 <td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td> </td>
@@ -26,5 +31,8 @@ Here is what I have so far:
 </table>
 </div>
 
+Special thanks to [@motowilliams][3] for a variety of these 
+
 [1]: http://hipchat.com/
 [2]: http://hipchat-emoticons.nyh.name/
+[3]: https://twitter.com/motowilliams
