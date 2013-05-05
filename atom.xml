@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-05-05T13:14:54-05:00</updated>
+  <updated>2013-05-05T13:18:18-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -22,16 +22,16 @@
 
 <p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
 
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem). I installed it, ran it again and voilà! The syntax was very simple:</p>
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and then it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem dependency). I installed the &#8216;mysql&#8217; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
 
 <blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
 
 <p>A couple things I like about Valkyrie:</p>
 
 <ul>
-<li>It is simple. I just point it and run.</li>
-<li>It uses Sequel.</li>
-<li>I can keep re-running it without it duplicating rows.</li>
+<li>It is simple. I just provide a mysql source and postgres destination.</li>
+<li>It uses <a href="https://github.com/jeremyevans/sequel">Sequel</a>.</li>
+<li>I can keep re-running it without it duplicating source data.</li>
 </ul>
 
 
