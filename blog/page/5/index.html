@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="As you start playing with SQL CLR, you learn pretty quick that the built in namespaces can be a little handicapping. You can skip this by creating &hellip;">
+  <meta name="description" content="With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,69 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/jquery-cdn-failover/">JQuery CDN Failover</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&#8217;t dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&#8230;. and it is quite easy really since 1.4 :</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.  
+
+4.  &amp;nbsp;
+
+5.  
+
+6.    if &amp;#40;typeof jQuery == 'undefined'&amp;#41;
+
+7.    &amp;#123;
+
+8.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
+
+9.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
+
+10.   &amp;#125;
+
+11.   
+
+12. &amp;nbsp;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -692,61 +755,6 @@ At this point you just check the local directory for email when you are testing 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/sql-server-20052008-alert-pack/">SQL Server 2005/2008 Alert Pack</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Outside of the daily WTF&#8217;s I create&#8230; one of the larger WTF&#8217;s I know is the SQL Server team removing the built in alerts in SQL Server 2005 and SQL Server 2008. Naturally I am going to gloss over a lot of this and just link up the code. To go more in depth on this, read the &#8216;related link&#8217; at the bottom.</p>
-
-<p>Lets walk through the file- (Make sure you have DatabaseMail set up and set the Agent to use DatabaseMail)</p>
-
-<ol>
-<li>In the @email list variable&#8230; set the notification emails you want</li>
-<li>Notice the &#8216;use MSDB&#8217; - that is SQL Agent&#8217;s crib</li>
-<li>You are then going to see the create statements for a variety of alerts in the agent</li>
-<li><p>the SQL 2000 alerts have some different delay intervals that throw warnings in 05/08. my script fixes that</p></li>
-<li><p>Create an operator named &#8216;DBA&#8217; and assign it the desired emails.</p></li>
-<li>Add the DBA operator to the alerts and tell it to use email notification</li>
-</ol>
-
-
-<p>Here is the file:</p>
-
-<p>Related Link:<br/>
-<a href="http://www.karaszi.com/SQLServer/util_agent_alerts.asp">http://www.karaszi.com/SQLServer/util_agent_alerts.asp</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -768,6 +776,10 @@ At this point you just check the local directory for email when you are testing 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
       </li>
     
@@ -781,10 +793,6 @@ At this point you just check the local directory for email when you are testing 
     
       <li class="post">
         <a href="/archives/later-wordpress/">Later Wordpress</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/stopping-spam-in-contact-form-7/">Stopping spam in Contact Form 7</a>
       </li>
     
   </ul>

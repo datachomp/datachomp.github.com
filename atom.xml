@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-04-18T16:53:20-05:00</updated>
+  <updated>2013-05-05T13:08:25-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Quickly Migrate A DB From MySQL To Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/"/>
+    <updated>2013-05-05T12:50:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres</id>
+    <content type="html"><![CDATA[<p>The more I&#8217;m around people writing web apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing people actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post is by no means an exhaustive list for how to do this, but more based around having 15 minutes of free time and internet.</p>
+
+<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free little intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to some port dependencies. No worries, I still had plenty of tabs with search results.</p>
+
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem). I installed it, ran it again and voilà! The syntax was very simple:</p>
+
+<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
+
+<p>A couple things I like about Valkyrie:</p>
+
+<ul>
+<li>It is simple. I just point it and run.</li>
+<li>It uses Sequel.</li>
+<li>I can keep re-running it without it duplicating rows.</li>
+</ul>
+
+
+<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
+
+<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[More Nerdy Hipchat Emoticons]]></title>
@@ -756,22 +784,6 @@ So remember when I started our Colors table with a capital C? This is where it c
 </code></pre>
 
 <p>and Viola! It works! In pretty much the time it takes to install SQL Server, we&#8217;re already rocking our stunning and highly valuable colors app!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rock out with your Procmon out]]></title>
-    <link href="http://datachomp.github.com/archives/rock-out-with-your-procmon-out/"/>
-    <updated>2011-07-26T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/rock-out-with-your-procmon-out</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
-Start run live.sysinternals.comtools</p>
-
-<p>If you are already a gigantic nerd like me and have various login scripts that run, it is way easy to simply map that share by throwing the following into your login scripts:</p>
-
-<p>net use s: live.sysinternals.comtools</p>
 ]]></content>
   </entry>
   

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Unregister Language Bar - DataChomp</title>
+  <title>Quickly Migrate A DB From MySQL To Postgres - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Two guys walk into a language bar, the smart one unregister it If you don&#8217;t need the language bar, then uninstall it by: Start Run "regsvr32. &hellip;">
+  <meta name="description" content="The more I&#8217;m around people writing web apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing people actually use &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/unregister-language-bar">
+  <link rel="canonical" href="http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Unregister Language Bar</h1>
+      <h1 class="entry-title">Quickly Migrate a DB From MySQL to Postgres</h1>
     
     
       <p class="meta">
@@ -99,24 +99,33 @@
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-05-05T12:50:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>The more I&#8217;m around people writing web apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing people actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post is by no means an exhaustive list for how to do this, but more based around having 15 minutes of free time and internet.</p>
 
-<h2>Two guys walk into a language bar, the smart one unregister it</h2>
+<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free little intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to some port dependencies. No worries, I still had plenty of tabs with search results.</p>
 
-<p>If you don&#8217;t need the language bar, then uninstall it by:</p>
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem). I installed it, ran it again and voilà! The syntax was very simple:</p>
 
-<p><code>Start   Run   "regsvr32.exe /u msutb.dll"    (minus the quotes)</code></p>
+<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
 
-<p>Setting god mode in Windows 7<br/>
-Create a folder and rename it to :<br/>
-GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
+<p>A couple things I like about Valkyrie:</p>
+
+<ul>
+<li>It is simple. I just point it and run.</li>
+<li>It uses Sequel.</li>
+<li>I can keep re-running it without it duplicating rows.</li>
+</ul>
+
+
+<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
+
+<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
 </div>
 
 
@@ -125,7 +134,7 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -139,21 +148,15 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-05-05T12:50:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/os/'>OS</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/unregister-language-bar/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/unregister-language-bar/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/" >Tweet</a>
   
   
   
@@ -162,14 +165,18 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/tempdb-on-the-move/" title="Previous Post: TempDB on the move">&laquo; TempDB on the move</a>
+        <a class="basic-alignment left" href="/archives/more-nerdy-hipchat-emoticons/" title="Previous Post: More Nerdy Hipchat Emoticons">&laquo; More Nerdy Hipchat Emoticons</a>
       
-      
-        <a class="basic-alignment right" href="/archives/who-said-programmers-are-un-date-able/" title="Next Post: Who said programmers are un-date-able ?">Who said programmers are un-date-able ? &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -228,7 +235,10 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/';
+        var disqus_url = 'http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
