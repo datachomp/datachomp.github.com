@@ -10,16 +10,28 @@ footer: true
 
 I wanted to start recording which books I've read.
 
+**Database:**  
+[postgres backup and restore][86]  
+[postgres instant starter][87]  
+[SQL Server 2012 Query Performance Tuning][88]  
+  
+
 **AppDev:**  
 [Exceptional Ruby][1]  
-  
-  
+[tmux] [85]  
+vim and vi tips  
+
+ [1]: http://pragprog.com/book/ager/exceptional-ruby
+ [85]: http://pragprog.com/book/bhtmux/tmux
+ [86]: http://www.packtpub.com/how-to-postgresql-backup-and-restore/book  
+ [87]: http://www.packtpub.com/instant-postgresql-starter/book
+ [88]: http://www.amazon.com/Server-2012-Query-Performance-Tuning/dp/1430242035
+
 \---|\---|-- 2012 \---|\---|--  
 **Infrastructure:**  
 [Nginx HTTP Server][2]![][3]  
 [Pro Linux System Administration (Expert's Voice in Open Source)][4]![][5]
 
- [1]: http://pragprog.com/book/ager/exceptional-ruby
  [2]: http://www.amazon.com/gp/product/1849510865/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=1849510865
  [3]: http://www.assoc-amazon.com/e/ir?t=data03c5-20&l=as2&o=1&a=1849510865
  [4]: http://www.amazon.com/gp/product/1430219122/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=1430219122
