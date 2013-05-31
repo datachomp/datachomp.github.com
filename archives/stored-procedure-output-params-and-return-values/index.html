@@ -108,189 +108,112 @@
 
 <div class="entry-content"><h1></h1>
 
-<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:</p>
+<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  SET @TheID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
-
-3.  RETURN @TheID
-
-4.  &amp;nbsp;
+<pre><code>SET @TheID = SCOPE_IDENTITY();
+RETURN @TheID
 </code></pre>
 
-<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:
+<code></p>
 
-2.  --drop table dbo.pizza
+<pre><code>--drop table dbo.pizza
+CREATE TABLE Pizza (pizzaid TINYINT IDENTITY(1,1), pizzasize VARCHAR(10), numberoftoppings TINYINT, pizzaname VARCHAR(40) )
 
-3.  CREATE TABLE Pizza &amp;#40;pizzaid TINYINT IDENTITY&amp;#40;1,1&amp;#41;, pizzasize VARCHAR&amp;#40;10&amp;#41;, numberoftoppings TINYINT, pizzaname VARCHAR&amp;#40;40&amp;#41; &amp;#41;
+CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
 
-4.  &amp;nbsp;
+BEGIN TRY
+INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
 
-5.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+SELECT @PizzaID = SCOPE_IDENTITY();
+RETURN 0;
+END Try
+BEGIN Catch
+    RETURN -1
+END Catch
+GO
 
-6.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
-
-7.  AS
-
-8.  &amp;nbsp;
-
-9.  BEGIN TRY
-
-10. INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
-
-11. VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
-
-12. &amp;nbsp;
-
-13. SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
-
-14. RETURN ;
-
-15. END Try
-
-16. BEGIN Catch
-
-17.     RETURN -1
-
-18. END Catch
-
-19. GO
-
-20. &amp;nbsp;
-
-21. DECLARE @InsertedID TINYINT, @RunOK INT;
-
-22. EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
-
-23. SELECT @RunOK, @InsertedID
-
-24. &amp;nbsp;
+DECLARE @InsertedID TINYINT, @RunOK INT;
+EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
+SELECT @RunOK, @InsertedID
 </code></pre>
 
-<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&#8217;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &#8220;Fine, in that case don&#8217;t do the above&#8221; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&#8217;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &#8220;Fine, in that case don&#8217;t do the above&#8221; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
+<code></p>
 
-2.  CREATE PROCEDURE dbo.asp_InsertNewPizza
+<pre><code>CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
 
-3.      &amp;#40;@PizzaSize VARCHAR&amp;#40;10&amp;#41;,@NumberofToppings TINYINT,@pizzaName VARCHAR&amp;#40;40&amp;#41;,@PizzaID TINYINT OUTPUT
+IF EXISTS (SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName)
+BEGIN
+    SET @PizzaID = NULL;
+    RETURN 1;   
+END
+ELSE
+BEGIN TRY
+    INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+    VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
 
-4.  AS
+    SELECT @PizzaID = SCOPE_IDENTITY();
+    RETURN 0;
+END TRY
+BEGIN CATCH
+    RETURN -1
+END CATCH
 
-5.  &amp;nbsp;
-
-6.  IF EXISTS &amp;#40;SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName&amp;#41;
-
-7.  BEGIN
-
-8.      SET @PizzaID = NULL;
-
-9.      RETURN 1;   
-
-10. END
-
-11. ELSE
-
-12. BEGIN TRY
-
-13.     INSERT INTO dbo.Pizza &amp;#40;pizzaSize, NumberOftoppings,pizzaname&amp;#41;
-
-14.     VALUES &amp;#40;@PizzaSize, @NumberofToppings, @pizzaName&amp;#41;
-
-15. &amp;nbsp;
-
-16.     SELECT @PizzaID = SCOPE_IDENTITY&amp;#40;&amp;#41;;
-
-17.     RETURN ;
-
-18. END TRY
-
-19. BEGIN CATCH
-
-20.     RETURN -1
-
-21. END CATCH
-
-22. &amp;nbsp;
-
-23. GO
-
-24. &amp;nbsp;
+GO
 </code></pre>
+
+<p></code></p>
 
 <p>Without catching the Return Values&#8230; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&#8217;t from an error, but that a certain business rule had been met.</p>
 
-<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&#8217;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:</p>
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&#8217;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>SqlCommand databaseCMD = new SqlCommand ("asp_InsertNewPizza", pizzaConn);
 
-2.  SqlCommand databaseCMD = [new][1] SqlCommand &amp;#40;"asp_InsertNewPizza", pizzaConn&amp;#41;;
+databaseCMD.CommandType = CommandType.StoredProcedure;
 
-3.  &amp;nbsp;
+SqlParameter PizzaSize = databaseCMD.Parameters.Add ("@pizzaSize", SqlDbType.VarChar, 10);
+PizzaSize.Direction = ParameterDirection.Input;
+SqlParameter NumberOfToppings = databaseCMD.Parameters.Add ("@NumberOfToppings", SqlDbType.TinyInt);
+NumberOfToppings.Direction = ParameterDirection.Input;
+SqlParameter PizzaName = databaseCMD.Parameters.Add ("@PizzaName", SqlDbType.VarChar, 40);
+PizzaName.Direction = ParameterDirection.Input;
 
-4.  databaseCMD.CommandType = CommandType.StoredProcedure;
 
-5.  &amp;nbsp;
+SqlParameter PizzaID = databaseCMD.Parameters.Add ("@PizzaID", SqlDbType.TinyInt);
+PizzaID.Direction = ParameterDirection.Output ;
+SqlParameter ReturnValue = databaseCMD.Parameters.Add ("RetVal", SqlDbType.Int);
+RetVal.Direction = ParameterDirection.ReturnValue;
 
-6.  SqlParameter PizzaSize = databaseCMD.Parameters.Add &amp;#40;"@pizzaSize", SqlDbType.VarChar, 10&amp;#41;;
+int pizzaID;
+pizzaConn.Open();
 
-7.  PizzaSize.Direction = ParameterDirection.Input;
+pizzaID =databaseCMD.ExecuteScalar ().ToString() ;
 
-8.  SqlParameter NumberOfToppings = databaseCMD.Parameters.Add &amp;#40;"@NumberOfToppings", SqlDbType.TinyInt&amp;#41;;
-
-9.  NumberOfToppings.Direction = ParameterDirection.Input;
-
-10. SqlParameter PizzaName = databaseCMD.Parameters.Add &amp;#40;"@PizzaName", SqlDbType.VarChar, 40&amp;#41;;
-
-11. PizzaName.Direction = ParameterDirection.Input;
-
-12. &amp;nbsp;
-
-13. &amp;nbsp;
-
-14. SqlParameter PizzaID = databaseCMD.Parameters.Add &amp;#40;"@PizzaID", SqlDbType.TinyInt&amp;#41;;
-
-15. PizzaID.Direction = ParameterDirection.Output ;
-
-16. SqlParameter ReturnValue = databaseCMD.Parameters.Add &amp;#40;"RetVal", SqlDbType.Int&amp;#41;;
-
-17. RetVal.Direction = ParameterDirection.ReturnValue;
-
-18. &amp;nbsp;
-
-19. int pizzaID;
-
-20. pizzaConn.Open&amp;#40;&amp;#41;;
-
-21. &amp;nbsp;
-
-22. pizzaID =databaseCMD.ExecuteScalar &amp;#40;&amp;#41;.ToString&amp;#40;&amp;#41; ;
-
-23. &amp;nbsp;
-
-24. if &amp;#40;ReturnValue == &amp;#41;&amp;#123;
-
-25. ResponseWrite&amp;#40;"The Pizza was added. The pizzaID is : "   pizzaID.ToString&amp;#40;&amp;#41; &amp;#41;;
-
-26. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
-
-27. &amp;#125;
-
-28. else if&amp;#123; ReturnValue == 1&amp;#41; &amp;#123;
-
-29. ResponseWrite&amp;#40;"Sorry friend, that pizza name already exists."&amp;#41;;
-
-30. ResponseWreite&amp;#40;"Return Value: "   RetVal.Value&amp;#41;;
-
-31. &amp;#125;
-
-32. else &amp;#123; FreakOut&amp;#40;&amp;#41;; &amp;#125;
-
-33. &amp;nbsp;
+if (ReturnValue == 0){
+ResponseWrite("The Pizza was added. The pizzaID is : " + pizzaID.ToString() );
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else if{ ReturnValue == 1) {
+ResponseWrite("Sorry friend, that pizza name already exists.");
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else { FreakOut(); }
 </code></pre>
+
+<p></code></p>
 </div>
 
 

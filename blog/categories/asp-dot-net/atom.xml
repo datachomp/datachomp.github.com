@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ASP.NET | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/asp-dot-net/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-05-16T09:42:30-05:00</updated>
+  <updated>2013-05-31T11:49:51-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -131,32 +131,22 @@ WebForm:</p>
     <id>http://datachomp.github.com/archives/jquery-cdn-failover</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>With 'high availability' being a nicely stressed buzzword coupled with issues in the 'cloud', an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won't dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover.... and it is quite easy really since 1.4 :</p>
+<p>With 'high availability' being a nicely stressed buzzword coupled with issues in the 'cloud', an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won't dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover.... and it is quite easy really since 1.4 :
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js"&gt;&lt;/script&gt;
 
-2.  
-
-3.  
-
-4.  &amp;nbsp;
-
-5.  
-
-6.    if &amp;#40;typeof jQuery == 'undefined'&amp;#41;
-
-7.    &amp;#123;
-
-8.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
-
-9.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
-
-10.   &amp;#125;
-
-11.   
-
-12. &amp;nbsp;
+&lt;script type="text/javascript"&gt;
+  if (typeof jQuery == 'undefined')
+  {
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jqueryui-1.8.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+  }
+  &lt;/script&gt;
 </code></pre>
+
+<p></code></p>
 ]]></content>
   </entry>
   
@@ -171,34 +161,30 @@ WebForm:</p>
 
 <p>Below is a quick/basic example of how to get started with helper classes.<br/>
 In my solution, I created a folder called 'Helpers' and added a new class object called 'StringManip'.<br/>
-Once that was completed, I added a few methods like:</p>
+Once that was completed, I added a few methods like:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  public static string UpperString&amp;#40;string val&amp;#41;
-
-3.  &amp;#123; return val.ToUpper&amp;#40;&amp;#41;; &amp;#125; 
-
-4.  &amp;nbsp;
+<pre><code>public static string UpperString(string val)
+{ return val.ToUpper(); }
 </code></pre>
 
-<p>In my code behind, I reference the class through a using statement:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>In my code behind, I reference the class through a using statement:
+<code></p>
 
-2.  using HelperClass.Helpers;
-
-3.  &amp;nbsp;
+<pre><code>using HelperClass.Helpers;
 </code></pre>
 
-<p>And then I can call the methods:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>And then I can call the methods:
+<code></p>
 
-2.  lbl_aspnet.Text = StringManip.UpperString&amp;#40;lbl_aspnet.Text&amp;#41;;
-
-3.  &amp;nbsp;
+<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
 </code></pre>
+
+<p></code></p>
 
 <p>If the above isn't enough to get you rolling.... then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
 ]]></content>

@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy,&amp;nbsp;DATEPART &hellip;">
+  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy, DATEPART(yyyy, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,34 +108,62 @@
 
 <div class="entry-content"><h1></h1>
 
-<p><strong>First day of the month:</strong></p>
+<p><strong>First day of the month:</strong>
+<code></p>
 
-<p><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))</code></p>
+<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
+</code></pre>
 
-<p><strong>First day of the week:</strong></p>
+<p></code>
+<strong>First day of the week:</strong>
+<code></p>
 
-<p><code>DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1,0)</code></p>
+<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
+</code></pre>
 
-<p><strong>Last day of the month:</strong></p>
+<p></code>
+<strong>Last day of the month:</strong>
+<code></p>
 
-<p><code>DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))</code></p>
+<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
+</code></pre>
 
-<p><strong>Last Business Day of the Month:  (buckle up for this one)<br/>
-</strong></p>
+<p></code>
+<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
+</strong>
+<code></p>
 
-<p><code>CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7&amp;nbsp;</code></p>
+<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
+THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
+THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
+</code></pre>
 
-<p><code>THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6&amp;nbsp;</code></p>
+<p></code></p>
 
-<p><code>THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month&amp;nbsp;</code></p>
+<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
+<code></p>
 
-<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong></p>
+<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
+AS 
+BEGIN
+SET DATEFIRST 1 
+DECLARE @Now DATETIME 
+    ,@LDOTM DATETIME --Last Day Of The Month
+SET @Now= GETDATE() 
+SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
+SELECT 
+@Now AS Today 
+, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
+, @LDOTM AS Last_day_of_month
+, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
+    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
+    ELSE @LDOTM END AS Last_Business_day_of_month 
+END
+</code></pre>
 
-<p><code>ALTER&amp;nbsp;PROCEDURE&amp;nbsp;usp_CommonDates_Report AS BEGIN
-SET&amp;nbsp;DATEFIRST&amp;nbsp;1 DECLARE&amp;nbsp;@Now&amp;nbsp;DATETIME &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;,@LDOTM&amp;nbsp;DATETIME&amp;nbsp;--Last&amp;nbsp;Day&amp;nbsp;Of&amp;nbsp;The&amp;nbsp;Month
-SET&amp;nbsp;@Now=&amp;nbsp;GETDATE() SET&amp;nbsp;@LDOTM&amp;nbsp;=&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
-SELECT @Now&amp;nbsp;AS&amp;nbsp;Today ,&amp;nbsp;DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1,0)&amp;nbsp;AS&amp;nbsp;Week_Start ,&amp;nbsp;@LDOTM&amp;nbsp;AS&amp;nbsp;Last_day_of_month
-,&amp;nbsp;CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=7&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=6&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;@LDOTM&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month END</code></p>
+<p></code></p>
 </div>
 
 

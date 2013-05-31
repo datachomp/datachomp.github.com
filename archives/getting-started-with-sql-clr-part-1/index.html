@@ -121,85 +121,60 @@ GO
 <p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
 <img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
 
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:</p>
+<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Microsoft.SqlServer.Server;
 
-2.  using System;
 
-3.  using System.Data;
-
-4.  using System.Data.SqlClient;
-
-5.  using System.Data.SqlTypes;
-
-6.  using Microsoft.SqlServer.Server;
-
-7.  &amp;nbsp;
-
-8.  &amp;nbsp;
-
-9.  public partial class StoredProcedures
-
-10. &amp;#123;
-
-11.     &amp;#91;Microsoft.SqlServer.Server.SqlProcedure&amp;#93;
-
-12.     public static void clr_Chomp&amp;#40;&amp;#41;
-
-13.     &amp;#123;
-
-14.         // Put your code here
-
-15.     &amp;#125;
-
-16. &amp;#125;;
-
-17. &amp;nbsp;
+public partial class StoredProcedures
+{
+    [Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp()
+    {
+        // Put your code here
+    }
+};
 </code></pre>
 
-<p>Let&#8217;s throw in some code:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>Let&#8217;s throw in some code:
+<code></p>
 
-2.      &amp;#91;Microsoft.SqlServer.Server.SqlProcedure&amp;#93;
-
-3.      public static void clr_Chomp&amp;#40;out string Chomps&amp;#41;
-
-4.      &amp;#123;
-
-5.          Chomps = "Chomp Chomp Chomp Chomp";
-
-6.      &amp;#125;
-
-7.  &amp;nbsp;
+<pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp(out string Chomps)
+    {
+        Chomps = "Chomp Chomp Chomp Chomp";
+    }
 </code></pre>
+
+<p></code></p>
 
 <p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &#8216;Chomp&#8217; X 4.<br/>
 Compile, and deploy. Gotcha - For those of us that use VS 2010 our default framework is 4.0 &#8230;. this won&#8217;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
-Make sure you are in the proper database and run it:</p>
+Make sure you are in the proper database and run it:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  DECLARE @words VARCHAR&amp;#40;25&amp;#41;
-
-3.  EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
-
-4.  SELECT @words
-
-5.  &amp;nbsp;
+<pre><code>DECLARE @words VARCHAR(25)
+EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
+SELECT @words
 </code></pre>
 
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:
+<code></p>
 
-2.  GOTO START;
-
-3.  &amp;nbsp;
+<pre><code>GOTO START;
 </code></pre>
 
-<p>In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
+<p></code>
+In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
 In Part 3, I will likely look at performance and some other items to help round out the series.</p>
 </div>
 

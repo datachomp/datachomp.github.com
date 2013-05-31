@@ -111,32 +111,22 @@
 
   <div class="entry-content"><h1></h1>
 
-<p>With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&#8217;t dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&#8230;. and it is quite easy really since 1.4 :</p>
+<p>With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&#8217;t dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&#8230;. and it is quite easy really since 1.4 :
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js"&gt;&lt;/script&gt;
 
-2.  
-
-3.  
-
-4.  &amp;nbsp;
-
-5.  
-
-6.    if &amp;#40;typeof jQuery == 'undefined'&amp;#41;
-
-7.    &amp;#123;
-
-8.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
-
-9.       document.write&amp;#40;unescape&amp;#40;""&amp;#41;&amp;#41;;
-
-10.   &amp;#125;
-
-11.   
-
-12. &amp;nbsp;
+&lt;script type="text/javascript"&gt;
+  if (typeof jQuery == 'undefined')
+  {
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jqueryui-1.8.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+  }
+  &lt;/script&gt;
 </code></pre>
+
+<p></code></p>
 </div>
   
   
@@ -178,85 +168,52 @@
 
 <p>The XMPP library I&#8217;ll be using is <a href="http://www.ag-software.de/agsxmpp-sdk.html">agsXMPP</a>. As you&#8217;ll see in my code below, I tend to just use a common shared library folder so I can house various libraries and it makes it easier from an organizational standpoint to cram them into the database. I use the following code to &#8216;cram&#8217; the library into my instance so I&#8217;ll be able to use it in a CLR procedure:</p>
 
-<pre><code>1.  &amp;nbsp;
+<p><code></p>
 
-2.  CREATE ASSEMBLY &amp;#91;agsXMPP&amp;#93;
-
-3.  FROM 'C:SubversionShared LibsagsxmppagsXMPP.dll'
-
-4.  WITH PERMISSION_SET = UNSAFE
-
-5.  GO
-
-6.  &amp;nbsp;
+<pre><code>CREATE ASSEMBLY [agsXMPP]
+FROM 'C:SubversionShared LibsagsxmppagsXMPP.dll'
+WITH PERMISSION_SET = UNSAFE
+GO
 </code></pre>
 
-<p>Once that is out of the way, we can roll our CLR proc, deploy and message to our hearts content (or until the network drops)</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>Once that is out of the way, we can roll our CLR proc, deploy and message to our hearts content (or until the network drops)
+<code></p>
 
-2.  using System;
+<pre><code>using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Microsoft.SqlServer.Server;
 
-3.  using System.Data;
+using agsXMPP;
+using agsXMPP.protocol.client;
+// yes,  domains and names have been changed to protect the innocent servers.
+public partial class StoredProcedures
+{
+    [Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_SendXMPP()
+    {
+        XmppClientConnection xmpp;
+        xmpp = new XmppClientConnection();
+        xmpp.AutoPresence = true;
 
-4.  using System.Data.SqlClient;
+        xmpp.AutoResolveConnectServer = true;
+        xmpp.Port = 5222;
+        xmpp.UseSSL = false;
+        xmpp.Server = "xmpp.datachomp.com";
+        xmpp.Username = "SQLAlert";
+        xmpp.Password = "SqlClr";
 
-5.  using System.Data.SqlTypes;
+        xmpp.Open();
 
-6.  using Microsoft.SqlServer.Server;
-
-7.  &amp;nbsp;
-
-8.  using agsXMPP;
-
-9.  using agsXMPP.protocol.client;
-
-10. // yes,  domains and names have been changed to protect the innocent servers.
-
-11. public partial class StoredProcedures
-
-12. &amp;#123;
-
-13.     &amp;#91;Microsoft.SqlServer.Server.SqlProcedure&amp;#93;
-
-14.     public static void clr_SendXMPP&amp;#40;&amp;#41;
-
-15.     &amp;#123;
-
-16.         XmppClientConnection xmpp;
-
-17.         xmpp = [new][2] XmppClientConnection&amp;#40;&amp;#41;;
-
-18.         xmpp.AutoPresence = true;
-
-19. &amp;nbsp;
-
-20.         xmpp.AutoResolveConnectServer = true;
-
-21.         xmpp.Port = 5222;
-
-22.         xmpp.UseSSL = false;
-
-23.         xmpp.Server = "xmpp.datachomp.com";
-
-24.         xmpp.Username = "SQLAlert";
-
-25.         xmpp.Password = "SqlClr";
-
-26. &amp;nbsp;
-
-27.         xmpp.Open&amp;#40;&amp;#41;;
-
-28. &amp;nbsp;
-
-29.         xmpp.OnLogin  = delegate&amp;#40;object o&amp;#41; &amp;#123; xmpp.Send&amp;#40;[new][2] Message&amp;#40;[new][2] Jid&amp;#40;"Gatir@xmpp.datachomp.com"&amp;#41;, MessageType.chat, "This really should be a variable yes?"&amp;#41;&amp;#41;; &amp;#125;;
-
-30.     &amp;#125;
-
-31. &amp;#125;;
-
-32. &amp;nbsp;
+        xmpp.OnLogin += delegate(object o) { xmpp.Send(new Message(new Jid("Gatir@xmpp.datachomp.com"), MessageType.chat, "This really should be a variable yes?")); };
+    }
+};
 </code></pre>
+
+<p></code></p>
 </div>
   
   
@@ -307,85 +264,60 @@ GO
 <p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
 <img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
 
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:</p>
+<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Microsoft.SqlServer.Server;
 
-2.  using System;
 
-3.  using System.Data;
-
-4.  using System.Data.SqlClient;
-
-5.  using System.Data.SqlTypes;
-
-6.  using Microsoft.SqlServer.Server;
-
-7.  &amp;nbsp;
-
-8.  &amp;nbsp;
-
-9.  public partial class StoredProcedures
-
-10. &amp;#123;
-
-11.     &amp;#91;Microsoft.SqlServer.Server.SqlProcedure&amp;#93;
-
-12.     public static void clr_Chomp&amp;#40;&amp;#41;
-
-13.     &amp;#123;
-
-14.         // Put your code here
-
-15.     &amp;#125;
-
-16. &amp;#125;;
-
-17. &amp;nbsp;
+public partial class StoredProcedures
+{
+    [Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp()
+    {
+        // Put your code here
+    }
+};
 </code></pre>
 
-<p>Let&#8217;s throw in some code:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>Let&#8217;s throw in some code:
+<code></p>
 
-2.      &amp;#91;Microsoft.SqlServer.Server.SqlProcedure&amp;#93;
-
-3.      public static void clr_Chomp&amp;#40;out string Chomps&amp;#41;
-
-4.      &amp;#123;
-
-5.          Chomps = "Chomp Chomp Chomp Chomp";
-
-6.      &amp;#125;
-
-7.  &amp;nbsp;
+<pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp(out string Chomps)
+    {
+        Chomps = "Chomp Chomp Chomp Chomp";
+    }
 </code></pre>
+
+<p></code></p>
 
 <p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &#8216;Chomp&#8217; X 4.<br/>
 Compile, and deploy. Gotcha - For those of us that use VS 2010 our default framework is 4.0 &#8230;. this won&#8217;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
-Make sure you are in the proper database and run it:</p>
+Make sure you are in the proper database and run it:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  DECLARE @words VARCHAR&amp;#40;25&amp;#41;
-
-3.  EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
-
-4.  SELECT @words
-
-5.  &amp;nbsp;
+<pre><code>DECLARE @words VARCHAR(25)
+EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
+SELECT @words
 </code></pre>
 
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:
+<code></p>
 
-2.  GOTO START;
-
-3.  &amp;nbsp;
+<pre><code>GOTO START;
 </code></pre>
 
-<p>In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
+<p></code>
+In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
 In Part 3, I will likely look at performance and some other items to help round out the series.</p>
 </div>
   
@@ -428,34 +360,30 @@ In Part 3, I will likely look at performance and some other items to help round 
 
 <p>Below is a quick/basic example of how to get started with helper classes.<br/>
 In my solution, I created a folder called &#8216;Helpers&#8217; and added a new class object called &#8216;StringManip&#8217;.<br/>
-Once that was completed, I added a few methods like:</p>
+Once that was completed, I added a few methods like:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  public static string UpperString&amp;#40;string val&amp;#41;
-
-3.  &amp;#123; return val.ToUpper&amp;#40;&amp;#41;; &amp;#125; 
-
-4.  &amp;nbsp;
+<pre><code>public static string UpperString(string val)
+{ return val.ToUpper(); }
 </code></pre>
 
-<p>In my code behind, I reference the class through a using statement:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>In my code behind, I reference the class through a using statement:
+<code></p>
 
-2.  using HelperClass.Helpers;
-
-3.  &amp;nbsp;
+<pre><code>using HelperClass.Helpers;
 </code></pre>
 
-<p>And then I can call the methods:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>And then I can call the methods:
+<code></p>
 
-2.  lbl_aspnet.Text = StringManip.UpperString&amp;#40;lbl_aspnet.Text&amp;#41;;
-
-3.  &amp;nbsp;
+<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
 </code></pre>
+
+<p></code></p>
 
 <p>If the above isn&#8217;t enough to get you rolling&#8230;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
 </div>
@@ -595,28 +523,20 @@ For other services/protocols I tend to use:<br/>
 
 <p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
 
-<p>This script will clear out the mail items and the log based on the @Retention_Days variable:</p>
+<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>DECLARE @Retention_days SMALLINT
+    , @Delete_Date DATETIME
 
-2.  DECLARE @Retention_days SMALLINT
+SET @Retention_Days = -90  -- 3 months
+SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
 
-3.      , @Delete_Date DATETIME
-
-4.  &amp;nbsp;
-
-5.  SET @Retention_Days = -90  -- 3 months
-
-6.  SET @Delete_Date = DATEADD&amp;#40;d, @Retention_Days, GETDATE&amp;#40;&amp;#41;&amp;#41;
-
-7.  &amp;nbsp;
-
-8.  EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
-
-9.  EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
-
-10. &amp;nbsp;
+EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
+EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
 </code></pre>
+
+<p></code></p>
 </div>
   
   
@@ -743,10 +663,17 @@ Step 2 - Make sure the SSD is aligned. Pull up &#8220;msinfo32&#8221;, navigate 
 
 <p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&#8217;t a real deal breaker as when I&#8217;m coding/debugging I&#8217;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
 
-<p>In your  section, you can specify either network delivery or a pickup location:<br/>
-`</p>
+<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
+<code></p>
 
-<p>`<br/>
+<pre><code>&lt;system.net&gt;
+    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
+        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
+    &lt;/mailSettings&gt;
+&lt;/system.net&gt;
+</code></pre>
+
+<p></code>
 At this point you just check the local directory for email when you are testing your application. If you don&#8217;t have system for production deployments, then don&#8217;t forget to change to the network delivery when you deploy.</p>
 </div>
   

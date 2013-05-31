@@ -112,34 +112,30 @@
 
 <p>Below is a quick/basic example of how to get started with helper classes.<br/>
 In my solution, I created a folder called &#8216;Helpers&#8217; and added a new class object called &#8216;StringManip&#8217;.<br/>
-Once that was completed, I added a few methods like:</p>
+Once that was completed, I added a few methods like:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  public static string UpperString&amp;#40;string val&amp;#41;
-
-3.  &amp;#123; return val.ToUpper&amp;#40;&amp;#41;; &amp;#125; 
-
-4.  &amp;nbsp;
+<pre><code>public static string UpperString(string val)
+{ return val.ToUpper(); }
 </code></pre>
 
-<p>In my code behind, I reference the class through a using statement:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>In my code behind, I reference the class through a using statement:
+<code></p>
 
-2.  using HelperClass.Helpers;
-
-3.  &amp;nbsp;
+<pre><code>using HelperClass.Helpers;
 </code></pre>
 
-<p>And then I can call the methods:</p>
+<p></code></p>
 
-<pre><code>1.  &amp;nbsp;
+<p>And then I can call the methods:
+<code></p>
 
-2.  lbl_aspnet.Text = StringManip.UpperString&amp;#40;lbl_aspnet.Text&amp;#41;;
-
-3.  &amp;nbsp;
+<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
 </code></pre>
+
+<p></code></p>
 
 <p>If the above isn&#8217;t enough to get you rolling&#8230;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
 </div>

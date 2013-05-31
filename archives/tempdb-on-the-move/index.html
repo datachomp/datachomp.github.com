@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="/************************************************************************ *By&amp;nbsp;default,&amp;nbsp;your&amp;nbsp;tempDB&amp;nbsp;files&amp; &hellip;">
+  <meta name="description" content="By default, your tempDB files are in the following locations: C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf C:Program FilesMicrosoft &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,9 +108,28 @@
 
 <div class="entry-content"><h1></h1>
 
-<p><code>/************************************************************************ *By&amp;nbsp;default,&amp;nbsp;your&amp;nbsp;tempDB&amp;nbsp;files&amp;nbsp;are&amp;nbsp;in&amp;nbsp;the&amp;nbsp;following&amp;nbsp;locations: *C:Program&amp;nbsp;FilesMicrosoft&amp;nbsp;SQL&amp;nbsp;ServerMSSQL.1MSSQLDatatempdb.mdf *C:Program&amp;nbsp;FilesMicrosoft&amp;nbsp;SQL&amp;nbsp;ServerMSSQL.1MSSQLDatatempdb.ldf * *The&amp;nbsp;below&amp;nbsp;commands&amp;nbsp;will&amp;nbsp;change&amp;nbsp;the&amp;nbsp;default&amp;nbsp;tempDB&amp;nbsp;locations&amp;nbsp;for&amp;nbsp;SQL&amp;nbsp;Server *and&amp;nbsp;have&amp;nbsp;it&amp;nbsp;create&amp;nbsp;the&amp;nbsp;tempDB&amp;nbsp;files&amp;nbsp;there&amp;nbsp;upon&amp;nbsp;start&amp;nbsp;up. ************************************************************************/ USE&amp;nbsp;master GO
-ALTER&amp;nbsp;DATABASE&amp;nbsp;tempdb&amp;nbsp;MODIFY&amp;nbsp;FILE&amp;nbsp;(NAME&amp;nbsp;=&amp;nbsp;tempdev,&amp;nbsp;FILENAME&amp;nbsp;=&amp;nbsp;'E:Datatempdb.mdf') GO ALTER&amp;nbsp;DATABASE&amp;nbsp;tempdb&amp;nbsp;MODIFY&amp;nbsp;FILE&amp;nbsp;(NAME&amp;nbsp;=&amp;nbsp;templog,&amp;nbsp;FILENAME&amp;nbsp;=&amp;nbsp;'F:Logtemplog.ldf') GO&amp;nbsp;
-/************************************************************************ *You&amp;nbsp;will&amp;nbsp;need&amp;nbsp;to&amp;nbsp;restart&amp;nbsp;SQL&amp;nbsp;Server&amp;nbsp;for&amp;nbsp;tempdb's&amp;nbsp;file&amp;nbsp;to&amp;nbsp;actually&amp;nbsp;move. * *More&amp;nbsp;reading&amp;nbsp;on&amp;nbsp;the&amp;nbsp;topic: *http://www.databasejournal.com/features/mssql/article.php/3379901 ************************************************************************/</code></p>
+<p><code>
+By default, your tempDB files are in the following locations:  <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf</p>
+
+<p>The below commands will change the default tempDB locations for SQL Server <br/>
+and have it create the tempDB files there upon start up. <br/>
+</code>
+<code>
+USE master <br/>
+GO <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = 'E:Datatempdb.mdf')  <br/>
+GO  <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = 'F:Logtemplog.ldf')  <br/>
+GO
+</code>
+<code>
+You will need to restart SQL Server for tempdb's file to actually move.</p>
+
+<p>More reading on the topic:  <br/>
+http://www.databasejournal.com/features/mssql/article.php/3379901  <br/>
+</code></p>
 </div>
 
 

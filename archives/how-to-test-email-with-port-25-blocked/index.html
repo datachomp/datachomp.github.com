@@ -110,10 +110,17 @@
 
 <p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&#8217;t a real deal breaker as when I&#8217;m coding/debugging I&#8217;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
 
-<p>In your  section, you can specify either network delivery or a pickup location:<br/>
-`</p>
+<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
+<code></p>
 
-<p>`<br/>
+<pre><code>&lt;system.net&gt;
+    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
+        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
+    &lt;/mailSettings&gt;
+&lt;/system.net&gt;
+</code></pre>
+
+<p></code>
 At this point you just check the local directory for email when you are testing your application. If you don&#8217;t have system for production deployments, then don&#8217;t forget to change to the network delivery when you deploy.</p>
 </div>
 

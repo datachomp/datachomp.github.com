@@ -112,13 +112,26 @@
 
 <p>So, in the master I have:</p>
 
-<p>&#8220;</p>
+<p><code></p>
+
+<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
+</code></pre>
+
+<p><code></p>
 
 <p> </p>
 
-<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:</p>
+<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:
+<code></p>
 
-<p><code>protected&amp;nbsp;void&amp;nbsp;Page_Load(object&amp;nbsp;sender,&amp;nbsp;EventArgs&amp;nbsp;e) { Literal menucontrol =&amp;nbsp;Page.Master.FindControl("lit_About")&amp;nbsp;as&amp;nbsp;Literal; ``menucontrol``.Text&amp;nbsp;=&amp;nbsp;"About";&amp;nbsp; }</code></p>
+<pre><code>protected void Page_Load(object sender, EventArgs e) 
+{ 
+Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
+menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
+}
+</code></pre>
+
+<p></code></p>
 </div>
 
 

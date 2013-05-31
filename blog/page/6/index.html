@@ -412,13 +412,26 @@ Visual Studio</p>
 
 <p>So, in the master I have:</p>
 
-<p>&#8220;</p>
+<p><code></p>
+
+<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
+</code></pre>
+
+<p><code></p>
 
 <p> </p>
 
-<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:</p>
+<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:
+<code></p>
 
-<p><code>protected&amp;nbsp;void&amp;nbsp;Page_Load(object&amp;nbsp;sender,&amp;nbsp;EventArgs&amp;nbsp;e) { Literal menucontrol =&amp;nbsp;Page.Master.FindControl("lit_About")&amp;nbsp;as&amp;nbsp;Literal; ``menucontrol``.Text&amp;nbsp;=&amp;nbsp;"About";&amp;nbsp; }</code></p>
+<pre><code>protected void Page_Load(object sender, EventArgs e) 
+{ 
+Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
+menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
+}
+</code></pre>
+
+<p></code></p>
 </div>
   
   
@@ -456,34 +469,62 @@ Visual Studio</p>
 
   <div class="entry-content"><h1></h1>
 
-<p><strong>First day of the month:</strong></p>
+<p><strong>First day of the month:</strong>
+<code></p>
 
-<p><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))</code></p>
+<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
+</code></pre>
 
-<p><strong>First day of the week:</strong></p>
+<p></code>
+<strong>First day of the week:</strong>
+<code></p>
 
-<p><code>DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;GETDATE()),GETDATE()))-1,0)</code></p>
+<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
+</code></pre>
 
-<p><strong>Last day of the month:</strong></p>
+<p></code>
+<strong>Last day of the month:</strong>
+<code></p>
 
-<p><code>DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))</code></p>
+<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
+</code></pre>
 
-<p><strong>Last Business Day of the Month:  (buckle up for this one)<br/>
-</strong></p>
+<p></code>
+<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
+</strong>
+<code></p>
 
-<p><code>CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7&amp;nbsp;</code></p>
+<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
+THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
+THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
+</code></pre>
 
-<p><code>THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6&amp;nbsp;</code></p>
+<p></code></p>
 
-<p><code>THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month&amp;nbsp;</code></p>
+<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
+<code></p>
 
-<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong></p>
+<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
+AS 
+BEGIN
+SET DATEFIRST 1 
+DECLARE @Now DATETIME 
+    ,@LDOTM DATETIME --Last Day Of The Month
+SET @Now= GETDATE() 
+SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
+SELECT 
+@Now AS Today 
+, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
+, @LDOTM AS Last_day_of_month
+, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
+    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
+    ELSE @LDOTM END AS Last_Business_day_of_month 
+END
+</code></pre>
 
-<p><code>ALTER&amp;nbsp;PROCEDURE&amp;nbsp;usp_CommonDates_Report AS BEGIN
-SET&amp;nbsp;DATEFIRST&amp;nbsp;1 DECLARE&amp;nbsp;@Now&amp;nbsp;DATETIME &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;,@LDOTM&amp;nbsp;DATETIME&amp;nbsp;--Last&amp;nbsp;Day&amp;nbsp;Of&amp;nbsp;The&amp;nbsp;Month
-SET&amp;nbsp;@Now=&amp;nbsp;GETDATE() SET&amp;nbsp;@LDOTM&amp;nbsp;=&amp;nbsp;DATEADD(ms,&amp;nbsp;-3,&amp;nbsp;DATEADD&amp;nbsp;(m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
-SELECT @Now&amp;nbsp;AS&amp;nbsp;Today ,&amp;nbsp;DATEADD(yyyy,&amp;nbsp;DATEPART(yyyy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1900,&amp;nbsp;0)&amp;nbsp; &amp;nbsp;DATEADD(dy,&amp;nbsp;DATEPART(dy,&amp;nbsp;DATEADD(weekday,1-DATEPART(weekday,&amp;nbsp;@Now),@Now))-1,0)&amp;nbsp;AS&amp;nbsp;Week_Start ,&amp;nbsp;@LDOTM&amp;nbsp;AS&amp;nbsp;Last_day_of_month
-,&amp;nbsp;CASE&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=7&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-2,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;WHEN&amp;nbsp;DATEPART(DW,&amp;nbsp;@LDOTM)=6&amp;nbsp;THEN&amp;nbsp;DATEADD(DAY,-1,&amp;nbsp;@LDOTM) &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;ELSE&amp;nbsp;@LDOTM&amp;nbsp;END&amp;nbsp;AS&amp;nbsp;Last_Business_day_of_month END</code></p>
+<p></code></p>
 </div>
   
   
@@ -567,9 +608,28 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
 
   <div class="entry-content"><h1></h1>
 
-<p><code>/************************************************************************ *By&amp;nbsp;default,&amp;nbsp;your&amp;nbsp;tempDB&amp;nbsp;files&amp;nbsp;are&amp;nbsp;in&amp;nbsp;the&amp;nbsp;following&amp;nbsp;locations: *C:Program&amp;nbsp;FilesMicrosoft&amp;nbsp;SQL&amp;nbsp;ServerMSSQL.1MSSQLDatatempdb.mdf *C:Program&amp;nbsp;FilesMicrosoft&amp;nbsp;SQL&amp;nbsp;ServerMSSQL.1MSSQLDatatempdb.ldf * *The&amp;nbsp;below&amp;nbsp;commands&amp;nbsp;will&amp;nbsp;change&amp;nbsp;the&amp;nbsp;default&amp;nbsp;tempDB&amp;nbsp;locations&amp;nbsp;for&amp;nbsp;SQL&amp;nbsp;Server *and&amp;nbsp;have&amp;nbsp;it&amp;nbsp;create&amp;nbsp;the&amp;nbsp;tempDB&amp;nbsp;files&amp;nbsp;there&amp;nbsp;upon&amp;nbsp;start&amp;nbsp;up. ************************************************************************/ USE&amp;nbsp;master GO
-ALTER&amp;nbsp;DATABASE&amp;nbsp;tempdb&amp;nbsp;MODIFY&amp;nbsp;FILE&amp;nbsp;(NAME&amp;nbsp;=&amp;nbsp;tempdev,&amp;nbsp;FILENAME&amp;nbsp;=&amp;nbsp;'E:Datatempdb.mdf') GO ALTER&amp;nbsp;DATABASE&amp;nbsp;tempdb&amp;nbsp;MODIFY&amp;nbsp;FILE&amp;nbsp;(NAME&amp;nbsp;=&amp;nbsp;templog,&amp;nbsp;FILENAME&amp;nbsp;=&amp;nbsp;'F:Logtemplog.ldf') GO&amp;nbsp;
-/************************************************************************ *You&amp;nbsp;will&amp;nbsp;need&amp;nbsp;to&amp;nbsp;restart&amp;nbsp;SQL&amp;nbsp;Server&amp;nbsp;for&amp;nbsp;tempdb's&amp;nbsp;file&amp;nbsp;to&amp;nbsp;actually&amp;nbsp;move. * *More&amp;nbsp;reading&amp;nbsp;on&amp;nbsp;the&amp;nbsp;topic: *http://www.databasejournal.com/features/mssql/article.php/3379901 ************************************************************************/</code></p>
+<p><code>
+By default, your tempDB files are in the following locations:  <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf</p>
+
+<p>The below commands will change the default tempDB locations for SQL Server <br/>
+and have it create the tempDB files there upon start up. <br/>
+</code>
+<code>
+USE master <br/>
+GO <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = 'E:Datatempdb.mdf')  <br/>
+GO  <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = 'F:Logtemplog.ldf')  <br/>
+GO
+</code>
+<code>
+You will need to restart SQL Server for tempdb's file to actually move.</p>
+
+<p>More reading on the topic:  <br/>
+http://www.databasejournal.com/features/mssql/article.php/3379901  <br/>
+</code></p>
 </div>
   
   
@@ -609,34 +669,47 @@ ALTER&amp;nbsp;DATABASE&amp;nbsp;tempdb&amp;nbsp;MODIFY&amp;nbsp;FILE&amp;nbsp;(
 
 <p>So you get your handy dandy <a href="http://technet.microsoft.com/en-us/library/ms345234.aspx">SQL Server Report Server all set up for email</a> and are looking good then you go to have it email to an outbound address.  All of a sudden you get the &#8216;The e-mail address of one or more recipients is not valid.&#8217;   While there could be a couple reasons for this issue, the main two I run into is SMTP authentication and user aliases.  The fix to both of these involves updating the ReportServer.Config file usually found in the filesystem with a folder structure resembling - &#8220;c:program filesmicrosoft SQL ServerMSRS10.MSSQLSERVER&#8221;</p>
 
-<p>You want to pop it open and then search for &#8220;SMTPServer&#8221; which will take you to something that looks like this:</p>
+<p>You want to pop it open and then search for &#8220;SMTPServer&#8221; which will take you to something that looks like this:
+<code></p>
 
-<ul>
-<li><p><a href="http://email.example.com/">email.example.com</a></p></li>
-</ul>
+<pre><code>&lt;RSEmailDPConfiguration&gt;
+&lt;SMTPServer&gt;email.example.com&lt;/SMTPServer&gt;
+&lt;SMTPServerPort&gt;&lt;/SMTPServerPort&gt;
+&lt;SMTPAccountName&gt;&lt;/SMTPAccountName&gt;
+&lt;SMTPConnectionTimeout&gt;&lt;/SMTPConnectionTimeout&gt;
+&lt;SMTPServerPickupDirectory&gt;&lt;/SMTPServerPickupDirectory&gt;
+&lt;SMTPUseSSL&gt;&lt;/SMTPUseSSL&gt;
+&lt;SendUsing&gt;2&lt;/SendUsing&gt;
+&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt;
+&lt;From&gt;MrMail@example.com&lt;/From&gt;
+&lt;EmbeddedRenderFormats&gt;&lt;RenderingExtension&gt;MHTML&lt;/RenderingExtension&gt;&lt;/EmbeddedRenderFormats&gt;
+&lt;PrivilegedUserRenderFormats&gt;&lt;/PrivilegedUserRenderFormats&gt;
+&lt;ExcludedRenderFormats&gt;&lt;RenderingExtension&gt;HTMLOWC&lt;/RenderingExtension&gt;
+&lt;RenderingExtension&gt;NULL&lt;/RenderingExtension&gt;&lt;RenderingExtension&gt;RGDI&lt;/RenderingExtension&gt;
+&lt;/ExcludedRenderFormats&gt;
+&lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+&lt;DefaultHostName&gt;Example.com&lt;/DefaultHostName&gt;
+&lt;PermittedHosts&gt;&lt;/PermittedHosts&gt;
+&lt;/RSEmailDPConfiguration&gt;
+</code></pre>
 
+<p></code></p>
 
-<p>2<br/>
-0<br/>
-<a href="mailto:PikepassMail@pikepass.com">MrMail@example.com</a><br/>
-MHTML</p>
+<p>The two fields you want to focus on are:<br/>
+<code></p>
 
-<p>HTMLOWC<br/>
-NULLRGDI</p>
+<pre><code>&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+</code></pre>
 
-<p>True<br/>
-Example.com</p>
+<p></code>
+You will want to change these to
+<code></p>
 
-<ul>
-<li><p>The two fields you want to focus on are:</p></li>
-</ul>
+<pre><code>&lt;SMTPAuthenticate&gt;2&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;False&lt;/SendEmailToUserAlias&gt;
+</code></pre>
 
-
-<p>0 and True</p>
-
-<p>You will want to change these to</p>
-
-<p><strong>2</strong> and <strong>False</strong></p>
+<p></code>
+This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
 
 <p>This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
 
