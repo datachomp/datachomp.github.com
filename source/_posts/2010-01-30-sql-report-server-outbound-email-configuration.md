@@ -15,42 +15,42 @@ So you get your handy dandy [SQL Server Report Server all set up for email][1] a
  [1]: http://technet.microsoft.com/en-us/library/ms345234.aspx
 
 You want to pop it open and then search for "SMTPServer" which will take you to something that looks like this:
+<code>
+	<RSEmailDPConfiguration>
+	<SMTPServer>email.example.com</SMTPServer>
+	<SMTPServerPort></SMTPServerPort>
+	<SMTPAccountName></SMTPAccountName>
+	<SMTPConnectionTimeout></SMTPConnectionTimeout>
+	<SMTPServerPickupDirectory></SMTPServerPickupDirectory>
+	<SMTPUseSSL></SMTPUseSSL>
+	<SendUsing>2</SendUsing>
+	<SMTPAuthenticate>0</SMTPAuthenticate>
+	<From>MrMail@example.com</From>
+	<EmbeddedRenderFormats><RenderingExtension>MHTML</RenderingExtension></EmbeddedRenderFormats>
+	<PrivilegedUserRenderFormats></PrivilegedUserRenderFormats>
+	<ExcludedRenderFormats><RenderingExtension>HTMLOWC</RenderingExtension>
+	<RenderingExtension>NULL</RenderingExtension><RenderingExtension>RGDI</RenderingExtension>
+	</ExcludedRenderFormats>
+	<SendEmailToUserAlias>True</SendEmailToUserAlias>
+	<DefaultHostName>Example.com</DefaultHostName>
+	<PermittedHosts></PermittedHosts>
+	</RSEmailDPConfiguration>
+</code>
 
-*  
-[email.example.com][2]  
-  
-  
-  
-  
-  
-2  
-0  
-[MrMail@example.com][3]  
-MHTML  
-  
-HTMLOWC  
-NULLRGDI  
-  
-True  
-Example.com  
-  
-* 
-The two fields you want to focus on are:
-
-0 and True
-
-
-
+The two fields you want to focus on are:  
+<code>
+	<SMTPAuthenticate>0</SMTPAuthenticate> and <SendEmailToUserAlias>True</SendEmailToUserAlias>
+</code>
 You will want to change these to
-
-**2** and **False**
+<code>
+	<SMTPAuthenticate>2</SMTPAuthenticate> and <SendEmailToUserAlias>False</SendEmailToUserAlias>
+</code>
+This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.
 
 
 
 This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.
 
- [2]: http://email.example.com/
- [3]: mailto:PikepassMail@pikepass.com
 
 For more information about the report server configuration settings,  see here: [http://msdn.microsoft.com/en-us/library/ms157273.aspx][4]
 

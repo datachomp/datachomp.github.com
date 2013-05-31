@@ -21,15 +21,18 @@ and from Haacked himself: [clickey][3]
 
 MVC ActionLink returns ?Length= - This was a real WTF for me. Turns out that if you specify a htmlattributes overload for ActionLink and don't put in something like null for the route values overload, it will append some stupid length=# string to your href.
 
-    1.  
-
- [4]: http://www.google.com/search?q=new msdn.microsoft.com
+<code>
+	<%: Html.ActionLink("Home", "Index", "Home", new { @class = "active" })%>
+</code>
 
 Generates the following html: 
-    1.  Home
+<code>
+	<a class="active" href="/?Length=4">Home</a>
+</code>
 
 So we throw in null for the routeValues overload:
-
-    1.  
+<code>
+	<%: Html.ActionLink("Home", "Index", "Home", null ,new { @class = "active" })%>
+</code> 
 
 and we get the html we want.

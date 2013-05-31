@@ -16,30 +16,20 @@ Trust me when I say I'm no stranger to abusing repeat methods in code behinds...
 Below is a quick/basic example of how to get started with helper classes.  
 In my solution, I created a folder called 'Helpers' and added a new class object called 'StringManip'.  
 Once that was completed, I added a few methods like:
-
-    1.  &nbsp;
-    
-    2.  public static string UpperString&#40;string val&#41;
-    
-    3.  &#123; return val.ToUpper&#40;&#41;; &#125; 
-    
-    4.  &nbsp;
+<code>
+	public static string UpperString(string val)
+	{ return val.ToUpper(); }
+</code>
 
 In my code behind, I reference the class through a using statement:
-
-    1.  &nbsp;
-    
-    2.  using HelperClass.Helpers;
-    
-    3.  &nbsp;
+<code>
+	using HelperClass.Helpers;
+</code>
 
 And then I can call the methods:
-
-    1.  &nbsp;
-    
-    2.  lbl_aspnet.Text = StringManip.UpperString&#40;lbl_aspnet.Text&#41;;
-    
-    3.  &nbsp;
+<code>
+	lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
+</code>
 
 If the above isn't enough to get you rolling.... then download the demo solution by [Clicking Here][1]
 

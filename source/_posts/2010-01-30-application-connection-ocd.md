@@ -22,4 +22,9 @@ Multiple connections from various applications and you don't know which is which
 
 Here is an example:
 
-`  `
+<code>
+	< connectionStrings> 
+	<add name="PaymentsConnStr" connectionString="Data Source=SuperServer;Initial Catalog=DB_Name;MultipleActiveResultSets=True;Persist Security Info=True;User ID=user1;Password=password1;Application Name=OCD App;" providerName="System.Data.SqlClient"/>
+	</connectionStrings>
+	
+</code>

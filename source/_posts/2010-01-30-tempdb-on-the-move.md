@@ -9,7 +9,25 @@ categories:
   - SQL Server
 ---
 # 
-
-`/************************************************************************ *By&nbsp;default,&nbsp;your&nbsp;tempDB&nbsp;files&nbsp;are&nbsp;in&nbsp;the&nbsp;following&nbsp;locations: *C:Program&nbsp;FilesMicrosoft&nbsp;SQL&nbsp;ServerMSSQL.1MSSQLDatatempdb.mdf *C:Program&nbsp;FilesMicrosoft&nbsp;SQL&nbsp;ServerMSSQL.1MSSQLDatatempdb.ldf * *The&nbsp;below&nbsp;commands&nbsp;will&nbsp;change&nbsp;the&nbsp;default&nbsp;tempDB&nbsp;locations&nbsp;for&nbsp;SQL&nbsp;Server *and&nbsp;have&nbsp;it&nbsp;create&nbsp;the&nbsp;tempDB&nbsp;files&nbsp;there&nbsp;upon&nbsp;start&nbsp;up. ************************************************************************/ USE&nbsp;master GO 
-ALTER&nbsp;DATABASE&nbsp;tempdb&nbsp;MODIFY&nbsp;FILE&nbsp;(NAME&nbsp;=&nbsp;tempdev,&nbsp;FILENAME&nbsp;=&nbsp;'E:Datatempdb.mdf') GO ALTER&nbsp;DATABASE&nbsp;tempdb&nbsp;MODIFY&nbsp;FILE&nbsp;(NAME&nbsp;=&nbsp;templog,&nbsp;FILENAME&nbsp;=&nbsp;'F:Logtemplog.ldf') GO&nbsp; 
-/************************************************************************ *You&nbsp;will&nbsp;need&nbsp;to&nbsp;restart&nbsp;SQL&nbsp;Server&nbsp;for&nbsp;tempdb's&nbsp;file&nbsp;to&nbsp;actually&nbsp;move. * *More&nbsp;reading&nbsp;on&nbsp;the&nbsp;topic: *http://www.databasejournal.com/features/mssql/article.php/3379901 ************************************************************************/ `
+<code>
+By default, your tempDB files are in the following locations:    
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf   
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf  
+   
+The below commands will change the default tempDB locations for SQL Server   
+and have it create the tempDB files there upon start up.   
+</code>
+<code>
+USE master   
+GO   
+ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = 'E:Datatempdb.mdf')    
+GO    
+ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = 'F:Logtemplog.ldf')    
+GO
+</code>
+<code>
+You will need to restart SQL Server for tempdb's file to actually move.    
+     
+More reading on the topic:    
+http://www.databasejournal.com/features/mssql/article.php/3379901    
+</code>

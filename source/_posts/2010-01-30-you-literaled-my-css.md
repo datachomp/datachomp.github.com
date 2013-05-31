@@ -14,13 +14,17 @@ On the main F5 page, I needed a way to adjust the CSS properties on the menu bas
 
 So, in the master I have:
 
-``
+<code>
+	<asp:Literal ID="lit_About" runat=server Text='<li><a href="About.aspx" title="About">About</a></li>' />
+<code>
 
  
 
 How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:
-
-  
-
-
-`protected&nbsp;void&nbsp;Page_Load(object&nbsp;sender,&nbsp;EventArgs&nbsp;e) { Literal menucontrol =&nbsp;Page.Master.FindControl("lit_About")&nbsp;as&nbsp;Literal; ``menucontrol``.Text&nbsp;=&nbsp;"About";&nbsp; }`
+<code>
+	protected void Page_Load(object sender, EventArgs e) 
+	{ 
+	Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
+	menucontrol.Text = "<li class='active'><a href='About.aspx' title='About'>About</a></li>";  
+	}
+</code>

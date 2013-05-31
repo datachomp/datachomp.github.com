@@ -11,24 +11,23 @@ categories:
 # 
 
 Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:
-
-    -- send a normal mail
-    EXEC msdb.dbo.sp_send_dbmail
-    @Profile_Name = @@ServerName
-    ,@recipients='name@domain.com;number@cingularme.com'
-    ,@subject = 'Dev Transfer to 19'
-    ,@body = 'Task Complete'
-    ,@body_format = 'HTML'
-
--- send with an attachment  
-EXEC msdb.dbo.sp\_send\_dbmail  
-@Profile_Name = @@SERVERNAME  
-,@recipients='name@domain.com'  
-,@subject = 'Dev Transfer to 19'  
-,@body = 'Task Complete'  
-,@body_format = 'HTML'  
+<code>
+-- send a normal mail
+EXEC msdb.dbo.sp_send_dbmail
+@Profile_Name = @@ServerName
+,@recipients='name@domain.com;number@cingularme.com'
+,@subject = 'Dev Transfer to 19'
+,@body = 'Task Complete'
+,@body_format = 'HTML'
+-- send with an attachment
+EXEC msdb.dbo.sp_send_dbmail
+@Profile_Name = @@SERVERNAME
+,@recipients='name@domain.com'
+,@subject = 'Dev Transfer to 19'
+,@body = 'Task Complete'
+,@body_format = 'HTML'
 ,@file_attachments = @SourcePath;
-
+</code>
 /*  
 --Odds and Ends  
 If sending to multiple peeps and one fails to send... queued up and resends to all.
