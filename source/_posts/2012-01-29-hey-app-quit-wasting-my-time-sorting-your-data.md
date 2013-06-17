@@ -36,20 +36,15 @@ On the bottom, do you see the glyph that is "Sort Cost: 15%"? As well as a diffe
 **Just Fix It**  
 In C#, you have these things you can use called Ordered Enumerables and they are really easy to use... take a look:
 
-    1.  public IOrderedEnumerable GetBadgeByUserId&#40;int badgeid&#41;
-    
-    2.  &#123;
-    
-    3.  	var table = [new][3] Badges&#40;&#41;;
-    
-    4.  	var badges = table.query&#40;"SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid&#41;;
-    
-    5.  	return badges.OrderBy&#40;x=>x.Name&#41;;
-    
-    6.  	//return badges.OrderByDescending(x => x.Name);
-    
-    7.  &#125;
-
+<code>
+public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
+{
+	var table = new Badges();
+	var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
+	return badges.OrderBy(x=>x.Name);
+	//return badges.OrderByDescending(x => x.Name);
+}
+</code>
  [3]: http://www.google.com/search?q=new msdn.microsoft.com
 
 That wasn't too hard was it? In the above example, it is making a call to the DB (using [Massive][4]) and sucking the results into 'badges'. That is where it breaks off its relationship with the database, and sorts the results in 'badges' and returns them to whatever was calling it.
@@ -63,6 +58,8 @@ I'm happy because you're not putting extra load on the DB. You're happy because 
 Ahhh, but perhaps you're one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don't have the webserver metrics, I can't really object to that. But what I can say is: "*Yo, that's cool. Since you are a programmer.... program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.*"
 
 There are a ton of ways to do this:  
+[http://lmgtfy.com/?q=sort+a+table+with+jquery][5]
 
+  [5]: http://lmgtfy.com/?q=sort+a+table+with+jquery
 
 Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE - Eating everything in site and then barfing it out to the app.
