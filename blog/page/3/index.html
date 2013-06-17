@@ -372,27 +372,24 @@ sconfig.cmd tool</p>
 
 <p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&#8217;s example</a> of using multiple args in a query</p>
 
-<pre><code>1.  &amp;nbsp;
+<p><code></p>
 
-2.  var tbl = [new][2] Products&amp;#40;&amp;#41;;
-
-3.  var products = tbl.All&amp;#40;where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20&amp;#41;;
+<pre><code>var tbl = new Products();
+var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
 </code></pre>
 
-<p>It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&#8217;t take to kindly to that sort of syntax.</p>
+<p></code>
+It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&#8217;t take to kindly to that sort of syntax.</p>
 
-<p>args: is a parameter of type object [] so the way I use multiple params is as follows:</p>
+<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
-
-2.  object&amp;#91;&amp;#93; queryargs = &amp;#123;"Okapi", "online"&amp;#125;;
-
-3.  var DBBasics = table.All&amp;#40;where: "WHERE ServerName=@0 and status = @1", args: queryargs &amp;#41;;
-
-4.  &amp;nbsp;
+<pre><code>object[] queryargs = {"Okapi", "online"};
+var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
 </code></pre>
 
-<p>and low and behold the magic happens.</p>
+<p></code>
+and low and behold the magic happens.</p>
 </div>
   
   
