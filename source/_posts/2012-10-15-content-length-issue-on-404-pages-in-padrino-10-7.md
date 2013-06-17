@@ -12,17 +12,19 @@ categories:
 
 I've been tooling around with [PadrinoRB][1] lately. Personally, it has been a nice mix of [SinatraRB][2] and Rails. One of the annoying issues I've hit is that when I define a view for my 404 errors:  
 <code>
-error 404 do
-  response.status = 404
-  render 'errors/404', :layout=>:applayout
-end
+	error 404 do
+  		response.status = 404
+  		render 'errors/404', :layout=>:applayout
+	end
 </code>
+
 It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out [here][3] that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:  
 <code>
-gem 'rake'
-gem 'sinatra', '1.3.2'
-gem 'sinatra-flash', :require => 'sinatra/flash'
+	gem 'rake'
+	gem 'sinatra', '1.3.2'
+	gem 'sinatra-flash', :require => 'sinatra/flash'
 </code>
+
 Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn't now how to serve up error pages properly.
 
  [1]: http://www.padrinorb.com/ "PadrinoRB"
