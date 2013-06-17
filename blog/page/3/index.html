@@ -427,24 +427,19 @@ and low and behold the magic happens.</p>
 
   <div class="entry-content"><h1></h1>
 
-<p>I always forget this so it is going in a blog for quick reference:</p>
+<p>I always forget this so it is going in a blog for quick reference:
+<code></p>
 
-<pre><code>1.  &amp;nbsp;
+<pre><code>SP_CONFIGURE 'show advanced options',1
+RECONFIGURE WITH override
+GO
 
-2.  SP_CONFIGURE 'show advanced options',1
-
-3.  RECONFIGURE WITH override
-
-4.  GO
-
-5.  SP_CONFIGURE 'backup compression default',1
-
-6.  RECONFIGURE WITH override
-
-7.  GO
-
-8.  &amp;nbsp;
+SP_CONFIGURE 'backup compression default',1
+RECONFIGURE WITH override
+GO
 </code></pre>
+
+<p></code></p>
 </div>
   
   
@@ -488,118 +483,88 @@ and low and behold the magic happens.</p>
 I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&#8217;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
 
 <p><strong>All this stuff is dynamic and I don&#8217;t know how to deal with it.</strong> I&#8217;m just as strongly typed as the next guy so this was an emotional hurdle. But we&#8217;re not here for therapy so lets code using one of my favorite examples - Credit Cards!<br/>
-Class:</p>
+Class:
+<code></p>
 
-<pre><code>1.  public class CreditCard : DynamicModel
-
-2.      &amp;#123;  public CreditCard&amp;#40;&amp;#41; : base&amp;#40;"AW_Sales_ConnStr"&amp;#41;
-
-3.          &amp;#123; 
-
-4.              PrimaryKeyField = "CreditCardID"; 
-
-5.          &amp;#125;
-
-6.      &amp;#125;
+<pre><code>public class CreditCard : DynamicModel
+    {  public CreditCard()  : base("AW_Sales_ConnStr")
+        { 
+            PrimaryKeyField = "CreditCardID"; 
+        }
+    }
 </code></pre>
 
-<p>ViewModel:</p>
+<p></code>
+ViewModel:
+<code></p>
 
-<pre><code>1.  public class CreditCardViewModel
-
-2.      &amp;#123;public IEnumerable&amp;#123; get; set; &amp;#125; &amp;#125;
+<pre><code>public class CreditCardViewModel
+    {public IEnumerable&lt;Cards&gt;{ get; set; } }
 </code></pre>
 
-<p>Controller:</p>
+<p></code>
+Controller:
+<code></p>
 
-<pre><code>1.  public ActionResult Index&amp;#40;&amp;#41;
+<pre><code>public ActionResult Index()
+{
+      var table = new CreditCard();
+      var cards = table.All();
 
-2.  &amp;#123;
-
-3.        var table = [new][2] CreditCard&amp;#40;&amp;#41;;
-
-4.        var cards = table.All&amp;#40;&amp;#41;;
-
-5.  &amp;nbsp;
-
-6.      var viewModel = [new][2] CreditCardViewModel
-
-7.      &amp;#123;
-
-8.            Cards = cards
-
-9.           &amp;#125;;
-
-10.     return View&amp;#40;viewModel&amp;#41;;
-
-11. &amp;#125;
+    var viewModel = new CreditCardViewModel
+    {
+          Cards = cards
+         };
+    return View(viewModel);
+}
 </code></pre>
 
-<p>View:</p>
+<p></code>
+View:
+<code></p>
 
-<pre><code>1.  @model Kona.Web.Models.CreditCardViewModel
+<pre><code>@model Kona.Web.Models.CreditCardViewModel
+@{ViewBag.Title = "Adventure Works Card Stealer";}
 
-2.  @&amp;#123;ViewBag.Title = "Adventure Works Card Stealer";&amp;#125;
-
-3.  &amp;nbsp;
-
-4.  
-
-5.  @foreach &amp;#40;var item in Model.Cards&amp;#41;
-
-6.  &amp;#123;
-
-7.  
-
-8.  
-
-9.  @item.CardType
-
-10. @item.CardNumber
-
-11. @item.ExpMonth
-
-12. @item.ExpYear
-
-13. 
-
-14. &amp;#125;
-
-15. 
-
-16. &amp;nbsp;
-
-17. &amp;nbsp;
+&lt;table&gt;
+@foreach (var item in Model.Cards)
+{
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;@item.CardType&lt;/td&gt;
+&lt;td&gt;@item.CardNumber&lt;/td&gt;
+&lt;td&gt;@item.ExpMonth&lt;/td&gt;
+&lt;td&gt;@item.ExpYear&lt;/td&gt;
+&lt;/tr&gt;
+}&lt;/tbody&gt;
+&lt;/table&gt;
 </code></pre>
 
-<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&#8230;. So since we have a special case where we care a whole bunch about not returning that data&#8230; lets change our controller:</p>
+<p></code></p>
 
-<pre><code>1.  var table = [new][2] CreditCard&amp;#40;&amp;#41;;
+<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&#8230;. So since we have a special case where we care a whole bunch about not returning that data&#8230; lets change our controller:
+<code></p>
 
-2.  //var cards = table.All();
-
-3.  var cards = table.Query&amp;#40;@"SELECT CardType, ExpMonth ,ExpYear from CreditCard"&amp;#41;;
+<pre><code>var table = new CreditCard();
+//var cards = table.All();
+var cards = table.Query(@"SELECT CardType, ExpMonth ,ExpYear from CreditCard");
 </code></pre>
 
-<p>Sweet! it compiles, we&#8217;re ready to check in and go grab a beer right? Heh, nope&#8230;. refresh your app:<br/>
+<p></code>
+Sweet! it compiles, we&#8217;re ready to check in and go grab a beer right? Heh, nope&#8230;. refresh your app:<br/>
 <em>&#8216;System.Dynamic.ExpandoObject&#8217; does not contain a definition for &#8216;CardNumber&#8217;</em></p>
 
-<p>So we update our view&#8230;.</p>
+<p>So we update our view&#8230;.
+<code></p>
 
-<pre><code>1.  &amp;#123;
-
-2.  &amp;nbsp;
-
-3.  @item.CardType
-
-4.  @item.ExpMonth
-
-5.  @item.ExpYear
-
-6.  &amp;nbsp;
-
-7.  &amp;#125;
+<pre><code>{
+@item.CardType
+@item.ExpMonth
+@item.ExpYear
+}
 </code></pre>
+
+<p></code></p>
 
 <p>and all is well again.</p>
 
@@ -609,30 +574,33 @@ Class:</p>
 
 <p>One last bit because this is getting lengthy:<br/>
 <strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&#8217;t figure out how make my class take &#8220;advantage&#8221; of that</strong><br/>
-This is a fun thing we DBA&#8217;s like to do for the sole purpose of driving AppDev&#8217;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:</p>
+This is a fun thing we DBA&#8217;s like to do for the sole purpose of driving AppDev&#8217;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
+<code></p>
 
-<pre><code>1.  public CreditCard&amp;#40;&amp;#41; : base&amp;#40;"AW_Sales_ConnStr"&amp;#41;
-
-2.          &amp;#123; 
-
-3.              TableName = "[Sales].[CreditCard]";
-
-4.              PrimaryKeyField = "CreditCardID"; 
-
-5.          &amp;#125;
+<pre><code>public CreditCard() : base("AW_Sales_ConnStr")
+        { 
+            TableName = "[Sales].[CreditCard]";
+            PrimaryKeyField = "CreditCardID"; 
+        }
 </code></pre>
 
-<p>That setting in the base() maps to my web.config:</p>
+<p></code></p>
 
-<pre><code>1.  add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
+<p>That setting in the base() maps to my web.config:
+<code></p>
+
+<pre><code>add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
 </code></pre>
 
-<p>and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:</p>
+<p></code></p>
 
-<pre><code>1.  CREATE USER &amp;#91;aw_Kona_Sales&amp;#93; FOR LOGIN &amp;#91;aw_Kona_Sales&amp;#93; WITH DEFAULT_SCHEMA=&amp;#91;Sales&amp;#93;
+<p>and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:
+<code></p>
 
-2.  &amp;nbsp;
+<pre><code>CREATE USER [aw_Kona_Sales] FOR LOGIN [aw_Kona_Sales] WITH DEFAULT_SCHEMA=[Sales]
 </code></pre>
+
+<p></code></p>
 
 <p>Last thing, I promise &#8230; In my first post, I included how the commands were rendering out in the SQL Server. I didn&#8217;t this time because this edition is more focused on a &#8220;getting things done in MVC&#8221; side of things.<br/>
 Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.</p>
