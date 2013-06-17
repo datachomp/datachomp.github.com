@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Databases | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/databases/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-16T23:34:05-05:00</updated>
+  <updated>2013-06-16T23:40:46-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -118,22 +118,19 @@ And this is the execution plan it creates:<br/>
 <p><strong>Just Fix It</strong><br/>
 In C#, you have these things you can use called Ordered Enumerables and they are really easy to use... take a look:</p>
 
-<pre><code>1.  public IOrderedEnumerable GetBadgeByUserId&amp;#40;int badgeid&amp;#41;
+<p><code>
+public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
+{</p>
 
-2.  &amp;#123;
-
-3.      var table = [new][3] Badges&amp;#40;&amp;#41;;
-
-4.      var badges = table.query&amp;#40;"SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid&amp;#41;;
-
-5.      return badges.OrderBy&amp;#40;x=&gt;x.Name&amp;#41;;
-
-6.      //return badges.OrderByDescending(x =&gt; x.Name);
-
-7.  &amp;#125;
+<pre><code>var table = new Badges();
+var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
+return badges.OrderBy(x=&gt;x.Name);
+//return badges.OrderByDescending(x =&gt; x.Name);
 </code></pre>
 
-<p>That wasn't too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into 'badges'. That is where it breaks off its relationship with the database, and sorts the results in 'badges' and returns them to whatever was calling it.</p>
+<p>}
+</code>
+That wasn't too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into 'badges'. That is where it breaks off its relationship with the database, and sorts the results in 'badges' and returns them to whatever was calling it.</p>
 
 <p><strong>Does this make us happy?</strong><br/>
 I'm happy because you're not putting extra load on the DB. You're happy because you have some sorted data and can close a help ticket... everyone wins right?</p>
@@ -141,7 +138,8 @@ I'm happy because you're not putting extra load on the DB. You're happy because 
 <p><strong>But But But, our servers are busy too!</strong><br/>
 Ahhh, but perhaps you're one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don't have the webserver metrics, I can't really object to that. But what I can say is: "<em>Yo, that's cool. Since you are a programmer.... program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>"</p>
 
-<p>There are a ton of ways to do this:</p>
+<p>There are a ton of ways to do this:<br/>
+<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
 
 <p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE - Eating everything in site and then barfing it out to the app.</p>
 ]]></content>

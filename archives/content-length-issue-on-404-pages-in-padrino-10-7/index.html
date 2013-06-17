@@ -112,15 +112,15 @@
 <code>
 error 404 do
   response.status = 404
-  render 'errors/404', :layout=&gt;:applayout
+  render 'errors/404', :layout=>:applayout
 end
-</code><br/>
+</code>
 It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
 <code>
 gem 'rake'
 gem 'sinatra', '1.3.2'
-gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
-</code><br/>
+gem 'sinatra-flash', :require => 'sinatra/flash'
+</code>
 Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&#8217;t now how to serve up error pages properly.</p>
 </div>
 
