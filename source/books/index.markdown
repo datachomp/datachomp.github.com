@@ -20,13 +20,19 @@ I wanted to start recording which books I've read.
 [Exceptional Ruby][1]  
 [tmux] [85]  
 vim and vi tips  
+[mastering nginx][89]  
+
+
+**Misc:**  
+[Ready Player One][90]  
 
  [1]: http://pragprog.com/book/ager/exceptional-ruby
  [85]: http://pragprog.com/book/bhtmux/tmux
  [86]: http://www.packtpub.com/how-to-postgresql-backup-and-restore/book  
  [87]: http://www.packtpub.com/instant-postgresql-starter/book
  [88]: http://www.amazon.com/Server-2012-Query-Performance-Tuning/dp/1430242035
-
+ [89]: http://www.amazon.com/Mastering-Nginx-Dimitri-Aivaliotis/dp/1849517444/ref=sr_1_1?ie=UTF8&qid=1371443557&sr=8-1&keywords=mastering+nginx
+ [90]: http://www.amazon.com/Ready-Player-One-A-Novel/dp/0307887448/ref=sr_1_1?ie=UTF8&qid=1371443522&sr=8-1&keywords=ready+player+one
 \---|\---|-- 2012 \---|\---|--  
 **Infrastructure:**  
 [Nginx HTTP Server][2]![][3]  
