@@ -1,0 +1,790 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[DataChomp]]></title>
+  <link href="http://datachomp.github.com/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.com/"/>
+  <updated>2013-06-09T16:22:39-05:00</updated>
+  <id>http://datachomp.github.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Quickly Migrate A DB From MySQL To Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/"/>
+    <updated>2013-05-05T12:50:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/quickly-migrate-a-db-from-mysql-to-postgres</id>
+    <content type="html"><![CDATA[<p>The more I&#8217;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
+
+<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
+
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and then it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem dependency). I installed the &#8216;mysql&#8217; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
+
+<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
+
+<p>A couple things I like about Valkyrie:</p>
+
+<ul>
+<li>It is simple. I just provide a mysql source and postgres destination.</li>
+<li>It uses <a href="https://github.com/jeremyevans/sequel">Sequel</a>.</li>
+<li>I can keep re-running it without it duplicating source data.</li>
+</ul>
+
+
+<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
+
+<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[More Nerdy Hipchat Emoticons]]></title>
+    <link href="http://datachomp.github.com/archives/more-nerdy-hipchat-emoticons/"/>
+    <updated>2013-04-17T22:43:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/more-nerdy-hipchat-emoticons</id>
+    <content type="html"><![CDATA[<p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&#8230;</p>
+
+<p>Here is what I have so far:</p>
+
+<div style="text-align: center;">
+<table style="margin: 0px auto; table-layout: fixed; width: 650px;">
+<tr>
+<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(css)<br/><img src="http://static.datachomp.com/emoticons/css.png" /></td><td>(jquery)<br/><img src="http://static.datachomp.com/emoticons/jquery.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
+</tr>
+<td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(poshgit)<br/><img src="http://static.datachomp.com/emoticons/poshgit.png" /></td><td> </td>
+</tr>
+<tr>
+<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
+</tr>
+<tr>
+<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(ruby)<br/><img src="http://static.datachomp.com/emoticons/ruby.png" /></td><td> </td>
+</tr>
+<tr>
+<td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td>(vs)<br/><img src="http://static.datachomp.com/emoticons/vs.png" /></td><td>(xamarin)<br/><img src="http://static.datachomp.com/emoticons/xamarinhq.png" /></td><td>(sublime)<br/><img src="http://static.datachomp.com/emoticons/sublimetext.png" /></td>
+</tr>
+<tr>
+<td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td> </td>
+</tr>
+</table>
+</div>
+
+
+<p>Special thanks to <a href="https://twitter.com/motowilliams">@motowilliams</a> for a variety of these</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Top 10 Reasons I like Postgres Over SQL Server]]></title>
+    <link href="http://datachomp.github.com/archives/top-10-reasons-i-like-postgres-over-sql-server/"/>
+    <updated>2013-04-07T10:46:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/top-10-reasons-i-like-postgres-over-sql-server</id>
+    <content type="html"><![CDATA[<p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
+While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
+
+<br />
+
+
+
+
+<hr />
+
+
+<ol>
+<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &#8220;feature&#8221; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
+<li><p>Compression out of the box. With SQL Server, compression is an &#8220;Enterprise Edition and Up&#8221; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
+<li><p>Concurrent Index Creation. You are going to find a recurring theme there&#8230;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
+<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&#8217;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&#8217;re writing huge checks to pull this off.</p></li>
+<li><p>Indexable functions - In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&#8217;re stuck in the cruel world of table scans when this happens.</p></li>
+<li><p>Modules/Extensions - Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&#8230; It quickly becomes your grandparents&#8217; database.</p></li>
+<li><p>Works everywhere - Linux, Mac, BSD, Windows&#8230; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
+<li><p>Arrays - Everyone loves arrays and they are a core part of programming&#8230;except in SQL Server, where they don&#8217;t exist.</p></li>
+<li><p>JSON / V8 support - You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
+<li><p>Unicode by default - No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
+</ol>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[So Long and Thanks For All The Deadlocks]]></title>
+    <link href="http://datachomp.github.com/archives/so-long-and-thanks-for-all-the-deadlocks/"/>
+    <updated>2013-03-10T21:54:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/so-long-and-thanks-for-all-the-deadlocks</id>
+    <content type="html"><![CDATA[<p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&#8230;it was less joking and more foreshadowing.</p>
+
+<p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
+
+<blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
+
+
+<script async src="http://datachomp.github.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &#8220;too heavily invested&#8221; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference - I have decided to be the change in my situation.</p>
+
+<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&#8217;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&#8217;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&#8230; and that is ok. It&#8217;s not the lazy route, but I feel it is the most rewarding.</p>
+
+<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&#8217;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
+
+<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&#8217;t be worried that I&#8217;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&#8217;s were trying to figure out sequences in SQL Server 2012.</p>
+
+<p>So in short, SQL Server&#8230; it&#8217;s not you, it&#8217;s me. And I&#8217;m cool with that. I&#8217;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Later Wordpress]]></title>
+    <link href="http://datachomp.github.com/archives/later-wordpress/"/>
+    <updated>2013-03-10T15:25:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/later-wordpress</id>
+    <content type="html"><![CDATA[<p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&#8230; and yes, that was with a configured supercache. Get what you pay for right?</p>
+
+<h2>Right Tool for the Right Blog</h2>
+
+<p>I have really wanted another level of simplicity that wordpress can&#8217;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Stopping spam in Contact Form 7]]></title>
+    <link href="http://datachomp.github.com/archives/stopping-spam-in-contact-form-7/"/>
+    <updated>2013-02-20T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/stopping-spam-in-contact-form-7</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&#8217;ve had around 2,000 spam entries and gmail hasn&#8217;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
+Ha, having issues getting the code to display properly so just check this link:</p>
+
+<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
+
+<p>Haven&#8217;t had any spam since, form works fine, and no CAPTCHA&#8217;s needed!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Running the right rubies on Heroku]]></title>
+    <link href="http://datachomp.github.com/archives/running-the-right-rubies-on-heroku/"/>
+    <updated>2013-02-20T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/running-the-right-rubies-on-heroku</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
+<code>
+source "https://rubygems.org"
+ruby '1.9.3'
+</code></p>
+
+<p>You can get a list of the latest rubies supported by Heroku here:<br/>
+<a href="https://devcenter.heroku.com/articles/ruby-support#ruby-versions" title="Heroku Rubies">Heroku Rubies</a></p>
+
+<p>If you are an RVM user like myself, feel free to add an .rvmrc file that will match what version Heroku is on for even more consistency goodness.<br/>
+<code>
+rvm --create --rvmrc 1.9.3-p327@mycoolproject
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A little bit more about sorting]]></title>
+    <link href="http://datachomp.github.com/archives/a-little-bit-more-about-sorting/"/>
+    <updated>2012-12-01T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/a-little-bit-more-about-sorting</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&#8217;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+
+<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
+
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&#8217;t thought of it. &#8220;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&#8221; Advantages of this are that I&#8217;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+
+<p><strong>Code Time<br/>
+Controller:</strong></p>
+
+<pre><code>var burritos = db.Select("select name,price from burritos");
+var tacos = db.Select("select name,price from tacos");
+
+var viewModel = new viewmodel_Food
+{
+  burritos = burritos
+  , tacos = tacos
+};
+return View(viewModel);
+</code></pre>
+
+<p><strong>View:</strong></p>
+
+<pre><code>@model burritoroll.web.Models.viewmodel_Food
+@{
+    ViewBag.Title = "Index";
+}
+
+Index
+
+Can you dig our burritos?
+BurritoPrice
+
+
+
+Can you dig our tacos?
+
+
+  TacoPrice
+
+
+
+
+
+@section scripts{
+
+    function viewModel() {
+        var self = this;
+
+        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
+        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
+
+        var sortitFunction = function (a, b) {
+            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
+        };
+
+        self.tacosarray.sort(sortitFunction);
+        self.burritosarray.sort(sortitFunction);
+    }
+
+    ko.applyBindings(new viewModel());
+
+}
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
+    <link href="http://datachomp.github.com/archives/what-net-orm-should-i-use/"/>
+    <updated>2012-11-29T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&#8217;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&#8217;m &#8220;picking&#8221; one per situation as a way of helping someone avoid the paradox of choice.</p>
+
+<p><strong>&#8220;Should I hand-roll my DAL?&#8221;</strong></p>
+
+<p>No. Unless you just want an academic/code exercise. The libraries I&#8217;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&#8217;t waste time reinventing this wheel.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want something easy or rapid prototyping&#8221;</strong></p>
+
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+
+<p><strong>&#8220;I don&#8217;t fear dynamics and I want some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+
+<p><strong>&#8220;I want POCOs, an old school feel and Stored Procs&#8221;</strong></p>
+
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+
+<p><strong>&#8220;I want POCOs with some codefirst action&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+
+<p><strong>&#8220;I&#8217;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&#8221;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+
+<p><strong>&#8220;I am a huge fan of T4 and code gen&#8221;</strong></p>
+
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+
+<p><strong>&#8220;I want POCOs and I might be doing some MongoDB in my app&#8221;</strong></p>
+
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+
+<p><strong>&#8220;My boss says we just have to use something ~Enterprisey~&#8221;</strong></p>
+
+<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
+
+<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Unicorn with Sinatra or Padrino on Heroku]]></title>
+    <link href="http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
+    <updated>2012-10-15T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
+
+<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
+<code>worker_processes 3
+timeout 30
+preload_app true
+</code></p>
+
+<p>2nd: I added Unicorn to my GemFile:<br/>
+<code>#rack server
+gem 'unicorn'</code></p>
+
+<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
+<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
+
+<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Content length issue on 404 pages in Padrino 10.7]]></title>
+    <link href="http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
+    <updated>2012-10-15T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I&#8217;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&#8217;ve hit is that when I define a view for my 404 errors:<br/>
+<code>
+error 404 do
+  response.status = 404
+  render 'errors/404', :layout=&gt;:applayout
+end
+</code><br/>
+It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
+<code>
+gem 'rake'
+gem 'sinatra', '1.3.2'
+gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
+</code><br/>
+Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&#8217;t now how to serve up error pages properly.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
+    <link href="http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
+    <updated>2012-05-02T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &#8216;important&#8217; to essential. There are various products out there that can accomplish this; I&#8217;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
+
+<p>On our Ubuntu box, after we finish the easy as candy install, we&#8217;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
+
+<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&#8217;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
+<code>
+sudo apt-get install openjdk-7-jre
+wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
+tar xfz TeamCity-7.0.2a.tar.gz
+cd Teamcity
+sudo ./bin/runAll.bat start
+</code></p>
+
+<p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
+
+<p>Yay! Everything works! You&#8217;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&#8217;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&#8217;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Running ASP.NET MVC4 on Ubuntu 12.04]]></title>
+    <link href="http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
+    <updated>2012-04-24T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &#8220;How are you running your app on Linux?&#8221; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&#8217;s best interest if I just blog it out. Technology moves fast&#8230; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &#8220;has been&#8221; Ubuntu 11.10, we&#8217;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&#8217;re so bleeding edge you can call us cutters!</p>
+
+<p>I&#8217;m not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together&#8230; at last.</p>
+
+<p>SSH into your fancy new Ubuntu box with <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" title="Putty">Putty</a> and Run this:<br/>
+<code>sudo apt-get update &amp;&amp; sudo apt-get -y install git-core curl python-software-properties</code></p>
+
+<p>This is going to let us add the ppa(think of this as a package location) to install a current nginx:<br/>
+<code>sudo add-apt-repository ppa:nginx/stable
+sudo apt-get update &amp;&amp; sudo apt-get -y install nginx</code></p>
+
+<p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let&#8217;s kick some other processes to the curb&#8230; like that skank MySQL and that wet blanket Apache:<br/>
+<code>sudo update-rc.d mysql remove &amp;&amp;
+sudo update-rc.d apache2 remove &amp;&amp; mkdir mycoolapp</code></p>
+
+<p>Now for the fun part, let&#8217;s get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
+<code>mkdir mono-2.11
+cd mono-2.11
+wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
+chmod 755 install_mono-2.11.sh
+./install_mono-2.11.sh
+</code></p>
+
+<p>Now to check that we have the current version, we just run the following:<br/>
+<code>/opt/mono-2.11/bin/mono -V</code></p>
+
+<p>Cool! We&#8217;re current, but what we really need is to just be able to run &#8220;mono -V&#8221; anywhere we want. We can do that by modifying our /etc/environment file:<br/>
+`sudo nano /etc/environment</p>
+
+<h1>then insert &#8220;:/opt/mono-2.11/bin&#8221;  at the end of that path string. Log out, log in for it to take effect.`</h1>
+
+<p>I don&#8217;t now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we&#8217;re going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new&#8217;ed up:</p>
+
+<ul>
+<li>Add a controller</li>
+<li>Add a view based on that controller</li>
+<li>Hit F5 and make sure it works</li>
+<li>Remove the EntityFramework.dll because we love our data and don&#8217;t want to give our app a low self esteem</li>
+<li>Once removed, hit F5 again</li>
+</ul>
+
+
+<p>If everything is still running, then do a file system deploy to a local folder of your choice. Go check out what was just deployed, specifically the &#8216;/bin&#8217; folder. We want to remove the Web.Infrastructure.dll because Mono already has this built into its GAC. High Five Mono! With that out of the way, we are going to copy that deployment over to the &#8216;mycoolapp&#8217; folder on our Linux server using <a href="http://winscp.net/eng/index.php" title="Winscp">WinsCP</a>. While I don&#8217;t have a WordPress plugin to read your mind, I hear you thinking &#8220;Rob, surely there are better ways to do this.&#8221; and you are right. However, this post is long enough and that topic will likely go into its own post.</p>
+
+<p>SSH back into your linux box, and &#8216;cd mycoolapp&#8217;. &#8220;cd&#8221; into your &#8220;mycoolapp&#8221; directory, type in &#8216;ls&#8217; to see the contents and make sure your app made it over. Once we see it, we can do a cassini like run of it by typeing out xsp4 and hitting enter. Try and hit your box on the port 8080 (xsp4 should tell you what it is running on) and see if you can see your app:</p>
+
+<p><img src="http://files.datachomp.com/AppDev/mono/monoapp.png" alt="" /></p>
+
+<p>Yay! Our code works and we&#8217;re so open source now that we can wear tight jeans at Starbucks and put Bon Iver on our ipod&#8230; just like those <a href="http://wekeroad.com/" title="Lead Rails Wanker">Rails wankers</a>! As for nginx and running our site as a Mono service, we can just use some of the nice documentation over at the Mono site:</p>
+
+<p>Nginx config:<br/>
+<a href="http://www.mono-project.com/FastCGI_Nginx" title="FastCGI_Nginx">http://www.mono-project.com/FastCGI_Nginx</a></p>
+
+<p>Mono as a service:<br/>
+<a href="http://yojimbo87.github.com/2010/03/14/mono-startup-script.html" title="Monoserve">http://yojimbo87.github.com/2010/03/14/mono-startup-script.html</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
+    <link href="http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
+    <updated>2012-03-13T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>If you want the back story on what this topic is all about -</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres/"/>
+    <updated>2012-03-07T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Ok, well I&#8217;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&#8217;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&#8217;s right friends, it isn&#8217;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &#8220;The Robs&#8221; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hey App, quit wasting my time sorting your data]]></title>
+    <link href="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/"/>
+    <updated>2012-01-29T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>An issue I run into quite a bit is unnecessary sorting in the database. I&#8217;m not talking about the sort of &#8216;Get last 5&#8217; type of sorting where you need to sort to get a valid result set. I&#8217;m talking about the &#8217;<em>Hey Database! I want some data&#8230;and I&#8217;ll probably throw some business logic in you&#8230; and while I&#8217;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&#8217;</p>
+
+<p><strong>Nut Kicking:</strong><br/>
+In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&#8217;t need to be as awesome as a DBAdatabase server.</p>
+
+<p><strong>Code Please:</strong><br/>
+Lets take a look at some execution plans/cost so you can view &#8216;ORDER BY&#8217; the same way I do.<br/>
+Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
+<code>SELECT  Name
+FROM dbo.Badges
+WHERE userid = 91254;
+SELECT Name
+FROM dbo.Badges
+WHERE userid = 91254
+ORDER BY name DESC;</code><br/>
+And this is the execution plan it creates:<br/>
+<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+
+<p>On the bottom, do you see the glyph that is &#8220;Sort Cost: 15%&#8221;? As well as a difference of almost 10% in general between the two queries? Removing those &#8220;sort&#8221;(har har har) of thing adds up&#8230;like a lot.</p>
+
+<p><strong>Just Fix It</strong><br/>
+In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&#8230; take a look:</p>
+
+<pre><code>1.  public IOrderedEnumerable GetBadgeByUserId&amp;#40;int badgeid&amp;#41;
+
+2.  &amp;#123;
+
+3.      var table = [new][3] Badges&amp;#40;&amp;#41;;
+
+4.      var badges = table.query&amp;#40;"SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid&amp;#41;;
+
+5.      return badges.OrderBy&amp;#40;x=&gt;x.Name&amp;#41;;
+
+6.      //return badges.OrderByDescending(x =&gt; x.Name);
+
+7.  &amp;#125;
+</code></pre>
+
+<p>That wasn&#8217;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &#8216;badges&#8217;. That is where it breaks off its relationship with the database, and sorts the results in &#8216;badges&#8217; and returns them to whatever was calling it.</p>
+
+<p><strong>Does this make us happy?</strong><br/>
+I&#8217;m happy because you&#8217;re not putting extra load on the DB. You&#8217;re happy because you have some sorted data and can close a help ticket&#8230; everyone wins right?</p>
+
+<p><strong>But But But, our servers are busy too!</strong><br/>
+Ahhh, but perhaps you&#8217;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&#8217;t have the webserver metrics, I can&#8217;t really object to that. But what I can say is: &#8221;<em>Yo, that&#8217;s cool. Since you are a programmer&#8230;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&#8221;</p>
+
+<p>There are a ton of ways to do this:</p>
+
+<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE - Eating everything in site and then barfing it out to the app.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
+    <link href="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control/"/>
+    <updated>2012-01-28T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/git-and-red-gate-sql-source-control</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
+
+<p><strong>Install Git:</strong><br/>
+Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
+While you are mindlessly clicking &#8216;next&#8217; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png"></a></p>
+
+<p><strong>Aside:</strong> I&#8217;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&#8217;t nearly as bad as you think once you get going.</p>
+
+<p><strong>Repo Hosting</strong><br/>
+Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
+
+<p><strong>Repo Man</strong><br/>
+In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
+Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout"></a><br/>
+You don&#8217;t have to do it like that, but again, that is the way I currently like to do it.</p>
+
+<p><strong>Lets hook up the DB!</strong><br/>
+Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&#8217;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
+From there, go to SSMS and link up the DB to your local repository:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
+
+<p><strong>Command Line Interface &#8230; or whatever</strong><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc. <code>git branch dbobjects</code><br/>
+Note: We don&#8217;t have to create a new branch. We could very easily just keep doing this in the &#8216;master&#8217; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
+Go into that branch: <code>git checkout dbobjects</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
+
+<p>Now, we go back to SSMS and commit our changes:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!"></a></p>
+
+<p>Cool! Our &#8220;dbobjects&#8221; branch has been committed locally, now we just need to merge it into our master branch!</p>
+
+<p>From there, go back to master: <code>git checkout master</code><br/>
+and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
+After we have merged, we can delete the branch we were working in by running:<br/>
+<code>git branch -d dbobjects</code><br/>
+and the process will end up looking like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
+
+<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &#8220;push&#8221;ing to the origin: <code>git push -u origin master</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin"></a></p>
+
+<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay"></a></p>
+
+<p>We can see them there for people pulling down changes. You&#8217;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Oklahoma City JavaScript Group]]></title>
+    <link href="http://datachomp.github.com/archives/oklahoma-city-javascript-group/"/>
+    <updated>2012-01-18T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/oklahoma-city-javascript-group</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>A <a href="http://okcjs.com/">new user group is starting in Oklahoma City</a> and it is one I find<br/>
+completely fascinating&#8230; a Javascript group! With the monumental surge in popularity of Javascript over the past year or so, this type of group is a can&#8217;t miss.</p>
+
+<p>Who should attend you might ask? <strong>All of us</strong> in the tech field because it is pretty much everywhere now. Even a database douche bag like myself is attending because I have finally accepted that Javascript is inescapable. Javascript is all over the web, going to be all over the desktop with Windows 8, appearing in the mobile markets, and starting to take over the back end with rad technologies like <a href="http://nodejs.org/">NodeJS</a>.</p>
+
+<p>I&#8217;m a complete noob with Javascript and I feel completely comfortable coming to this group because with as fast as this technology is moving, we&#8217;re all noobs and need to learn from each other. This group will not waste your time because</p>
+
+<p><strong>Learning is cumulative.</strong></p>
+
+<p>As a speed freak, my primary interest lies in <a href="http://nodejs.org/">NodeJS</a>, but I know for a fact that I will learn something to help me with Node from <a href="http://www.vancelucas.com/">Vance</a> talking about BDD testing with a testing framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. That is just how it works. He gives, I take, and down the road I give back. Even if you don&#8217;t know or care a thing about Javascript, it can be a good networking opportunity with some of the people in our community that have a true passion for tech and are trying to push tech boundaries. If that doesn&#8217;t interest you, you can <a href="http://i.imgur.com/0cFLk.gif">lurk in the back and watch me </a>ask stupid questions as I try and get the info to the highly firewall&#8217;ed learning center that is my brain&#8230; or just show up for a free lunch. You have options.</p>
+
+<p>If you don&#8217;t go or don&#8217;t plan to go&#8230;no worries. I&#8217;ll still love you (as a friend), but in our very fluid industry, dropping an hour a month of your time on something like this is an incredibly way to not go stagnant.</p>
+
+<p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&#8230;. help me learn this stuff!</p>
+
+<p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple-Talk &#8211; SQL Test write up]]></title>
+    <link href="http://datachomp.github.com/archives/simple-talk-sql-test-write-up/"/>
+    <updated>2011-12-16T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/simple-talk-sql-test-write-up</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&#8217;m anxious to see just how much David and his team can improve it.</p>
+
+<p><a href="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/" title="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/">http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/</a></p>
+
+<p>In other news, being published on Simple-Talk is also another thing <a href="http://troyhunt.com/" title="Troy Hunt">Troy Hunt</a> won&#8217;t be able to 1-Up me with.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Postgres and MVC3]]></title>
+    <link href="http://datachomp.github.com/archives/getting-started-with-postgres-and-mvc3/"/>
+    <updated>2011-11-20T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/getting-started-with-postgres-and-mvc3</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>&#8220;<strong><em><a href="http://www.postgresql.org/">Postgres</a>? WTF man, you&#8217;re a SQL Server DBA!</em></strong>&#8221; It&#8217;s true, I am a SQL Server DBA but even I have to admit that the Postgres team is doing some <a href="http://www.postgresql.org/about/featurematrix">wildy exciting stuff</a>. With that in mind, lets take a quick look at just how quickly we can replace SQL Server with a free/open full bore Enterprise database system like <a href="http://www.postgresql.org/">Postgres</a>.</p>
+
+<p>One of the first things you will notice is Postgres is way easier to install than SQL Server. The SQL Server install is born from a truck stop romance between TFS and Sharepoint that someone found in a garbage bag in a dumpster and burned to a DVD. Postgres takes a different angle and opts for a &#8216;less is more&#8217; type of approach. One of the big things you will want to pay attention to is the password you give the default &#8216;postgres&#8217; account. Think of him as the SA account in SQL Server as he too wields a mighty big stick.</p>
+
+<p>Once we finish the installer, lets open up pgAdmin III (henceforth known as pgAdmin). If you are accustomed to SSMS with SQL Server and always wished it went on a diet&#8230; then you might like pgAdmin. Be warned though, pgAdmin isn&#8217;t SSMS on a diet&#8230; it is like SSMS with Anorexia. Once pgAdmin is opened and you are connected, then drill down to &#8216;databases&#8217; and do a &#8216;new database&#8217; and use the GUI to make your fancy new demo database, or just run the raw sql:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE DATABASE "Demo"
+
+3.    WITH ENCODING='UTF8'
+
+4.         OWNER=postgres
+
+5.         CONNECTION LIMIT=-1;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>Next, lets hop in that database and throw up some tables/data:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE TABLE "Colors"
+
+3.  &amp;#40;
+
+4.      colorid serial NOT NULL,
+
+5.      colorname character varying&amp;#40;50&amp;#41; NOT NULL,
+
+6.      constraint pk_colorid PRIMARY KEY &amp;#40;colorid&amp;#41;
+
+7.  &amp;#41;
+
+8.  WITH &amp;#40;OIDS=false&amp;#41;;
+
+9.  &amp;nbsp;
+
+10. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+11. VALUES &amp;#40;'red'&amp;#41;;
+
+12. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+13. VALUES &amp;#40;'blue'&amp;#41;;
+
+14. SELECT * FROM "Colors";
+
+15. &amp;nbsp;
+</code></pre>
+
+<p>So why the quotes around the table names you might be asking&#8230; well, SQL Server has a bit of Honey Badger approach to what case you assign names and Postgres treats it like a pretty big deal. Luckily, overcoming it isn&#8217;t a big deal, we just double quote it. Now, if you don&#8217;t have years of tsql or <a href="http://en.wikipedia.org/wiki/CamelCase">camelcasing</a> drilled into your brain, you can easy just do everything in lower case and not fight the double quote dragon.<br/>
+What else sticks out there&#8230; oh Data Types! You will have to adjust to some variance in data types, but in a good way. Postgres has a lavish assortment of data types for you to fall in love with and one of which is using &#8216;serial&#8217; instead of the whole IDENTITY(1,1) you might be used to in SQL Server. There are also some really cool things called Sequences in Postgres which are blazing fast and give you the value of the ID before you insert it. DBAs like them because it can get you AppDevs away from fatty GUID primary keys.</p>
+
+<p>Fire up a new MVC3 app and hop into the Nuget console. From there, we&#8217;re going to add our <a href="http://www.nuget.org/List/Packages/Npgsql">Postgre provider</a> with &#8221;<strong>Install-Package Npgsql</strong>&#8221;. Now that we have our vital provider assemblies, lets go mess around in the web.config.</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.      
+
+4.          
+
+5.              
+
+10.         
+
+11.     
+
+12. &amp;nbsp;
+
+13.     
+
+14.         
+
+15.     
+
+16. &amp;nbsp;
+</code></pre>
+
+<p>Yeah! We have our provider factory rocking and our connection string. Yes, I am using the postgres account in this demo and yes that is wrong/stupid, but I&#8217;m having so much fun playing with the Postgres engine that I decided to take a shortcut there for this entry.</p>
+
+<p>So our color app is pretty quick and dirty. In keeping with that spirit, I&#8217;m going to use <a href="https://github.com/robconery/massive">Massive</a> as my ORM of choice. It already has a <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> ready to go. <a href="https://github.com/toptensoftware/petapoco">PetaPoco</a> has some very nice Postgres options in it, but Massive is very quick/easy and the Expandos makes all the strong-typers uncomfortable and I love a good code-trolling.</p>
+
+<p>In the Model folder of our app, I create a new class file called Massive and I copy/paste the <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> into it, and I also created a new class file called &#8220;Colors&#8221; that I pasted the following in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.      public class Color : DynamicModel
+
+3.      &amp;#123;
+
+4.          public Color&amp;#40;&amp;#41; : base&amp;#40;"pg", "Colors", "colorid"&amp;#41; &amp;#123; &amp;#125;
+
+5.  &amp;nbsp;
+
+6.      &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>All wired up! In the home controller, we&#8217;ll throw some code to play with our table in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  var table = [new][8] Color&amp;#40;&amp;#41;;
+
+3.  var colors = table.All&amp;#40;&amp;#41;;
+
+4.  ViewBag.colors = colors;
+
+5.  &amp;nbsp;
+</code></pre>
+
+<p>And then in our view:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  @foreach &amp;#40;var color in ViewBag.colors&amp;#41;
+
+3.  &amp;#123; 
+
+4.       @: @color.colorid @color.colorname
+
+5.  &amp;#125;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>F5 and what do we get? BOOM!!! &#8220;Error 42P01: relation &#8220;colors&#8221; does not exist&#8221;<br/>
+So remember when I started our Colors table with a capital C? This is where it can come back to bite you&#8230; and also one of the reasons I absolutely love Micro-ORMs. Fast, malleable, and so easy a DBA can use it. Let&#8217;s hop into Massive and throw some quotes around our table access:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  string sql = limit &gt;  ? "SELECT TOP "   limit   " {0} FROM "&amp;#123;1&amp;#125;" " : "SELECT {0} FROM "&amp;#123;1&amp;#125;" ";
+
+3.  &amp;nbsp;
+</code></pre>
+
+<p>and Viola! It works! In pretty much the time it takes to install SQL Server, we&#8217;re already rocking our stunning and highly valuable colors app!</p>
+]]></content>
+  </entry>
+  
+</feed>

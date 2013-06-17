@@ -1,0 +1,300 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>GIT and Red Gate SQL Source Control - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="I am a huge fan of Red Gate SQL Source Control because it makes source controlling/deploying your database easier. I am aware of the MS Database &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">GIT and Red Gate SQL Source Control</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-28T00:00:00-06:00" pubdate data-updated="true">Jan 28<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
+
+<p><strong>Install Git:</strong><br/>
+Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
+While you are mindlessly clicking &#8216;next&#8217; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png"></a></p>
+
+<p><strong>Aside:</strong> I&#8217;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&#8217;t nearly as bad as you think once you get going.</p>
+
+<p><strong>Repo Hosting</strong><br/>
+Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
+
+<p><strong>Repo Man</strong><br/>
+In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
+Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout"></a><br/>
+You don&#8217;t have to do it like that, but again, that is the way I currently like to do it.</p>
+
+<p><strong>Lets hook up the DB!</strong><br/>
+Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&#8217;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
+From there, go to SSMS and link up the DB to your local repository:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
+
+<p><strong>Command Line Interface &#8230; or whatever</strong><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc. <code>git branch dbobjects</code><br/>
+Note: We don&#8217;t have to create a new branch. We could very easily just keep doing this in the &#8216;master&#8217; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
+Go into that branch: <code>git checkout dbobjects</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
+
+<p>Now, we go back to SSMS and commit our changes:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!"></a></p>
+
+<p>Cool! Our &#8220;dbobjects&#8221; branch has been committed locally, now we just need to merge it into our master branch!</p>
+
+<p>From there, go back to master: <code>git checkout master</code><br/>
+and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
+After we have merged, we can delete the branch we were working in by running:<br/>
+<code>git branch -d dbobjects</code><br/>
+and the process will end up looking like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
+
+<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &#8220;push&#8221;ing to the origin: <code>git push -u origin master</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin"></a></p>
+
+<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay"></a></p>
+
+<p>We can see them there for people pulling down changes. You&#8217;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-28T00:00:00-06:00" pubdate data-updated="true">Jan 28<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/oklahoma-city-javascript-group/" title="Previous Post: Oklahoma City JavaScript Group">&laquo; Oklahoma City JavaScript Group</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Next Post: Hey App, quit wasting my time sorting your data">Hey App, quit wasting my time sorting your data &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<br/>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/later-wordpress/">Later Wordpress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

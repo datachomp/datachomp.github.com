@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: ASP.NET | DataChomp]]></title>
+  <link href="http://datachomp.github.com/blog/categories/asp-dot-net/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.com/"/>
+  <updated>2013-06-09T16:22:39-05:00</updated>
+  <id>http://datachomp.github.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Deploy MVC3 to Shared Hosting]]></title>
+    <link href="http://datachomp.github.com/archives/deploy-mvc3-to-shared-hosting/"/>
+    <updated>2011-01-23T00:00:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/deploy-mvc3-to-shared-hosting</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Deploying ASP MVC3 to shared hosting isn't always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn't have (and I didn't request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to 'copy local' to get it to work on shared hosting.</p>
+
+<p>The list of assemblies to set to copy local = true is:</p>
+
+<ul>
+<li>Microsoft.Web.Infrastructure</li>
+<li>System.Web.Helpers</li>
+<li>System.Web.Mvc</li>
+<li>System.Web.Razor</li>
+<li>System.Web.Webpages</li>
+<li>System.Web.WebPages.Deployment</li>
+<li>System.Web.Webpages.Razor</li>
+</ul>
+
+
+<p>Drew Miller ( <a href="http://drew-prog.blogspot.com/">blog</a> | <a href="http://twitter.com/anglicangeek">twitter</a> ) has a great breakdown on this : <a href="http://drew-prog.blogspot.com/2011/01/how-to-deploy-aspnet-mvc-3-app-to-web.html">Click for Breakdown </a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Upload file to S3 with ASP.NET]]></title>
+    <link href="http://datachomp.github.com/archives/upload-file-to-s3-with-asp-net/"/>
+    <updated>2010-09-21T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/upload-file-to-s3-with-asp-net</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I suppose the subject pulls no punches with what we're going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
+WebForm:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.  
+</code></pre>
+
+<p>Code behind:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  protected void Button1_Click&amp;#40;object sender, EventArgs e&amp;#41;
+
+3.          &amp;#123;
+
+4.              string result = Program.GetServiceOutput&amp;#40;&amp;#41;;
+
+5.              Label1.Text = result;
+
+6.          &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>Class file for AWSCalls;</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  using Amazon;   // these are part of the AWSSDK.dll that you add to the project
+
+3.  using Amazon.S3;
+
+4.  using Amazon.S3.Model;
+
+5.  ....
+
+6.  public static void SendFileToS3&amp;#40;string filename, Stream ImgStream&amp;#41;
+
+7.          &amp;#123;
+
+8.              string accessKey = "Access Key here!";
+
+9.              string secretAccessKey = "Secret Key goes here!";
+
+10.             string bucketName = "Bucket Name goes Here!";
+
+11.             string keyName = filename; 
+
+12. &amp;nbsp;
+
+13.             AmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client&amp;#40;accessKey, secretAccessKey&amp;#41;;
+
+14.             PutObjectRequest request = [new][1] PutObjectRequest&amp;#40;&amp;#41;;
+
+15. &amp;nbsp;
+
+16.             request.WithInputStream&amp;#40;ImgStream&amp;#41;;
+
+17. &amp;nbsp;
+
+18.             request.WithBucketName&amp;#40;bucketName&amp;#41;;
+
+19.             request.WithKey&amp;#40;keyName&amp;#41;;
+
+20.             request.StorageClass = S3StorageClass.ReducedRedundancy; //set storage to reduced redundancy
+
+21.             client.PutObject&amp;#40;request&amp;#41;;
+
+22.         &amp;#125;
+</code></pre>
+
+<p>So there you have it! We take a file, throw it into a page.... and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[JQuery CDN failover]]></title>
+    <link href="http://datachomp.github.com/archives/jquery-cdn-failover/"/>
+    <updated>2010-08-31T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/jquery-cdn-failover</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>With 'high availability' being a nicely stressed buzzword coupled with issues in the 'cloud', an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won't dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover.... and it is quite easy really since 1.4 :
+<code></p>
+
+<pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
+&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js"&gt;&lt;/script&gt;
+
+&lt;script type="text/javascript"&gt;
+  if (typeof jQuery == 'undefined')
+  {
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jqueryui-1.8.4.min.js' type='text/javascript'%3E%3C/script%3E"));
+  }
+  &lt;/script&gt;
+</code></pre>
+
+<p></code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Helper Classes]]></title>
+    <link href="http://datachomp.github.com/archives/helper-classes/"/>
+    <updated>2010-07-20T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/helper-classes</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Trust me when I say I'm no stranger to abusing repeat methods in code behinds... however, it does reach a point where something has to give. When you reach that point, your solution is a 'helper' class.</p>
+
+<p>Below is a quick/basic example of how to get started with helper classes.<br/>
+In my solution, I created a folder called 'Helpers' and added a new class object called 'StringManip'.<br/>
+Once that was completed, I added a few methods like:
+<code></p>
+
+<pre><code>public static string UpperString(string val)
+{ return val.ToUpper(); }
+</code></pre>
+
+<p></code></p>
+
+<p>In my code behind, I reference the class through a using statement:
+<code></p>
+
+<pre><code>using HelperClass.Helpers;
+</code></pre>
+
+<p></code></p>
+
+<p>And then I can call the methods:
+<code></p>
+
+<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
+</code></pre>
+
+<p></code></p>
+
+<p>If the above isn't enough to get you rolling.... then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SSL &#8211; a secure way to waste money]]></title>
+    <link href="http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money/"/>
+    <updated>2010-06-28T00:00:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign's prices, product, or just the general crappy nature of the company... but I will list alternatives:</p>
+
+<p>The current ones I use and it rocks:<br/>
+For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
+For other services/protocols I tend to use:<br/>
+<a href="http://www.cacert.org/">CA Cert Org</a></p>
+
+<p>I don't think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+
+<p>Equally excellent CA's that are not free:<br/>
+<a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
+<a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
+<a href="http://www.geotrust.com/">Geotrust.com</a></p>
+]]></content>
+  </entry>
+  
+</feed>

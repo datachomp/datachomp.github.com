@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Hey App, quit wasting my time sorting your data - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="An issue I run into quite a bit is unnecessary sorting in the database. I&#8217;m not talking about the sort of &#8216;Get last 5&#8217; type of &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Hey App, Quit Wasting My Time Sorting Your Data</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p>An issue I run into quite a bit is unnecessary sorting in the database. I&#8217;m not talking about the sort of &#8216;Get last 5&#8217; type of sorting where you need to sort to get a valid result set. I&#8217;m talking about the &#8217;<em>Hey Database! I want some data&#8230;and I&#8217;ll probably throw some business logic in you&#8230; and while I&#8217;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&#8217;</p>
+
+<p><strong>Nut Kicking:</strong><br/>
+In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&#8217;t need to be as awesome as a DBAdatabase server.</p>
+
+<p><strong>Code Please:</strong><br/>
+Lets take a look at some execution plans/cost so you can view &#8216;ORDER BY&#8217; the same way I do.<br/>
+Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
+<code>SELECT  Name
+FROM dbo.Badges
+WHERE userid = 91254;
+SELECT Name
+FROM dbo.Badges
+WHERE userid = 91254
+ORDER BY name DESC;</code><br/>
+And this is the execution plan it creates:<br/>
+<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+
+<p>On the bottom, do you see the glyph that is &#8220;Sort Cost: 15%&#8221;? As well as a difference of almost 10% in general between the two queries? Removing those &#8220;sort&#8221;(har har har) of thing adds up&#8230;like a lot.</p>
+
+<p><strong>Just Fix It</strong><br/>
+In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&#8230; take a look:</p>
+
+<pre><code>1.  public IOrderedEnumerable GetBadgeByUserId&amp;#40;int badgeid&amp;#41;
+
+2.  &amp;#123;
+
+3.      var table = [new][3] Badges&amp;#40;&amp;#41;;
+
+4.      var badges = table.query&amp;#40;"SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid&amp;#41;;
+
+5.      return badges.OrderBy&amp;#40;x=&gt;x.Name&amp;#41;;
+
+6.      //return badges.OrderByDescending(x =&gt; x.Name);
+
+7.  &amp;#125;
+</code></pre>
+
+<p>That wasn&#8217;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &#8216;badges&#8217;. That is where it breaks off its relationship with the database, and sorts the results in &#8216;badges&#8217; and returns them to whatever was calling it.</p>
+
+<p><strong>Does this make us happy?</strong><br/>
+I&#8217;m happy because you&#8217;re not putting extra load on the DB. You&#8217;re happy because you have some sorted data and can close a help ticket&#8230; everyone wins right?</p>
+
+<p><strong>But But But, our servers are busy too!</strong><br/>
+Ahhh, but perhaps you&#8217;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&#8217;t have the webserver metrics, I can&#8217;t really object to that. But what I can say is: &#8221;<em>Yo, that&#8217;s cool. Since you are a programmer&#8230;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&#8221;</p>
+
+<p>There are a ton of ways to do this:</p>
+
+<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE - Eating everything in site and then barfing it out to the app.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/databases/'>Databases</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/git-and-red-gate-sql-source-control/" title="Previous Post: GIT and Red Gate SQL Source Control">&laquo; GIT and Red Gate SQL Source Control</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/im-leaving-sql-server-for-postgres/" title="Next Post: I&#8217;m leaving SQL Server for Postgres">I&#8217;m leaving SQL Server for Postgres &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<br/>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/later-wordpress/">Later Wordpress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

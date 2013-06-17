@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Tekpub &#8211; Full Throttle with Rob Sullivan show notes - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Tekpub &#8211; Full Throttle With Rob Sullivan Show Notes</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><h1></h1>
+
+<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &#8220;we&#8217;ll see this later&#8221; (like with SQL Server Profiler) and we never see it&#8230; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&#8217;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
+
+<p><strong>Questions:</strong>*<br/>
+<strong>How do you get the stats to appear in the &#8220;messages&#8221; window?</strong><br/>
+Those stats come from the following commands:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;<br/>
+If you don&#8217;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
+Tools -> Options -> Query Execution -> SQL Server -> Advanced<br/>
+then check:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;
+<strong>Lock Pages in Memory, is that always good?</strong><br/>
+No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/
+<strong>Why no filtered index on Posts?</strong><br/>
+In our first scenario, to get the front page up&#8230; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
+
+<p><strong>What were you using for &#8220;Intellisense&#8221; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
+
+<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
+
+<p><strong>Tech used in the series:</strong><br/>
+Visual Studio 2010 / MVC3 / EF 4.1<br/>
+SQL Server 2008 R2 / Management Studio<br/>
+<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &#8220;Intellisense&#8221; and &#8220;snippets&#8221; in Management Studio<br/>
+<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
+<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
+<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
+
+<p><strong>Source code:</strong></p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/appdev/'>AppDev</a>, <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/mvc/'>MVC</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>, <a class='category' href='/blog/categories/tools/'>Tools</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/windows-server-core-basic-operations/" title="Previous Post: Windows Server Core &#8211; basic operations">&laquo; Windows Server Core &#8211; basic operations</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/why-red-gate-and-i-are-friends-with-benefits/" title="Next Post: Why Red Gate and I are friends with benefits">Why Red Gate and I are friends with benefits &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<br/>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/later-wordpress/">Later Wordpress</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan -
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
