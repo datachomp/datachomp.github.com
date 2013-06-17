@@ -12,19 +12,12 @@ categories:
 # 
 
 I always forget this so it is going in a blog for quick reference:
-
-    1.  &nbsp;
-    
-    2.  SP_CONFIGURE 'show advanced options',1
-    
-    3.  RECONFIGURE WITH override
-    
-    4.  GO
-    
-    5.  SP_CONFIGURE 'backup compression default',1
-    
-    6.  RECONFIGURE WITH override
-    
-    7.  GO
-    
-    8.  &nbsp;
+<code>
+	SP_CONFIGURE 'show advanced options',1
+	RECONFIGURE WITH override
+	GO
+	    
+	SP_CONFIGURE 'backup compression default',1
+	RECONFIGURE WITH override
+	GO
+</code>
