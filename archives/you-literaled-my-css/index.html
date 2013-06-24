@@ -110,18 +110,15 @@
 
 <p>On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  Essentially a literal lives up to its name&#8230; it allows you to define literal html.</p>
 
-<p>So, in the master I have:</p>
-
-<p><code></p>
+<p>So, in the master I have:<br/>
+<code></p>
 
 <pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
 </code></pre>
 
 <p><code></p>
 
-<p> </p>
-
-<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:
+<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:<br/>
 <code></p>
 
 <pre><code>protected void Page_Load(object sender, EventArgs e) 
