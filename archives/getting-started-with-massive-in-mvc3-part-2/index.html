@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="If you read over my first post on this you probably have some questions going through your mind&#8230;. I know I did&#8230; So lets ask them: Rob, &hellip;">
+  <meta name="description" content="If you read over my first post on this you probably have some questions going through your mind&hellip;. I know I did&hellip; So lets ask them: Rob &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,12 +108,12 @@
 
 <div class="entry-content"><h1></h1>
 
-<p>If you read over my first post on this you probably have some questions going through your mind&#8230;. I know I did&#8230; So lets ask them:</p>
+<p>If you read over my first post on this you probably have some questions going through your mind&hellip;. I know I did&hellip; So lets ask them:</p>
 
-<p><strong>Rob, your queries make no sense to me because I have no idea about this &#8216;drinks&#8217; table you&#8217;re hitting.</strong><br/>
-I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&#8217;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
+<p><strong>Rob, your queries make no sense to me because I have no idea about this &lsquo;drinks&rsquo; table you&rsquo;re hitting.</strong><br/>
+I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&rsquo;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
 
-<p><strong>All this stuff is dynamic and I don&#8217;t know how to deal with it.</strong> I&#8217;m just as strongly typed as the next guy so this was an emotional hurdle. But we&#8217;re not here for therapy so lets code using one of my favorite examples - Credit Cards!<br/>
+<p><strong>All this stuff is dynamic and I don&rsquo;t know how to deal with it.</strong> I&rsquo;m just as strongly typed as the next guy so this was an emotional hurdle. But we&rsquo;re not here for therapy so lets code using one of my favorite examples &ndash; Credit Cards!<br/>
 Class:
 <code></p>
 
@@ -173,7 +173,7 @@ View:
 
 <p></code></p>
 
-<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&#8230;. So since we have a special case where we care a whole bunch about not returning that data&#8230; lets change our controller:
+<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&hellip;. So since we have a special case where we care a whole bunch about not returning that data&hellip; lets change our controller:
 <code></p>
 
 <pre><code>var table = new CreditCard();
@@ -182,10 +182,10 @@ var cards = table.Query(@"SELECT CardType, ExpMonth ,ExpYear from CreditCard");
 </code></pre>
 
 <p></code>
-Sweet! it compiles, we&#8217;re ready to check in and go grab a beer right? Heh, nope&#8230;. refresh your app:<br/>
-<em>&#8216;System.Dynamic.ExpandoObject&#8217; does not contain a definition for &#8216;CardNumber&#8217;</em></p>
+Sweet! it compiles, we&rsquo;re ready to check in and go grab a beer right? Heh, nope&hellip;. refresh your app:<br/>
+<em>&lsquo;System.Dynamic.ExpandoObject&rsquo; does not contain a definition for &lsquo;CardNumber&rsquo;</em></p>
 
-<p>So we update our view&#8230;.
+<p>So we update our view&hellip;.
 <code></p>
 
 <pre><code>{
@@ -199,13 +199,13 @@ Sweet! it compiles, we&#8217;re ready to check in and go grab a beer right? Heh,
 
 <p>and all is well again.</p>
 
-<p>Make no mistake about it&#8230; Massive will give you all the rope you want to easily swing around your apps data jungle&#8230; it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 (<a href="http://thisdeveloperslife.com/post/1-0-8-motivation">And don&#8217;t get me wrong, I like EF4</a>) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I&#8217;ll get it done.</p>
+<p>Make no mistake about it&hellip; Massive will give you all the rope you want to easily swing around your apps data jungle&hellip; it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 (<a href="http://thisdeveloperslife.com/post/1-0-8-motivation">And don&rsquo;t get me wrong, I like EF4</a>) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I&rsquo;ll get it done.</p>
 
 <p>Welcome to dynamic!</p>
 
 <p>One last bit because this is getting lengthy:<br/>
-<strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&#8217;t figure out how make my class take &#8220;advantage&#8221; of that</strong><br/>
-This is a fun thing we DBA&#8217;s like to do for the sole purpose of driving AppDev&#8217;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
+<strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&rsquo;t figure out how make my class take &ldquo;advantage&rdquo; of that</strong><br/>
+This is a fun thing we DBA&rsquo;s like to do for the sole purpose of driving AppDev&rsquo;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
 <code></p>
 
 <pre><code>public CreditCard() : base("AW_Sales_ConnStr")
@@ -233,7 +233,7 @@ This is a fun thing we DBA&#8217;s like to do for the sole purpose of driving Ap
 
 <p></code></p>
 
-<p>Last thing, I promise &#8230; In my first post, I included how the commands were rendering out in the SQL Server. I didn&#8217;t this time because this edition is more focused on a &#8220;getting things done in MVC&#8221; side of things.<br/>
+<p>Last thing, I promise &hellip; In my first post, I included how the commands were rendering out in the SQL Server. I didn&rsquo;t this time because this edition is more focused on a &ldquo;getting things done in MVC&rdquo; side of things.<br/>
 Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.</p>
 </div>
 
@@ -292,17 +292,13 @@ Trust me, I am a DBA first ( and I imagine some of my code probably shows it) an
 </div>
 
 <aside class="sidebar">
-	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
-	<br/>
-	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
       <li class="post">
@@ -310,11 +306,11 @@ Trust me, I am a DBA first ( and I imagine some of my code probably shows it) an
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
       </li>
     
       <li class="post">

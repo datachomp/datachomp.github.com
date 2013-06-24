@@ -110,9 +110,9 @@
 
 <p><a href="http://blog.wekeroad.com/">Rob Conery</a> has created a new ORM of sorts   and as a DBA, I must say I like what I see so far.</p>
 
-<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&#8217;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&#8230; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
+<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&rsquo;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&hellip; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
 
-<p>We DBA&#8217;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &#8216;plan cache poisoning&#8217;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &#8216;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&#8230; it doesn&#8217;t have to compile a new plan&#8230; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&#8230;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&#8230;  it would compile a plan for &#8216;Rob&#8217;, a plan for &#8216;Robert&#8217;,  a plan for &#8216;Mike&#8217; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&#8217;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
+<p>We DBA&rsquo;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &lsquo;plan cache poisoning&rsquo;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &lsquo;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&hellip; it doesn&rsquo;t have to compile a new plan&hellip; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&hellip;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&hellip;  it would compile a plan for &#8216;Rob&rsquo;, a plan for &lsquo;Robert&rsquo;,  a plan for &lsquo;Mike&rsquo; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&rsquo;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
 
 <p>To make  basic call with Massive on a Drinks Table (DrinkID, DrinkName) we do this:</p>
 
@@ -122,21 +122,21 @@
 </code></pre>
 
 <p>If you have done any Linq or EF you know that even a basic call like that is going to cause Linq or EF to create<br/>
-the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &#8216;hey look at me&#8217;<br/>
-Does Massive have this problem? Nope, looking at profiler we get straight forward SQL -</p>
+the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &lsquo;hey look at me&#8217;<br/>
+Does Massive have this problem? Nope, looking at profiler we get straight forward SQL &ndash;</p>
 
 <pre><code>1.  SELECT * FROM DRINKS
 </code></pre>
 
-<p>Well, that&#8217;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
-Rarely, so lets move to some conditions&#8230; lets look up a drink name:</p>
+<p>Well, that&rsquo;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
+Rarely, so lets move to some conditions&hellip; lets look up a drink name:</p>
 
 <pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
 
 2.  var drinks = table.All&amp;#40;where: "WHERE DrinkName=@0", args: "Fire Rock Pale Ale"&amp;#41;;
 </code></pre>
 
-<p>Knowing EF, we&#8217;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
+<p>Knowing EF, we&rsquo;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
 In Massive, we get:</p>
 
 <pre><code>1.  EXEC SP_EXECUTESQL N'SELECT * FROM Drinks WHERE DrinkName=@0',N'@0 nvarchar(4000)',@=N'Fire Rock Pale Ale'
@@ -202,17 +202,13 @@ In Massive, we get:</p>
 </div>
 
 <aside class="sidebar">
-	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
-	<br/>
-	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
       <li class="post">
@@ -220,11 +216,11 @@ In Massive, we get:</p>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
       </li>
     
       <li class="post">

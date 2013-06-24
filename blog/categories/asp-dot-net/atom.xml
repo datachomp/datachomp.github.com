@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ASP.NET | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/asp-dot-net/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-23T23:37:39-05:00</updated>
+  <updated>2013-06-23T23:52:55-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -20,7 +20,7 @@
     <id>http://datachomp.github.com/archives/deploy-mvc3-to-shared-hosting</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>Deploying ASP MVC3 to shared hosting isn't always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn't have (and I didn't request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to 'copy local' to get it to work on shared hosting.</p>
+<p>Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn&rsquo;t have (and I didn&rsquo;t request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to &lsquo;copy local&rsquo; to get it to work on shared hosting.</p>
 
 <p>The list of assemblies to set to copy local = true is:</p>
 
@@ -46,7 +46,7 @@
     <id>http://datachomp.github.com/archives/upload-file-to-s3-with-asp-net</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>I suppose the subject pulls no punches with what we're going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
+<p>I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
 WebForm:</p>
 
 <pre><code>1.  &amp;nbsp;
@@ -120,7 +120,7 @@ WebForm:</p>
 22.         &amp;#125;
 </code></pre>
 
-<p>So there you have it! We take a file, throw it into a page.... and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
+<p>So there you have it! We take a file, throw it into a page&hellip;. and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
 ]]></content>
   </entry>
   
@@ -131,7 +131,7 @@ WebForm:</p>
     <id>http://datachomp.github.com/archives/jquery-cdn-failover</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>With 'high availability' being a nicely stressed buzzword coupled with issues in the 'cloud', an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won't dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover.... and it is quite easy really since 1.4 :
+<p>With &lsquo;high availability&rsquo; being a nicely stressed buzzword coupled with issues in the &lsquo;cloud&rsquo;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&rsquo;t dig into the reasons for using a CDN for jquery but will plug the usual &ndash; It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&hellip;. and it is quite easy really since 1.4 :
 <code></p>
 
 <pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
@@ -157,10 +157,10 @@ WebForm:</p>
     <id>http://datachomp.github.com/archives/helper-classes</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>Trust me when I say I'm no stranger to abusing repeat methods in code behinds... however, it does reach a point where something has to give. When you reach that point, your solution is a 'helper' class.</p>
+<p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
 
 <p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called 'Helpers' and added a new class object called 'StringManip'.<br/>
+In my solution, I created a folder called &lsquo;Helpers&rsquo; and added a new class object called &lsquo;StringManip&rsquo;.<br/>
 Once that was completed, I added a few methods like:
 <code></p>
 
@@ -186,7 +186,7 @@ Once that was completed, I added a few methods like:
 
 <p></code></p>
 
-<p>If the above isn't enough to get you rolling.... then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
+<p>If the above isn&rsquo;t enough to get you rolling&hellip;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
 ]]></content>
   </entry>
   
@@ -197,16 +197,16 @@ Once that was completed, I added a few methods like:
     <id>http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign's prices, product, or just the general crappy nature of the company... but I will list alternatives:</p>
+<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
 
 <p>The current ones I use and it rocks:<br/>
 For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
 For other services/protocols I tend to use:<br/>
 <a href="http://www.cacert.org/">CA Cert Org</a></p>
 
-<p>I don't think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
 
-<p>Equally excellent CA's that are not free:<br/>
+<p>Equally excellent CA&rsquo;s that are not free:<br/>
 <a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
 <a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
 <a href="http://www.geotrust.com/">Geotrust.com</a></p>

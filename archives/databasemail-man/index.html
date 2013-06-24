@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples: -- send a &hellip;">
+  <meta name="description" content="Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples: &mdash; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -110,36 +110,36 @@
 
 <p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:
 <code>
--- send a normal mail
+&mdash; send a normal mail
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@ServerName
-,@recipients='name@domain.com;number@cingularme.com'
-,@subject = 'Dev Transfer to 19'
-,@body = 'Task Complete'
-,@body_format = 'HTML'
--- send with an attachment
+,@recipients=&lsquo;name@domain.com;<a href="&#109;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#x6e;&#x75;&#x6d;&#x62;&#101;&#114;&#64;&#99;&#x69;&#110;&#x67;&#117;&#x6c;&#x61;&#114;&#x6d;&#x65;&#46;&#x63;&#111;&#x6d;">&#x6e;&#117;&#x6d;&#x62;&#101;&#x72;&#x40;&#x63;&#105;&#110;&#103;&#x75;&#108;&#x61;&#x72;&#109;&#101;&#46;&#99;&#111;&#x6d;</a>&rsquo;
+,@subject = &lsquo;Dev Transfer to 19&rsquo;
+,@body = &lsquo;Task Complete&rsquo;
+,@body_format = &lsquo;HTML&rsquo;
+&mdash; send with an attachment
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@SERVERNAME
-,@recipients='name@domain.com'
-,@subject = 'Dev Transfer to 19'
-,@body = 'Task Complete'
-,@body_format = 'HTML'
+,@recipients=&lsquo;<a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#x3a;&#110;&#97;&#109;&#x65;&#64;&#100;&#111;&#109;&#x61;&#105;&#x6e;&#x2e;&#99;&#x6f;&#x6d;">&#110;&#x61;&#109;&#x65;&#x40;&#100;&#x6f;&#x6d;&#97;&#x69;&#x6e;&#x2e;&#99;&#111;&#x6d;</a>&rsquo;
+,@subject = &lsquo;Dev Transfer to 19&rsquo;
+,@body = &lsquo;Task Complete&rsquo;
+,@body_format = &lsquo;HTML&rsquo;
 ,@file_attachments = @SourcePath;
 </code>
 /*<br/>
-&#8211;Odds and Ends<br/>
-If sending to multiple peeps and one fails to send&#8230; queued up and resends to all.</p>
+&mdash;Odds and Ends<br/>
+If sending to multiple peeps and one fails to send&hellip; queued up and resends to all.</p>
 
 <p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
 
-<p>&#8211; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for name@domain.com). )</p>
+<p>&mdash; SMTP Authentication<br/>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#x61;&#x6d;&#x65;&#64;&#100;&#x6f;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#111;&#109;">&#110;&#x61;&#109;&#x65;&#x40;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#x6d;</a>). )</p>
 
-<p>&#8211; antivirus port 25 block<br/>
+<p>&mdash; antivirus port 25 block<br/>
 The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
 
-<p>&#8211;Select * from sysmail_allitems order by mailitem_id desc   &#8211; look up mails<br/>
-&#8211;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &#8211; look up the mails details<br/>
+<p>&mdash;Select * from sysmail_allitems order by mailitem_id desc   &mdash; look up mails<br/>
+&mdash;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &mdash; look up the mails details<br/>
 */</p>
 </div>
 
@@ -198,17 +198,13 @@ The mail could not be sent to the recipients because of the mail server failure.
 </div>
 
 <aside class="sidebar">
-	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
-	<br/>
-	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
       <li class="post">
@@ -216,11 +212,11 @@ The mail could not be sent to the recipients because of the mail server failure.
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
       </li>
     
       <li class="post">

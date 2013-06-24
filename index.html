@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="The more I&#8217;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing them actually use MySQL &hellip;">
+  <meta name="description" content="The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,11 +109,11 @@
   </header>
 
 
-  <div class="entry-content"><p>The more I&#8217;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
+  <div class="entry-content"><p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
 
-<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
+<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
 
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and then it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem dependency). I installed the &#8216;mysql&#8217; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&rsquo;s and then it barfed on a &lsquo;mysql&rsquo; dependency (not to be confused with mysql2 gem dependency). I installed the &lsquo;mysql&rsquo; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
 
 <blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
 
@@ -164,7 +164,7 @@
   </header>
 
 
-  <div class="entry-content"><p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&#8230;</p>
+  <div class="entry-content"><p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&hellip;</p>
 
 <p>Here is what I have so far:</p>
 
@@ -228,7 +228,7 @@
 
 
   <div class="entry-content"><p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&#8230; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&#8217;m favoring Postgres over SQL Server from a technical/business aspect.</p>
+While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&hellip; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&rsquo;m favoring Postgres over SQL Server from a technical/business aspect.</p>
 
 <br />
 
@@ -239,16 +239,16 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
 
 <ol>
-<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &#8220;feature&#8221; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
-<li><p>Compression out of the box. With SQL Server, compression is an &#8220;Enterprise Edition and Up&#8221; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
-<li><p>Concurrent Index Creation. You are going to find a recurring theme there&#8230;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
-<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&#8217;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&#8217;re writing huge checks to pull this off.</p></li>
-<li><p>Indexable functions - In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&#8217;re stuck in the cruel world of table scans when this happens.</p></li>
-<li><p>Modules/Extensions - Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&#8230; It quickly becomes your grandparents&#8217; database.</p></li>
-<li><p>Works everywhere - Linux, Mac, BSD, Windows&#8230; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
-<li><p>Arrays - Everyone loves arrays and they are a core part of programming&#8230;except in SQL Server, where they don&#8217;t exist.</p></li>
-<li><p>JSON / V8 support - You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
-<li><p>Unicode by default - No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
+<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &ldquo;feature&rdquo; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
+<li><p>Compression out of the box. With SQL Server, compression is an &ldquo;Enterprise Edition and Up&rdquo; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
+<li><p>Concurrent Index Creation. You are going to find a recurring theme there&hellip;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
+<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&rsquo;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&rsquo;re writing huge checks to pull this off.</p></li>
+<li><p>Indexable functions &ndash; In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&rsquo;re stuck in the cruel world of table scans when this happens.</p></li>
+<li><p>Modules/Extensions &ndash; Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&hellip; It quickly becomes your grandparents&#8217; database.</p></li>
+<li><p>Works everywhere &ndash; Linux, Mac, BSD, Windows&hellip; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
+<li><p>Arrays &ndash; Everyone loves arrays and they are a core part of programming&hellip;except in SQL Server, where they don&rsquo;t exist.</p></li>
+<li><p>JSON / V8 support &ndash; You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
+<li><p>Unicode by default &ndash; No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
 </ol>
 
 </div>
@@ -286,7 +286,7 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   </header>
 
 
-  <div class="entry-content"><p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&#8230;it was less joking and more foreshadowing.</p>
+  <div class="entry-content"><p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
 
 <p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
 
@@ -296,15 +296,15 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
-<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &#8220;too heavily invested&#8221; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference - I have decided to be the change in my situation.</p>
+<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
 
-<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&#8217;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&#8217;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&#8230; and that is ok. It&#8217;s not the lazy route, but I feel it is the most rewarding.</p>
+<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&rsquo;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&rsquo;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&hellip; and that is ok. It&rsquo;s not the lazy route, but I feel it is the most rewarding.</p>
 
-<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&#8217;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
+<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&rsquo;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
 
-<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&#8217;t be worried that I&#8217;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&#8217;s were trying to figure out sequences in SQL Server 2012.</p>
+<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
 
-<p>So in short, SQL Server&#8230; it&#8217;s not you, it&#8217;s me. And I&#8217;m cool with that. I&#8217;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
+<p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
 </div>
   
   
@@ -340,11 +340,11 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   </header>
 
 
-  <div class="entry-content"><p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&#8230; and yes, that was with a configured supercache. Get what you pay for right?</p>
+  <div class="entry-content"><p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
 
 <h2>Right Tool for the Right Blog</h2>
 
-<p>I have really wanted another level of simplicity that wordpress can&#8217;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
+<p>I have really wanted another level of simplicity that wordpress can&rsquo;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
 </div>
   
   
@@ -382,12 +382,12 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
   <div class="entry-content"><h1></h1>
 
-<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&#8217;ve had around 2,000 spam entries and gmail hasn&#8217;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
+<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
 Ha, having issues getting the code to display properly so just check this link:</p>
 
 <p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
 
-<p>Haven&#8217;t had any spam since, form works fine, and no CAPTCHA&#8217;s needed!</p>
+<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
 </div>
   
   
@@ -475,11 +475,11 @@ rvm --create --rvmrc 1.9.3-p327@mycoolproject
 
   <div class="entry-content"><h1></h1>
 
-<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&#8217;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
 
 <p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
 
-<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&#8217;t thought of it. &#8220;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&#8221; Advantages of this are that I&#8217;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
 
 <p><strong>Code Time<br/>
 Controller:</strong></p>
@@ -575,41 +575,41 @@ Can you dig our tacos?
 
   <div class="entry-content"><h1></h1>
 
-<p>I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&#8217;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&#8217;m &#8220;picking&#8221; one per situation as a way of helping someone avoid the paradox of choice.</p>
+<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
 
-<p><strong>&#8220;Should I hand-roll my DAL?&#8221;</strong></p>
+<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
 
-<p>No. Unless you just want an academic/code exercise. The libraries I&#8217;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&#8217;t waste time reinventing this wheel.</p>
+<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
 
-<p><strong>&#8220;I don&#8217;t fear dynamics and I want something easy or rapid prototyping&#8221;</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
 
-<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
 
-<p><strong>&#8220;I don&#8217;t fear dynamics and I want some codefirst action&#8221;</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
 
-<p><strong>&#8220;I want POCOs, an old school feel and Stored Procs&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
 
-<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
 
-<p><strong>&#8220;I want POCOs with some codefirst action&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
 
-<p><strong>&#8220;I&#8217;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&#8221;</strong></p>
+<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
 
-<p><strong>&#8220;I am a huge fan of T4 and code gen&#8221;</strong></p>
+<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
 
-<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
 
-<p><strong>&#8220;I want POCOs and I might be doing some MongoDB in my app&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
 
-<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
 
-<p><strong>&#8220;My boss says we just have to use something ~Enterprisey~&#8221;</strong></p>
+<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
 
 <p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
 
@@ -683,17 +683,13 @@ gem 'unicorn'</code></p>
   </div>
 </div>
 <aside class="sidebar">
-	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
-	<br/>
-	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
       <li class="post">
@@ -701,11 +697,11 @@ gem 'unicorn'</code></p>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
       </li>
     
       <li class="post">

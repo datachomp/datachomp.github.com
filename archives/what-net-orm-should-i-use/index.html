@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs &hellip;">
+  <meta name="description" content="I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,41 +108,41 @@
 
 <div class="entry-content"><h1></h1>
 
-<p>I get asked all the time &#8220;What ORM should I use?&#8221; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&#8217;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&#8217;m &#8220;picking&#8221; one per situation as a way of helping someone avoid the paradox of choice.</p>
+<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
 
-<p><strong>&#8220;Should I hand-roll my DAL?&#8221;</strong></p>
+<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
 
-<p>No. Unless you just want an academic/code exercise. The libraries I&#8217;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&#8217;t waste time reinventing this wheel.</p>
+<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
 
-<p><strong>&#8220;I don&#8217;t fear dynamics and I want something easy or rapid prototyping&#8221;</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
 
-<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
 
-<p><strong>&#8220;I don&#8217;t fear dynamics and I want some codefirst action&#8221;</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
 
-<p><strong>&#8220;I want POCOs, an old school feel and Stored Procs&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
 
-<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
 
-<p><strong>&#8220;I want POCOs with some codefirst action&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
 
-<p><strong>&#8220;I&#8217;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&#8221;</strong></p>
+<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
 
-<p><strong>&#8220;I am a huge fan of T4 and code gen&#8221;</strong></p>
+<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
 
-<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
 
-<p><strong>&#8220;I want POCOs and I might be doing some MongoDB in my app&#8221;</strong></p>
+<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
 
-<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
 
-<p><strong>&#8220;My boss says we just have to use something ~Enterprisey~&#8221;</strong></p>
+<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
 
 <p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
 
@@ -204,17 +204,13 @@
 </div>
 
 <aside class="sidebar">
-	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
-	<br/>
-	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
       <li class="post">
@@ -222,11 +218,11 @@
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
       </li>
     
       <li class="post">
