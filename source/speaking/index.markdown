@@ -11,7 +11,7 @@ footer: true
 Here are my plans for the years... I hope to catch you at one of the following:
 
 \---|-- 2013 \---|--  
-Aug ##, 2013 - OKC SQL - SQL Server vs The World  
+Aug 12, 2013 - OKC SQL - SQL Server vs The World  
 Jun 13, 2013 - Oslo Norway - Speaking at NDC Oslo on killing your SQL Server  
 May 03, 2013 - Kansas City - Speaking at KCDC on killing your SQL Server  
 Feb 28, 2013 - San Francisco - Speaking at the Heroku Developer Conf on the Cost of Indifference  
