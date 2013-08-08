@@ -665,7 +665,8 @@ preload_app true</code></p>
 
 <p>2nd: I added Unicorn to my GemFile:<br/>
 <code>#rack server<br/>
-gem &lsquo;unicorn&rsquo;</code></p>
+gem &lsquo;unicorn&rsquo;</code>
+You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
 
 <p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
 <code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
