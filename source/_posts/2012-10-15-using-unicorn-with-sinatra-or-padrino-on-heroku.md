@@ -17,16 +17,15 @@ My apps on [Heroku][1] have been cruising along ok using Thin as my rack server,
  [3]: http://unicorn.bogomips.org/ "Unicorn"
 
 1st: I added a Unicorn config file: **touch config/unicorn.rb** and added the following:  
-`worker_processes 3
-timeout 30
-preload_app true
-`
+<code>worker_processes 3  
+timeout 30  
+preload_app true</code>
 
 2nd: I added Unicorn to my GemFile:  
-`#rack server
-gem 'unicorn'`
+<code>#rack server  
+gem 'unicorn'</code>
 
 3rd: I added a Procfile to the root of my app: **touch Procfile** and added the following:  
-`web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb`
+<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code>
 
 Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.
