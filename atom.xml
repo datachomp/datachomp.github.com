@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-07-04T00:14:58-05:00</updated>
+  <updated>2013-08-08T10:55:05-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -320,14 +320,13 @@ Can you dig our tacos?
 <p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
 
 <p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
-<code>worker_processes 3
-timeout 30
-preload_app true
-</code></p>
+<code>worker_processes 3<br/>
+timeout 30<br/>
+preload_app true</code></p>
 
 <p>2nd: I added Unicorn to my GemFile:<br/>
-<code>#rack server
-gem 'unicorn'</code></p>
+<code>#rack server<br/>
+gem &lsquo;unicorn&rsquo;</code></p>
 
 <p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
 <code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
