@@ -54,7 +54,8 @@ From there, go to SSMS and link up the DB to your local repository:
  [13]: http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png "repo linko"
 
 **Command Line Interface ... or whatever**  
-Back in powershell (or whatever client you are using) create a new branch for updating our proc. `git branch dbobjects`  
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
 Note: We don't have to create a new branch. We could very easily just keep doing this in the 'master' branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.  
 Go into that branch: `git checkout dbobjects`  
 [][14]
@@ -71,7 +72,7 @@ Cool! Our "dbobjects" branch has been committed locally, now we just need to mer
 From there, go back to master: `git checkout master`  
 and then merge into master our dbobjects branch: `git merge master dbobjects`  
 After we have merged, we can delete the branch we were working in by running:  
-`git branch -d dbobjects`  
+<code>git branch -d dbobjects</code>
 and the process will end up looking like this:  
 [][16]
 

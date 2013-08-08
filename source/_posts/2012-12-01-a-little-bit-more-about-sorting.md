@@ -27,7 +27,7 @@ Thinking I was onto something, I ran the idea by my resident javascript expert M
 
 **Code Time  
 Controller:**
-
+<code>
     var burritos = db.Select("select name,price from burritos");
     var tacos = db.Select("select name,price from tacos");
                 
@@ -37,16 +37,16 @@ Controller:**
       , tacos = tacos
     };
     return View(viewModel);
-
+</code>
 **View:**
-
+<code>
     @model burritoroll.web.Models.viewmodel_Food
     @{
         ViewBag.Title = "Index";
     }
-    
+
     Index
-    
+ 
     Can you dig our burritos?
     BurritoPrice
      
@@ -80,3 +80,4 @@ Controller:**
     	ko.applyBindings(new viewModel());
     	
     }
+</code>

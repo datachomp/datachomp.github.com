@@ -22,13 +22,13 @@ On our Ubuntu box, after we finish the easy as candy install, we're going to wan
  [2]: http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/ "Install Mono on Ubuntu"
 
 Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we're going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :  
-`
-sudo apt-get install openjdk-7-jre
-wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
-tar xfz TeamCity-7.0.2a.tar.gz
-cd Teamcity
-sudo ./bin/runAll.bat start
-`
+<code>
+	sudo apt-get install openjdk-7-jre
+	wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
+	tar xfz TeamCity-7.0.2a.tar.gz
+	cd Teamcity
+	sudo ./bin/runAll.bat start
+</code>
 
 Pretty easy right? Lets check out our web interface:[![TeamcityWelcome][4]][4]
 

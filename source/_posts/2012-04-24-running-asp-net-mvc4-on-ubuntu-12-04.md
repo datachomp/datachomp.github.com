@@ -21,33 +21,36 @@ The single most question I get regarding our [Hello Postgres][1] series over Tek
 I'm not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together... at last.
 
 SSH into your fancy new Ubuntu box with [Putty][3] and Run this:  
-`sudo apt-get update && sudo apt-get -y install git-core curl python-software-properties`
+<code>sudo apt-get update && sudo apt-get -y install git-core curl python-software-properties</code>
 
  [3]: http://www.chiark.greenend.org.uk/~sgtatham/putty/ "Putty"
 
 This is going to let us add the ppa(think of this as a package location) to install a current nginx:  
-`sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update && sudo apt-get -y install nginx`
+<code>
+	sudo add-apt-repository ppa:nginx/stable
+	sudo apt-get update && sudo apt-get -y install nginx
+</code>
 
 Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let's kick some other processes to the curb... like that skank MySQL and that wet blanket Apache:  
-`sudo update-rc.d mysql remove &&
-sudo update-rc.d apache2 remove && mkdir mycoolapp`
+<code>sudo update-rc.d mysql remove &&  
+sudo update-rc.d apache2 remove && mkdir mycoolapp</code>
 
 Now for the fun part, let's get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab [this dudes][4] install script and go have a drink because it takes a bit to finish:  
-`mkdir mono-2.11
-cd mono-2.11
-wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
-chmod 755 install_mono-2.11.sh
-./install_mono-2.11.sh
-`
+<code>
+	mkdir mono-2.11
+	cd mono-2.11
+	wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
+	chmod 755 install_mono-2.11.sh
+	./install_mono-2.11.sh
+</code>
 
  [4]: http://www.integratedwebsystems.com/2012/04/install-mono-2-11/ "Nathan Bridgewater"
 
 Now to check that we have the current version, we just run the following:  
-`/opt/mono-2.11/bin/mono -V`
+<code>/opt/mono-2.11/bin/mono -V</code>
 
 Cool! We're current, but what we really need is to just be able to run "mono -V" anywhere we want. We can do that by modifying our /etc/environment file:  
-`sudo nano /etc/environment
+<code>sudo nano /etc/environment</code>
 #then insert ":/opt/mono-2.11/bin"  at the end of that path string. Log out, log in for it to take effect.`
 
 I don't now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we're going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new'ed up:
