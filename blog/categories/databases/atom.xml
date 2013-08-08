@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Databases | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/databases/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-08T10:55:05-05:00</updated>
+  <updated>2013-08-08T11:00:52-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -103,13 +103,13 @@ In the same way that AppDevs outnumber DBAs, infrastructure wise there are typic
 <p><strong>Code Please:</strong><br/>
 Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
 Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name
-FROM dbo.Badges
-WHERE userid = 91254;
-SELECT Name
-FROM dbo.Badges
-WHERE userid = 91254
-ORDER BY name DESC;</code><br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
 And this is the execution plan it creates:<br/>
 <a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
 
@@ -176,7 +176,8 @@ From there, go to SSMS and link up the DB to your local repository:<br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
 
 <p><strong>Command Line Interface &hellip; or whatever</strong><br/>
-Back in powershell (or whatever client you are using) create a new branch for updating our proc. <code>git branch dbobjects</code><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
 Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
 Go into that branch: <code>git checkout dbobjects</code><br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
@@ -189,7 +190,7 @@ Go into that branch: <code>git checkout dbobjects</code><br/>
 <p>From there, go back to master: <code>git checkout master</code><br/>
 and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
 After we have merged, we can delete the branch we were working in by running:<br/>
-<code>git branch -d dbobjects</code><br/>
+<code>git branch -d dbobjects</code>
 and the process will end up looking like this:<br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AppDev | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/appdev/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-08T10:55:05-05:00</updated>
+  <updated>2013-08-08T11:00:52-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -50,7 +50,8 @@ rvm --create --rvmrc 1.9.3-p327@mycoolproject
 <p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
 
 <p><strong>Code Time<br/>
-Controller:</strong></p>
+Controller:</strong>
+<code></p>
 
 <pre><code>var burritos = db.Select("select name,price from burritos");
 var tacos = db.Select("select name,price from tacos");
@@ -63,7 +64,9 @@ var viewModel = new viewmodel_Food
 return View(viewModel);
 </code></pre>
 
-<p><strong>View:</strong></p>
+<p></code>
+<strong>View:</strong>
+<code></p>
 
 <pre><code>@model burritoroll.web.Models.viewmodel_Food
 @{
@@ -106,6 +109,8 @@ Can you dig our tacos?
 
 }
 </code></pre>
+
+<p></code></p>
 ]]></content>
   </entry>
   

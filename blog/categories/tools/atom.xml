@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tools | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/tools/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-08T10:55:05-05:00</updated>
+  <updated>2013-08-08T11:00:52-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -25,13 +25,16 @@
 <p>On our Ubuntu box, after we finish the easy as candy install, we&rsquo;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
 
 <p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&rsquo;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
-<code>
-sudo apt-get install openjdk-7-jre
+<code></p>
+
+<pre><code>sudo apt-get install openjdk-7-jre
 wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
 tar xfz TeamCity-7.0.2a.tar.gz
 cd Teamcity
 sudo ./bin/runAll.bat start
-</code></p>
+</code></pre>
+
+<p></code></p>
 
 <p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
 

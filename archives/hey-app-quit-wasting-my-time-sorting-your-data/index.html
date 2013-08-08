@@ -116,13 +116,13 @@ In the same way that AppDevs outnumber DBAs, infrastructure wise there are typic
 <p><strong>Code Please:</strong><br/>
 Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
 Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name
-FROM dbo.Badges
-WHERE userid = 91254;
-SELECT Name
-FROM dbo.Badges
-WHERE userid = 91254
-ORDER BY name DESC;</code><br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
 And this is the execution plan it creates:<br/>
 <a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
 

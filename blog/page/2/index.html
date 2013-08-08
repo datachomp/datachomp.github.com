@@ -175,13 +175,16 @@ gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
 <p>On our Ubuntu box, after we finish the easy as candy install, we&rsquo;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
 
 <p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&rsquo;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
-<code>
-sudo apt-get install openjdk-7-jre
+<code></p>
+
+<pre><code>sudo apt-get install openjdk-7-jre
 wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
 tar xfz TeamCity-7.0.2a.tar.gz
 cd Teamcity
 sudo ./bin/runAll.bat start
-</code></p>
+</code></pre>
+
+<p></code></p>
 
 <p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
 
@@ -231,26 +234,35 @@ sudo ./bin/runAll.bat start
 <code>sudo apt-get update &amp;&amp; sudo apt-get -y install git-core curl python-software-properties</code></p>
 
 <p>This is going to let us add the ppa(think of this as a package location) to install a current nginx:<br/>
-<code>sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update &amp;&amp; sudo apt-get -y install nginx</code></p>
+<code></p>
+
+<pre><code>sudo add-apt-repository ppa:nginx/stable
+sudo apt-get update &amp;&amp; sudo apt-get -y install nginx
+</code></pre>
+
+<p></code></p>
 
 <p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let&rsquo;s kick some other processes to the curb&hellip; like that skank MySQL and that wet blanket Apache:<br/>
-<code>sudo update-rc.d mysql remove &amp;&amp;
+<code>sudo update-rc.d mysql remove &amp;&amp;<br/>
 sudo update-rc.d apache2 remove &amp;&amp; mkdir mycoolapp</code></p>
 
 <p>Now for the fun part, let&rsquo;s get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
-<code>mkdir mono-2.11
+<code></p>
+
+<pre><code>mkdir mono-2.11
 cd mono-2.11
 wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
 chmod 755 install_mono-2.11.sh
 ./install_mono-2.11.sh
-</code></p>
+</code></pre>
+
+<p></code></p>
 
 <p>Now to check that we have the current version, we just run the following:<br/>
 <code>/opt/mono-2.11/bin/mono -V</code></p>
 
 <p>Cool! We&rsquo;re current, but what we really need is to just be able to run &ldquo;mono -V&rdquo; anywhere we want. We can do that by modifying our /etc/environment file:<br/>
-`sudo nano /etc/environment</p>
+<code>sudo nano /etc/environment</code></p>
 
 <h1>then insert &ldquo;:/opt/mono-2.11/bin&rdquo;  at the end of that path string. Log out, log in for it to take effect.`</h1>
 
@@ -403,13 +415,13 @@ In the same way that AppDevs outnumber DBAs, infrastructure wise there are typic
 <p><strong>Code Please:</strong><br/>
 Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
 Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name
-FROM dbo.Badges
-WHERE userid = 91254;
-SELECT Name
-FROM dbo.Badges
-WHERE userid = 91254
-ORDER BY name DESC;</code><br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
 And this is the execution plan it creates:<br/>
 <a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
 
@@ -503,7 +515,8 @@ From there, go to SSMS and link up the DB to your local repository:<br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
 
 <p><strong>Command Line Interface &hellip; or whatever</strong><br/>
-Back in powershell (or whatever client you are using) create a new branch for updating our proc. <code>git branch dbobjects</code><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
 Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
 Go into that branch: <code>git checkout dbobjects</code><br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
@@ -516,7 +529,7 @@ Go into that branch: <code>git checkout dbobjects</code><br/>
 <p>From there, go back to master: <code>git checkout master</code><br/>
 and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
 After we have merged, we can delete the branch we were working in by running:<br/>
-<code>git branch -d dbobjects</code><br/>
+<code>git branch -d dbobjects</code>
 and the process will end up looking like this:<br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
 
