@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="There is going to be a strong disturbance in the force, Dallas Feb 21st &ndash; 25th when the SQLSkills team comes down for a Master Immersion class &hellip;">
+  <meta name="description" content="Here are some of the tools I use for Security and Code analysis  (I bet you didn&rsquo;t see that coming from!) WebConfig Analyzer &ndash; you can &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/security-and-code-analysis-tools-i-use/">Security and Code Analysis Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Here are some of the tools I use for Security and Code analysis  (I bet you didn&rsquo;t see that coming from!)</p>
+
+<p>WebConfig Analyzer &ndash; you can do a stand alone download and feed your webconfig into it</p>
+
+<p><a href="http://www.wireshark.org/">WireShark</a> Use this to see what is going on on the network.</p>
+
+<p><a href="http://www.fiddler2.com/fiddler2/">Fiddler </a>&ndash; Great for https inspection.</p>
+
+<p><a href="http://www.mavitunasecurity.com/communityedition/">Netsparker</a> Use it to hit test sites and see if throws back anything useful.</p>
+
+<p><a href="http://www.backtrack-linux.org/">BackTrack 4</a> Not sure what needs to be said here other than the best way to get a white hat, is to take a black hat and bleach it.</p>
+
+<p><a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=917023f6-d5b7-41bb-bbc0-411a7d66cf3c">FXCop</a> I tun this against my code when I want to feel stupid and see how many places I&rsquo;ve goofed.  Things putting getters and setters on read only data. Doh!</p>
+
+<p><a href="http://www.red-gate.com/products/dotnet-development/reflector/">Reflector</a> Other peoples code and programs look pretty fun when uncompiled. Likewise, this is also good for making sure you didn&rsquo;t leave any sensitive information in your own binaries.</p>
+
+<p>FireFox add-ons:</p>
+
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/viewstate-size/">ViewState</a></p>
+
+<p><a href="http://getfirebug.com/">FireBug</a></p>
+
+<p>And then everything else that SnipeyHead (<a href="http://www.snipe.net/">Blog</a> | <a href="http://twitter.com/#!/snipeyhead">Twitter</a>) uses:</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -723,58 +783,6 @@ WebForm:</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/installing-mongodb-on-ubuntu/">Installing MongoDB on Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-04T00:00:00-05:00" pubdate data-updated="true">Sep 4<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>
-
-<p>Navigate to: /etc/apt/sources.list<br/>
-Then: sudo pico sources.list<br/>
-In your sources, add the following line: deb <a href="http://downloads.mongodb.org/distros/ubuntu">http://downloads.mongodb.org/distros/ubuntu</a> 10.4 10gen<br/>
-Save/exit the file, then add the key: sudo apt-key adv &mdash;keyserver keyserver.ubuntu.com &mdash;recv 7F0CEB10</p>
-
-<p>Once that is done, you&rsquo;re ready to update and install.<br/>
-Update: sudo apt-get update<br/>
-Install: sudo apt-get install mongodb-stable</p>
-
-<p>Well now what?<br/>
-If you need to configure MongoDB further, then navigate to: /etc/mongodb.conf<br/>
-If you need to add/remove/mess with the database, it lives in: /var/lib/mongodb<br/>
-Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -796,6 +804,10 @@ Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
@@ -809,10 +821,6 @@ Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
     
       <li class="post">
         <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
   </ul>

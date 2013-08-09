@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="For the most part, I find online MSDN to be a complete and utter slow pain in the compiler. It appears that MS has fixed this by offering &lsquo;low &hellip;">
+  <meta name="description" content="So you get your handy dandy SQL Server Report Server all set up for email and are looking good then you go to have it email to an outbound address &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,92 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-report-server-outbound-email-configuration/">SQL Report Server Outbound Email Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So you get your handy dandy <a href="http://technet.microsoft.com/en-us/library/ms345234.aspx">SQL Server Report Server all set up for email</a> and are looking good then you go to have it email to an outbound address.  All of a sudden you get the &lsquo;The e-mail address of one or more recipients is not valid.&#8217;   While there could be a couple reasons for this issue, the main two I run into is SMTP authentication and user aliases.  The fix to both of these involves updating the ReportServer.Config file usually found in the filesystem with a folder structure resembling &ndash; &ldquo;c:program filesmicrosoft SQL ServerMSRS10.MSSQLSERVER&rdquo;</p>
+
+<p>You want to pop it open and then search for &ldquo;SMTPServer&rdquo; which will take you to something that looks like this:
+<code></p>
+
+<pre><code>&lt;RSEmailDPConfiguration&gt;
+&lt;SMTPServer&gt;email.example.com&lt;/SMTPServer&gt;
+&lt;SMTPServerPort&gt;&lt;/SMTPServerPort&gt;
+&lt;SMTPAccountName&gt;&lt;/SMTPAccountName&gt;
+&lt;SMTPConnectionTimeout&gt;&lt;/SMTPConnectionTimeout&gt;
+&lt;SMTPServerPickupDirectory&gt;&lt;/SMTPServerPickupDirectory&gt;
+&lt;SMTPUseSSL&gt;&lt;/SMTPUseSSL&gt;
+&lt;SendUsing&gt;2&lt;/SendUsing&gt;
+&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt;
+&lt;From&gt;MrMail@example.com&lt;/From&gt;
+&lt;EmbeddedRenderFormats&gt;&lt;RenderingExtension&gt;MHTML&lt;/RenderingExtension&gt;&lt;/EmbeddedRenderFormats&gt;
+&lt;PrivilegedUserRenderFormats&gt;&lt;/PrivilegedUserRenderFormats&gt;
+&lt;ExcludedRenderFormats&gt;&lt;RenderingExtension&gt;HTMLOWC&lt;/RenderingExtension&gt;
+&lt;RenderingExtension&gt;NULL&lt;/RenderingExtension&gt;&lt;RenderingExtension&gt;RGDI&lt;/RenderingExtension&gt;
+&lt;/ExcludedRenderFormats&gt;
+&lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+&lt;DefaultHostName&gt;Example.com&lt;/DefaultHostName&gt;
+&lt;PermittedHosts&gt;&lt;/PermittedHosts&gt;
+&lt;/RSEmailDPConfiguration&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>The two fields you want to focus on are:<br/>
+<code></p>
+
+<pre><code>&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+</code></pre>
+
+<p></code>
+You will want to change these to
+<code></p>
+
+<pre><code>&lt;SMTPAuthenticate&gt;2&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;False&lt;/SendEmailToUserAlias&gt;
+</code></pre>
+
+<p></code>
+This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
+
+<p>This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
+
+<p>For more information about the report server configuration settings,  see here: <a href="http://msdn.microsoft.com/en-us/library/ms157273.aspx" title="ReportServer Configuration File">http://msdn.microsoft.com/en-us/library/ms157273.aspx</a></p>
+
+<p>This post also makes the assumption you do SMTP authenticate for outbound emails&hellip;. If you are unsure, then double check that you are not currently operating an open relay email server.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -158,14 +244,14 @@
 &mdash; send a normal mail
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6e;&#117;&#109;&#x62;&#x65;&#114;&#64;&#x63;&#105;&#110;&#x67;&#117;&#108;&#97;&#x72;&#109;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#110;&#x75;&#109;&#x62;&#x65;&#114;&#64;&#x63;&#x69;&#110;&#103;&#x75;&#108;&#x61;&#114;&#109;&#x65;&#x2e;&#99;&#x6f;&#109;</a>&rsquo;
+,@recipients=&lsquo;name@domain.com;<a href="&#109;&#x61;&#105;&#108;&#x74;&#111;&#58;&#110;&#x75;&#109;&#x62;&#x65;&#114;&#64;&#x63;&#105;&#x6e;&#103;&#x75;&#x6c;&#97;&#x72;&#109;&#101;&#x2e;&#x63;&#111;&#x6d;">&#110;&#117;&#109;&#x62;&#x65;&#114;&#x40;&#x63;&#105;&#x6e;&#x67;&#x75;&#x6c;&#x61;&#114;&#x6d;&#x65;&#x2e;&#99;&#111;&#x6d;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
 &mdash; send with an attachment
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#x61;&#x6d;&#101;&#64;&#x64;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#46;&#99;&#x6f;&#x6d;">&#110;&#x61;&#x6d;&#101;&#64;&#x64;&#111;&#109;&#x61;&#105;&#x6e;&#46;&#99;&#x6f;&#109;</a>&rsquo;
+,@recipients=&lsquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#111;&#58;&#x6e;&#x61;&#x6d;&#x65;&#x40;&#x64;&#111;&#109;&#x61;&#x69;&#x6e;&#46;&#x63;&#x6f;&#x6d;">&#110;&#97;&#109;&#101;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#110;&#x2e;&#99;&#111;&#x6d;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
@@ -178,7 +264,7 @@ If sending to multiple peeps and one fails to send&hellip; queued up and resends
 <p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
 
 <p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#110;&#97;&#x6d;&#101;&#x40;&#x64;&#111;&#x6d;&#97;&#105;&#110;&#46;&#99;&#111;&#x6d;">&#110;&#97;&#109;&#x65;&#64;&#100;&#x6f;&#x6d;&#97;&#x69;&#110;&#x2e;&#x63;&#x6f;&#109;</a>). )</p>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#x6e;&#97;&#x6d;&#x65;&#x40;&#x64;&#111;&#109;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#109;">&#110;&#97;&#x6d;&#101;&#x40;&#100;&#111;&#x6d;&#97;&#x69;&#x6e;&#46;&#99;&#111;&#109;</a>). )</p>
 
 <p>&mdash; antivirus port 25 block<br/>
 The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
@@ -307,6 +393,10 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
@@ -320,10 +410,6 @@ The mail could not be sent to the recipients because of the mail server failure.
     
       <li class="post">
         <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
   </ul>

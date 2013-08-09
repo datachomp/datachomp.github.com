@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="With &lsquo;high availability&rsquo; being a nicely stressed buzzword coupled with issues in the &lsquo;cloud&rsquo;, an issue can arise of what to &hellip;">
+  <meta name="description" content="First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,58 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/installing-mongodb-on-ubuntu/">Installing MongoDB on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-04T00:00:00-05:00" pubdate data-updated="true">Sep 4<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>
+
+<p>Navigate to: /etc/apt/sources.list<br/>
+Then: sudo pico sources.list<br/>
+In your sources, add the following line: deb <a href="http://downloads.mongodb.org/distros/ubuntu">http://downloads.mongodb.org/distros/ubuntu</a> 10.4 10gen<br/>
+Save/exit the file, then add the key: sudo apt-key adv &mdash;keyserver keyserver.ubuntu.com &mdash;recv 7F0CEB10</p>
+
+<p>Once that is done, you&rsquo;re ready to update and install.<br/>
+Update: sudo apt-get update<br/>
+Install: sudo apt-get install mongodb-stable</p>
+
+<p>Well now what?<br/>
+If you need to configure MongoDB further, then navigate to: /etc/mongodb.conf<br/>
+If you need to add/remove/mess with the database, it lives in: /var/lib/mongodb<br/>
+Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -631,57 +683,6 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/how-to-test-email-with-port-25-blocked/">How to Test Email With Port 25 Blocked</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-21T00:00:00-06:00" pubdate data-updated="true">Feb 21<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&rsquo;t a real deal breaker as when I&rsquo;m coding/debugging I&rsquo;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
-
-<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
-<code></p>
-
-<pre><code>&lt;system.net&gt;
-    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
-        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
-    &lt;/mailSettings&gt;
-&lt;/system.net&gt;
-</code></pre>
-
-<p></code>
-At this point you just check the local directory for email when you are testing your application. If you don&rsquo;t have system for production deployments, then don&rsquo;t forget to change to the network delivery when you deploy.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -703,6 +704,10 @@ At this point you just check the local directory for email when you are testing 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
@@ -716,10 +721,6 @@ At this point you just check the local directory for email when you are testing 
     
       <li class="post">
         <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
       </li>
     
   </ul>
