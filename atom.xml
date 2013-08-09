@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-09T00:45:14-05:00</updated>
+  <updated>2013-08-09T00:54:32-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -32,12 +32,12 @@ Instead of the behemoth Visual Studio &ndash; I just use a text editor or bash o
 SQL Server is replaced with a lean Postgres and a tricked out <a href="http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/">psql</a>. This still blows my mind and loving it every day.</p>
 
 <p><strong>OS</strong><br/>
-Instead of a fatty windows &ndash; I run <a href="http://www.ubuntu.com/">Ubuntu</a>. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster &ndash; I can run <a href="http://crunchbang.org/">Crunchbang</a> and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like <a href="http://crunchbang.org/">Crunchbang</a> is like going from a bicycle to a Ducati.I&rsquo;ve often thought it would be cool if instead of more Windows Modern-UI for pleabs, Microsoft had a more <a href="http://openbox.org/">OpenBox</a> type windows manager built ontop of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my <a href="http://www.indiegogo.com/projects/ubuntu-edge">phone</a>.</p>
+Instead of a fatty windows &ndash; I run <a href="http://www.ubuntu.com/">Ubuntu</a>. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster &ndash; I can run <a href="http://crunchbang.org/">Crunchbang</a> and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like <a href="http://crunchbang.org/">Crunchbang</a> is like going from a bicycle to a Ducati. I&rsquo;ve often thought it would be cool if instead of more Windows Modern-UI for pleabs, Microsoft had a more <a href="http://openbox.org/">OpenBox</a> type windows manager built ontop of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my <a href="http://www.indiegogo.com/projects/ubuntu-edge">phone</a>.</p>
 
 <p><strong>Virtuals</strong><br/>
-Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windws VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
+Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
 
-<p>For me and coding, Linux is Adderall and Windows is Jersey Shore. So as I go to buy a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been welcome releif and it&rsquo;s nice to stop and smell the progress.</p>
+<p>For me and coding, Linux is Adderall and Windows is Jersey Shore. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
 ]]></content>
   </entry>
   
