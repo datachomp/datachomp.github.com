@@ -1,0 +1,34 @@
+---
+layout: post
+title: "No Longer Buying Aircraft Carriers"
+date: 2013-08-09 00:23
+comments: true
+categories: 
+---
+I'm a hardware nut who likes both building and upgrading my dev boxes. I'm getting ready to refresh my box this year and the biggest difference - I'm no longer doing .NET/SQL Server. I'm also not on Windows.  
+  
+So what's different?  
+  
+**Remoting**  
+Instead of a laggy/sluggish RDP sessions doing password dances, I'm all in with SSH and loving it.  
+  
+**IDE**  
+Instead of the behemoth Visual Studio - I just use a text editor or bash or any number of focused tools that get out of my way.  
+
+**Database**  
+SQL Server is replaced with a lean Postgres and a tricked out [psql][1]. This still blows my mind and loving it every day.  
+
+**OS**  
+Instead of a fatty windows - I run [Ubuntu][5]. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster - I can run [Crunchbang][4] and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like [Crunchbang][4] is like going from a bicycle to a Ducati.I've often thought it would be cool if instead of more Windows Modern-UI for pleabs, Microsoft had a more [OpenBox][3] type windows manager built ontop of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my [phone][6].
+  
+**Virtuals**  
+Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windws VM's... I can do extremely light, fast Linux VM's and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual [to the cloud][2] vs offloading Windows to the cloud.
+  
+For me and coding, Linux is Adderall and Windows is Jersey Shore. So as I go to buy a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been welcome releif and it's nice to stop and smell the progress.  
+
+[1]: http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/
+[2]: http://digitalocean.com
+[3]: http://openbox.org/
+[4]: http://crunchbang.org/
+[5]: http://www.ubuntu.com/
+[6]: http://www.indiegogo.com/projects/ubuntu-edge
