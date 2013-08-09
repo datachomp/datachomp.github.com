@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-09T08:46:45-05:00</updated>
+  <updated>2013-08-09T10:43:33-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,38 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Treadmill Desk Setup]]></title>
+    <link href="http://datachomp.github.com/archives/treadmill-desk-setup/"/>
+    <updated>2013-08-09T10:05:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/treadmill-desk-setup</id>
+    <content type="html"><![CDATA[<p>For quite a few months now, I&rsquo;ve been playing around with a treadmill
+desk. I have a pretty large hydraulic desk from <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Geek Desk</a> that I have
+partitioned into 2 workstations:</p>
+
+<p><a href="http://images.datachomp.com/treadmill/desktop.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_desktop.jpg" title="On Top of The Desk World" alt="On Top of The Desk World" Height="200" Width="400" /></a></p>
+
+
+<p><strong>What is This?</strong><br/>
+On the left is my coding/recording station, and on the right is my learning/gaming station.
+When i&rsquo;m simply consuming content, I can easily work on my treadmill station. I have a <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Confidence Power Plus</a> treadmill that I mostly disassembled and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn&rsquo;t focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.</p>
+
+<p><a href="http://images.datachomp.com/treadmill/underview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_underview.jpg" title="Under the hood" alt="Under the hood" Height="200" Width="400" /></a></p>
+
+
+<p><strong>These Reboots Were Made For Walking</strong><br/>
+Since I know I will be tread&#8217;ing at some point in the day &ndash; and I know it will kill itself every 30 minutes &ndash; I&rsquo;ve been using tools like <a href="http://getpocket.com/a/">Pocket</a> and stuff to help me avoid distractions on my ~creation station~ because I know I can just punt it right over to the treadmill box and consume a lot of content distraction free. I am finally reaching a point where I can read at 2.8 mph, and watch screencasts at 4 mph. This makes me a huge fan of screencasts&hellip; They are better for me.</p>
+
+<p><a href="http://images.datachomp.com/treadmill/fullview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_fullview.jpg" title="Back That Desk Up" alt="Back that Desk Up" Height="400" Width="200" /></a></p>
+
+
+<p><strong>tail -m thedragon</strong><br/>
+Recently, I started adding games to the mix. If you are expecting to be able to play twitch games&hellip; Just stop that thought now. Any game that relies on twitch or precision is a no go. I&rsquo;m a huge fan of <a href="http://www.youtube.com/watch?v=VxeW6urxLfY">Skyrim</a> and rpg&rsquo;s in general, but my current schedule/commits don&rsquo;t really allow me much indulgence in those time sinks. However, the need for a game that doesn&rsquo;t require heavy precision + the 30 minute cutoff on my treadmill allows an incredible pairing to occur.</p>
+
+<p>Am I healthier because of my treadmill setup?  Maybe. Am I happier, more productive and having more fun? You bet!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[No Longer Buying Aircraft Carriers]]></title>
@@ -40,7 +72,7 @@ Having an OS with native virtual desktops is a complete joy. Sometimes I&rsquo;m
 <p><strong>Virtuals</strong><br/>
 Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
 
-<p>For me and coding, Linux is Adderall and Windows is Jersey Shore. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
+<p>For me, Linux is clean and focused and Windows is <a href="http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg">Teletubbies</a>. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
 ]]></content>
   </entry>
   
@@ -672,21 +704,6 @@ completely fascinating&hellip; a Javascript group! With the monumental surge in 
 <p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&hellip;. help me learn this stuff!</p>
 
 <p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Simple-Talk &#8211; SQL Test write up]]></title>
-    <link href="http://datachomp.github.com/archives/simple-talk-sql-test-write-up/"/>
-    <updated>2011-12-16T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/simple-talk-sql-test-write-up</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m anxious to see just how much David and his team can improve it.</p>
-
-<p><a href="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/" title="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/">http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/</a></p>
-
-<p>In other news, being published on Simple-Talk is also another thing <a href="http://troyhunt.com/" title="Troy Hunt">Troy Hunt</a> won&rsquo;t be able to 1-Up me with.</p>
 ]]></content>
   </entry>
   
