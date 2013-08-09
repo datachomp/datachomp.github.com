@@ -27,7 +27,7 @@ Having an OS with native virtual desktops is a complete joy. Sometimes I'm doing
 **Virtuals**  
 Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM's... I can do extremely light, fast Linux VM's and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual [to the cloud][2] vs offloading Windows to the cloud.
   
-For me and coding, Linux is Adderall and Windows is Jersey Shore. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it's nice to stop and smell the progress.  
+For me, Linux is clean and focused and Windows is [Teletubbies][7]. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it's nice to stop and smell the progress.  
 
 [1]: http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/
 [2]: http://digitalocean.com
@@ -35,3 +35,4 @@ For me and coding, Linux is Adderall and Windows is Jersey Shore. As I go to bui
 [4]: http://crunchbang.org/
 [5]: http://www.ubuntu.com/
 [6]: http://www.indiegogo.com/projects/ubuntu-edge
+[7]: http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg
