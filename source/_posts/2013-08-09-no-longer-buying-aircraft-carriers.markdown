@@ -19,7 +19,10 @@ Instead of the behemoth Visual Studio - I just use a text editor or bash or any 
 SQL Server is replaced with a lean Postgres and a tricked out [psql][1]. This still blows my mind and loving it every day.  
 
 **OS**  
-Instead of a fatty windows - I run [Ubuntu][5]. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster - I can run [Crunchbang][4] and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like [Crunchbang][4] is like going from a bicycle to a Ducati. I've often thought it would be cool if instead of more Windows Modern-UI for plebes, Microsoft had a more [OpenBox][3] type windows manager built on top of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my [phone][6].
+Instead of a fatty windows - I run [Ubuntu][5]. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster - I can run [Crunchbang][4] and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like [Crunchbang][4] is like going from a bicycle to a Ducati. It is so bad, that I've been able to install versions of Linux that have the same memory footprint as just the Activation/License checker on Windows. I've often thought it would be cool if instead of more Windows Modern-UI for plebes, Microsoft had a more [OpenBox][3] type windows manager built on top of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my [phone][6].
+  
+**Virtual Desktops**  
+Having an OS with native virtual desktops is a complete joy. Sometimes I'm doing just data, sometimes I'm wallowing around in code, other times I'm browsing/social networking. Having dedicated desktops for this and not having to resort to 'I need a ton of monitors' Windows syndrome has been a welcome change as well.  
   
 **Virtuals**  
 Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM's... I can do extremely light, fast Linux VM's and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual [to the cloud][2] vs offloading Windows to the cloud.
