@@ -11,7 +11,7 @@ partitioned into 2 workstations:
 <p><a href="http://images.datachomp.com/treadmill/desktop.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_desktop.jpg" title="On Top of The Desk World" alt="On Top of The Desk World" Height="200" Width="400" /></a></p>
 **What is This?**  
 On the left is my coding/recording station, and on the right is my learning/gaming station.
-When i'm simply consuming content, I can easily work on my treadmill station. I have a [Confidence Power Plus][2] treadmill that I mostly disassembled and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn't focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.
+When I'm simply consuming content, I can easily work on my treadmill station. For $200, I bought a [Confidence Power Plus][2] treadmill that I [mostly disassembled][5] and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn't focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.
 
 <p><a href="http://images.datachomp.com/treadmill/underview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_underview.jpg" title="Under the hood" alt="Under the hood" Height="200" Width="400" /></a></p>
   
@@ -28,5 +28,6 @@ Am I healthier because of my treadmill setup?  Maybe. Am I happier, more product
 
 [1]: http://www.geekdesk.com/
 [2]: http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&psc=1
-[3]: http://getpocket.com/a/
+[3]: http://getpocket.com/
 [4]: http://www.youtube.com/watch?v=VxeW6urxLfY
+[5]: http://www.treadmilldeskdiary.com/setting-up-my-confidence-power-plus-treadmill-for-a-desk/
