@@ -9,6 +9,9 @@ categories:
 ---
 # 
 
+NOTE: As of 2013, I no longer use Windows... so this post is a bit dated.  
+  
+  
 This is a living document of Applications you will find on my Windows OS:
 
 [FileZilla][1] - great FTP client and server  
