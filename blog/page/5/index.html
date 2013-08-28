@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we &hellip;">
+  <meta name="description" content="I have a great hosting provider &ndash; Arvixe and they are on the ball for both my Linux hosting as well as my .NET stuff. So as I started cranking &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,73 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/early-mvc-pitfalls-shared-hosting-and-action-link/">Early MVC Pitfalls &#8211; Shared Hosting and Action Link</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I have a great hosting provider &ndash; <a href="http://www.arvixe.com/">Arvixe</a> and they are on the ball for both my Linux hosting as well as my .NET stuff. So as I started cranking out apps and went to deploy I knew I could count on them to handle the hosting task at hand. So, compile&hellip; deploy&hellip; and we&rsquo;re erroring out. Oh! I forgot to set my site to integrated pipeline&hellip;. fix that, drop some control f5 and still an issue. So, CustomErrors=OFF, deploy and see that it is an error with the System.Web.MVC assembly. That&rsquo;s odd, well a google searching showed that this is a bit of known error. To fix, you simply click on the properties of that assembly, and set the &ldquo;copy local&rdquo; property to true. More information can be found here:<br/>
+<a href="http://www.britishdeveloper.co.uk/2010/05/mvc2-deploy-could-not-load-file-or.html">This dudes blog</a><br/>
+and from Haacked himself: <a href="http://haacked.com/archive/2008/11/03/bin-deploy-aspnetmvc.aspx">clickey</a></p>
+
+<p>MVC ActionLink returns ?Length= &ndash; This was a real WTF for me. Turns out that if you specify a htmlattributes overload for ActionLink and don&rsquo;t put in something like null for the route values overload, it will append some stupid length=# string to your href.</p>
+
+<p><code></p>
+
+<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", new { @class = "active" })%&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>Generates the following html:
+<code></p>
+
+<pre><code>&lt;a class="active" href="/?Length=4"&gt;Home&lt;/a&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>So we throw in null for the routeValues overload:
+<code></p>
+
+<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", null ,new { @class = "active" })%&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>and we get the html we want.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -708,49 +775,6 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-solid-state-drives/">Getting Started With Solid State Drives</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-26T00:00:00-05:00" pubdate data-updated="true">Jun 26<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Step 1 &ndash; Make sure AHCI is working in the bios. This is used for TRIM and such.<br/>
-Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, navigate to Components &ndash;> Storage &ndash;> Disks, and look for &ldquo;Partition Starting Offset&rdquo;. Use those numbers and <a href="http://www.techpowerup.com/articles/other/157">Techpowerup &ndash; SSD Alignment Calculator</a> to make sure your disk is aligned.</p>
-
-<p>Step 3 &ndash; Make sure TRIM is enabled. At the command prompt, type-> &ldquo;fsutil behavior query disabledeletenotify&rdquo; A 0 means that TRIM is on, a 1 means it is off. To turn Trim on type, &ldquo;fsutil behavior set disabledeletenotify 0&rdquo; .</p>
-
-<p>Step 4 &ndash; Use programs like Filemon and such to see if you have something that is doing heavy writes on your SSD. Depending on what they are, you might want to move them to something else.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -772,6 +796,10 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
@@ -785,10 +813,6 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
     
       <li class="post">
         <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
   </ul>

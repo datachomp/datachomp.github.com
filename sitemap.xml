@@ -297,12 +297,16 @@
         <lastmod>2013-08-09T12:37:31-05:00</lastmod>
     </url>
     <url>
+        <loc>http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion/</loc>
+        <lastmod>2013-08-27T23:40:25-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://datachomp.github.com/about/</loc>
         <lastmod>2013-06-28T13:43:27-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/blog/archives/</loc>
-        <lastmod>2013-08-16T21:06:10-05:00</lastmod>
+        <lastmod>2013-08-27T23:40:25-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/books/</loc>
@@ -310,7 +314,7 @@
     </url>
     <url>
         <loc>http://datachomp.github.com/</loc>
-        <lastmod>2013-08-16T21:06:10-05:00</lastmod>
+        <lastmod>2013-08-27T23:40:25-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/robots.txt</loc>

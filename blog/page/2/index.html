@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs &hellip;">
+  <meta name="description" content="As a big fan of not sorting in the database when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like datatables. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,111 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/a-little-bit-more-about-sorting/">A Little Bit More About Sorting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-12-01T00:00:00-06:00" pubdate data-updated="true">Dec 1<span>st</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+
+<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
+
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+
+<p><strong>Code Time<br/>
+Controller:</strong>
+<code></p>
+
+<pre><code>var burritos = db.Select("select name,price from burritos");
+var tacos = db.Select("select name,price from tacos");
+
+var viewModel = new viewmodel_Food
+{
+  burritos = burritos
+  , tacos = tacos
+};
+return View(viewModel);
+</code></pre>
+
+<p></code>
+<strong>View:</strong>
+<code></p>
+
+<pre><code>@model burritoroll.web.Models.viewmodel_Food
+@{
+    ViewBag.Title = "Index";
+}
+
+Index
+
+Can you dig our burritos?
+BurritoPrice
+
+
+
+Can you dig our tacos?
+
+
+  TacoPrice
+
+
+
+
+
+@section scripts{
+
+    function viewModel() {
+        var self = this;
+
+        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
+        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
+
+        var sortitFunction = function (a, b) {
+            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
+        };
+
+        self.tacosarray.sort(sortitFunction);
+        self.burritosarray.sort(sortitFunction);
+    }
+
+    ko.applyBindings(new viewModel());
+
+}
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -676,59 +781,6 @@ and the process will end up looking like this:<br/>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/oklahoma-city-javascript-group/">Oklahoma City JavaScript Group</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-18T00:00:00-06:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>A <a href="http://okcjs.com/">new user group is starting in Oklahoma City</a> and it is one I find<br/>
-completely fascinating&hellip; a Javascript group! With the monumental surge in popularity of Javascript over the past year or so, this type of group is a can&rsquo;t miss.</p>
-
-<p>Who should attend you might ask? <strong>All of us</strong> in the tech field because it is pretty much everywhere now. Even a database douche bag like myself is attending because I have finally accepted that Javascript is inescapable. Javascript is all over the web, going to be all over the desktop with Windows 8, appearing in the mobile markets, and starting to take over the back end with rad technologies like <a href="http://nodejs.org/">NodeJS</a>.</p>
-
-<p>I&rsquo;m a complete noob with Javascript and I feel completely comfortable coming to this group because with as fast as this technology is moving, we&rsquo;re all noobs and need to learn from each other. This group will not waste your time because</p>
-
-<p><strong>Learning is cumulative.</strong></p>
-
-<p>As a speed freak, my primary interest lies in <a href="http://nodejs.org/">NodeJS</a>, but I know for a fact that I will learn something to help me with Node from <a href="http://www.vancelucas.com/">Vance</a> talking about BDD testing with a testing framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. That is just how it works. He gives, I take, and down the road I give back. Even if you don&rsquo;t know or care a thing about Javascript, it can be a good networking opportunity with some of the people in our community that have a true passion for tech and are trying to push tech boundaries. If that doesn&rsquo;t interest you, you can <a href="http://i.imgur.com/0cFLk.gif">lurk in the back and watch me </a>ask stupid questions as I try and get the info to the highly firewall&#8217;ed learning center that is my brain&hellip; or just show up for a free lunch. You have options.</p>
-
-<p>If you don&rsquo;t go or don&rsquo;t plan to go&hellip;no worries. I&rsquo;ll still love you (as a friend), but in our very fluid industry, dropping an hour a month of your time on something like this is an incredibly way to not go stagnant.</p>
-
-<p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&hellip;. help me learn this stuff!</p>
-
-<p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -750,6 +802,10 @@ completely fascinating&hellip; a Javascript group! With the monumental surge in 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
@@ -763,10 +819,6 @@ completely fascinating&hellip; a Javascript group! With the monumental surge in 
     
       <li class="post">
         <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a>
       </li>
     
   </ul>

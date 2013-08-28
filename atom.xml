@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-16T21:06:39-05:00</updated>
+  <updated>2013-08-27T23:41:10-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Passenger: No Longer in /opt/ion]]></title>
+    <link href="http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
+    <updated>2013-08-27T23:26:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
+    <content type="html"><![CDATA[<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
+
+<h3>Magic Strings of Wonderful Glory</h3>
+
+<p>After you get your feet under you, you might find yourself needing to use more than the base modules that come with the nginx inside Passenger. As I would go to install or update Passenger, I would end up having to run something like this:</p>
+
+<pre><code>gem install passenger
+
+passenger-install-nginx-module --nginx-source-dir=/usr/src/nginx-1.5.3 ---with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with --without-http_scgi_module --without-http_uwsgi_module --without-http_fastcgi_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --with-http_realip_module --add-module=/opt/nginxmodules/headers-more
+</code></pre>
+
+<p>This creates a few issues. Issue #1: I have to keep wget&#8217;ing new versions of source when I need to update.<br/>
+Issue #2: I have a completely different workflow/scripts for managing a passenger nginx instance than I do for a unicorn/puma instance. This variance drives me nuts and be a source of script churn.</p>
+
+<h3>Antacids</h3>
+
+<p>I kept thinking there had to be a better way. Then the sky hash parted and a beam of light shown directly on a ppa from the brightbox team. This package uses a traditional installation of nginx, which means that I can easily install the nginx-extras package and get all my extra modules I need for load balancing and nginx_status. Here is how I do it:</p>
+
+<pre><code>sudo apt-get install -y python-software-properties curl git-core  
+sudo apt-add-repository -y ppa:brightbox/passenger-experimental  
+sudo apt-get update
+
+sudo apt-get install -y nginx-full  
+sudo apt-get install -y nginx-extras  #extras headers and stuff  
+
+\curl -L https://get.rvm.io | bash  
+source ~/.profile  
+
+rvm install 2.0.0-p247  
+rvm --default use 2.0.0-p247  
+
+sudo service nginx restart  
+</code></pre>
+
+<p>Most of how to do this is covered at:<br/>
+<a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Treadmill Desk Setup]]></title>
@@ -678,32 +722,6 @@ and the process will end up looking like this:<br/>
 <a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay"></a></p>
 
 <p>We can see them there for people pulling down changes. You&rsquo;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Oklahoma City JavaScript Group]]></title>
-    <link href="http://datachomp.github.com/archives/oklahoma-city-javascript-group/"/>
-    <updated>2012-01-18T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/oklahoma-city-javascript-group</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>A <a href="http://okcjs.com/">new user group is starting in Oklahoma City</a> and it is one I find<br/>
-completely fascinating&hellip; a Javascript group! With the monumental surge in popularity of Javascript over the past year or so, this type of group is a can&rsquo;t miss.</p>
-
-<p>Who should attend you might ask? <strong>All of us</strong> in the tech field because it is pretty much everywhere now. Even a database douche bag like myself is attending because I have finally accepted that Javascript is inescapable. Javascript is all over the web, going to be all over the desktop with Windows 8, appearing in the mobile markets, and starting to take over the back end with rad technologies like <a href="http://nodejs.org/">NodeJS</a>.</p>
-
-<p>I&rsquo;m a complete noob with Javascript and I feel completely comfortable coming to this group because with as fast as this technology is moving, we&rsquo;re all noobs and need to learn from each other. This group will not waste your time because</p>
-
-<p><strong>Learning is cumulative.</strong></p>
-
-<p>As a speed freak, my primary interest lies in <a href="http://nodejs.org/">NodeJS</a>, but I know for a fact that I will learn something to help me with Node from <a href="http://www.vancelucas.com/">Vance</a> talking about BDD testing with a testing framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. That is just how it works. He gives, I take, and down the road I give back. Even if you don&rsquo;t know or care a thing about Javascript, it can be a good networking opportunity with some of the people in our community that have a true passion for tech and are trying to push tech boundaries. If that doesn&rsquo;t interest you, you can <a href="http://i.imgur.com/0cFLk.gif">lurk in the back and watch me </a>ask stupid questions as I try and get the info to the highly firewall&#8217;ed learning center that is my brain&hellip; or just show up for a free lunch. You have options.</p>
-
-<p>If you don&rsquo;t go or don&rsquo;t plan to go&hellip;no worries. I&rsquo;ll still love you (as a friend), but in our very fluid industry, dropping an hour a month of your time on something like this is an incredibly way to not go stagnant.</p>
-
-<p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&hellip;. help me learn this stuff!</p>
-
-<p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
 ]]></content>
   </entry>
   
