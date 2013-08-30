@@ -117,7 +117,7 @@
 
 <h3>Say Hello To My Little Friend</h3>
 
-<p>Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">Hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
+<p>Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
 
 <pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
 CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
