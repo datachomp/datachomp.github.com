@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-29T22:25:12-05:00</updated>
+  <updated>2013-08-29T22:25:36-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.github.com/archives/extending-sequel-with-hstore/"/>
     <updated>2013-08-29T21:19:00-05:00</updated>
     <id>http://datachomp.github.com/archives/extending-sequel-with-hstore</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and everything in this world of Ruby started clicking.</p>
+    <content type="html"><![CDATA[<p>I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and at that point, everything in this world of Ruby started clicking.</p>
 
 <h3>Iocane Powder</h3>
 
