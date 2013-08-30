@@ -145,12 +145,11 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
 
 #our view:
 &lt;h2&gt;So Cheezy&lt;/h2&gt;
-        &lt;ul&gt;
-        &lt;% @cheesylist.each do |c| %&gt;
-
-        &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
-        &lt;% end %&gt;
-      &lt;/ul&gt;
+  &lt;ul&gt;
+  &lt;% @cheesylist.each do |c| %&gt;
+  &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+  &lt;/ul&gt;
 </code></pre>
 
 <h3>Be still my beating DAL</h3>

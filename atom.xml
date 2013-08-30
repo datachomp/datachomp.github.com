@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-29T23:01:26-05:00</updated>
+  <updated>2013-08-29T23:02:14-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -54,12 +54,11 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
 
 #our view:
 &lt;h2&gt;So Cheezy&lt;/h2&gt;
-        &lt;ul&gt;
-        &lt;% @cheesylist.each do |c| %&gt;
-
-        &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
-        &lt;% end %&gt;
-      &lt;/ul&gt;
+  &lt;ul&gt;
+  &lt;% @cheesylist.each do |c| %&gt;
+  &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
+  &lt;% end %&gt;
+  &lt;/ul&gt;
 </code></pre>
 
 <h3>Be still my beating DAL</h3>
