@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>extending sequel with hstore - DataChomp</title>
+  <title>Extending Sequel with hstore - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
@@ -108,9 +108,13 @@
 
 <div class="entry-content"><p>I&rsquo;ve always been a fan of the cleaner simpler ORM&rsquo;s. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and everything in this world of Ruby started clicking.</p>
 
+<h3>Iocane Powder</h3>
+
+<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Like Iocane Powder, sequel_pg has no smell which means that you don&rsquo;t have to change any of your existing code. You just declare in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder. If you are using something else like MySQL&hellip; this can be a fatal move.</p>
+
 <h3>Say Hello To My Little Friend</h3>
 
-<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">Hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
+<p>Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">Hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
 
 <pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
 CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
