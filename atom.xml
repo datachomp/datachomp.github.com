@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-29T22:26:15-05:00</updated>
+  <updated>2013-08-29T22:27:48-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -22,7 +22,7 @@
 
 <h3>Iocane Powder</h3>
 
-<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Like Iocane Powder, sequel_pg has no smell which means that you don&rsquo;t have to change any of your existing code. All you need to do is declare it in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder making it safe to use. If you are using something else like MySQL&hellip; this can be an extremely fatal move.</p>
+<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Like Iocane Powder, sequel_pg has no smell which means that you don&rsquo;t have to change any of your existing code. All you need to do is declare it in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder making it safe to use. If you&rsquo;re hanging with a gutter punking database like MySQL&hellip; adding sequel_pg can be an extremely fatal move.</p>
 
 <h3>Say Hello To My Little Friend</h3>
 
