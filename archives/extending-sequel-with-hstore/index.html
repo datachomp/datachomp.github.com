@@ -126,7 +126,7 @@ VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado,
 , ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
 </code></pre>
 
-<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence outloud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
+<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence out loud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
 
 <pre><code>require 'sequel'
 Sequel.extension(:pg_hstore, :pg_hstore_ops, :pg_array)
