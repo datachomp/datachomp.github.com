@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-29T23:02:14-05:00</updated>
+  <updated>2013-08-29T23:04:40-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -36,7 +36,7 @@ VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado,
 , ('burritoname =&gt; "MS Server", toppings =&gt; "chicken", price =&gt; "15.50"')
 , ('burritoname =&gt; "Redis", toppings =&gt; "steak, cheese, spinach", price =&gt; "3.50"')
 , ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
-, ('burritoname =&gt; "Oracle", toppings =&gt; "gold, diamonds, elitism", price =&gt; "Call for a Quote"') -- don't run this
+, ('burritoname =&gt; "Oracle", toppings =&gt; "gold, diamonds, elitism", price =&gt; "Call for a Quote"'); -- don't run this
 </code></pre>
 
 <p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence out loud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
