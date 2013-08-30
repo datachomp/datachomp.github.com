@@ -9,8 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Step 1 &ndash; Make sure AHCI is working in the bios. This is used for TRIM and such.
-Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo; &hellip;">
+  <meta name="description" content="So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,59 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo; &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/databasemail-time-to-clean-house/">DatabaseMail Time to Clean House</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
+
+<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
+<code></p>
+
+<pre><code>DECLARE @Retention_days SMALLINT
+    , @Delete_Date DATETIME
+
+SET @Retention_Days = -90  -- 3 months
+SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
+
+EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
+EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -577,99 +629,6 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/who-said-programmers-are-un-date-able/">Who Said Programmers Are Un-date-able ?</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p><strong>First day of the month:</strong>
-<code></p>
-
-<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
-</code></pre>
-
-<p></code>
-<strong>First day of the week:</strong>
-<code></p>
-
-<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
-</code></pre>
-
-<p></code>
-<strong>Last day of the month:</strong>
-<code></p>
-
-<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
-</code></pre>
-
-<p></code>
-<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
-</strong>
-<code></p>
-
-<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
-THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
-    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
-THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
-    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
-</code></pre>
-
-<p></code></p>
-
-<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
-<code></p>
-
-<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
-AS 
-BEGIN
-SET DATEFIRST 1 
-DECLARE @Now DATETIME 
-    ,@LDOTM DATETIME --Last Day Of The Month
-SET @Now= GETDATE() 
-SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
-SELECT 
-@Now AS Today 
-, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
-, @LDOTM AS Last_day_of_month
-, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
-    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
-    ELSE @LDOTM END AS Last_Business_day_of_month 
-END
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -691,6 +650,10 @@ END
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
@@ -704,10 +667,6 @@ END
     
       <li class="post">
         <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
       </li>
     
   </ul>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Unregister Language Bar - DataChomp</title>
+  <title>extending sequel with hstore - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Two guys walk into a language bar, the smart one unregister it If you don&rsquo;t need the language bar, then uninstall it by: Start Run "regsvr32. &hellip;">
+  <meta name="description" content="I&rsquo;ve always been a fan of the cleaner simpler ORM&rsquo;s. When I was getting started with Ruby, Active Record was like putting my App in a fat &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/unregister-language-bar">
+  <link rel="canonical" href="http://datachomp.github.com/archives/extending-sequel-with-hstore">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Unregister Language Bar</h1>
+      <h1 class="entry-title">Extending Sequel With Hstore</h1>
     
     
       <p class="meta">
@@ -99,24 +99,55 @@
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-08-29T21:19:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>I&rsquo;ve always been a fan of the cleaner simpler ORM&rsquo;s. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and everything in this world of Ruby started clicking.</p>
 
-<h2>Two guys walk into a language bar, the smart one unregister it</h2>
+<h3>Say Hello To My Little Friend</h3>
 
-<p>If you don&rsquo;t need the language bar, then uninstall it by:</p>
+<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">Hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
 
-<p><code>Start   Run   "regsvr32.exe /u msutb.dll"    (minus the quotes)</code></p>
+<pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
+CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
 
-<p>Setting god mode in Windows 7<br/>
-Create a folder and rename it to :<br/>
-GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
+INSERT INTO kvburritos (details)
+VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado, peppers", price=&gt; 4.50')
+, ('burritoname =&gt; "MS Server", toppings =&gt; "chicken", price =&gt; "15.50"')
+, ('burritoname =&gt; "Redis", toppings =&gt; "steak, cheese, spinach", price =&gt; "3.50"')
+, ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
+</code></pre>
+
+<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence outloud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
+
+<pre><code>require 'sequel'
+Sequel.extension(:pg_hstore, :pg_hstore_ops, :pg_array)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&gt;'burritomix', :user=&gt;'kencollins')
+</code></pre>
+
+<p>I put that array one on there for free. When we use this in our app, instead of a gutless, soulless, faceless hstore hash from the DB, we&rsquo;re getting awesome, tangible, huggable data:</p>
+
+<pre><code>#our model:
+#get the burritos that have cheese on them. Replace with Avacado in Production
+@cheesylist = DB.fetch("SELECT * FROM kvburritos WHERE lower(details-&gt;'toppings') LIKE '%cheese%';")
+
+#our view:
+&lt;h2&gt;So Cheezy&lt;/h2&gt;
+        &lt;ul&gt;
+        &lt;% @cheesylist.each do |c| %&gt;
+
+        &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
+        &lt;% end %&gt;
+      &lt;/ul&gt;
+</code></pre>
+
+<h3>Be still my beating DAL</h3>
+
+<p>I love this! We can now build as fast as we want with semi structured data&hellip; and when our data becomes important and matures a little bit, we can just as easy break into relational schemas &ndash; Just as God intended.</p>
 </div>
 
 
@@ -125,7 +156,7 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -139,21 +170,15 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-08-29T21:19:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/os/'>OS</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/unregister-language-bar/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/unregister-language-bar/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/extending-sequel-with-hstore/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/extending-sequel-with-hstore/" >Tweet</a>
   
   
   
@@ -162,14 +187,18 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/tempdb-on-the-move/" title="Previous Post: TempDB on the move">&laquo; TempDB on the move</a>
+        <a class="basic-alignment left" href="/archives/phusion-passenger-is-no-longer-in-opt-ion/" title="Previous Post: Passenger: No Longer in /opt/ion">&laquo; Passenger: No Longer in /opt/ion</a>
       
-      
-        <a class="basic-alignment right" href="/archives/who-said-programmers-are-un-date-able/" title="Next Post: Who said programmers are un-date-able ?">Who said programmers are un-date-able ? &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -228,7 +257,10 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/extending-sequel-with-hstore/';
+        var disqus_url = 'http://datachomp.github.com/archives/extending-sequel-with-hstore/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

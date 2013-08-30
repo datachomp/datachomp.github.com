@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-27T23:41:10-05:00</updated>
+  <updated>2013-08-29T22:10:17-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,56 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[extending sequel with hstore]]></title>
+    <link href="http://datachomp.github.com/archives/extending-sequel-with-hstore/"/>
+    <updated>2013-08-29T21:19:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/extending-sequel-with-hstore</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve always been a fan of the cleaner simpler ORM&rsquo;s. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and everything in this world of Ruby started clicking.</p>
+
+<h3>Say Hello To My Little Friend</h3>
+
+<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">Hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
+
+<pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
+CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
+
+INSERT INTO kvburritos (details)
+VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado, peppers", price=&gt; 4.50')
+, ('burritoname =&gt; "MS Server", toppings =&gt; "chicken", price =&gt; "15.50"')
+, ('burritoname =&gt; "Redis", toppings =&gt; "steak, cheese, spinach", price =&gt; "3.50"')
+, ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
+</code></pre>
+
+<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence outloud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
+
+<pre><code>require 'sequel'
+Sequel.extension(:pg_hstore, :pg_hstore_ops, :pg_array)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&gt;'burritomix', :user=&gt;'kencollins')
+</code></pre>
+
+<p>I put that array one on there for free. When we use this in our app, instead of a gutless, soulless, faceless hstore hash from the DB, we&rsquo;re getting awesome, tangible, huggable data:</p>
+
+<pre><code>#our model:
+#get the burritos that have cheese on them. Replace with Avacado in Production
+@cheesylist = DB.fetch("SELECT * FROM kvburritos WHERE lower(details-&gt;'toppings') LIKE '%cheese%';")
+
+#our view:
+&lt;h2&gt;So Cheezy&lt;/h2&gt;
+        &lt;ul&gt;
+        &lt;% @cheesylist.each do |c| %&gt;
+
+        &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
+        &lt;% end %&gt;
+      &lt;/ul&gt;
+</code></pre>
+
+<h3>Be still my beating DAL</h3>
+
+<p>I love this! We can now build as fast as we want with semi structured data&hellip; and when our data becomes important and matures a little bit, we can just as easy break into relational schemas &ndash; Just as God intended.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Passenger: No Longer in /opt/ion]]></title>
@@ -663,65 +713,6 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
 <a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
 
 <p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
-    <link href="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control/"/>
-    <updated>2012-01-28T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/git-and-red-gate-sql-source-control</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
-
-<p><strong>Install Git:</strong><br/>
-Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
-While you are mindlessly clicking &lsquo;next&rsquo; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png"></a></p>
-
-<p><strong>Aside:</strong> I&rsquo;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&rsquo;t nearly as bad as you think once you get going.</p>
-
-<p><strong>Repo Hosting</strong><br/>
-Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
-
-<p><strong>Repo Man</strong><br/>
-In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
-Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout"></a><br/>
-You don&rsquo;t have to do it like that, but again, that is the way I currently like to do it.</p>
-
-<p><strong>Lets hook up the DB!</strong><br/>
-Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&rsquo;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
-From there, go to SSMS and link up the DB to your local repository:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
-
-<p><strong>Command Line Interface &hellip; or whatever</strong><br/>
-Back in powershell (or whatever client you are using) create a new branch for updating our proc.
-<code>git branch dbobjects</code>
-Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
-Go into that branch: <code>git checkout dbobjects</code><br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
-
-<p>Now, we go back to SSMS and commit our changes:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!"></a></p>
-
-<p>Cool! Our &ldquo;dbobjects&rdquo; branch has been committed locally, now we just need to merge it into our master branch!</p>
-
-<p>From there, go back to master: <code>git checkout master</code><br/>
-and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
-After we have merged, we can delete the branch we were working in by running:<br/>
-<code>git branch -d dbobjects</code>
-and the process will end up looking like this:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
-
-<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &ldquo;push&#8221;ing to the origin: <code>git push -u origin master</code><br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin"></a></p>
-
-<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
-<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay"></a></p>
-
-<p>We can see them there for people pulling down changes. You&rsquo;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
 ]]></content>
   </entry>
   
