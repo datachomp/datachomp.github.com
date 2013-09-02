@@ -11,7 +11,7 @@ I've always been a fan of the cleaner simpler ORMs. When I was getting started w
 Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the [sequel_pg][3] gem. Like Iocane Powder, sequel_pg has no smell which means that you don't have to change any of your existing code. All you need to do is declare it in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder making it safe to use. If your life blood is coursing with MySQL then adding sequel_pg can be an extremely fatal move. Though, that may not be a bad thing. *zing!*
 
 ### Say Hello To My Little Friend
-Part of the absolute joy of using an object relational database like Postgres is... well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called [Hstore][4] which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:  
+Part of the absolute joy of using an object relational database like Postgres is... well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called [hstore][4] which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:  
 
 
 	CREATE EXTENSION IF NOT EXISTS hstore;  
@@ -22,7 +22,7 @@ Part of the absolute joy of using an object relational database like Postgres is
 	, ('burritoname => "MS Server", toppings => "chicken", price => "15.50"')
 	, ('burritoname => "Redis", toppings => "steak, cheese, spinach", price => "3.50"')
 	, ('burritoname => "Rethink", toppings => "egg, chorizo, bacon", price => "5.00"')
-	, ('burritoname => "Oracle", toppings => "gold, diamonds, elitism", price => "Call for a Quote"') -- don't run this
+	, ('burritoname => "Oracle", toppings => "gold, diamonds, elitism", price => "Call for a Quote"'); -- don't run this
   
 Yay! I'm not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel...have fun reading that sentence out loud. Fear not, [Jeremy Evans][5] and friends already have our back with extensions you can apply to Sequel. Check it out:
 
@@ -39,15 +39,14 @@ I put that array one on there for free. When we use this in our app, instead of 
 
 	#our view:
 	<h2>So Cheezy</h2>
-            <ul>
-            <% @cheesylist.each do |c| %>
-
-            <li><%= c[:details][:burritoname] %> - <%=  c[:details][:toppings] %></li>
-            <% end %>
-          </ul>
+      <ul>
+      <% @cheesylist.each do |c| %>
+	  <li><%= c[:details][:burritoname] %> - <%=  c[:details][:toppings] %></li>
+      <% end %>
+      </ul>
   
 ### Be still my beating DAL
-I love this! We can now build as fast as we want with semi structured data... and when our data becomes important and matures a little bit, we can just as easy break into relational schemas - Just as God intended.
+I love this! We can now build as fast as we want with semi structured data... and when our data becomes important and matures a little bit, we can easily break into relational schemas - Just as God intended.
 
 
 [1]: http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg
