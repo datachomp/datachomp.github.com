@@ -4,7 +4,7 @@
   <title><![CDATA[Category: OS | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/os/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-16T23:56:20-05:00</updated>
+  <updated>2013-08-30T11:28:35-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -20,55 +20,64 @@
     <id>http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is "How are you running your app on Linux?" As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone's best interest if I just blog it out. Technology moves fast... like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a "has been" Ubuntu 11.10, we're going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We're so bleeding edge you can call us cutters!</p>
+<p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &ldquo;How are you running your app on Linux?&rdquo; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&rsquo;s best interest if I just blog it out. Technology moves fast&hellip; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &ldquo;has been&rdquo; Ubuntu 11.10, we&rsquo;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&rsquo;re so bleeding edge you can call us cutters!</p>
 
-<p>I'm not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together... at last.</p>
+<p>I&rsquo;m not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together&hellip; at last.</p>
 
 <p>SSH into your fancy new Ubuntu box with <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" title="Putty">Putty</a> and Run this:<br/>
 <code>sudo apt-get update &amp;&amp; sudo apt-get -y install git-core curl python-software-properties</code></p>
 
 <p>This is going to let us add the ppa(think of this as a package location) to install a current nginx:<br/>
-<code>sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update &amp;&amp; sudo apt-get -y install nginx</code></p>
+<code></p>
 
-<p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let's kick some other processes to the curb... like that skank MySQL and that wet blanket Apache:<br/>
-<code>sudo update-rc.d mysql remove &amp;&amp;
+<pre><code>sudo add-apt-repository ppa:nginx/stable
+sudo apt-get update &amp;&amp; sudo apt-get -y install nginx
+</code></pre>
+
+<p></code></p>
+
+<p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let&rsquo;s kick some other processes to the curb&hellip; like that skank MySQL and that wet blanket Apache:<br/>
+<code>sudo update-rc.d mysql remove &amp;&amp;<br/>
 sudo update-rc.d apache2 remove &amp;&amp; mkdir mycoolapp</code></p>
 
-<p>Now for the fun part, let's get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
-<code>mkdir mono-2.11
+<p>Now for the fun part, let&rsquo;s get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
+<code></p>
+
+<pre><code>mkdir mono-2.11
 cd mono-2.11
 wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
 chmod 755 install_mono-2.11.sh
 ./install_mono-2.11.sh
-</code></p>
+</code></pre>
+
+<p></code></p>
 
 <p>Now to check that we have the current version, we just run the following:<br/>
 <code>/opt/mono-2.11/bin/mono -V</code></p>
 
-<p>Cool! We're current, but what we really need is to just be able to run "mono -V" anywhere we want. We can do that by modifying our /etc/environment file:<br/>
-`sudo nano /etc/environment</p>
+<p>Cool! We&rsquo;re current, but what we really need is to just be able to run &ldquo;mono -V&rdquo; anywhere we want. We can do that by modifying our /etc/environment file:<br/>
+<code>sudo nano /etc/environment</code></p>
 
-<h1>then insert ":/opt/mono-2.11/bin"  at the end of that path string. Log out, log in for it to take effect.`</h1>
+<h1>then insert &ldquo;:/opt/mono-2.11/bin&rdquo;  at the end of that path string. Log out, log in for it to take effect.`</h1>
 
-<p>I don't now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we're going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new'ed up:</p>
+<p>I don&rsquo;t now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we&rsquo;re going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new'ed up:</p>
 
 <ul>
 <li>Add a controller</li>
 <li>Add a view based on that controller</li>
 <li>Hit F5 and make sure it works</li>
-<li>Remove the EntityFramework.dll because we love our data and don't want to give our app a low self esteem</li>
+<li>Remove the EntityFramework.dll because we love our data and don&rsquo;t want to give our app a low self esteem</li>
 <li>Once removed, hit F5 again</li>
 </ul>
 
 
-<p>If everything is still running, then do a file system deploy to a local folder of your choice. Go check out what was just deployed, specifically the '/bin' folder. We want to remove the Web.Infrastructure.dll because Mono already has this built into its GAC. High Five Mono! With that out of the way, we are going to copy that deployment over to the 'mycoolapp' folder on our Linux server using <a href="http://winscp.net/eng/index.php" title="Winscp">WinsCP</a>. While I don't have a WordPress plugin to read your mind, I hear you thinking "Rob, surely there are better ways to do this." and you are right. However, this post is long enough and that topic will likely go into its own post.</p>
+<p>If everything is still running, then do a file system deploy to a local folder of your choice. Go check out what was just deployed, specifically the &lsquo;/bin&rsquo; folder. We want to remove the Web.Infrastructure.dll because Mono already has this built into its GAC. High Five Mono! With that out of the way, we are going to copy that deployment over to the &lsquo;mycoolapp&rsquo; folder on our Linux server using <a href="http://winscp.net/eng/index.php" title="Winscp">WinsCP</a>. While I don&rsquo;t have a WordPress plugin to read your mind, I hear you thinking &ldquo;Rob, surely there are better ways to do this.&rdquo; and you are right. However, this post is long enough and that topic will likely go into its own post.</p>
 
-<p>SSH back into your linux box, and 'cd mycoolapp'. "cd" into your "mycoolapp" directory, type in 'ls' to see the contents and make sure your app made it over. Once we see it, we can do a cassini like run of it by typeing out xsp4 and hitting enter. Try and hit your box on the port 8080 (xsp4 should tell you what it is running on) and see if you can see your app:</p>
+<p>SSH back into your linux box, and &lsquo;cd mycoolapp&rsquo;. &ldquo;cd&rdquo; into your &ldquo;mycoolapp&rdquo; directory, type in &lsquo;ls&rsquo; to see the contents and make sure your app made it over. Once we see it, we can do a cassini like run of it by typeing out xsp4 and hitting enter. Try and hit your box on the port 8080 (xsp4 should tell you what it is running on) and see if you can see your app:</p>
 
 <p><img src="http://files.datachomp.com/AppDev/mono/monoapp.png" alt="" /></p>
 
-<p>Yay! Our code works and we're so open source now that we can wear tight jeans at Starbucks and put Bon Iver on our ipod... just like those <a href="http://wekeroad.com/" title="Lead Rails Wanker">Rails wankers</a>! As for nginx and running our site as a Mono service, we can just use some of the nice documentation over at the Mono site:</p>
+<p>Yay! Our code works and we&rsquo;re so open source now that we can wear tight jeans at Starbucks and put Bon Iver on our ipod&hellip; just like those <a href="http://wekeroad.com/" title="Lead Rails Wanker">Rails wankers</a>! As for nginx and running our site as a Mono service, we can just use some of the nice documentation over at the Mono site:</p>
 
 <p>Nginx config:<br/>
 <a href="http://www.mono-project.com/FastCGI_Nginx" title="FastCGI_Nginx">http://www.mono-project.com/FastCGI_Nginx</a></p>
@@ -102,28 +111,33 @@ Start run live.sysinternals.comtools</p>
     <content type="html"><![CDATA[<h1></h1>
 
 <p><strong>Misc:</strong><br/>
-<a href="http://www.clamxav.com/">ClamXav</a> - antivirus<br/>
-<a href="http://www.evernote.com/">Evernote</a> - for note taking<br/>
-<a href="http://handbrake.fr/">Handbrake</a> - for media conversion<br/>
-<a href="http://www.libreoffice.org/download/">LibreOffice</a> - for working on office docs... though starting to use Keynote for presentations<br/>
-<a href="http://www.titanium.free.fr/">Onyx</a> - mac maintenance app<br/>
-<a href="http://www.videolan.org/vlc/">VLC</a> - for watching media on the mac<br/>
-<a href="http://www.transmissionbt.com/" title="Transmission">Transmission</a> - for bittorrent</p>
+<a href="http://www.clamxav.com/">ClamXav</a> &ndash; antivirus<br/>
+<a href="http://www.evernote.com/">Evernote</a> &ndash; for note taking<br/>
+<a href="http://handbrake.fr/">Handbrake</a> &ndash; for media conversion<br/>
+<a href="http://www.libreoffice.org/download/">LibreOffice</a> &ndash; for working on office docs&hellip; though starting to use Keynote for presentations<br/>
+<a href="http://www.titanium.free.fr/">Onyx</a> &ndash; mac maintenance app<br/>
+<a href="http://www.videolan.org/vlc/">VLC</a> &ndash; for watching media on the mac<br/>
+<a href="http://www.shazoor.in/post/30223922874/vox-for-mountain-lion-fixed">Vox</a> &ndash; nice clean music player<br/>
+<a href="http://www.transmissionbt.com/" title="Transmission">Transmission</a> &ndash; for bittorrent<br/>
+<a href="http://imageoptim.com/">ImageOptim</a> &ndash; image compression<br/>
+<a href="http://www.hogbaysoftware.com/products/writeroom">WriteRoom</a> &ndash; for writing</p>
 
 <p><strong>Internet:</strong><br/>
-<a href="http://adium.im/">Adium</a> - for XMPP and stuff<br/>
-<a href="http://colloquy.info/">Colloquy</a> - for IRC<br/>
-<a href="http://cyberduck.ch/">CyberDuck</a> - for FTPness<br/>
-<a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a> - for browsing<br/>
-<a href="http://www.opera.com/">Opera</a> - for fast browsing<br/>
+<a href="http://adium.im/">Adium</a> &ndash; for XMPP and stuff<br/>
+<a href="http://colloquy.info/">Colloquy</a> &ndash; for IRC<br/>
+<a href="http://cyberduck.ch/">CyberDuck</a> &ndash; for FTPness<br/>
+<a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a> &ndash; for browsing<br/>
+<a href="http://www.opera.com/">Opera</a> &ndash; for fast browsing<br/>
 Skype<br/>
-- <a href="http://www.ecamm.com/mac/callrecorder/">Call Recorder</a> - for recording Skype calls</p>
+&ndash; <a href="http://www.ecamm.com/mac/callrecorder/">Call Recorder</a> &ndash; for recording Skype calls<br/>
+<a href="https://www.macupdate.com/app/mac/9517/chicken-of-the-vnc">Chicken of the VNC</a> &ndash; for remoting</p>
 
 <p><strong>Dev:</strong><br/>
-<a href="http://www.mono-project.com/Main_Page">Mono</a> - because I'm a C# hack<br/>
-<a href="http://www.jetbrains.com/ruby/">RubyMine</a> - to help me feel less bad at Ruby<br/>
-<a href="http://macromates.com/">TextMate</a> - Editing things<br/>
-<a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> to virtualize things</p>
+<a href="http://www.sublimetext.com/2">Sublime Text</a> &ndash; text editor <br/>
+<a href="http://postgresapp.com/">Postgres App</a> &ndash; best way to run postgres on osx<br/>
+<a href="http://macromates.com/">TextMate</a> &ndash; Editing things<br/>
+<a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> to virtualize things<br/>
+<a href="http://www.iterm2.com/#/section/home">iterm2</a> &ndash; cooler terminal</p>
 ]]></content>
   </entry>
   
@@ -148,20 +162,20 @@ sconfig.cmd tool</p>
     <id>http://datachomp.github.com/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>Amazon has just done something amazing... <a href="http://aws.amazon.com/free/">Amazingness</a>... They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig's comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
+<p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
 
 <p>So what can I do with this you might ask? Here are some ideas: (I am doing these off the top of my head so feel free to criticize them by suggesting a better ideas)</p>
 
 <ol>
-<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the 'will this mess up my system' fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
-<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon's simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA's, NOSQL stands for "Not Only SQL" not for No - SQL as in SQL Void.</p></li>
+<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the &lsquo;will this mess up my system&rsquo; fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
+<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon&rsquo;s simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA&rsquo;s, NOSQL stands for &ldquo;Not Only SQL&rdquo; not for No &ndash; SQL as in SQL Void.</p></li>
 <li><p>Embrace the awesome of Amazon S3. Ever wonder why Dropbox/JungleDisk and various other companies can give you so much storage for so cheap? Amazon S3 is pretty much the answer to that question. I typically use the cheapest hosting plans possible and S3 as a CDN to smoke/mirror performance.</p></li>
-<li><p>SQL Server testing - Microsoft provides trial software for pretty much all their projects. If you are curious about ... say playing with some feature of replication or maybe wondering about online indexing ... Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
-<li><p>.Net testing or running a service - With shared hosting, I don't have a way of keeping an ongoing on demand service per say... So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app.... Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don't really support SQL Server SSIS... so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
+<li><p>SQL Server testing &ndash; Microsoft provides trial software for pretty much all their projects. If you are curious about &hellip; say playing with some feature of replication or maybe wondering about online indexing &hellip; Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
+<li><p>.Net testing or running a service &ndash; With shared hosting, I don&rsquo;t have a way of keeping an ongoing on demand service per say&hellip; So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app&hellip;. Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don&rsquo;t really support SQL Server SSIS&hellip; so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
 </ol>
 
 
-<p>Now, some of this isn't without a learning curve, but we are in the software development industry... if we can't navigate learning curves or don't even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
+<p>Now, some of this isn&rsquo;t without a learning curve, but we are in the software development industry&hellip; if we can&rsquo;t navigate learning curves or don&rsquo;t even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
 ]]></content>
   </entry>
   

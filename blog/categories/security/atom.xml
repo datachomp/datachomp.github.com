@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Security | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/security/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-16T23:56:20-05:00</updated>
+  <updated>2013-08-30T11:28:35-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -22,11 +22,11 @@
 
 <p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
 
-<p>In Cydia, go to the "Search" section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
+<p>In Cydia, go to the &ldquo;Search&rdquo; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
 From there, type in <strong><em>su root</em></strong> and hit return. This changes us to the root user so we can access/change the password for it. It will then prompt you to type in that global root password of <strong><em>alpine</em></strong> . Once you are root, just type <strong><em>passwd</em></strong> then hit return. From there, you will need to enter, then re-enter your password and the change should take place. Simply type in <strong><em>exit</em></strong> to leave the root account and get back to the standard prompt.</p>
 
 <p><strong>Another Notch: Changing the Mobile User</strong><br/>
-You should also consider doing the same thing for your Mobile user as it uses a global password of "alpine" as well<br/>
+You should also consider doing the same thing for your Mobile user as it uses a global password of &ldquo;alpine&rdquo; as well<br/>
 You start the MobileTerminal app as the Mobile user, so to change the password for it simply type <strong>*passwd</strong> Then type alpine when it prompts, then fill out the stuff for the new password and start sleeping better at night knowing that you have just put up a basic security fence for your sweet sweet jailbroken phone.
 For more information, check out these handy posts:</p>
 
@@ -41,16 +41,16 @@ For more information, check out these handy posts:</p>
     <id>http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign's prices, product, or just the general crappy nature of the company... but I will list alternatives:</p>
+<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
 
 <p>The current ones I use and it rocks:<br/>
 For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
 For other services/protocols I tend to use:<br/>
 <a href="http://www.cacert.org/">CA Cert Org</a></p>
 
-<p>I don't think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
 
-<p>Equally excellent CA's that are not free:<br/>
+<p>Equally excellent CA&rsquo;s that are not free:<br/>
 <a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
 <a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
 <a href="http://www.geotrust.com/">Geotrust.com</a></p>

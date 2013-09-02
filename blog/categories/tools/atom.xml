@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Tools | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/tools/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-16T23:56:20-05:00</updated>
+  <updated>2013-08-30T11:28:35-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -20,22 +20,25 @@
     <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from 'important' to essential. There are various products out there that can accomplish this; I'm going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
+<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
 
-<p>On our Ubuntu box, after we finish the easy as candy install, we're going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
+<p>On our Ubuntu box, after we finish the easy as candy install, we&rsquo;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
 
-<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we're going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
-<code>
-sudo apt-get install openjdk-7-jre
+<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&rsquo;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
+<code></p>
+
+<pre><code>sudo apt-get install openjdk-7-jre
 wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
 tar xfz TeamCity-7.0.2a.tar.gz
 cd Teamcity
 sudo ./bin/runAll.bat start
-</code></p>
+</code></pre>
+
+<p></code></p>
 
 <p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
 
-<p>Yay! Everything works! You're also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt's post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I'll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
+<p>Yay! Everything works! You&rsquo;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&rsquo;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&rsquo;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
 ]]></content>
   </entry>
   
@@ -62,31 +65,31 @@ Start run live.sysinternals.comtools</p>
     <id>http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times "we'll see this later" (like with SQL Server Profiler) and we never see it... that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We'll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
+<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
 
 <p><strong>Questions:</strong>*<br/>
-<strong>How do you get the stats to appear in the "messages" window?</strong><br/>
+<strong>How do you get the stats to appear in the &ldquo;messages&rdquo; window?</strong><br/>
 Those stats come from the following commands:<br/>
 SET STATISTICS IO ON;<br/>
 SET STATISTICS TIME ON;<br/>
-If you don't want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
-Tools -> Options -> Query Execution -> SQL Server -> Advanced<br/>
+If you don&rsquo;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
+Tools &ndash;> Options &ndash;> Query Execution &ndash;> SQL Server &ndash;> Advanced<br/>
 then check:<br/>
 SET STATISTICS IO ON;<br/>
 SET STATISTICS TIME ON;
 <strong>Lock Pages in Memory, is that always good?</strong><br/>
-No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/
+No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: <a href="http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/">http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/</a>
 <strong>Why no filtered index on Posts?</strong><br/>
-In our first scenario, to get the front page up... we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
+In our first scenario, to get the front page up&hellip; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
 
-<p><strong>What were you using for "Intellisense" in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
+<p><strong>What were you using for &ldquo;Intellisense&rdquo; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
 
 <p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
 
 <p><strong>Tech used in the series:</strong><br/>
 Visual Studio 2010 / MVC3 / EF 4.1<br/>
 SQL Server 2008 R2 / Management Studio<br/>
-<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> "Intellisense" and "snippets" in Management Studio<br/>
+<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &ldquo;Intellisense&rdquo; and &ldquo;snippets&rdquo; in Management Studio<br/>
 <a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
 <a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
 <a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
@@ -102,23 +105,23 @@ SQL Server 2008 R2 / Management Studio<br/>
     <id>http://datachomp.github.com/archives/my-subversion-ignore-list-for-visual-studio-anhksvn</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>Disclaimer: I didn't write/create these exclusions...I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn't bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
+<p>Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn&rsquo;t bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
 
 <p><strong>UPDATE:</strong> Jim motivated me to actually spend the extra time to track down the actual links I used.  <a href="http://stackoverflow.com/questions/85353/best-general-svn-ignore-pattern" title="Link1">Link1</a> and  <a href="http://stackoverflow.com/questions/4375971/tortoise-svn-global-ignore-pattern" title="Link2">Link2</a></p>
 
-<p>I use  <a href="http://ankhsvn.open.collab.net/" title="AnkhSVN">AhnkSVN</a> as my visual studio source control plugin.  I right click on the solution,  select 'subversion',  select 'solution properties'.  That brings up a box and you will want to click 'add'.  From there,  select  svn.Ignore  and copy/paste the below:</p>
+<p>I use  <a href="http://ankhsvn.open.collab.net/" title="AnkhSVN">AhnkSVN</a> as my visual studio source control plugin.  I right click on the solution,  select &lsquo;subversion&rsquo;,  select &lsquo;solution properties&rsquo;.  That brings up a box and you will want to click &lsquo;add&rsquo;.  From there,  select  svn.Ignore  and copy/paste the below:</p>
 
 <p>Solution Level:</p>
 
 <p>*.csproj.user Bin obj Obj Release debug Debug release</p>
 
-<p>Note: I don't use Reshaper, if you do, there are other exclusions you will want to add</p>
+<p>Note: I don&rsquo;t use Reshaper, if you do, there are other exclusions you will want to add</p>
 
 <p>In <a href="http://tortoisesvn.tigris.org/" title="TortoiseSVN">Tortoisesvn</a>,  my exclusion list is :</p>
 
 <p><em>.o </em>.lo <em>.la </em>.al .libs <em>.so *.so.[0-9]* </em>.a <em>.pyc </em>.pyo <em>.rej </em>~ #<em># .#</em> .<em>.swp .DS_Store </em>.csproj.user Bin obj Obj Release debug Debug release *.suo</p>
 
-<p>When you go into your TortoiseSVN settings,  on the 'general' tab,  copy/paste that into the  'Global Ignore Pattern:' box.</p>
+<p>When you go into your TortoiseSVN settings,  on the &lsquo;general&rsquo; tab,  copy/paste that into the  'Global Ignore Pattern:&lsquo; box.</p>
 ]]></content>
   </entry>
   
@@ -129,9 +132,9 @@ SQL Server 2008 R2 / Management Studio<br/>
     <id>http://datachomp.github.com/archives/sql-server-variety-hour</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn't have any links in my slides, I figured I would link up the stuff we talked about:</p>
+<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
 
-<p>WhoIsActive - <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
+<p>WhoIsActive &ndash; <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
 
 <p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
 
@@ -145,7 +148,7 @@ SQL Server 2008 R2 / Management Studio<br/>
 
 <p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
 
-<p>Virtualization - <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
+<p>Virtualization &ndash; <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
 ]]></content>
   </entry>
   

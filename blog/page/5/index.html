@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to &hellip;">
+  <meta name="description" content="I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,6 +86,295 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/archives/lets-open-some-new-doors-mvc/">Lets Open Some New Doors &#8211; MVC</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time constraint or any number of excuses. However, last night I decided to change all that and really give MVC a fair chance. The more I tinker around in Ruby and iphone development the more I buy into the validity of the MVC approach. Here is a bit of the technology roadmap I want to drive down:</p>
+
+<p><a href="http://mvccontrib.codeplex.com/wikipage?title=T4MVC">T4</a> &ndash; I hear about it, time to see what the fuss is about. Besides, <a href="http://twitter.com/davidebbo">David Ebbo</a> is the man.</p>
+
+<p><a href="http://code.google.com/p/elmah/">Elmah</a> will be a proof of concept before I roll into <a href="http://www.exceptioneer.com/public/WhatIsExceptioneer.aspx">Exceptioneer</a>.</p>
+
+<p><a href="https://aws.amazon.com/s3/">S3</a> &ndash; I have already started playing around with this and love it. It will likely be serving the images and public files.</p>
+
+<p>Routing &ndash; a vanity name like implementation for users will be my head first dive into routing.</p>
+
+<p>Model &ndash; As a DBA, the data layer and ADO are my bread and butter. But it is time to step forward and see what the fuss is about. I will likely be trying out EF and <a href="http://subsonicproject.com/">Subsonic</a>.</p>
+
+<p>Charting &ndash; I&rsquo;m a stat nerd, so I will be capturing stats, I hope to be able to throw some of them into the charting control.</p>
+
+<p>NoSQL &ndash; I&rsquo;m not sure how to work it in yet, but at some point, I am planning on having a <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>/<a href="http://ravendb.net/">RavenDB</a>/<a href="http://www.mongodb.org/">MongoDB</a> section just to explore and have knowledge outside of a half dozen tech articles.</p>
+
+<p>Lastly, it is time to branch away from Web services and start playing around with WCF. This will really come into play for the iphone app being done in <a href="http://monotouch.net/">MonoTouch</a> which really is an exciting piece of work.</p>
+
+<p>Once we are done with ASP.NET MVC, I plan to move to Ruby 3 and try and to build the same apps in that. Should be a great compare and contrast.</p>
+
+<p>So that is it for now, time to see if I can stick to it and see this through&hellip; or give up and step back into web forms.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/early-mvc-pitfalls-shared-hosting-and-action-link/">Early MVC Pitfalls &#8211; Shared Hosting and Action Link</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I have a great hosting provider &ndash; <a href="http://www.arvixe.com/">Arvixe</a> and they are on the ball for both my Linux hosting as well as my .NET stuff. So as I started cranking out apps and went to deploy I knew I could count on them to handle the hosting task at hand. So, compile&hellip; deploy&hellip; and we&rsquo;re erroring out. Oh! I forgot to set my site to integrated pipeline&hellip;. fix that, drop some control f5 and still an issue. So, CustomErrors=OFF, deploy and see that it is an error with the System.Web.MVC assembly. That&rsquo;s odd, well a google searching showed that this is a bit of known error. To fix, you simply click on the properties of that assembly, and set the &ldquo;copy local&rdquo; property to true. More information can be found here:<br/>
+<a href="http://www.britishdeveloper.co.uk/2010/05/mvc2-deploy-could-not-load-file-or.html">This dudes blog</a><br/>
+and from Haacked himself: <a href="http://haacked.com/archive/2008/11/03/bin-deploy-aspnetmvc.aspx">clickey</a></p>
+
+<p>MVC ActionLink returns ?Length= &ndash; This was a real WTF for me. Turns out that if you specify a htmlattributes overload for ActionLink and don&rsquo;t put in something like null for the route values overload, it will append some stupid length=# string to your href.</p>
+
+<p><code></p>
+
+<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", new { @class = "active" })%&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>Generates the following html:
+<code></p>
+
+<pre><code>&lt;a class="active" href="/?Length=4"&gt;Home&lt;/a&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>So we throw in null for the routeValues overload:
+<code></p>
+
+<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", null ,new { @class = "active" })%&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>and we get the html we want.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/upload-file-to-s3-with-asp-net/">Upload File to S3 With ASP.NET</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-21T00:00:00-05:00" pubdate data-updated="true">Sep 21<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
+WebForm:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.  
+</code></pre>
+
+<p>Code behind:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  protected void Button1_Click&amp;#40;object sender, EventArgs e&amp;#41;
+
+3.          &amp;#123;
+
+4.              string result = Program.GetServiceOutput&amp;#40;&amp;#41;;
+
+5.              Label1.Text = result;
+
+6.          &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>Class file for AWSCalls;</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  using Amazon;   // these are part of the AWSSDK.dll that you add to the project
+
+3.  using Amazon.S3;
+
+4.  using Amazon.S3.Model;
+
+5.  ....
+
+6.  public static void SendFileToS3&amp;#40;string filename, Stream ImgStream&amp;#41;
+
+7.          &amp;#123;
+
+8.              string accessKey = "Access Key here!";
+
+9.              string secretAccessKey = "Secret Key goes here!";
+
+10.             string bucketName = "Bucket Name goes Here!";
+
+11.             string keyName = filename; 
+
+12. &amp;nbsp;
+
+13.             AmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client&amp;#40;accessKey, secretAccessKey&amp;#41;;
+
+14.             PutObjectRequest request = [new][1] PutObjectRequest&amp;#40;&amp;#41;;
+
+15. &amp;nbsp;
+
+16.             request.WithInputStream&amp;#40;ImgStream&amp;#41;;
+
+17. &amp;nbsp;
+
+18.             request.WithBucketName&amp;#40;bucketName&amp;#41;;
+
+19.             request.WithKey&amp;#40;keyName&amp;#41;;
+
+20.             request.StorageClass = S3StorageClass.ReducedRedundancy; //set storage to reduced redundancy
+
+21.             client.PutObject&amp;#40;request&amp;#41;;
+
+22.         &amp;#125;
+</code></pre>
+
+<p>So there you have it! We take a file, throw it into a page&hellip;. and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/installing-mongodb-on-ubuntu/">Installing MongoDB on Ubuntu</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-04T00:00:00-05:00" pubdate data-updated="true">Sep 4<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>
+
+<p>Navigate to: /etc/apt/sources.list<br/>
+Then: sudo pico sources.list<br/>
+In your sources, add the following line: deb <a href="http://downloads.mongodb.org/distros/ubuntu">http://downloads.mongodb.org/distros/ubuntu</a> 10.4 10gen<br/>
+Save/exit the file, then add the key: sudo apt-key adv &mdash;keyserver keyserver.ubuntu.com &mdash;recv 7F0CEB10</p>
+
+<p>Once that is done, you&rsquo;re ready to update and install.<br/>
+Update: sudo apt-get update<br/>
+Install: sudo apt-get install mongodb-stable</p>
+
+<p>Well now what?<br/>
+If you need to configure MongoDB further, then navigate to: /etc/mongodb.conf<br/>
+If you need to add/remove/mess with the database, it lives in: /var/lib/mongodb<br/>
+Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/archives/jquery-cdn-failover/">JQuery CDN Failover</a></h1>
     
     
@@ -111,7 +400,7 @@
 
   <div class="entry-content"><h1></h1>
 
-<p>With &#8216;high availability&#8217; being a nicely stressed buzzword coupled with issues in the &#8216;cloud&#8217;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&#8217;t dig into the reasons for using a CDN for jquery but will plug the usual - It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&#8230;. and it is quite easy really since 1.4 :
+<p>With &lsquo;high availability&rsquo; being a nicely stressed buzzword coupled with issues in the &lsquo;cloud&rsquo;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&rsquo;t dig into the reasons for using a CDN for jquery but will plug the usual &ndash; It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&hellip;. and it is quite easy really since 1.4 :
 <code></p>
 
 <pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
@@ -164,9 +453,9 @@
 
   <div class="entry-content"><h1></h1>
 
-<p>As you start playing with SQL CLR, you learn pretty quick that the built in namespaces can be a little handicapping. You can skip this by creating an &#8216;unsafe&#8217; assembly in your database. In the following demo, we&#8217;re going to load a 3rd party .library for XMPP messaging into our SQL Server instance, and use a stored procedure to send XMPP messages.</p>
+<p>As you start playing with SQL CLR, you learn pretty quick that the built in namespaces can be a little handicapping. You can skip this by creating an &lsquo;unsafe&rsquo; assembly in your database. In the following demo, we&rsquo;re going to load a 3rd party .library for XMPP messaging into our SQL Server instance, and use a stored procedure to send XMPP messages.</p>
 
-<p>The XMPP library I&#8217;ll be using is <a href="http://www.ag-software.de/agsxmpp-sdk.html">agsXMPP</a>. As you&#8217;ll see in my code below, I tend to just use a common shared library folder so I can house various libraries and it makes it easier from an organizational standpoint to cram them into the database. I use the following code to &#8216;cram&#8217; the library into my instance so I&#8217;ll be able to use it in a CLR procedure:</p>
+<p>The XMPP library I&rsquo;ll be using is <a href="http://www.ag-software.de/agsxmpp-sdk.html">agsXMPP</a>. As you&rsquo;ll see in my code below, I tend to just use a common shared library folder so I can house various libraries and it makes it easier from an organizational standpoint to cram them into the database. I use the following code to &lsquo;cram&rsquo; the library into my instance so I&rsquo;ll be able to use it in a CLR procedure:</p>
 
 <p><code></p>
 
@@ -251,7 +540,7 @@ public partial class StoredProcedures
 
   <div class="entry-content"><h1></h1>
 
-<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&#8217;s get started:</p>
+<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&rsquo;s get started:</p>
 
 <p>First, we need to enable CLR on our database:</p>
 
@@ -264,7 +553,7 @@ GO
 <p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
 <img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
 
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &lsquo;database&rsquo; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
 <code></p>
 
 <pre><code>using System;
@@ -286,7 +575,7 @@ public partial class StoredProcedures
 
 <p></code></p>
 
-<p>Let&#8217;s throw in some code:
+<p>Let&rsquo;s throw in some code:
 <code></p>
 
 <pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
@@ -298,8 +587,8 @@ public partial class StoredProcedures
 
 <p></code></p>
 
-<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &#8216;Chomp&#8217; X 4.<br/>
-Compile, and deploy. Gotcha - For those of us that use VS 2010 our default framework is 4.0 &#8230;. this won&#8217;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
+<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &lsquo;Chomp&rsquo; X 4.<br/>
+Compile, and deploy. Gotcha &ndash; For those of us that use VS 2010 our default framework is 4.0 &hellip;. this won&rsquo;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
 Make sure you are in the proper database and run it:
 <code></p>
 
@@ -310,7 +599,7 @@ SELECT @words
 
 <p></code></p>
 
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:
+<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&rsquo;s. If it didn&rsquo;t work for you then:
 <code></p>
 
 <pre><code>GOTO START;
@@ -356,10 +645,10 @@ In Part 3, I will likely look at performance and some other items to help round 
 
   <div class="entry-content"><h1></h1>
 
-<p>Trust me when I say I&#8217;m no stranger to abusing repeat methods in code behinds&#8230; however, it does reach a point where something has to give. When you reach that point, your solution is a &#8216;helper&#8217; class.</p>
+<p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
 
 <p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called &#8216;Helpers&#8217; and added a new class object called &#8216;StringManip&#8217;.<br/>
+In my solution, I created a folder called &lsquo;Helpers&rsquo; and added a new class object called &lsquo;StringManip&rsquo;.<br/>
 Once that was completed, I added a few methods like:
 <code></p>
 
@@ -385,7 +674,7 @@ Once that was completed, I added a few methods like:
 
 <p></code></p>
 
-<p>If the above isn&#8217;t enough to get you rolling&#8230;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
+<p>If the above isn&rsquo;t enough to get you rolling&hellip;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
 </div>
   
   
@@ -425,11 +714,11 @@ Once that was completed, I added a few methods like:
 
 <p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
 
-<p>In Cydia, go to the &#8220;Search&#8221; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
+<p>In Cydia, go to the &ldquo;Search&rdquo; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
 From there, type in <strong><em>su root</em></strong> and hit return. This changes us to the root user so we can access/change the password for it. It will then prompt you to type in that global root password of <strong><em>alpine</em></strong> . Once you are root, just type <strong><em>passwd</em></strong> then hit return. From there, you will need to enter, then re-enter your password and the change should take place. Simply type in <strong><em>exit</em></strong> to leave the root account and get back to the standard prompt.</p>
 
 <p><strong>Another Notch: Changing the Mobile User</strong><br/>
-You should also consider doing the same thing for your Mobile user as it uses a global password of &#8220;alpine&#8221; as well<br/>
+You should also consider doing the same thing for your Mobile user as it uses a global password of &ldquo;alpine&rdquo; as well<br/>
 You start the MobileTerminal app as the Mobile user, so to change the password for it simply type <strong>*passwd</strong> Then type alpine when it prompts, then fill out the stuff for the new password and start sleeping better at night knowing that you have just put up a basic security fence for your sweet sweet jailbroken phone.
 For more information, check out these handy posts:</p>
 
@@ -471,210 +760,19 @@ For more information, check out these handy posts:</p>
 
   <div class="entry-content"><h1></h1>
 
-<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&#8217;s prices, product, or just the general crappy nature of the company&#8230; but I will list alternatives:</p>
+<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
 
 <p>The current ones I use and it rocks:<br/>
 For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
 For other services/protocols I tend to use:<br/>
 <a href="http://www.cacert.org/">CA Cert Org</a></p>
 
-<p>I don&#8217;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
 
-<p>Equally excellent CA&#8217;s that are not free:<br/>
+<p>Equally excellent CA&rsquo;s that are not free:<br/>
 <a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
 <a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
 <a href="http://www.geotrust.com/">Geotrust.com</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/databasemail-time-to-clean-house/">DatabaseMail Time to Clean House</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
-
-<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
-<code></p>
-
-<pre><code>DECLARE @Retention_days SMALLINT
-    , @Delete_Date DATETIME
-
-SET @Retention_Days = -90  -- 3 months
-SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
-
-EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
-EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-solid-state-drives/">Getting Started With Solid State Drives</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-26T00:00:00-05:00" pubdate data-updated="true">Jun 26<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Step 1 - Make sure AHCI is working in the bios. This is used for TRIM and such.<br/>
-Step 2 - Make sure the SSD is aligned. Pull up &#8220;msinfo32&#8221;, navigate to Components -> Storage -> Disks, and look for &#8220;Partition Starting Offset&#8221;. Use those numbers and <a href="http://www.techpowerup.com/articles/other/157">Techpowerup - SSD Alignment Calculator</a> to make sure your disk is aligned.</p>
-
-<p>Step 3 - Make sure TRIM is enabled. At the command prompt, type-> &#8220;fsutil behavior query disabledeletenotify&#8221; A 0 means that TRIM is on, a 1 means it is off. To turn Trim on type, &#8220;fsutil behavior set disabledeletenotify 0&#8221; .</p>
-
-<p>Step 4 - Use programs like Filemon and such to see if you have something that is doing heavy writes on your SSD. Depending on what they are, you might want to move them to something else.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/ssis-and-the-embedded-delimiter-fail/">SSIS and the Embedded Delimiter Fail</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&#8217;s a huge deal in SQL Server 2005 and SQL Server 2005 SSIS. Of course, it is a bit of a mystery while they keep removing functionality but that isn&#8217;t the point of this post. The point of this post is to show a solution&#8230;</p>
-
-<p>The solution comes by way of the Microsoft SQL Server Community Samples: Integration Services (yes, it is a long name for &#8216;Look dudes! We are giving you a work around!&#8217; but it works non the less).</p>
-
-<p>http://sqlsrvintegrationsrv.codeplex.com/</p>
-
-<p>I tried the delimited file reader in a variety of scenarios and it passed with flying colors. How nice it is to be able do the same imports that were effortless in SQL 2000.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/how-to-test-email-with-port-25-blocked/">How to Test Email With Port 25 Blocked</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-21T00:00:00-06:00" pubdate data-updated="true">Feb 21<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&#8217;t a real deal breaker as when I&#8217;m coding/debugging I&#8217;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
-
-<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
-<code></p>
-
-<pre><code>&lt;system.net&gt;
-    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
-        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
-    &lt;/mailSettings&gt;
-&lt;/system.net&gt;
-</code></pre>
-
-<p></code>
-At this point you just check the local directory for email when you are testing your application. If you don&#8217;t have system for production deployments, then don&#8217;t forget to change to the network delivery when you deploy.</p>
 </div>
   
   
@@ -694,32 +792,32 @@ At this point you just check the local directory for email when you are testing 
 </div>
 <aside class="sidebar">
 	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
-	<a href="http://tekpub.com/productions/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
 	<br/>
-	<a href="http://tekpub.com/productions/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>	
   
     <section>
   <h1>Recent Posts</h1>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -735,7 +833,7 @@ At this point you just check the local directory for email when you are testing 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 

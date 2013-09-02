@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="The more I&#8217;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing them actually use MySQL &hellip;">
+  <meta name="description" content="The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -106,11 +106,11 @@
   </header>
 
 
-<div class="entry-content"><p>The more I&#8217;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&#8217;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
+<div class="entry-content"><p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
 
-<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> - They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&#8217;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
+<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
 
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&#8217;s and then it barfed on a &#8216;mysql&#8217; dependency (not to be confused with mysql2 gem dependency). I installed the &#8216;mysql&#8217; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
+<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&rsquo;s and then it barfed on a &lsquo;mysql&rsquo; dependency (not to be confused with mysql2 gem dependency). I installed the &lsquo;mysql&rsquo; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
 
 <blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
 
@@ -168,6 +168,8 @@
         <a class="basic-alignment left" href="/archives/more-nerdy-hipchat-emoticons/" title="Previous Post: More Nerdy Hipchat Emoticons">&laquo; More Nerdy Hipchat Emoticons</a>
       
       
+        <a class="basic-alignment right" href="/archives/no-longer-buying-aircraft-carriers/" title="Next Post: No Longer Buying Aircraft Carriers">No Longer Buying Aircraft Carriers &raquo;</a>
+      
     </p>
   </footer>
 </article>
@@ -191,23 +193,23 @@
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -224,7 +226,7 @@
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 

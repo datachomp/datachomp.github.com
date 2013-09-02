@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="As a big fan of not sorting in the database when I don&#8217;t have to, I have often resorted to heavy handed javascript libraries like datatables. &hellip;">
+  <meta name="description" content="As a big fan of not sorting in the database when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like datatables. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -108,14 +108,15 @@
 
 <div class="entry-content"><h1></h1>
 
-<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&#8217;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
 
 <p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
 
-<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&#8217;t thought of it. &#8220;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&#8221; Advantages of this are that I&#8217;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
 
 <p><strong>Code Time<br/>
-Controller:</strong></p>
+Controller:</strong>
+<code></p>
 
 <pre><code>var burritos = db.Select("select name,price from burritos");
 var tacos = db.Select("select name,price from tacos");
@@ -128,7 +129,9 @@ var viewModel = new viewmodel_Food
 return View(viewModel);
 </code></pre>
 
-<p><strong>View:</strong></p>
+<p></code>
+<strong>View:</strong>
+<code></p>
 
 <pre><code>@model burritoroll.web.Models.viewmodel_Food
 @{
@@ -171,6 +174,8 @@ Can you dig our tacos?
 
 }
 </code></pre>
+
+<p></code></p>
 </div>
 
 
@@ -238,23 +243,23 @@ Can you dig our tacos?
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -271,7 +276,7 @@ Can you dig our tacos?
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 

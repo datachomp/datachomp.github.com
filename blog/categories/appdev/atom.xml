@@ -4,7 +4,7 @@
   <title><![CDATA[Category: AppDev | DataChomp]]></title>
   <link href="http://datachomp.github.com/blog/categories/appdev/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-06-16T23:56:20-05:00</updated>
+  <updated>2013-08-30T11:28:35-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -43,14 +43,15 @@ rvm --create --rvmrc 1.9.3-p327@mycoolproject
     <id>http://datachomp.github.com/archives/a-little-bit-more-about-sorting</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don't have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
 
 <p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
 
-<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn't thought of it. "I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that." Advantages of this are that I'm not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
 
 <p><strong>Code Time<br/>
-Controller:</strong></p>
+Controller:</strong>
+<code></p>
 
 <pre><code>var burritos = db.Select("select name,price from burritos");
 var tacos = db.Select("select name,price from tacos");
@@ -63,7 +64,9 @@ var viewModel = new viewmodel_Food
 return View(viewModel);
 </code></pre>
 
-<p><strong>View:</strong></p>
+<p></code>
+<strong>View:</strong>
+<code></p>
 
 <pre><code>@model burritoroll.web.Models.viewmodel_Food
 @{
@@ -106,6 +109,8 @@ Can you dig our tacos?
 
 }
 </code></pre>
+
+<p></code></p>
 ]]></content>
   </entry>
   
@@ -116,41 +121,41 @@ Can you dig our tacos?
     <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>I get asked all the time "What ORM should I use?" I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I'll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I'm "picking" one per situation as a way of helping someone avoid the paradox of choice.</p>
+<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
 
-<p><strong>"Should I hand-roll my DAL?"</strong></p>
+<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
 
-<p>No. Unless you just want an academic/code exercise. The libraries I'll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don't waste time reinventing this wheel.</p>
+<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
 
-<p><strong>"I don't fear dynamics and I want something easy or rapid prototyping"</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
 
-<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> - This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
 
-<p><strong>"I don't fear dynamics and I want some codefirst action"</strong></p>
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> - One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
 
-<p><strong>"I want POCOs, an old school feel and Stored Procs"</strong></p>
+<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
 
-<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> - When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
 
-<p><strong>"I want POCOs with some codefirst action"</strong></p>
+<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
 
-<p><strong>"I'm using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to"</strong></p>
+<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
 
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> - This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
 
-<p><strong>"I am a huge fan of T4 and code gen"</strong></p>
+<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
 
-<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> - PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
 
-<p><strong>"I want POCOs and I might be doing some MongoDB in my app"</strong></p>
+<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
 
-<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> - I have personally not used this one yet, but I always hear wonderful things about it.</p>
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
 
-<p><strong>"My boss says we just have to use something ~Enterprisey~"</strong></p>
+<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
 
 <p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
 
@@ -168,14 +173,14 @@ Can you dig our tacos?
 <p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
 
 <p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
-<code>worker_processes 3
-timeout 30
-preload_app true
-</code></p>
+<code>worker_processes 3<br/>
+timeout 30<br/>
+preload_app true</code></p>
 
 <p>2nd: I added Unicorn to my GemFile:<br/>
-<code>#rack server
-gem 'unicorn'</code></p>
+<code>#rack server<br/>
+gem &lsquo;unicorn&rsquo;</code>
+You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
 
 <p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
 <code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
@@ -191,7 +196,7 @@ gem 'unicorn'</code></p>
     <id>http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
     <content type="html"><![CDATA[<h1></h1>
 
-<p>I've been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I've hit is that when I define a view for my 404 errors:<br/>
+<p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>
 <code></p>
 
 <pre><code>error 404 do
@@ -212,7 +217,7 @@ gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
 
 <p></code></p>
 
-<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn't now how to serve up error pages properly.</p>
+<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
 ]]></content>
   </entry>
   

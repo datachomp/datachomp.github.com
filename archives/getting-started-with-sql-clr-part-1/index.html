@@ -108,7 +108,7 @@
 
 <div class="entry-content"><h1></h1>
 
-<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&#8217;s get started:</p>
+<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&rsquo;s get started:</p>
 
 <p>First, we need to enable CLR on our database:</p>
 
@@ -121,7 +121,7 @@ GO
 <p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
 <img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
 
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &#8216;database&#8217; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &lsquo;database&rsquo; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
 <code></p>
 
 <pre><code>using System;
@@ -143,7 +143,7 @@ public partial class StoredProcedures
 
 <p></code></p>
 
-<p>Let&#8217;s throw in some code:
+<p>Let&rsquo;s throw in some code:
 <code></p>
 
 <pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
@@ -155,8 +155,8 @@ public partial class StoredProcedures
 
 <p></code></p>
 
-<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &#8216;Chomp&#8217; X 4.<br/>
-Compile, and deploy. Gotcha - For those of us that use VS 2010 our default framework is 4.0 &#8230;. this won&#8217;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
+<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &lsquo;Chomp&rsquo; X 4.<br/>
+Compile, and deploy. Gotcha &ndash; For those of us that use VS 2010 our default framework is 4.0 &hellip;. this won&rsquo;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
 Make sure you are in the proper database and run it:
 <code></p>
 
@@ -167,7 +167,7 @@ SELECT @words
 
 <p></code></p>
 
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&#8217;s. If it didn&#8217;t work for you then:
+<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&rsquo;s. If it didn&rsquo;t work for you then:
 <code></p>
 
 <pre><code>GOTO START;
@@ -243,23 +243,23 @@ In Part 3, I will likely look at performance and some other items to help round 
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -276,7 +276,7 @@ In Part 3, I will likely look at performance and some other items to help round 
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 

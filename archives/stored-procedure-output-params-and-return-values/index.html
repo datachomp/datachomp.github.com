@@ -146,7 +146,7 @@ SELECT @RunOK, @InsertedID
 
 <p></code></p>
 
-<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&#8217;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &#8220;Fine, in that case don&#8217;t do the above&#8221; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&rsquo;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &ldquo;Fine, in that case don&rsquo;t do the above&rdquo; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
 <code></p>
 
 <pre><code>CREATE PROCEDURE dbo.asp_InsertNewPizza
@@ -175,9 +175,9 @@ GO
 
 <p></code></p>
 
-<p>Without catching the Return Values&#8230; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&#8217;t from an error, but that a certain business rule had been met.</p>
+<p>Without catching the Return Values&hellip; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&rsquo;t from an error, but that a certain business rule had been met.</p>
 
-<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&#8217;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&rsquo;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
 <code></p>
 
 <pre><code>SqlCommand databaseCMD = new SqlCommand ("asp_InsertNewPizza", pizzaConn);
@@ -281,23 +281,23 @@ else { FreakOut(); }
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -314,7 +314,7 @@ else { FreakOut(); }
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 

@@ -114,20 +114,20 @@ Run this example to see what I mean:</p>
 <p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
    , Account_Name VARCHAR(50), balance smallmoney);<br/>
 INSERT INTO #temper <br/>
-VALUES (&#8216;Jimmy Johns&#8217;, 50),(&#8216;Qdoba&#8217;,60)<br/>
-   ,(&#8216;Big Truck Tacos&#8217;, 70),(&#8216;Hideaway&#8217;, 80),(&#8216;Teds&#8217;, 90);<br/>
+VALUES (&lsquo;Jimmy Johns&rsquo;, 50),(&lsquo;Qdoba&rsquo;,60)<br/>
+   ,(&lsquo;Big Truck Tacos&rsquo;, 70),(&lsquo;Hideaway&rsquo;, 80),(&lsquo;Teds&rsquo;, 90);<br/>
 SELECT Account_Name, SUM(balance) AS BALANCE<br/>
 FROM #temper<br/>
 GROUP BY Account_Name WITH ROLLUP;<br/>
 DROP TABLE #temper;</p>
 
-<p>Pretty cool right?  The downside being that there is a NULL to deal with and that isn&#8217;t a very descript name for the total.  So maybe we plaster on a CASE statement to replace the NULL with something a little digestible to a user:</p>
+<p>Pretty cool right?  The downside being that there is a NULL to deal with and that isn&rsquo;t a very descript name for the total.  So maybe we plaster on a CASE statement to replace the NULL with something a little digestible to a user:</p>
 
 <p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
    , Account_Name VARCHAR(50), balance smallmoney);<br/>
 INSERT INTO #temper <br/>
-VALUES (&#8216;Jimmy Johns&#8217;, 50),(&#8216;Qdoba&#8217;,60)<br/>
-   ,(&#8216;Big Truck Tacos&#8217;, 70),(&#8216;Hideaway&#8217;, 80),(&#8216;Teds&#8217;, 90);<br/>
+VALUES (&lsquo;Jimmy Johns&rsquo;, 50),(&lsquo;Qdoba&rsquo;,60)<br/>
+   ,(&lsquo;Big Truck Tacos&rsquo;, 70),(&lsquo;Hideaway&rsquo;, 80),(&lsquo;Teds&rsquo;, 90);<br/>
 SELECT CASE<br/>
    WHEN (Grouping(Account_Name)=1) THEN &#8217;Total&#8217;<br/>
    ELSE Account_Name<br/>
@@ -205,23 +205,23 @@ DROP TABLE #temper;</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate A DB From MySQL To Postgres</a>
+        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
-        <a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a>
+        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
       <li class="post">
-        <a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I like Postgres Over SQL Server</a>
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
       </li>
     
       <li class="post">
-        <a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks For All The Deadlocks</a>
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
       <li class="post">
-        <a href="/archives/later-wordpress/">Later Wordpress</a>
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
@@ -238,7 +238,7 @@ DROP TABLE #temper;</p>
     </div>
   </div>
   <footer role="contentinfo"><p>
-  Copyright &copy; 2013 - Rob Sullivan -
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
   <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
 </p>
 
