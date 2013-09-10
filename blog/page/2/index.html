@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never &hellip;">
+  <meta name="description" content="It was about a year ago today when we launched the Postgres episode over at Tekpub, and it is some of the most fun I have had building software. I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,143 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-10T21:54:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
+
+<p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
+
+<blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
+
+
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+
+<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
+
+<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&rsquo;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&rsquo;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&hellip; and that is ok. It&rsquo;s not the lazy route, but I feel it is the most rewarding.</p>
+
+<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&rsquo;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
+
+<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
+
+<p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/later-wordpress/">Later Wordpress</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-10T15:25:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
+
+<h2>Right Tool for the Right Blog</h2>
+
+<p>I have really wanted another level of simplicity that wordpress can&rsquo;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/stopping-spam-in-contact-form-7/">Stopping Spam in Contact Form 7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
+Ha, having issues getting the code to display properly so just check this link:</p>
+
+<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
+
+<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -581,170 +718,6 @@ chmod 755 install_mono-2.11.sh
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/">TSQL Tuesday #28 &#8211; Jack of All Trades, Master of One</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-13T00:00:00-05:00" pubdate data-updated="true">Mar 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>If you want the back story on what this topic is all about &ndash;</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/im-leaving-sql-server-for-postgres/">I&#8217;m Leaving SQL Server for Postgres</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
-
-<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
-
-<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/hey-app-quit-wasting-my-time-sorting-your-data/">Hey App, Quit Wasting My Time Sorting Your Data</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
-
-<p><strong>Nut Kicking:</strong><br/>
-In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
-
-<p><strong>Code Please:</strong><br/>
-Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
-Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254;<br/>
-SELECT Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254<br/>
-ORDER BY name DESC;</code>
-And this is the execution plan it creates:<br/>
-<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
-
-<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
-
-<p><strong>Just Fix It</strong><br/>
-In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
-
-<p><code>
-public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
-{</p>
-
-<pre><code>var table = new Badges();
-var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
-return badges.OrderBy(x=&gt;x.Name);
-//return badges.OrderByDescending(x =&gt; x.Name);
-</code></pre>
-
-<p>}
-</code>
-That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
-
-<p><strong>Does this make us happy?</strong><br/>
-I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
-
-<p><strong>But But But, our servers are busy too!</strong><br/>
-Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
-
-<p>There are a ton of ways to do this:<br/>
-<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
-
-<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -766,23 +739,23 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/okc-ruby/">OKC Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/postgresql-9-dot-3-is-out/">PostgreSQL 9.3 Is Out</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/why-screencasts-work-for-me/">Why Screencasts Work for Me</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
         <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>

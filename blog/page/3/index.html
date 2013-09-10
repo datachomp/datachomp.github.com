@@ -9,7 +9,8 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I am a huge fan of Red Gate SQL Source Control because it makes source controlling/deploying your database easier. I am aware of the MS Database &hellip;">
+  <meta name="description" content=" If you want the back story on what this topic is all about &ndash;
+">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,170 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/">TSQL Tuesday #28 &#8211; Jack of All Trades, Master of One</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-13T00:00:00-05:00" pubdate data-updated="true">Mar 13<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>If you want the back story on what this topic is all about &ndash;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/im-leaving-sql-server-for-postgres/">I&#8217;m Leaving SQL Server for Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-03-07T00:00:00-06:00" pubdate data-updated="true">Mar 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/hey-app-quit-wasting-my-time-sorting-your-data/">Hey App, Quit Wasting My Time Sorting Your Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
+
+<p><strong>Nut Kicking:</strong><br/>
+In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
+
+<p><strong>Code Please:</strong><br/>
+Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
+Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
+And this is the execution plan it creates:<br/>
+<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+
+<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
+
+<p><strong>Just Fix It</strong><br/>
+In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
+
+<p><code>
+public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
+{</p>
+
+<pre><code>var table = new Badges();
+var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
+return badges.OrderBy(x=&gt;x.Name);
+//return badges.OrderByDescending(x =&gt; x.Name);
+</code></pre>
+
+<p>}
+</code>
+That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
+
+<p><strong>Does this make us happy?</strong><br/>
+I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
+
+<p><strong>But But But, our servers are busy too!</strong><br/>
+Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
+
+<p>There are a ton of ways to do this:<br/>
+<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
+
+<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -597,171 +762,6 @@ Skype<br/>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/">Tekpub &#8211; Full Throttle With Rob Sullivan Show Notes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
-
-<p><strong>Questions:</strong>*<br/>
-<strong>How do you get the stats to appear in the &ldquo;messages&rdquo; window?</strong><br/>
-Those stats come from the following commands:<br/>
-SET STATISTICS IO ON;<br/>
-SET STATISTICS TIME ON;<br/>
-If you don&rsquo;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
-Tools &ndash;> Options &ndash;> Query Execution &ndash;> SQL Server &ndash;> Advanced<br/>
-then check:<br/>
-SET STATISTICS IO ON;<br/>
-SET STATISTICS TIME ON;
-<strong>Lock Pages in Memory, is that always good?</strong><br/>
-No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: <a href="http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/">http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/</a>
-<strong>Why no filtered index on Posts?</strong><br/>
-In our first scenario, to get the front page up&hellip; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
-
-<p><strong>What were you using for &ldquo;Intellisense&rdquo; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
-
-<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
-
-<p><strong>Tech used in the series:</strong><br/>
-Visual Studio 2010 / MVC3 / EF 4.1<br/>
-SQL Server 2008 R2 / Management Studio<br/>
-<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &ldquo;Intellisense&rdquo; and &ldquo;snippets&rdquo; in Management Studio<br/>
-<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
-<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
-<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
-
-<p><strong>Source code:</strong></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/windows-server-core-basic-operations/">Windows Server Core &#8211; Basic Operations</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-25T00:00:00-05:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition.</p>
-
-<p><strong>Quick tool to handle basic configurations like computer name/updates/time:</strong><br/>
-sconfig.cmd tool</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/massive-and-using-multiple-args/">Massive and Using Multiple Args:</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>
-
-<p><code></p>
-
-<pre><code>var tbl = new Products();
-var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
-</code></pre>
-
-<p></code>
-It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&rsquo;t take to kindly to that sort of syntax.</p>
-
-<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
-<code></p>
-
-<pre><code>object[] queryargs = {"Okapi", "online"};
-var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
-</code></pre>
-
-<p></code>
-and low and behold the magic happens.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -783,23 +783,23 @@ and low and behold the magic happens.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/okc-ruby/">OKC Ruby</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/postgresql-9-dot-3-is-out/">PostgreSQL 9.3 Is Out</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/why-screencasts-work-for-me/">Why Screencasts Work for Me</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
         <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
