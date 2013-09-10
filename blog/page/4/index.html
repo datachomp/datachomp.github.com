@@ -9,7 +9,9 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say &hellip;">
+  <meta name="description" content="I always forget this so it is going in a blog for quick reference: SP_CONFIGURE 'show advanced options',1
+RECONFIGURE WITH override
+GO SP_CONFIGURE &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,171 +82,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/">Tekpub &#8211; Full Throttle With Rob Sullivan Show Notes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
-
-<p><strong>Questions:</strong>*<br/>
-<strong>How do you get the stats to appear in the &ldquo;messages&rdquo; window?</strong><br/>
-Those stats come from the following commands:<br/>
-SET STATISTICS IO ON;<br/>
-SET STATISTICS TIME ON;<br/>
-If you don&rsquo;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
-Tools &ndash;> Options &ndash;> Query Execution &ndash;> SQL Server &ndash;> Advanced<br/>
-then check:<br/>
-SET STATISTICS IO ON;<br/>
-SET STATISTICS TIME ON;
-<strong>Lock Pages in Memory, is that always good?</strong><br/>
-No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: <a href="http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/">http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/</a>
-<strong>Why no filtered index on Posts?</strong><br/>
-In our first scenario, to get the front page up&hellip; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
-
-<p><strong>What were you using for &ldquo;Intellisense&rdquo; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
-
-<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
-
-<p><strong>Tech used in the series:</strong><br/>
-Visual Studio 2010 / MVC3 / EF 4.1<br/>
-SQL Server 2008 R2 / Management Studio<br/>
-<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &ldquo;Intellisense&rdquo; and &ldquo;snippets&rdquo; in Management Studio<br/>
-<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
-<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
-<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
-
-<p><strong>Source code:</strong></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/windows-server-core-basic-operations/">Windows Server Core &#8211; Basic Operations</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-25T00:00:00-05:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition.</p>
-
-<p><strong>Quick tool to handle basic configurations like computer name/updates/time:</strong><br/>
-sconfig.cmd tool</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/massive-and-using-multiple-args/">Massive and Using Multiple Args:</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>
-
-<p><code></p>
-
-<pre><code>var tbl = new Products();
-var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
-</code></pre>
-
-<p></code>
-It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&rsquo;t take to kindly to that sort of syntax.</p>
-
-<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
-<code></p>
-
-<pre><code>object[] queryargs = {"Okapi", "online"};
-var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
-</code></pre>
-
-<p></code>
-and low and behold the magic happens.</p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -751,6 +588,254 @@ In Massive, we get:</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-server-variety-hour/">SQL Server Variety Hour</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-14T00:00:00-06:00" pubdate data-updated="true">Dec 14<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
+
+<p>WhoIsActive &ndash; <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
+
+<p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
+
+<p>SQL SourceControl- <a href="http://www.red-gate.com/products/sql-development/sql-source-control/" title="http://www.red-gate.com/products/sql-development/sql-source-control/">http://www.red-gate.com/products/sql-development/sql-source-control/</a></p>
+
+<p>.Net Reflector- <a href="http://www.red-gate.com/products/dotnet-development/reflector/" title="http://www.red-gate.com/products/dotnet-development/reflector/">http://www.red-gate.com/products/dotnet-development/reflector/</a></p>
+
+<p>LinqPad- <a href="http://linqpad.net/" title="http://linqpad.net/">http://linqpad.net/</a></p>
+
+<p>EF Profiler- <a href="http://efprof.com/" title="http://efprof.com/">http://efprof.com/</a></p>
+
+<p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
+
+<p>Virtualization &ndash; <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/stored-procedure-output-params-and-return-values/">Stored Procedure Output Params and Return Values</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:
+<code></p>
+
+<pre><code>SET @TheID = SCOPE_IDENTITY();
+RETURN @TheID
+</code></pre>
+
+<p></code></p>
+
+<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:
+<code></p>
+
+<pre><code>--drop table dbo.pizza
+CREATE TABLE Pizza (pizzaid TINYINT IDENTITY(1,1), pizzasize VARCHAR(10), numberoftoppings TINYINT, pizzaname VARCHAR(40) )
+
+CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
+
+BEGIN TRY
+INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
+
+SELECT @PizzaID = SCOPE_IDENTITY();
+RETURN 0;
+END Try
+BEGIN Catch
+    RETURN -1
+END Catch
+GO
+
+DECLARE @InsertedID TINYINT, @RunOK INT;
+EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
+SELECT @RunOK, @InsertedID
+</code></pre>
+
+<p></code></p>
+
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&rsquo;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &ldquo;Fine, in that case don&rsquo;t do the above&rdquo; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
+<code></p>
+
+<pre><code>CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
+
+IF EXISTS (SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName)
+BEGIN
+    SET @PizzaID = NULL;
+    RETURN 1;   
+END
+ELSE
+BEGIN TRY
+    INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+    VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
+
+    SELECT @PizzaID = SCOPE_IDENTITY();
+    RETURN 0;
+END TRY
+BEGIN CATCH
+    RETURN -1
+END CATCH
+
+GO
+</code></pre>
+
+<p></code></p>
+
+<p>Without catching the Return Values&hellip; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&rsquo;t from an error, but that a certain business rule had been met.</p>
+
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&rsquo;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
+<code></p>
+
+<pre><code>SqlCommand databaseCMD = new SqlCommand ("asp_InsertNewPizza", pizzaConn);
+
+databaseCMD.CommandType = CommandType.StoredProcedure;
+
+SqlParameter PizzaSize = databaseCMD.Parameters.Add ("@pizzaSize", SqlDbType.VarChar, 10);
+PizzaSize.Direction = ParameterDirection.Input;
+SqlParameter NumberOfToppings = databaseCMD.Parameters.Add ("@NumberOfToppings", SqlDbType.TinyInt);
+NumberOfToppings.Direction = ParameterDirection.Input;
+SqlParameter PizzaName = databaseCMD.Parameters.Add ("@PizzaName", SqlDbType.VarChar, 40);
+PizzaName.Direction = ParameterDirection.Input;
+
+
+SqlParameter PizzaID = databaseCMD.Parameters.Add ("@PizzaID", SqlDbType.TinyInt);
+PizzaID.Direction = ParameterDirection.Output ;
+SqlParameter ReturnValue = databaseCMD.Parameters.Add ("RetVal", SqlDbType.Int);
+RetVal.Direction = ParameterDirection.ReturnValue;
+
+int pizzaID;
+pizzaConn.Open();
+
+pizzaID =databaseCMD.ExecuteScalar ().ToString() ;
+
+if (ReturnValue == 0){
+ResponseWrite("The Pizza was added. The pizzaID is : " + pizzaID.ToString() );
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else if{ ReturnValue == 1) {
+ResponseWrite("Sorry friend, that pizza name already exists.");
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else { FreakOut(); }
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/virtual-victory-aws-gives-out-a-year-of-usage/">Virtual Victory &#8211; AWS Gives Out a Year of Usage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-23T00:00:00-05:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
+
+<p>So what can I do with this you might ask? Here are some ideas: (I am doing these off the top of my head so feel free to criticize them by suggesting a better ideas)</p>
+
+<ol>
+<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the &lsquo;will this mess up my system&rsquo; fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
+<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon&rsquo;s simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA&rsquo;s, NOSQL stands for &ldquo;Not Only SQL&rdquo; not for No &ndash; SQL as in SQL Void.</p></li>
+<li><p>Embrace the awesome of Amazon S3. Ever wonder why Dropbox/JungleDisk and various other companies can give you so much storage for so cheap? Amazon S3 is pretty much the answer to that question. I typically use the cheapest hosting plans possible and S3 as a CDN to smoke/mirror performance.</p></li>
+<li><p>SQL Server testing &ndash; Microsoft provides trial software for pretty much all their projects. If you are curious about &hellip; say playing with some feature of replication or maybe wondering about online indexing &hellip; Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
+<li><p>.Net testing or running a service &ndash; With shared hosting, I don&rsquo;t have a way of keeping an ongoing on demand service per say&hellip; So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app&hellip;. Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don&rsquo;t really support SQL Server SSIS&hellip; so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
+</ol>
+
+
+<p>Now, some of this isn&rsquo;t without a learning curve, but we are in the software development industry&hellip; if we can&rsquo;t navigate learning curves or don&rsquo;t even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -772,23 +857,23 @@ In Massive, we get:</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/okc-ruby/">OKC Ruby</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/postgresql-9-dot-3-is-out/">PostgreSQL 9.3 Is Out</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/why-screencasts-work-for-me/">Why Screencasts Work for Me</a>
-      </li>
-    
-      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
         <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>

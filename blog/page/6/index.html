@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to &hellip;">
+  <meta name="description" content="So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,171 +80,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/helper-classes/">Helper Classes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-20T00:00:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
-
-<p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called &lsquo;Helpers&rsquo; and added a new class object called &lsquo;StringManip&rsquo;.<br/>
-Once that was completed, I added a few methods like:
-<code></p>
-
-<pre><code>public static string UpperString(string val)
-{ return val.ToUpper(); }
-</code></pre>
-
-<p></code></p>
-
-<p>In my code behind, I reference the class through a using statement:
-<code></p>
-
-<pre><code>using HelperClass.Helpers;
-</code></pre>
-
-<p></code></p>
-
-<p>And then I can call the methods:
-<code></p>
-
-<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
-</code></pre>
-
-<p></code></p>
-
-<p>If the above isn&rsquo;t enough to get you rolling&hellip;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/change-iphone-root-password-after-jailbreak/">Change iPhone Root Password After Jailbreak</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-07T00:00:00-05:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
-
-<p>In Cydia, go to the &ldquo;Search&rdquo; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
-From there, type in <strong><em>su root</em></strong> and hit return. This changes us to the root user so we can access/change the password for it. It will then prompt you to type in that global root password of <strong><em>alpine</em></strong> . Once you are root, just type <strong><em>passwd</em></strong> then hit return. From there, you will need to enter, then re-enter your password and the change should take place. Simply type in <strong><em>exit</em></strong> to leave the root account and get back to the standard prompt.</p>
-
-<p><strong>Another Notch: Changing the Mobile User</strong><br/>
-You should also consider doing the same thing for your Mobile user as it uses a global password of &ldquo;alpine&rdquo; as well<br/>
-You start the MobileTerminal app as the Mobile user, so to change the password for it simply type <strong>*passwd</strong> Then type alpine when it prompts, then fill out the stuff for the new password and start sleeping better at night knowing that you have just put up a basic security fence for your sweet sweet jailbroken phone.
-For more information, check out these handy posts:</p>
-
-<p>and</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/ssl-a-secure-way-to-waste-money/">SSL &#8211; a Secure Way to Waste Money</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
-
-<p>The current ones I use and it rocks:<br/>
-For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
-For other services/protocols I tend to use:<br/>
-<a href="http://www.cacert.org/">CA Cert Org</a></p>
-
-<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
-
-<p>Equally excellent CA&rsquo;s that are not free:<br/>
-<a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
-<a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
-<a href="http://www.geotrust.com/">Geotrust.com</a></p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -627,6 +462,173 @@ DROP TABLE #temper;</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/database-tools-i-use/">Database Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of tools I use:<br/>
+SQL Server-<br/>
+SQL Server 2000 Query Analyzer<br/>
+SQL Server 2005<br/>
+SQL Server 2008<br/>
+<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
+<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
+SQL Examiner- <a href="http://www.sqlaccessories.com/SQL_Examiner/  ">http://www.sqlaccessories.com/SQL_Examiner/  </a>
+SQLPing3- <a href="http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  ">http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  </a>
+<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
+SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</a></p>
+
+<p><a href="http://www.sqlite.org/">SQLite</a><br/>
+<a href="http://www.postgresql.org/">PostGre</a><br/>
+<a href="http://www.mongodb.org/">MongoDB</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/appdev-tools-i-use/">AppDev Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of Application Development Tools I use:<br/>
+<a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a> -<br/>
+<a href="http://notepad-plus.sourceforge.net/uk/site.htm">Notepad </a><br/>
+<a href="http://www.vmware.com/">VMWare</a><br/>
+Visual Studio</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/resharper/index.html">Resharper</a></li>
+<li>AnhkSVN
+
+<ul>
+<li>TracExplorer<br/>
+<a href="http://monodevelop.com/">MonoDevelop</a><br/>
+<a href="http://projectlocker.com/">ProjectLocker</a><br/>
+<a href="http://code.google.com/p/elmah/">ELMAH</a><br/>
+<a href="http://home.snafu.de/tilman/xenulink.html">Xenu</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/you-literaled-my-css/">You Literaled My CSS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  Essentially a literal lives up to its name&hellip; it allows you to define literal html.</p>
+
+<p>So, in the master I have:<br/>
+<code></p>
+
+<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
+</code></pre>
+
+<p><code></p>
+
+<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:<br/>
+<code></p>
+
+<pre><code>protected void Page_Load(object sender, EventArgs e) 
+{ 
+Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
+menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
+}
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -648,23 +650,23 @@ DROP TABLE #temper;</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/okc-ruby/">OKC Ruby</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/postgresql-9-dot-3-is-out/">PostgreSQL 9.3 Is Out</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/why-screencasts-work-for-me/">Why Screencasts Work for Me</a>
-      </li>
-    
-      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
       <li class="post">
         <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
