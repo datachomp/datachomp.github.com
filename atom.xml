@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-13T23:22:59-05:00</updated>
+  <updated>2013-09-13T23:24:58-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -20,7 +20,7 @@
     <id>http://datachomp.github.com/archives/nginx-block-php-requests</id>
     <content type="html"><![CDATA[<h3>problem</h3>
 
-<p>When your rails app barfs, it isn&rsquo;t pretty. Even with a basic routing error, you can count on another 30 lines of junk going into your application log you don&rsquo;t care about. A lot of this junk comes from bots making php requests or just looking for low hanging fruit exploits. We need something to tune the signal to noise in our application logs as well as to stop wasting our apps time on bots.</p>
+<p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on another 30 lines of stack junk going into your application log you don&rsquo;t care about. A lot of this junk comes from bots making php requests or just looking for low hanging fruit exploits. We need something to tune the signal to noise in our application logs as well as to stop wasting our apps time on bots.</p>
 
 <h3>solution</h3>
 
