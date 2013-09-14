@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, &hellip;">
+  <meta name="description" content="problem When your rails app barfs, it isn&rsquo;t pretty. Even with a basic routing error, you can count on another 30 lines of junk you don&rsquo;t &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -109,9 +109,11 @@
   </header>
 
 
-  <div class="entry-content"><p>If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, I don&rsquo;t really need my app to start barfing errors and logging a bunch of errant php bot requests.</p>
+  <div class="entry-content"><h3>problem</h3>
 
-<h4>solution</h4>
+<p>When your rails app barfs, it isn&rsquo;t pretty. Even with a basic routing error, you can count on another 30 lines of junk you don&rsquo;t care about. A lot of these junk requests come from bots making php requests or just looking for low hanging fruit exploits. We need something to tune the signal to noise in our application logs as well as not wasting our apps time on bots.</p>
+
+<h3>solution</h3>
 
 <p>Just throw in a quick nginx rule to catch and handle all the requests before they even hit your server.</p>
 

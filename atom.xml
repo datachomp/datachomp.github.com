@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-13T23:00:49-05:00</updated>
+  <updated>2013-09-13T23:18:14-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,9 +18,11 @@
     <link href="http://datachomp.github.com/archives/nginx-block-php-requests/"/>
     <updated>2013-09-13T22:28:00-05:00</updated>
     <id>http://datachomp.github.com/archives/nginx-block-php-requests</id>
-    <content type="html"><![CDATA[<p>If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, I don&rsquo;t really need my app to start barfing errors and logging a bunch of errant php bot requests.</p>
+    <content type="html"><![CDATA[<h3>problem</h3>
 
-<h4>solution</h4>
+<p>When your rails app barfs, it isn&rsquo;t pretty. Even with a basic routing error, you can count on another 30 lines of junk you don&rsquo;t care about. A lot of these junk requests come from bots making php requests or just looking for low hanging fruit exploits. We need something to tune the signal to noise in our application logs as well as not wasting our apps time on bots.</p>
+
+<h3>solution</h3>
 
 <p>Just throw in a quick nginx rule to catch and handle all the requests before they even hit your server.</p>
 
