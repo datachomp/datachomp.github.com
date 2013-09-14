@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, Active Record was like putting my App in a fat suit. &hellip;">
+  <meta name="description" content="If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,51 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, I don&rsquo;t really need my app to start barfing errors and logging a bunch of errant requests.</p>
+
+<h3>solution</h3>
+
+<p>Just throw in a quick nginx rule to catch and handle all the requests before they even hit your server.</p>
+
+<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+}
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -621,49 +666,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/stopping-spam-in-contact-form-7/">Stopping Spam in Contact Form 7</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
-Ha, having issues getting the code to display properly so just check this link:</p>
-
-<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
-
-<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -683,6 +685,10 @@ Ha, having issues getting the code to display properly so just check this link:<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
@@ -696,10 +702,6 @@ Ha, having issues getting the code to display properly so just check this link:<
     
       <li class="post">
         <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>

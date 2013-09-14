@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Pack the powder, light the wick! - DataChomp</title>
+  <title>nginx block php requests - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="There is going to be a strong disturbance in the force, Dallas Feb 21st &ndash; 25th when the SQLSkills team comes down for a Master Immersion class &hellip;">
+  <meta name="description" content="If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/pack-the-powder-light-the-wick">
+  <link rel="canonical" href="http://datachomp.github.com/archives/nginx-block-php-requests">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Pack the Powder, Light the Wick!</h1>
+      <h1 class="entry-title">Nginx Block Php Requests</h1>
     
     
       <p class="meta">
@@ -99,28 +99,23 @@
   
 
 
-<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
+<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>If you&rsquo;re a fellow log comber, then you likely see tons of .php requests in your application log. Since I&rsquo;m not slumming around in .php, I don&rsquo;t really need my app to start barfing errors and logging a bunch of errant requests.</p>
 
-<p>There is going to be a strong disturbance in the force, Dallas Feb 21st &ndash; 25th when the <a href="http://www.sqlskills.com/">SQLSkills</a> team comes down for a Master Immersion class : <a href="http://www.sqlskills.com/Master1-Dallas-20110221.asp">http://www.sqlskills.com/Master1-Dallas-20110221.asp</a> .</p>
+<h3>solution</h3>
 
-<p>I am not going to spend a lot of time talking about why I want to attend a class taught by Paul Randal (<a href="http://www.sqlskills.com/BLOGS/PAUL/">blog</a> | <a href="http://twitter.com/#!/paulrandal">twitter</a>) and Kimberly Tripp (<a href="http://www.sqlskills.com/BLOGS/Kimberly/">blog</a> | <a href="http://twitter.com/#!/kimberlyltripp">twitter</a>). Their body of work in both the education and SQL Server stands second to no one, so trying to go on about this just belabors the point. Simply put, if you want to be among the best, then one should find the best and learn from them.</p>
+<p>Just throw in a quick nginx rule to catch and handle all the requests before they even hit your server.</p>
 
-<p>Now, let us graduate to the less obvious aspect of this post, which is why I would make the best use of this knowledge.  With technical debt, you sometimes have to write SQL checks that your brain can&rsquo;t cash. This class is like adding a few 0&rsquo;s to your brain balance.   As I take in the knowledge from this class, it is going to manifest itself into a trident to attack the following issues:</p>
-
-<p><strong>Personal: </strong> Let&rsquo;s be honest, keeping up with technology is an infinite and exhaustive grind.  Unfortunately, this can eventually create stress on one&rsquo;s work/life balance as the unending need to keep learning is often standing right in the way of the unending need to be with one&rsquo;s family. The quality and depth of this immersion event is an incredible opportunity to trade a few days in order to receive many years worth of nights. I personally think a good DBA is a &ldquo;Jack of all trades, Master of one&rdquo;&hellip; it is time I establish my mastery.</p>
-
-<p><strong>Professional:</strong> I currently work as the lone DBA for a virtual high school. This is simply the most fascinating job I have ever had for a variety of reasons. Having never had a DBA and more the point, no solid guidance in how to do things, the situations I come across can be truly migraine-inducing. The quicker I am able diagnose the correct path,  the more time I can spend on what really matters. Things like building analysis cubes which enable our teachers and staff to quickly identify where the system is breaking down with regards to the students&#8217; education. By doing this, it creates an opportunity for system efficiencies and satisfying end user experiences which are far more interesting and worthwhile than trying to continually identify where our SQL Servers are breaking down.</p>
-
-<p><strong>Community:</strong> As a founder of the Oklahoma City SQL Server Developers Group, what you teach me doesn&rsquo;t stop at my front lobe. You essentially essentially aid me in becoming Johnny SQL-Seed, spreading my knowledge to our community as I continue to give more talks to our group and region. In addition, my hope is that the networking from this class will enable us to find more speakers, as well as bring different points of views and technological diversity to our meetings. Without question, being involved in the SQL community is a lot of fun. However, the downside is that while I am organizing or speaking, I tend to miss out on a lot of content. This class is a chance for me to participate instead of provide, and I can&rsquo;t wait to be immersed in this baptism of SQL.</p>
-
-<p>In closing, this is an incredible opportunity put out there by the <a href="http://www.sqlskills.com/">SQLSkills</a> team and I truly hope to INNER JOIN them in Dallas.</p>
+<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+}
+</code></pre>
 </div>
 
 
@@ -129,7 +124,7 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -143,21 +138,15 @@
   
 
 
-<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
+<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/pack-the-powder-light-the-wick/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/pack-the-powder-light-the-wick/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/nginx-block-php-requests/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/nginx-block-php-requests/" >Tweet</a>
   
   
   
@@ -166,14 +155,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/deploy-mvc3-to-shared-hosting/" title="Previous Post: Deploy MVC3 to Shared Hosting">&laquo; Deploy MVC3 to Shared Hosting</a>
+        <a class="basic-alignment left" href="/archives/extending-sequel-with-hstore/" title="Previous Post: Extending Sequel with hstore">&laquo; Extending Sequel with hstore</a>
       
-      
-        <a class="basic-alignment right" href="/archives/security-and-code-analysis-tools-i-use/" title="Next Post: Security and Code Analysis tools I use">Security and Code Analysis tools I use &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -232,7 +225,10 @@
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/nginx-block-php-requests/';
+        var disqus_url = 'http://datachomp.github.com/archives/nginx-block-php-requests/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you &hellip;">
+  <meta name="description" content="It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,56 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/ssl-a-secure-way-to-waste-money/">SSL &#8211; a Secure Way to Waste Money</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
+
+<p>The current ones I use and it rocks:<br/>
+For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
+For other services/protocols I tend to use:<br/>
+<a href="http://www.cacert.org/">CA Cert Org</a></p>
+
+<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+
+<p>Equally excellent CA&rsquo;s that are not free:<br/>
+<a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
+<a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
+<a href="http://www.geotrust.com/">Geotrust.com</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -571,64 +621,6 @@ Visual Studio</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/you-literaled-my-css/">You Literaled My CSS</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  Essentially a literal lives up to its name&hellip; it allows you to define literal html.</p>
-
-<p>So, in the master I have:<br/>
-<code></p>
-
-<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
-</code></pre>
-
-<p><code></p>
-
-<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:<br/>
-<code></p>
-
-<pre><code>protected void Page_Load(object sender, EventArgs e) 
-{ 
-Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
-menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
-}
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -650,6 +642,10 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
@@ -663,10 +659,6 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
     
       <li class="post">
         <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
       </li>
     
   </ul>
