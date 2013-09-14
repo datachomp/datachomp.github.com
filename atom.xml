@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-13T23:22:15-05:00</updated>
+  <updated>2013-09-13T23:22:34-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -24,7 +24,7 @@
 
 <h3>solution</h3>
 
-<p>Just throw in a quick nginx location rule to catch and handle all the requests before they even hit your server.</p>
+<p>Just throw in a quick nginx location rule in your apps nginx config to catch and handle all the requests before they even hit your server.</p>
 
 <pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
     return 404;
