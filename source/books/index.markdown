@@ -8,20 +8,35 @@ footer: true
 ---
 # 
 
+It is worth mentioning that in addition to reading, I spend a good chunk of time on sites like [Tekpub][], [CodeSchool][], [Railscasts][], [RubyTapas][] and occasionally [Peepcode][].  
+
+
+[Tekpub]: http://tekpub.com/ "Tekpub"
+[CodeSchool]: http://codeschool.com/ "CodeSchool"
+[Railscasts]: http://railscasts.com/ "Railscasts"
+[RubyTapas]: http://rubytapas.com/ "RubyTapas"
+[Peepcode]: http://peepcode.com/ "Peepcode"
+  
 I wanted to start recording which books I've read.
 
 **Database:**  
 [postgres backup and restore][86]  
 [postgres instant starter][87]  
 [SQL Server 2012 Query Performance Tuning][88]  
-  
+[Delivering Business Intelligence with Microsoft SQL Server 2012][]
+
+[Delivering Business Intelligence with Microsoft SQL Server 2012]: http://www.amazon.com/Delivering-Business-Intelligence-Microsoft-Server/dp/0071759387 "2012 BI Tools"  
 
 **AppDev:**  
 [Exceptional Ruby][1]  
 [tmux] [85]  
 vim and vi tips  
 [mastering nginx][89]  
+[RubyMotion][]  
+[Rails Recipes][]  
 
+[RubyMotion]: http://pragprog.com/book/carubym/rubymotion/ "RubyMotion"
+[Rails Recipes]: http://pragprog.com/book/rr2/rails-recipes/ "Rails Recipes"
 
 **Misc:**  
 [Ready Player One][90]  
