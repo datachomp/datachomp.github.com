@@ -5,6 +5,9 @@ date: 2013-08-27 23:26
 comments: true
 categories: 
 ---
+
+UPDATE on official repos - http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/  
+  
 When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to [Heroku][1].  However, if you find yourself having to deploy to a [VPS][3], one of next best things you can do is use [Phusion Passenger][2]. It is an incredibly low friction application server for rack apps (and other things).
 
 [1]: http://heroku.com
