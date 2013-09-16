@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-14T08:56:08-05:00</updated>
+  <updated>2013-09-16T10:38:02-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -129,7 +129,9 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
     <link href="http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
     <updated>2013-08-27T23:26:00-05:00</updated>
     <id>http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
-    <content type="html"><![CDATA[<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
+    <content type="html"><![CDATA[<p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
+
+<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
 
 <h3>Magic Strings of Wonderful Glory</h3>
 
