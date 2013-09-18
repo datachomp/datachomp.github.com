@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="problem: When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 &hellip;">
+  <meta name="description" content="Modules and extensions are one of the key features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,87 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/postgres-dot-app-and-shared-preload-libraries-settings/">Postgres.App and Shared_preload_libraries Settings</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T09:28:00-05:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Modules and extensions are one of the key features that keep Postgres so relevant in modern development. Need GUIDs?  Just add the extension and you&rsquo;re off to the races:</p>
+
+<pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
+create extension "uuid-ossp"; -- it's alive!
+</code></pre>
+
+<p>and to make sure it&rsquo;s active:</p>
+
+<pre><code>select * from pg_extension; -- we should see it listed
+</code></pre>
+
+<p>But not all extensions are created equal.  If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion to get a deeper view of
+what has happened in the database.  Adding it to a database is easy enough:</p>
+
+<pre><code>create extension "pg_stat_statements";
+</code></pre>
+
+<p>But when we go to use it:</p>
+
+<pre><code>SELECT * FROM pg_stat_statements  
+</code></pre>
+
+<p>We&rsquo;re greeted with a error that can be a little intimidating:<br/>
+<font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
+
+<p>Ummmm what?  Some extensions have special requirements that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup which requires us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, this is pretty straight forward as we make sure we have our contrib module installed:</p>
+
+<pre><code>sudo apt-get install -y postgresql-contrib-9.3
+</code></pre>
+
+<p>Head on over to our configuration at  /etc/postgresql/9.3/main/postgres.conf   and look for the shared_preload_libraries setting and change it like so:</p>
+
+<pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
+</code></pre>
+
+<p>That works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. There are some tricks though. Connect to your instance of postgres and run the following:</p>
+
+<pre><code>show all;   -- This is a list of a bunch of settings... whoa!
+show config_all;  --Ahhhh, here is what we want
+</code></pre>
+
+<p>Now that we have the location of our configuration file, just throw it into the Unholy Explorer(AKA Finder), start scrolling the file and add the pg_stat_statements setting to the shared_preload_libraries.</p>
+
+<h4>buyer beware</h4>
+
+<p>This works wonderfully in Postgres.app 9.3.0.0. In earlier versions of the app, it does has issues finding the contrib modules. This is a bit of a bummer and when I get my act together, I&rsquo;ll file an issue. Of course, you&rsquo;re more than welcome to beat me to the punch.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -667,46 +748,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/later-wordpress/">Later Wordpress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-10T15:25:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
-
-<h2>Right Tool for the Right Blog</h2>
-
-<p>I have really wanted another level of simplicity that wordpress can&rsquo;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -726,6 +767,10 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/postgres-dot-app-and-shared-preload-libraries-settings/">Postgres.App and Shared_preload_libraries Settings</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
       </li>
     
@@ -739,10 +784,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
     
       <li class="post">
         <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
   </ul>

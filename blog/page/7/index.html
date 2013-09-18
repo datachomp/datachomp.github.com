@@ -9,7 +9,11 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  &hellip;">
+  <meta name="description" content="This is a living document of Application Development Tools I use:
+TortoiseSVN -
+Notepad VMWare
+Visual Studio Resharper
+AnhkSVN TracExplorer &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +84,63 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/appdev-tools-i-use/">AppDev Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of Application Development Tools I use:<br/>
+<a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a> -<br/>
+<a href="http://notepad-plus.sourceforge.net/uk/site.htm">Notepad </a><br/>
+<a href="http://www.vmware.com/">VMWare</a><br/>
+Visual Studio</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/resharper/index.html">Resharper</a></li>
+<li>AnhkSVN
+
+<ul>
+<li>TracExplorer<br/>
+<a href="http://monodevelop.com/">MonoDevelop</a><br/>
+<a href="http://projectlocker.com/">ProjectLocker</a><br/>
+<a href="http://code.google.com/p/elmah/">ELMAH</a><br/>
+<a href="http://home.snafu.de/tilman/xenulink.html">Xenu</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -500,14 +561,14 @@ This will let use the report servers service credentials to authenticate to the 
 &mdash; send a normal mail
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#109;&#97;&#x69;&#108;&#116;&#111;&#x3a;&#x6e;&#117;&#109;&#x62;&#101;&#114;&#x40;&#99;&#105;&#x6e;&#103;&#x75;&#x6c;&#x61;&#114;&#x6d;&#x65;&#46;&#99;&#111;&#x6d;">&#110;&#117;&#x6d;&#98;&#101;&#114;&#64;&#99;&#105;&#x6e;&#x67;&#117;&#x6c;&#97;&#114;&#x6d;&#x65;&#46;&#x63;&#111;&#x6d;</a>&rsquo;
+,@recipients=&lsquo;name@domain.com;<a href="&#109;&#x61;&#105;&#108;&#x74;&#x6f;&#58;&#110;&#x75;&#x6d;&#98;&#101;&#x72;&#64;&#x63;&#x69;&#110;&#x67;&#117;&#108;&#97;&#114;&#x6d;&#101;&#46;&#x63;&#111;&#109;">&#110;&#x75;&#109;&#x62;&#101;&#114;&#x40;&#x63;&#105;&#x6e;&#x67;&#x75;&#x6c;&#x61;&#114;&#109;&#x65;&#x2e;&#x63;&#x6f;&#109;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
 &mdash; send with an attachment
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6e;&#97;&#109;&#x65;&#64;&#x64;&#x6f;&#109;&#x61;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;">&#x6e;&#x61;&#109;&#101;&#64;&#100;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x2e;&#99;&#111;&#x6d;</a>&rsquo;
+,@recipients=&lsquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#116;&#x6f;&#x3a;&#x6e;&#x61;&#x6d;&#101;&#64;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#46;&#99;&#111;&#x6d;">&#x6e;&#97;&#x6d;&#x65;&#x40;&#100;&#111;&#x6d;&#97;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
@@ -520,7 +581,7 @@ If sending to multiple peeps and one fails to send&hellip; queued up and resends
 <p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
 
 <p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#x61;&#x6d;&#x65;&#64;&#100;&#111;&#x6d;&#97;&#x69;&#110;&#46;&#99;&#111;&#109;">&#110;&#x61;&#109;&#x65;&#64;&#x64;&#x6f;&#x6d;&#97;&#105;&#x6e;&#x2e;&#99;&#111;&#109;</a>). )</p>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#x6e;&#x61;&#x6d;&#101;&#64;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#46;&#99;&#111;&#x6d;">&#110;&#x61;&#x6d;&#x65;&#x40;&#100;&#x6f;&#109;&#97;&#105;&#x6e;&#x2e;&#99;&#x6f;&#109;</a>). )</p>
 
 <p>&mdash; antivirus port 25 block<br/>
 The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
@@ -649,6 +710,10 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/postgres-dot-app-and-shared-preload-libraries-settings/">Postgres.App and Shared_preload_libraries Settings</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
       </li>
     
@@ -662,10 +727,6 @@ The mail could not be sent to the recipients because of the mail server failure.
     
       <li class="post">
         <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
       </li>
     
   </ul>
