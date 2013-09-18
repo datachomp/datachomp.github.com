@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-18T10:09:15-05:00</updated>
+  <updated>2013-09-18T10:12:34-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -14,10 +14,10 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Postgres.App and shared_preload_libraries settings]]></title>
-    <link href="http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries-settings/"/>
+    <title type="html"><![CDATA[Postgres.app and shared_preload_libraries]]></title>
+    <link href="http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries/"/>
     <updated>2013-09-18T09:28:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries-settings</id>
+    <id>http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries</id>
     <content type="html"><![CDATA[<p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
 
 <pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
