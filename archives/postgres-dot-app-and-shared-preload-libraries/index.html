@@ -136,7 +136,7 @@ select * from pg_stat_statements;
 <pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
 </code></pre>
 
-<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of postgres and run the following:</p>
+<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of Postgres.app and run the following:</p>
 
 <pre><code>show all;        -- This is a list of a bunch of settings... whoa!
 show config_all; -- Ahhhh, here is what we want
