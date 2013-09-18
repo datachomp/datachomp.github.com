@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-18T10:02:50-05:00</updated>
+  <updated>2013-09-18T10:09:15-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries-settings/"/>
     <updated>2013-09-18T09:28:00-05:00</updated>
     <id>http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries-settings</id>
-    <content type="html"><![CDATA[<p>Modules and extensions are one of the key features that keep Postgres so relevant in modern development. Need GUIDs?  Just add the extension and you&rsquo;re off to the races:</p>
+    <content type="html"><![CDATA[<p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
 
 <pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
 create extension "uuid-ossp"; -- it's alive!
@@ -29,34 +29,29 @@ create extension "uuid-ossp"; -- it's alive!
 <pre><code>select * from pg_extension; -- we should see it listed
 </code></pre>
 
-<p>But not all extensions are created equal.  If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion to get a deeper view of
-what has happened in the database.  Adding it to a database is easy enough:</p>
+<p>But not all extensions are created equal. If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion. This extension gives you  deeper view of what has been running in your database. Adding it to a database is easy enough:</p>
 
 <pre><code>create extension "pg_stat_statements";
+select * from pg_stat_statements;  
 </code></pre>
 
-<p>But when we go to use it:</p>
-
-<pre><code>SELECT * FROM pg_stat_statements  
-</code></pre>
-
-<p>We&rsquo;re greeted with a error that can be a little intimidating:<br/>
+<p>Uh oh, we&rsquo;re greeted with a error that can be a little intimidating:<br/>
 <font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
 
-<p>Ummmm what?  Some extensions have special requirements that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup which requires us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, this is pretty straight forward as we make sure we have our contrib module installed:</p>
+<p>Ummmm what? Some extensions have special requirements that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
 
 <pre><code>sudo apt-get install -y postgresql-contrib-9.3
 </code></pre>
 
-<p>Head on over to our configuration at  /etc/postgresql/9.3/main/postgres.conf   and look for the shared_preload_libraries setting and change it like so:</p>
+<p>Head on over to our configuration at /etc/postgresql/9.3/main/postgres.conf and look for the shared_preload_libraries setting and reference the extension:</p>
 
 <pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
 </code></pre>
 
-<p>That works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. There are some tricks though. Connect to your instance of postgres and run the following:</p>
+<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of postgres and run the following:</p>
 
-<pre><code>show all;   -- This is a list of a bunch of settings... whoa!
-show config_all;  --Ahhhh, here is what we want
+<pre><code>show all;        -- This is a list of a bunch of settings... whoa!
+show config_all; -- Ahhhh, here is what we want
 </code></pre>
 
 <p>Now that we have the location of our configuration file, just throw it into the Unholy Explorer(AKA Finder), start scrolling the file and add the pg_stat_statements setting to the shared_preload_libraries.</p>
