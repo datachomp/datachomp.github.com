@@ -301,26 +301,8 @@
         <lastmod>2013-09-16T10:37:16-05:00</lastmod>
     </url>
     <url>
-        <loc>
-            http://datachomp.github.com/archives/why-i-chose-to-buy-instead-of-build-my-new-computer/
-        </loc>
-        <lastmod>2013-09-02T18:00:21-05:00</lastmod>
-    </url>
-    <url>
         <loc>http://datachomp.github.com/archives/extending-sequel-with-hstore/</loc>
         <lastmod>2013-09-10T09:54:29-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://datachomp.github.com/archives/why-screencasts-work-for-me/</loc>
-        <lastmod>2013-09-10T09:56:12-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://datachomp.github.com/archives/postgresql-9-dot-3-is-out/</loc>
-        <lastmod>2013-09-10T09:56:20-05:00</lastmod>
-    </url>
-    <url>
-        <loc>http://datachomp.github.com/archives/okc-ruby/</loc>
-        <lastmod>2013-09-10T09:56:15-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/archives/nginx-block-php-requests/</loc>
@@ -330,7 +312,7 @@
         <loc>
             http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries/
         </loc>
-        <lastmod>2013-09-18T10:12:04-05:00</lastmod>
+        <lastmod>2013-09-18T10:14:53-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/about/</loc>
@@ -338,7 +320,7 @@
     </url>
     <url>
         <loc>http://datachomp.github.com/blog/archives/</loc>
-        <lastmod>2013-09-18T10:12:04-05:00</lastmod>
+        <lastmod>2013-09-18T10:14:53-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/books/</loc>
@@ -346,7 +328,7 @@
     </url>
     <url>
         <loc>http://datachomp.github.com/</loc>
-        <lastmod>2013-09-18T10:12:04-05:00</lastmod>
+        <lastmod>2013-09-18T10:14:53-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/robots.txt</loc>

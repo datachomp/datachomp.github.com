@@ -126,7 +126,7 @@ select * from pg_stat_statements;
 <p>Uh oh, we&rsquo;re greeted with a error that can be a little intimidating:<br/>
 <font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
 
-<p>Ummmm what? Some extensions have special requirements that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
+<p>Ummmm what? Some extensions have special needs that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
 
 <pre><code>sudo apt-get install -y postgresql-contrib-9.3
 </code></pre>
