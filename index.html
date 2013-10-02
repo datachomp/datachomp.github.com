@@ -119,7 +119,7 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
 , :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
 </code></pre>
 
-<p> When I look at my pg_stat_activity, I get a nice entry:</p>
+<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
 
 <pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
 </code></pre>

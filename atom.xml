@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-02T09:51:48-05:00</updated>
+  <updated>2013-10-02T09:53:22-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -28,7 +28,7 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
 , :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
 </code></pre>
 
-<p> When I look at my pg_stat_activity, I get a nice entry:</p>
+<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
 
 <pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
 </code></pre>
