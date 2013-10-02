@@ -315,12 +315,16 @@
         <lastmod>2013-09-18T10:15:50-05:00</lastmod>
     </url>
     <url>
+        <loc>http://datachomp.github.com/archives/application-name-in-sequel/</loc>
+        <lastmod>2013-10-02T09:51:10-05:00</lastmod>
+    </url>
+    <url>
         <loc>http://datachomp.github.com/about/</loc>
         <lastmod>2013-09-02T18:00:21-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/blog/archives/</loc>
-        <lastmod>2013-09-18T10:15:50-05:00</lastmod>
+        <lastmod>2013-10-02T09:51:10-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/books/</loc>
@@ -328,7 +332,7 @@
     </url>
     <url>
         <loc>http://datachomp.github.com/</loc>
-        <lastmod>2013-09-18T10:15:50-05:00</lastmod>
+        <lastmod>2013-10-02T09:51:10-05:00</lastmod>
     </url>
     <url>
         <loc>http://datachomp.github.com/robots.txt</loc>

@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-09-18T10:38:43-05:00</updated>
+  <updated>2013-10-02T09:51:48-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,28 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[application_name in sequel]]></title>
+    <link href="http://datachomp.github.com/archives/application-name-in-sequel/"/>
+    <updated>2013-10-02T09:22:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/application-name-in-sequel</id>
+    <content type="html"><![CDATA[<p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
+
+<p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
+
+<pre><code>require 'sequel'
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'datachomp', :user=&gt;'rob', :max_connections =&gt; 10
+, :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
+</code></pre>
+
+<p> When I look at my pg_stat_activity, I get a nice entry:</p>
+
+<pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
+</code></pre>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Postgres.app and shared_preload_libraries]]></title>
@@ -742,17 +764,6 @@ chmod 755 install_mono-2.11.sh
 
 <p>Mono as a service:<br/>
 <a href="http://yojimbo87.github.com/2010/03/14/mono-startup-script.html" title="Monoserve">http://yojimbo87.github.com/2010/03/14/mono-startup-script.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
-    <link href="http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
-    <updated>2012-03-13T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>If you want the back story on what this topic is all about &ndash;</p>
 ]]></content>
   </entry>
   
