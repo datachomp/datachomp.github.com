@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-07T14:47:32-05:00</updated>
+  <updated>2013-10-07T14:47:51-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -53,7 +53,7 @@ CREATE EXTENSION earthdistance;
 
 <p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of 4 countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
 
-<pre><code>-- my location on  i-235 is a very hungry (35.512363,-97.515678)
+<pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
 SELECT *, point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)::point AS burrito_distance
 FROM burritoplaces
 WHERE (point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)) &lt; 10 --feel free to play this!
