@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-07T16:36:03-05:00</updated>
+  <updated>2013-10-07T16:39:28-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -62,6 +62,14 @@ ORDER by burrito_distance;
 </code></pre>
 
 <p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
+
+<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
+
+<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
+FROM burritoplaces
+WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
+ORDER by burrito_distance;
+</code></pre>
 ]]></content>
   </entry>
   

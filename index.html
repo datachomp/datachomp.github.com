@@ -153,6 +153,14 @@ ORDER by burrito_distance;
 </code></pre>
 
 <p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
+
+<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
+
+<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
+FROM burritoplaces
+WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
+ORDER by burrito_distance;
+</code></pre>
 </div>
   
   
