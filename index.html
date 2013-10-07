@@ -143,7 +143,7 @@ CREATE EXTENSION cube;
 CREATE EXTENSION earthdistance;
 </code></pre>
 
-<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of 4 countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
+<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of the four countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
 
 <pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
 SELECT *, point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)::point AS burrito_distance
