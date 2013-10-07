@@ -112,12 +112,13 @@
 
 <p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
 
-<pre><code>--Hello Data!
+<pre><code>--Hello Table!
 CREATE TABLE burritoplaces
 (id serial PRIMARY KEY,
 establishment varchar(50) not null,
 lat double precision,
 lon double precision);  
+--Hello Data!
 INSERT INTO burritoplaces(establishment, lat,lon)
 VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
 ,('Locos Lobos', 35.496025,-97.510185)
