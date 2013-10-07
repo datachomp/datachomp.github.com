@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-07T16:39:28-05:00</updated>
+  <updated>2013-10-07T16:53:06-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -45,7 +45,7 @@ VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
 SELECT * FROM burritoplaces;
 </code></pre>
 
-<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
+<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do it outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
 
 <pre><code>--turn on the magic
 CREATE EXTENSION cube;
