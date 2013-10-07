@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to &hellip;">
+  <meta name="description" content="Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,111 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/getting-started-with-sql-clr-part-1/">Getting Started With SQL CLR Part 1</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-07-27T00:00:00-05:00" pubdate data-updated="true">Jul 27<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&rsquo;s get started:</p>
+
+<p>First, we need to enable CLR on our database:</p>
+
+<pre><code>sp_configure 'clr enabled', 1
+GO
+RECONFIGURE
+GO
+</code></pre>
+
+<p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
+<img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
+
+<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &lsquo;database&rsquo; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<code></p>
+
+<pre><code>using System;
+using System.Data;
+using System.Data.SqlClient;
+using System.Data.SqlTypes;
+using Microsoft.SqlServer.Server;
+
+
+public partial class StoredProcedures
+{
+    [Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp()
+    {
+        // Put your code here
+    }
+};
+</code></pre>
+
+<p></code></p>
+
+<p>Let&rsquo;s throw in some code:
+<code></p>
+
+<pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
+    public static void clr_Chomp(out string Chomps)
+    {
+        Chomps = "Chomp Chomp Chomp Chomp";
+    }
+</code></pre>
+
+<p></code></p>
+
+<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &lsquo;Chomp&rsquo; X 4.<br/>
+Compile, and deploy. Gotcha &ndash; For those of us that use VS 2010 our default framework is 4.0 &hellip;. this won&rsquo;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
+Make sure you are in the proper database and run it:
+<code></p>
+
+<pre><code>DECLARE @words VARCHAR(25)
+EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
+SELECT @words
+</code></pre>
+
+<p></code></p>
+
+<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&rsquo;s. If it didn&rsquo;t work for you then:
+<code></p>
+
+<pre><code>GOTO START;
+</code></pre>
+
+<p></code>
+In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
+In Part 3, I will likely look at performance and some other items to help round out the series.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -559,74 +664,6 @@ DROP TABLE #temper;</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/windows-tools-i-use/">Windows Tools I Use</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>NOTE: As of 2013, I no longer use Windows&hellip; so this post is a bit dated.</p>
-
-<p>This is a living document of Applications you will find on my Windows OS:</p>
-
-<p><a href="http://filezilla-project.org/">FileZilla</a> &ndash; great FTP client and server<br/>
-<a href="http://getfirefox.com">Firefox</a></p>
-
-<p><a href="http://adblockplus.org/en/">Adblock plus</a></p>
-
-<p><a href="http://www.colorzilla.com/firefox/">colorzilla</a></p>
-
-<p><a href="http://getfirebug.com/">firebug</a></p>
-
-<p><a href="https://www.dropbox.com/">Dropbox</a> &ndash; File syncs and backups<br/>
-<a href="http://launchy.net/"> Launchy </a> &ndash; application launcher<br/>
-<a href="http://lightscreen.sourceforge.net/"> LightScreen</a> &ndash; replacement for snip it<br/>
-<a href="http://www.foobar2000.org/"> Foobar 2000</a> &ndash; music player replacement<br/>
-<a href="http://www.getpaint.net/"> Paint.net</a> open source image editor<br/>
-<a href="http://www.videolan.org/vlc/">VLC</a> &ndash; Media player<br/>
-<a href="http://blog.kowalczyk.info/software/sumatrapdf/index.html">SumatraPDF</a> &ndash; lightweight pdf viewer<br/>
-<a href="http://Ninite.com">Ninite</a> &ndash; mass installer of basic apps<br/>
-<a href="http://www.pidgin.im/">pidgin</a> &ndash; chat client<br/>
-<a href="http://www.utorrent.com/">utorrent</a> &ndash; torrent tool<br/>
-<a href="http://store.steampowered.com/about/">steam</a> &ndash; game platform<br/>
-<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">putty</a> -<br/>
-<a href="http://winscp.net/eng/index.php">winSCP</a> -<br/>
-<a href="http://www.imgburn.com/">imgBurn</a> &ndash; burns my iso files<br/>
-<a href="http://www.7-zip.org/">7zip</a> &ndash; compression tool<br/>
-<a href="http://www.openoffice.org/">OpenOffice</a> &ndash; haven&rsquo;t found anything I use in MS office that this can&rsquo;t replace.<br/>
-<a href="http://cdexos.sourceforge.net/">Cdex</a> &ndash; program to help with personal backups of CD&#8217;s<br/>
-<a href="http://www.dvdshrink.org/">DVDShrink</a> -program to help with personal backups of DVD&rsquo;s</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -648,6 +685,10 @@ DROP TABLE #temper;</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/application-name-in-sequel/">Application_name in Sequel</a>
       </li>
     
@@ -661,10 +702,6 @@ DROP TABLE #temper;</p>
     
       <li class="post">
         <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
       </li>
     
   </ul>

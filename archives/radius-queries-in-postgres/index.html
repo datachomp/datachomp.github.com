@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>You Literaled my CSS - DataChomp</title>
+  <title>Radius Queries in Postgres - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  &hellip;">
+  <meta name="description" content="Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/you-literaled-my-css">
+  <link rel="canonical" href="http://datachomp.github.com/archives/radius-queries-in-postgres">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">You Literaled My CSS</h1>
+      <h1 class="entry-title">Radius Queries in Postgres</h1>
     
     
       <p class="meta">
@@ -99,36 +99,56 @@
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-10-07T13:56:00-05:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
 
-<p>On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  Essentially a literal lives up to its name&hellip; it allows you to define literal html.</p>
+<h4>Where oh where to begin</h4>
 
-<p>So, in the master I have:<br/>
-<code></p>
+<p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
 
-<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
+<pre><code>--Hello Data!
+create table burritoplaces
+(id serial PRIMARY KEY,
+establishment varchar(50) not null,
+lat double precision,
+lon double precision);
+insert into burritoplaces(establishment, lat,lon)
+VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
+,('Locos Lobos', 35.496025,-97.510185)
+,('Captain Crustacian', 35.51468,-97.524347)
+,('Double Stuffers Cafe', 35.523762,-97.508039)
+,('Cafe Truncate of Watonga', 35.866413,-98.473206);
 </code></pre>
 
-<p><code></p>
+<p>The data checks out:</p>
 
-<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:<br/>
-<code></p>
-
-<pre><code>protected void Page_Load(object sender, EventArgs e) 
-{ 
-Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
-menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
-}
+<pre><code>-- all 5 entries
+select * from burritoplaces;
 </code></pre>
 
-<p></code></p>
+<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
+
+<pre><code>--turn on the magic
+create extension cube;
+create extension earthdistance;
+</code></pre>
+
+<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of 4 countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
+
+<pre><code>-- my location on  i-235 is a very hungry (35.512363,-97.515678)
+SELECT *, point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)::point AS burrito_distance
+FROM burritoplaces
+WHERE (point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)) &lt; 10
+ORDER by burrito_distance;
+</code></pre>
+
+<p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Locos Lobos is less than a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
 </div>
 
 
@@ -137,7 +157,7 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -151,21 +171,15 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2013-10-07T13:56:00-05:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/asp-dot-net/'>ASP.NET</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/you-literaled-my-css/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/you-literaled-my-css/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/radius-queries-in-postgres/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/radius-queries-in-postgres/" >Tweet</a>
   
   
   
@@ -174,14 +188,18 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/who-said-programmers-are-un-date-able/" title="Previous Post: Who said programmers are un-date-able ?">&laquo; Who said programmers are un-date-able ?</a>
+        <a class="basic-alignment left" href="/archives/application-name-in-sequel/" title="Previous Post: application_name in sequel">&laquo; application_name in sequel</a>
       
-      
-        <a class="basic-alignment right" href="/archives/appdev-tools-i-use/" title="Next Post: AppDev Tools I Use">AppDev Tools I Use &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -240,7 +258,10 @@ menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='Abou
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/radius-queries-in-postgres/';
+        var disqus_url = 'http://datachomp.github.com/archives/radius-queries-in-postgres/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
