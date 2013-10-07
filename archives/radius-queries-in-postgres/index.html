@@ -113,7 +113,7 @@
 <p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
 
 <pre><code>--Hello Data!
-create table burritoplaces
+CREATE TABLE burritoplaces
 (id serial PRIMARY KEY,
 establishment varchar(50) not null,
 lat double precision,
@@ -135,8 +135,8 @@ select * from burritoplaces;
 <p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
 
 <pre><code>--turn on the magic
-create extension cube;
-create extension earthdistance;
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
 </code></pre>
 
 <p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of 4 countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
