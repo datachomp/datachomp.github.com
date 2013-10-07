@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-07T14:46:58-05:00</updated>
+  <updated>2013-10-07T14:47:32-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -41,7 +41,7 @@ VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
 <p>The data checks out:</p>
 
 <pre><code>-- all 5 entries
-select * from burritoplaces;
+SELECT * FROM burritoplaces;
 </code></pre>
 
 <p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
@@ -56,7 +56,7 @@ CREATE EXTENSION earthdistance;
 <pre><code>-- my location on  i-235 is a very hungry (35.512363,-97.515678)
 SELECT *, point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)::point AS burrito_distance
 FROM burritoplaces
-WHERE (point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)) &lt; 10
+WHERE (point(35.512363,-97.515678) &lt;@&gt; point(lat, lon)) &lt; 10 --feel free to play this!
 ORDER by burrito_distance;
 </code></pre>
 
