@@ -26,7 +26,7 @@ Luckily, I happen to know the latitude and longitude of all my favorite burrito 
 The data checks out:
 	-- all 5 entries
 	SELECT * FROM burritoplaces;
-Perfect! All my favorite places are there but sadly, I can't do geospatial math in my head. I can't even really do outside of my head so I'm going to have to get some help. Enter the [earthdistance][1] postgres extension and its helpful sibling 'cube':
+Perfect! All my favorite places are there but sadly, I can't do geospatial math in my head. I can't even really do it outside of my head so I'm going to have to get some help. Enter the [earthdistance][1] postgres extension and its helpful sibling 'cube':
 
 	--turn on the magic
 	CREATE EXTENSION cube;

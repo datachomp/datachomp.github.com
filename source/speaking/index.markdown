@@ -11,6 +11,7 @@ footer: true
 Here are my plans for the years... I hope to catch you at one of the following:
 
 \---|-- 2013 \---|--  
+Nov 14, 2013 - OKC Ruby - Slinging data with Sequel
 Nov 07, 2013 - Thunder Plains Conf - Why nothing will love your app more than Postgres
 Aug 24, 2013 - SQL Saturday #223 - SQL Server vs The World  
 Aug 12, 2013 - OKC SQL - SQL Server vs The World  
