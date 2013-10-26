@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my &hellip;">
+  <meta name="description" content="A working Asset Pipeline(AP for short) can be a thing of beauty. A broken asset pipeline can be a horribly mean shutin. One of my favorite ways for &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,74 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-26T14:42:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A working Asset Pipeline(AP for short) can be a thing of beauty. A broken asset pipeline can be a horribly mean shutin. One of my favorite ways for it to break in my Rails 3 app is the:</p>
+
+<pre><code>undefined method `directory?' for nil:NilClass
+rake aborted
+</code></pre>
+
+<p>Thanks AP, for breaking and basically telling me nothing. Luckily, it doesn&rsquo;t have to be this way. If we take a moment to stop and get to know AP, we can get it to open up and be more helpful to us. We start by setting our bundler editor in .bashrc by adding the following line:</p>
+
+<pre><code>export BUNDLER_EDITOR=subl   #I set mine to sublimetext
+</code></pre>
+
+<p>Next up, we hop into terminal and go for an in home visit right into the code itself:</p>
+
+<pre><code>bundle open sprockets  #sprockets is AP's birth name
+</code></pre>
+
+<p>Navigate to lib->sprockets->base.rb</p>
+
+<p>find your way to the &ldquo;def each_entry(root, &amp;block)&rdquo; section of code and you&rsquo;ll likely see a lack of error handling there. To fix it, I wrap a rescue around the &ldquo;directory?&rdquo; check like so:</p>
+
+<pre><code>begin
+    if stat(path).directory?
+      each_entry(path) do |subpath|
+        paths &lt;&lt; subpath
+      end
+    end
+    rescue
+      puts "Hey friend, I have an issue at: #{path}"
+    end
+end
+</code></pre>
+
+<p>This doesn&rsquo;t fix all of AP&rsquo;s problems, none of us are perfect, but it does coax the gem into letting us know where the problem is. Once we know where the problem is, we can work on it together rather than just throwing our arms up in the air and quitting.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -703,69 +771,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-17T22:43:00-05:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&hellip;</p>
-
-<p>Here is what I have so far:</p>
-
-<div style="text-align: center;">
-<table style="margin: 0px auto; table-layout: fixed; width: 650px;">
-<tr>
-<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(css)<br/><img src="http://static.datachomp.com/emoticons/css.png" /></td><td>(jquery)<br/><img src="http://static.datachomp.com/emoticons/jquery.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
-</tr>
-<td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(poshgit)<br/><img src="http://static.datachomp.com/emoticons/poshgit.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
-</tr>
-<tr>
-<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(ruby)<br/><img src="http://static.datachomp.com/emoticons/ruby.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td>(vs)<br/><img src="http://static.datachomp.com/emoticons/vs.png" /></td><td>(xamarin)<br/><img src="http://static.datachomp.com/emoticons/xamarinhq.png" /></td><td>(sublime)<br/><img src="http://static.datachomp.com/emoticons/sublimetext.png" /></td>
-</tr>
-<tr>
-<td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td> </td>
-</tr>
-</table>
-</div>
-
-
-<p>Special thanks to <a href="https://twitter.com/motowilliams">@motowilliams</a> for a variety of these</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -785,6 +790,10 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a>
       </li>
     
@@ -798,10 +807,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
     
       <li class="post">
         <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
   </ul>

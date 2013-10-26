@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off Stackoverflow.com Sadly, I didn&rsquo;t bookmark the link and upon &hellip;">
+  <meta name="description" content="Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company Arvixe is pretty cutting edge,  &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/deploy-mvc3-to-shared-hosting/">Deploy MVC3 to Shared Hosting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn&rsquo;t have (and I didn&rsquo;t request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to &lsquo;copy local&rsquo; to get it to work on shared hosting.</p>
+
+<p>The list of assemblies to set to copy local = true is:</p>
+
+<ul>
+<li>Microsoft.Web.Infrastructure</li>
+<li>System.Web.Helpers</li>
+<li>System.Web.Mvc</li>
+<li>System.Web.Razor</li>
+<li>System.Web.Webpages</li>
+<li>System.Web.WebPages.Deployment</li>
+<li>System.Web.Webpages.Razor</li>
+</ul>
+
+
+<p>Drew Miller ( <a href="http://drew-prog.blogspot.com/">blog</a> | <a href="http://twitter.com/anglicangeek">twitter</a> ) has a great breakdown on this : <a href="http://drew-prog.blogspot.com/2011/01/how-to-deploy-aspnet-mvc-3-app-to-web.html">Click for Breakdown </a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -725,93 +778,6 @@ Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-sql-clr-part-2/">Getting Started With SQL CLR Part 2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>As you start playing with SQL CLR, you learn pretty quick that the built in namespaces can be a little handicapping. You can skip this by creating an &lsquo;unsafe&rsquo; assembly in your database. In the following demo, we&rsquo;re going to load a 3rd party .library for XMPP messaging into our SQL Server instance, and use a stored procedure to send XMPP messages.</p>
-
-<p>The XMPP library I&rsquo;ll be using is <a href="http://www.ag-software.de/agsxmpp-sdk.html">agsXMPP</a>. As you&rsquo;ll see in my code below, I tend to just use a common shared library folder so I can house various libraries and it makes it easier from an organizational standpoint to cram them into the database. I use the following code to &lsquo;cram&rsquo; the library into my instance so I&rsquo;ll be able to use it in a CLR procedure:</p>
-
-<p><code></p>
-
-<pre><code>CREATE ASSEMBLY [agsXMPP]
-FROM 'C:SubversionShared LibsagsxmppagsXMPP.dll'
-WITH PERMISSION_SET = UNSAFE
-GO
-</code></pre>
-
-<p></code></p>
-
-<p>Once that is out of the way, we can roll our CLR proc, deploy and message to our hearts content (or until the network drops)
-<code></p>
-
-<pre><code>using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using Microsoft.SqlServer.Server;
-
-using agsXMPP;
-using agsXMPP.protocol.client;
-// yes,  domains and names have been changed to protect the innocent servers.
-public partial class StoredProcedures
-{
-    [Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_SendXMPP()
-    {
-        XmppClientConnection xmpp;
-        xmpp = new XmppClientConnection();
-        xmpp.AutoPresence = true;
-
-        xmpp.AutoResolveConnectServer = true;
-        xmpp.Port = 5222;
-        xmpp.UseSSL = false;
-        xmpp.Server = "xmpp.datachomp.com";
-        xmpp.Username = "SQLAlert";
-        xmpp.Password = "SqlClr";
-
-        xmpp.Open();
-
-        xmpp.OnLogin += delegate(object o) { xmpp.Send(new Message(new Jid("Gatir@xmpp.datachomp.com"), MessageType.chat, "This really should be a variable yes?")); };
-    }
-};
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -833,6 +799,10 @@ public partial class StoredProcedures
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a>
       </li>
     
@@ -846,10 +816,6 @@ public partial class StoredProcedures
     
       <li class="post">
         <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
       </li>
     
   </ul>

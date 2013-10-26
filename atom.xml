@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-17T15:08:48-05:00</updated>
+  <updated>2013-10-26T14:58:23-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,47 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Helping Asset Pipeline Open Up A Little]]></title>
+    <link href="http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little/"/>
+    <updated>2013-10-26T14:42:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little</id>
+    <content type="html"><![CDATA[<p>A working Asset Pipeline(AP for short) can be a thing of beauty. A broken asset pipeline can be a horribly mean shutin. One of my favorite ways for it to break in my Rails 3 app is the:</p>
+
+<pre><code>undefined method `directory?' for nil:NilClass
+rake aborted
+</code></pre>
+
+<p>Thanks AP, for breaking and basically telling me nothing. Luckily, it doesn&rsquo;t have to be this way. If we take a moment to stop and get to know AP, we can get it to open up and be more helpful to us. We start by setting our bundler editor in .bashrc by adding the following line:</p>
+
+<pre><code>export BUNDLER_EDITOR=subl   #I set mine to sublimetext
+</code></pre>
+
+<p>Next up, we hop into terminal and go for an in home visit right into the code itself:</p>
+
+<pre><code>bundle open sprockets  #sprockets is AP's birth name
+</code></pre>
+
+<p>Navigate to lib->sprockets->base.rb</p>
+
+<p>find your way to the &ldquo;def each_entry(root, &amp;block)&rdquo; section of code and you&rsquo;ll likely see a lack of error handling there. To fix it, I wrap a rescue around the &ldquo;directory?&rdquo; check like so:</p>
+
+<pre><code>begin
+    if stat(path).directory?
+      each_entry(path) do |subpath|
+        paths &lt;&lt; subpath
+      end
+    end
+    rescue
+      puts "Hey friend, I have an issue at: #{path}"
+    end
+end
+</code></pre>
+
+<p>This doesn&rsquo;t fix all of AP&rsquo;s problems, none of us are perfect, but it does coax the gem into letting us know where the problem is. Once we know where the problem is, we can work on it together rather than just throwing our arms up in the air and quitting.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Radius Queries in Postgres]]></title>
@@ -721,35 +762,6 @@ gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
 <p></code></p>
 
 <p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
-    <link href="http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
-    <updated>2012-05-02T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
-
-<p>On our Ubuntu box, after we finish the easy as candy install, we&rsquo;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
-
-<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&rsquo;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
-<code></p>
-
-<pre><code>sudo apt-get install openjdk-7-jre
-wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
-tar xfz TeamCity-7.0.2a.tar.gz
-cd Teamcity
-sudo ./bin/runAll.bat start
-</code></pre>
-
-<p></code></p>
-
-<p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
-
-<p>Yay! Everything works! You&rsquo;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&rsquo;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&rsquo;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
 ]]></content>
   </entry>
   
