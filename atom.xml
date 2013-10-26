@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-26T14:58:23-05:00</updated>
+  <updated>2013-10-26T14:59:56-05:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little/"/>
     <updated>2013-10-26T14:42:00-05:00</updated>
     <id>http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little</id>
-    <content type="html"><![CDATA[<p>A working Asset Pipeline(AP for short) can be a thing of beauty. A broken asset pipeline can be a horribly mean shutin. One of my favorite ways for it to break in my Rails 3 app is the:</p>
+    <content type="html"><![CDATA[<p>A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in my Rails 3 app is the:</p>
 
 <pre><code>undefined method `directory?' for nil:NilClass
 rake aborted
