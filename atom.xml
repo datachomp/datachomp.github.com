@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-14T22:51:14-06:00</updated>
+  <updated>2013-11-14T22:52:49-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -22,7 +22,7 @@
 
 <h3>Always Be Coding</h3>
 
-<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me  because what good is data if you don&rsquo;t use it?</p>
+<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me once a week because what good is data if you don&rsquo;t use it?</p>
 
 <h3>It Passes in a Flash</h3>
 
