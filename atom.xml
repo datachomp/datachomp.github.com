@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-10-26T14:59:56-05:00</updated>
+  <updated>2013-11-14T22:15:46-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[My Friend Rob]]></title>
+    <link href="http://datachomp.github.com/archives/my-friend-rob/"/>
+    <updated>2013-11-14T22:05:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/my-friend-rob</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I started taking everything for granted.</p>
+
+<h3>Always Be Coding</h3>
+
+<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me  because what good is data if you don&rsquo;t use it?</p>
+
+<h3>It Passes in a Flash</h3>
+
+<p>The past few months have been amazing. The team I work with at Raisemore is top notch and it is an incredible feeling to be working with and helping non-profits every day. Tekpub got acquired by Pluralsight and it has been a lot of work and an absolute blast building products with them. I&rsquo;ve also helped reboot our local Ruby user group with 2 other friends and spoke to that group today on two topics I absolutely love &ndash; Sequel and Postgres.</p>
+
+<h3>For Whom The Phone Tolls</h3>
+
+<p>We just got back from dinner and I&rsquo;m checking my usual blog posts and nightly reading when I get the familiar email every Friday at 00:00:00 UTC:<br/>
+Subject: Be Thankful<br/>
+Body: 1 &ndash; Rob Conery</p>
+
+<p>I don&rsquo;t know if it gets anymore serendipitous than that. Rob is the first entry I put in the table. Since I&rsquo;ve met Rob, he has challenged me to be a better DBA, challenged my comfort zones and to be an overall better person. Some of the above he&rsquo;s done directly, some of it indirectly and I&rsquo;m thankful for all if it.</p>
+
+<h3>perspective.empty?</h3>
+
+<p>I can&rsquo;t wait to see who/what shows up in my inbox next week. Perhaps I&rsquo;ll take the time to personally thank them or the project. Between now and when I get my next mail, I also hope that I can have the same effect on others my list has had on me.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Helping Asset Pipeline Open Up A Little]]></title>
@@ -730,38 +759,6 @@ You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets 
 <code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
 
 <p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Content length issue on 404 pages in Padrino 10.7]]></title>
-    <link href="http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
-    <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>
-<code></p>
-
-<pre><code>error 404 do
-    response.status = 404
-    render 'errors/404', :layout=&gt;:applayout
-end
-</code></pre>
-
-<p></code></p>
-
-<p>It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
-<code></p>
-
-<pre><code>gem 'rake'
-gem 'sinatra', '1.3.2'
-gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
-</code></pre>
-
-<p></code></p>
-
-<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
 ]]></content>
   </entry>
   

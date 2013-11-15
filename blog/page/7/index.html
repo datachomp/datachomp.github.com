@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Anyone who has to do reporting on a recurring basis knows what a pain it can be when you have to provide columns totals for the app. Treatment for &hellip;">
+  <meta name="description" content="Outside of the daily WTF&rsquo;s I create&hellip; one of the larger WTF&rsquo;s I know is the SQL Server team removing the built in alerts in SQL &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,61 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-server-20052008-alert-pack/">SQL Server 2005/2008 Alert Pack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Outside of the daily WTF&rsquo;s I create&hellip; one of the larger WTF&rsquo;s I know is the SQL Server team removing the built in alerts in SQL Server 2005 and SQL Server 2008. Naturally I am going to gloss over a lot of this and just link up the code. To go more in depth on this, read the &lsquo;related link&rsquo; at the bottom.</p>
+
+<p>Lets walk through the file- (Make sure you have DatabaseMail set up and set the Agent to use DatabaseMail)</p>
+
+<ol>
+<li>In the @email list variable&hellip; set the notification emails you want</li>
+<li>Notice the &lsquo;use MSDB&rsquo; &ndash; that is SQL Agent&rsquo;s crib</li>
+<li>You are then going to see the create statements for a variety of alerts in the agent</li>
+<li><p>the SQL 2000 alerts have some different delay intervals that throw warnings in 05/08. my script fixes that</p></li>
+<li><p>Create an operator named &lsquo;DBA&rsquo; and assign it the desired emails.</p></li>
+<li>Add the DBA operator to the alerts and tell it to use email notification</li>
+</ol>
+
+
+<p>Here is the file:</p>
+
+<p>Related Link:<br/>
+<a href="http://www.karaszi.com/SQLServer/util_agent_alerts.asp">http://www.karaszi.com/SQLServer/util_agent_alerts.asp</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -667,48 +722,6 @@ This will let use the report servers service credentials to authenticate to the 
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/msdn-on-the-down-low-bandwidth/">MSDN on the Down Low Bandwidth</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>For the most part, I find online <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> to be a complete and utter slow pain in the compiler. It appears that MS has fixed this by offering &lsquo;low bandwidth&rsquo; view for both <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> and Technet. I am pleased to have this information tool back.</p>
-
-<p>You can trigger this by click on the &ldquo;Switch on low bandwidth view&rdquo; link on <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> or Technet.</p>
-
-<p><img src="http://images.datachomp.com/AppDev/Low_Bandwidth_MSDN.jpg" alt="" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -730,6 +743,10 @@ This will let use the report servers service credentials to authenticate to the 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
@@ -743,10 +760,6 @@ This will let use the report servers service credentials to authenticate to the 
     
       <li class="post">
         <a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
       </li>
     
   </ul>

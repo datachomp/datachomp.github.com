@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) &hellip;">
+  <meta name="description" content="I&rsquo;ve been tooling around with PadrinoRB lately. Personally, it has been a nice mix of SinatraRB and Rails. One of the annoying issues I&rsquo; &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,65 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/content-length-issue-on-404-pages-in-padrino-10-7/">Content Length Issue on 404 Pages in Padrino 10.7</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-10-15T00:00:00-05:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>
+<code></p>
+
+<pre><code>error 404 do
+    response.status = 404
+    render 'errors/404', :layout=&gt;:applayout
+end
+</code></pre>
+
+<p></code></p>
+
+<p>It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
+<code></p>
+
+<pre><code>gem 'rake'
+gem 'sinatra', '1.3.2'
+gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
+</code></pre>
+
+<p></code></p>
+
+<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -762,49 +821,6 @@ So remember when I started our Colors table with a capital C? This is where it c
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/rock-out-with-your-procmon-out/">Rock Out With Your Procmon Out</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-07-26T00:00:00-05:00" pubdate data-updated="true">Jul 26<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
-Start run live.sysinternals.comtools</p>
-
-<p>If you are already a gigantic nerd like me and have various login scripts that run, it is way easy to simply map that share by throwing the following into your login scripts:</p>
-
-<p>net use s: live.sysinternals.comtools</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/4/">&larr; Older</a>
@@ -826,6 +842,10 @@ Start run live.sysinternals.comtools</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
@@ -839,10 +859,6 @@ Start run live.sysinternals.comtools</p>
     
       <li class="post">
         <a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
       </li>
     
   </ul>

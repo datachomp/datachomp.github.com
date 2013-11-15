@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in &hellip;">
+  <meta name="description" content="It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,62 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/my-friend-rob/">My Friend Rob</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-14T22:05:00-06:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I started taking everything for granted.</p>
+
+<h3>Always Be Coding</h3>
+
+<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me  because what good is data if you don&rsquo;t use it?</p>
+
+<h3>It Passes in a Flash</h3>
+
+<p>The past few months have been amazing. The team I work with at Raisemore is top notch and it is an incredible feeling to be working with and helping non-profits every day. Tekpub got acquired by Pluralsight and it has been a lot of work and an absolute blast building products with them. I&rsquo;ve also helped reboot our local Ruby user group with 2 other friends and spoke to that group today on two topics I absolutely love &ndash; Sequel and Postgres.</p>
+
+<h3>For Whom The Phone Tolls</h3>
+
+<p>We just got back from dinner and I&rsquo;m checking my usual blog posts and nightly reading when I get the familiar email every Friday at 00:00:00 UTC:<br/>
+Subject: Be Thankful<br/>
+Body: 1 &ndash; Rob Conery</p>
+
+<p>I don&rsquo;t know if it gets anymore serendipitous than that. Rob is the first entry I put in the table. Since I&rsquo;ve met Rob, he has challenged me to be a better DBA, challenged my comfort zones and to be an overall better person. Some of the above he&rsquo;s done directly, some of it indirectly and I&rsquo;m thankful for all if it.</p>
+
+<h3>perspective.empty?</h3>
+
+<p>I can&rsquo;t wait to see who/what shows up in my inbox next week. Perhaps I&rsquo;ll take the time to personally thank them or the project. Between now and when I get my next mail, I also hope that I can have the same effect on others my list has had on me.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -716,61 +772,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T12:50:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
-
-<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
-
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&rsquo;s and then it barfed on a &lsquo;mysql&rsquo; dependency (not to be confused with mysql2 gem dependency). I installed the &lsquo;mysql&rsquo; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
-
-<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
-
-<p>A couple things I like about Valkyrie:</p>
-
-<ul>
-<li>It is simple. I just provide a mysql source and postgres destination.</li>
-<li>It uses <a href="https://github.com/jeremyevans/sequel">Sequel</a>.</li>
-<li>I can keep re-running it without it duplicating source data.</li>
-</ul>
-
-
-<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
-
-<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -790,6 +791,10 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
@@ -803,10 +808,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
     
       <li class="post">
         <a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a>
       </li>
     
   </ul>
