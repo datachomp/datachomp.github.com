@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-15T18:27:15-06:00</updated>
+  <updated>2013-11-15T18:28:03-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.github.com/archives/writable-ctes-in-postgres/"/>
     <updated>2013-11-15T18:10:00-06:00</updated>
     <id>http://datachomp.github.com/archives/writable-ctes-in-postgres</id>
-    <content type="html"><![CDATA[<p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/9.2/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+    <content type="html"><![CDATA[<p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
 First, lets new up some data:</p>
 
 <pre><code>drop table if exists thanks;
