@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my Thankyou app &hellip;">
+  <meta name="description" content="Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,101 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T21:20:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
+
+<pre><code>CREATE TABLE burritotrucks
+(
+  id serial primary key,
+  truckname text not null,
+  onsite daterange not null --or tsrange if busy schedule
+);
+
+insert into burritotrucks (truckname, onsite)
+values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
+('chompy delight', '[2013-11-15, 2013-11-17]'),
+('no dogs allowed', '[2013-11-16, 2013-11-21]'),
+('government cheese wagon', '[2013-11-11, 2013-11-14]'),
+('tortuga mochilla', '[2013-11-13, 2013-11-18]');
+</code></pre>
+
+<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()
+</code></pre>
+
+<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()::date
+</code></pre>
+
+<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
+
+<pre><code>Sequel.extension(:pg_range)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>We query the database:</p>
+
+<pre><code>options = DB[:burritotrucks].all
+p options
+</code></pre>
+
+<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
+
+<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
+p options
+</code></pre>
+
+<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
+
+<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
+
+<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
+p options
+</code></pre>
+
+<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish Postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -749,65 +844,6 @@ sudo service nginx restart
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-09T10:05:00-05:00" pubdate data-updated="true">Aug 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>For quite a few months now, I&rsquo;ve been playing around with a treadmill
-desk. I have a pretty large hydraulic desk from <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Geek Desk</a> that I have
-partitioned into 2 workstations:</p>
-
-<p><a href="http://images.datachomp.com/treadmill/desktop.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_desktop.jpg" title="On Top of The Desk World" alt="On Top of The Desk World" Height="200" Width="400" /></a></p>
-
-
-<p><strong>What is This?</strong><br/>
-On the left is my coding/recording station, and on the right is my learning/gaming station.
-When I&rsquo;m simply consuming content, I can easily work on my treadmill station. For $200, I bought a <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Confidence Power Plus</a> treadmill that I <a href="http://www.treadmilldeskdiary.com/setting-up-my-confidence-power-plus-treadmill-for-a-desk/">mostly disassembled</a> and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn&rsquo;t focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.</p>
-
-<p><a href="http://images.datachomp.com/treadmill/underview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_underview.jpg" title="Under the hood" alt="Under the hood" Height="200" Width="400" /></a></p>
-
-
-<p><strong>These Reboots Were Made For Walking</strong><br/>
-Since I know I will be tread&#8217;ing at some point in the day &ndash; and I know it will kill itself every 30 minutes &ndash; I&rsquo;ve been using tools like <a href="http://getpocket.com/">Pocket</a> and stuff to help me avoid distractions on my ~creation station~ because I know I can just punt it right over to the treadmill box and consume a lot of content distraction free. I am finally reaching a point where I can read at 2.8 mph, and watch screencasts at 4 mph. This makes me a huge fan of screencasts&hellip; They are better for me.</p>
-
-<p><a href="http://images.datachomp.com/treadmill/fullview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_fullview.jpg" title="Back That Desk Up" alt="Back that Desk Up" Height="400" Width="200" /></a></p>
-
-
-<p><strong>tail -m thedragon</strong><br/>
-Recently, I started adding games to the mix. If you are expecting to be able to play twitch games&hellip; Just stop that thought now. Any game that relies on twitch or precision is a no go. I&rsquo;m a huge fan of <a href="http://www.youtube.com/watch?v=VxeW6urxLfY">Skyrim</a> and rpg&rsquo;s in general, but my current schedule/commits don&rsquo;t really allow me much indulgence in those time sinks. However, the need for a game that doesn&rsquo;t require heavy precision + the 30 minute cutoff on my treadmill allows an incredible pairing to occur.</p>
-
-<p>Am I healthier because of my treadmill setup?  Maybe. Am I happier, more productive and having more fun? You bet!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -827,6 +863,10 @@ Recently, I started adding games to the mix. If you are expecting to be able to 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
@@ -840,10 +880,6 @@ Recently, I started adding games to the mix. If you are expecting to be able to 
     
       <li class="post">
         <a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/application-name-in-sequel/">Application_name in Sequel</a>
       </li>
     
   </ul>

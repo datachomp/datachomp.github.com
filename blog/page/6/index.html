@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get &hellip;">
+  <meta name="description" content="I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,118 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/upload-file-to-s3-with-asp-net/">Upload File to S3 With ASP.NET</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-21T00:00:00-05:00" pubdate data-updated="true">Sep 21<span>st</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
+WebForm:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.  
+</code></pre>
+
+<p>Code behind:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  protected void Button1_Click&amp;#40;object sender, EventArgs e&amp;#41;
+
+3.          &amp;#123;
+
+4.              string result = Program.GetServiceOutput&amp;#40;&amp;#41;;
+
+5.              Label1.Text = result;
+
+6.          &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>Class file for AWSCalls;</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  using Amazon;   // these are part of the AWSSDK.dll that you add to the project
+
+3.  using Amazon.S3;
+
+4.  using Amazon.S3.Model;
+
+5.  ....
+
+6.  public static void SendFileToS3&amp;#40;string filename, Stream ImgStream&amp;#41;
+
+7.          &amp;#123;
+
+8.              string accessKey = "Access Key here!";
+
+9.              string secretAccessKey = "Secret Key goes here!";
+
+10.             string bucketName = "Bucket Name goes Here!";
+
+11.             string keyName = filename; 
+
+12. &amp;nbsp;
+
+13.             AmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client&amp;#40;accessKey, secretAccessKey&amp;#41;;
+
+14.             PutObjectRequest request = [new][1] PutObjectRequest&amp;#40;&amp;#41;;
+
+15. &amp;nbsp;
+
+16.             request.WithInputStream&amp;#40;ImgStream&amp;#41;;
+
+17. &amp;nbsp;
+
+18.             request.WithBucketName&amp;#40;bucketName&amp;#41;;
+
+19.             request.WithKey&amp;#40;keyName&amp;#41;;
+
+20.             request.StorageClass = S3StorageClass.ReducedRedundancy; //set storage to reduced redundancy
+
+21.             client.PutObject&amp;#40;request&amp;#41;;
+
+22.         &amp;#125;
+</code></pre>
+
+<p>So there you have it! We take a file, throw it into a page&hellip;. and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -639,50 +751,6 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/ssis-and-the-embedded-delimiter-fail/">SSIS and the Embedded Delimiter Fail</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server 2005 SSIS. Of course, it is a bit of a mystery while they keep removing functionality but that isn&rsquo;t the point of this post. The point of this post is to show a solution&hellip;</p>
-
-<p>The solution comes by way of the Microsoft SQL Server Community Samples: Integration Services (yes, it is a long name for &lsquo;Look dudes! We are giving you a work around!&rsquo; but it works non the less).</p>
-
-<p><a href="http://sqlsrvintegrationsrv.codeplex.com/">http://sqlsrvintegrationsrv.codeplex.com/</a></p>
-
-<p>I tried the delimited file reader in a variety of scenarios and it passed with flying colors. How nice it is to be able do the same imports that were effortless in SQL 2000.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -704,6 +772,10 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
@@ -717,10 +789,6 @@ Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, nav
     
       <li class="post">
         <a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/application-name-in-sequel/">Application_name in Sequel</a>
       </li>
     
   </ul>

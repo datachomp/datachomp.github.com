@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>DatabaseMail Time to clean house - DataChomp</title>
+  <title>Sequel and Postgres Range Types - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you &hellip;">
+  <meta name="description" content="Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/databasemail-time-to-clean-house">
+  <link rel="canonical" href="http://datachomp.github.com/archives/sequel-and-postgres-range-types">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">DatabaseMail Time to Clean House</h1>
+      <h1 class="entry-title">Sequel and Postgres Range Types</h1>
     
     
       <p class="meta">
@@ -99,31 +99,73 @@
   
 
 
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
+<time datetime="2013-11-15T21:20:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
 
-<p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
+<pre><code>CREATE TABLE burritotrucks
+(
+  id serial primary key,
+  truckname text not null,
+  onsite daterange not null --or tsrange if busy schedule
+);
 
-<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
-<code></p>
-
-<pre><code>DECLARE @Retention_days SMALLINT
-    , @Delete_Date DATETIME
-
-SET @Retention_Days = -90  -- 3 months
-SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
-
-EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
-EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
+insert into burritotrucks (truckname, onsite)
+values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
+('chompy delight', '[2013-11-15, 2013-11-17]'),
+('no dogs allowed', '[2013-11-16, 2013-11-21]'),
+('government cheese wagon', '[2013-11-11, 2013-11-14]'),
+('tortuga mochilla', '[2013-11-13, 2013-11-18]');
 </code></pre>
 
-<p></code></p>
+<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()
+</code></pre>
+
+<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()::date
+</code></pre>
+
+<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
+
+<pre><code>Sequel.extension(:pg_range)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>We query the database:</p>
+
+<pre><code>options = DB[:burritotrucks].all
+p options
+</code></pre>
+
+<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
+
+<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
+p options
+</code></pre>
+
+<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
+
+<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
+
+<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
+p options
+</code></pre>
+
+<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish Postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
 </div>
 
 
@@ -132,7 +174,7 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -146,21 +188,15 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
   
 
 
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
+<time datetime="2013-11-15T21:20:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/databasemail-time-to-clean-house/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/databasemail-time-to-clean-house/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/sequel-and-postgres-range-types/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/sequel-and-postgres-range-types/" >Tweet</a>
   
   
   
@@ -169,14 +205,18 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/getting-started-with-solid-state-drives/" title="Previous Post: Getting started with Solid State Drives">&laquo; Getting started with Solid State Drives</a>
+        <a class="basic-alignment left" href="/archives/writable-ctes-in-postgres/" title="Previous Post: Writable CTEs in Postgres">&laquo; Writable CTEs in Postgres</a>
       
-      
-        <a class="basic-alignment right" href="/archives/ssl-a-secure-way-to-waste-money/" title="Next Post: SSL &#8211; a secure way to waste money">SSL &#8211; a secure way to waste money &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -235,7 +275,10 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/sequel-and-postgres-range-types/';
+        var disqus_url = 'http://datachomp.github.com/archives/sequel-and-postgres-range-types/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

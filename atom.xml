@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-15T18:29:45-06:00</updated>
+  <updated>2013-11-15T21:28:57-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,74 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Sequel and Postgres Range Types]]></title>
+    <link href="http://datachomp.github.com/archives/sequel-and-postgres-range-types/"/>
+    <updated>2013-11-15T21:20:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/sequel-and-postgres-range-types</id>
+    <content type="html"><![CDATA[<p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
+
+<pre><code>CREATE TABLE burritotrucks
+(
+  id serial primary key,
+  truckname text not null,
+  onsite daterange not null --or tsrange if busy schedule
+);
+
+insert into burritotrucks (truckname, onsite)
+values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
+('chompy delight', '[2013-11-15, 2013-11-17]'),
+('no dogs allowed', '[2013-11-16, 2013-11-21]'),
+('government cheese wagon', '[2013-11-11, 2013-11-14]'),
+('tortuga mochilla', '[2013-11-13, 2013-11-18]');
+</code></pre>
+
+<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()
+</code></pre>
+
+<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()::date
+</code></pre>
+
+<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
+
+<pre><code>Sequel.extension(:pg_range)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>We query the database:</p>
+
+<pre><code>options = DB[:burritotrucks].all
+p options
+</code></pre>
+
+<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
+
+<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
+p options
+</code></pre>
+
+<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
+
+<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
+
+<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
+p options
+</code></pre>
+
+<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish Postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Writable CTEs in Postgres]]></title>
@@ -751,55 +819,6 @@ Can you dig our tacos?
 </code></pre>
 
 <p></code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
-    <link href="http://datachomp.github.com/archives/what-net-orm-should-i-use/"/>
-    <updated>2012-11-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
-
-<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
-
-<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
-
-<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
-
-<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
-
-<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
-
-<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
-
-<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
-
-<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
-
-<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
-
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
-
-<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
-
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
-
-<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
-
-<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
-
-<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
-
-<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
-
-<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
-
-<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
-
-<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
 ]]></content>
   </entry>
   
