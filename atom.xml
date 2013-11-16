@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-15T18:28:03-06:00</updated>
+  <updated>2013-11-15T18:29:45-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -37,7 +37,7 @@ values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
 select * from thanks;
 </code></pre>
 
-<p>Hot!!! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months:</p>
+<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
 
 <pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
 </code></pre>
