@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-14T22:54:27-06:00</updated>
+  <updated>2013-11-15T18:27:15-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Writable CTEs in Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/writable-ctes-in-postgres/"/>
+    <updated>2013-11-15T18:10:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/writable-ctes-in-postgres</id>
+    <content type="html"><![CDATA[<p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/9.2/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+First, lets new up some data:</p>
+
+<pre><code>drop table if exists thanks;
+create table thanks (
+    id serial primary key,
+    who text not null,
+    picked boolean not null default 'false',
+    created_at date default now(),
+    last_picked date default '-infinity'
+);
+
+insert into thanks (who)
+values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
+, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
+
+select * from thanks;
+</code></pre>
+
+<p>Hot!!! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months:</p>
+
+<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+</code></pre>
+
+<p>Now we can put it in a normal CTE:</p>
+
+<pre><code>with guesswho as (
+    select * from thanks 
+    where picked = false or last_picked &lt; now() - interval '9 months')
+select guesswho.id, guesswho.who
+from guesswho;
+</code></pre>
+
+<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+
+<pre><code>with guesswho as (
+    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+select guesswho.id, guesswho.who
+from guesswho, onlyone
+where champs = onlyone.tops;
+</code></pre>
+
+<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+
+<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+
+, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
+guesswho.champs = onlyone.tops RETURNING thanks.picked)
+
+select guesswho.id, guesswho.who
+from guesswho, onlyone, adios
+where champs = onlyone.tops;
+</code></pre>
+
+<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[My Friend Rob]]></title>
@@ -733,32 +800,6 @@ Can you dig our tacos?
 <p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
 
 <p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using Unicorn with Sinatra or Padrino on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
-    <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
-
-<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
-<code>worker_processes 3<br/>
-timeout 30<br/>
-preload_app true</code></p>
-
-<p>2nd: I added Unicorn to my GemFile:<br/>
-<code>#rack server<br/>
-gem &lsquo;unicorn&rsquo;</code>
-You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
-
-<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
-<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
-
-<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
 ]]></content>
   </entry>
   

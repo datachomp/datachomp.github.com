@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL &hellip;">
+  <meta name="description" content="I&rsquo;m a hardware nut who likes both building and upgrading my dev boxes. I&rsquo;m getting ready to refresh my box this year and the biggest &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-09T00:23:00-05:00" pubdate data-updated="true">Aug 9<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;m a hardware nut who likes both building and upgrading my dev boxes. I&rsquo;m getting ready to refresh my box this year and the biggest difference &ndash; I&rsquo;m no longer doing .NET/SQL Server. I&rsquo;m also not on Windows.</p>
+
+<p>So what&rsquo;s different?</p>
+
+<p><strong>Remoting</strong><br/>
+Instead of a laggy/sluggish RDP sessions doing password dances, I&rsquo;m all in with SSH and loving it.</p>
+
+<p><strong>IDE</strong><br/>
+Instead of the behemoth Visual Studio &ndash; I just use a text editor or bash or any number of focused tools that get out of my way.</p>
+
+<p><strong>Database</strong><br/>
+SQL Server is replaced with a lean Postgres and a tricked out <a href="http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/">psql</a>. This still blows my mind and loving it every day.</p>
+
+<p><strong>OS</strong><br/>
+Instead of a fatty windows &ndash; I run <a href="http://www.ubuntu.com/">Ubuntu</a>. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster &ndash; I can run <a href="http://crunchbang.org/">Crunchbang</a> and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like <a href="http://crunchbang.org/">Crunchbang</a> is like going from a bicycle to a Ducati. The difference is further illustrated by the fact that I&rsquo;ve been able to install versions of Linux that have the same memory footprint as just the Activation/License checker on Windows. I&rsquo;ve often thought it would be cool if instead of more Windows Modern-UI for plebes, Microsoft had a more <a href="http://openbox.org/">OpenBox</a> type windows manager built on top of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my <a href="http://www.indiegogo.com/projects/ubuntu-edge">phone</a>.</p>
+
+<p><strong>Virtual Desktops</strong><br/>
+Having an OS with native virtual desktops is a complete joy. Sometimes I&rsquo;m doing just data, sometimes I&rsquo;m wallowing around in code, other times I&rsquo;m browsing/social networking. Having dedicated desktops for this and not having to resort to &lsquo;I need a ton of monitors&rsquo; Windows syndrome has been a welcome change as well.</p>
+
+<p><strong>Virtuals</strong><br/>
+Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
+
+<p>For me, Linux is clean and focused and Windows is <a href="http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg">Teletubbies</a>. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -626,59 +684,6 @@ Can you dig our tacos?
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/">Using Unicorn With Sinatra or Padrino on Heroku</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-10-15T00:00:00-05:00" pubdate data-updated="true">Oct 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
-
-<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
-<code>worker_processes 3<br/>
-timeout 30<br/>
-preload_app true</code></p>
-
-<p>2nd: I added Unicorn to my GemFile:<br/>
-<code>#rack server<br/>
-gem &lsquo;unicorn&rsquo;</code>
-You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
-
-<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
-<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
-
-<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -700,6 +705,10 @@ You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
@@ -713,10 +722,6 @@ You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets 
     
       <li class="post">
         <a href="/archives/application-name-in-sequel/">Application_name in Sequel</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a>
       </li>
     
   </ul>

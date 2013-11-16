@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>SSIS and the embedded delimiter fail - DataChomp</title>
+  <title>Writable CTEs in Postgres - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server &hellip;">
+  <meta name="description" content="Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my Thankyou app &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/ssis-and-the-embedded-delimiter-fail">
+  <link rel="canonical" href="http://datachomp.github.com/archives/writable-ctes-in-postgres">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">SSIS and the Embedded Delimiter Fail</h1>
+      <h1 class="entry-title">Writable CTEs in Postgres</h1>
     
     
       <p class="meta">
@@ -99,22 +99,72 @@
   
 
 
-<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2010</time>
+<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/9.2/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+First, lets new up some data:</p>
 
-<p>Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server 2005 SSIS. Of course, it is a bit of a mystery while they keep removing functionality but that isn&rsquo;t the point of this post. The point of this post is to show a solution&hellip;</p>
+<pre><code>drop table if exists thanks;
+create table thanks (
+    id serial primary key,
+    who text not null,
+    picked boolean not null default 'false',
+    created_at date default now(),
+    last_picked date default '-infinity'
+);
 
-<p>The solution comes by way of the Microsoft SQL Server Community Samples: Integration Services (yes, it is a long name for &lsquo;Look dudes! We are giving you a work around!&rsquo; but it works non the less).</p>
+insert into thanks (who)
+values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
+, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
 
-<p><a href="http://sqlsrvintegrationsrv.codeplex.com/">http://sqlsrvintegrationsrv.codeplex.com/</a></p>
+select * from thanks;
+</code></pre>
 
-<p>I tried the delimited file reader in a variety of scenarios and it passed with flying colors. How nice it is to be able do the same imports that were effortless in SQL 2000.</p>
+<p>Hot!!! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months:</p>
+
+<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+</code></pre>
+
+<p>Now we can put it in a normal CTE:</p>
+
+<pre><code>with guesswho as (
+    select * from thanks 
+    where picked = false or last_picked &lt; now() - interval '9 months')
+select guesswho.id, guesswho.who
+from guesswho;
+</code></pre>
+
+<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+
+<pre><code>with guesswho as (
+    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+select guesswho.id, guesswho.who
+from guesswho, onlyone
+where champs = onlyone.tops;
+</code></pre>
+
+<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+
+<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+
+, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
+guesswho.champs = onlyone.tops RETURNING thanks.picked)
+
+select guesswho.id, guesswho.who
+from guesswho, onlyone, adios
+where champs = onlyone.tops;
+</code></pre>
+
+<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
 </div>
 
 
@@ -123,7 +173,7 @@
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -137,21 +187,15 @@
   
 
 
-<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2010</time>
+<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/databases/'>Databases</a>, <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/ssis-and-the-embedded-delimiter-fail/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/ssis-and-the-embedded-delimiter-fail/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/writable-ctes-in-postgres/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/writable-ctes-in-postgres/" >Tweet</a>
   
   
   
@@ -160,14 +204,18 @@
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/how-to-test-email-with-port-25-blocked/" title="Previous Post: How to test email with port 25 blocked">&laquo; How to test email with port 25 blocked</a>
+        <a class="basic-alignment left" href="/archives/my-friend-rob/" title="Previous Post: My Friend Rob">&laquo; My Friend Rob</a>
       
-      
-        <a class="basic-alignment right" href="/archives/getting-started-with-solid-state-drives/" title="Next Post: Getting started with Solid State Drives">Getting started with Solid State Drives &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -226,7 +274,10 @@
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
+        var disqus_url = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
