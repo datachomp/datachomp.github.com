@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-20T19:55:06-06:00</updated>
+  <updated>2013-11-20T19:58:41-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -22,7 +22,7 @@
 
 <h3>pg_therapy</h3>
 
-<p>While many of us that live in the database have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku.  Heroku has put out a very helpful add in to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language, they don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
+<p>While many of us that live in the database have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your .psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku.  Heroku has put out a very helpful add in to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language, they don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
 
 <h3>Pump you up</h3>
 
