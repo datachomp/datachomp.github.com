@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Writable CTEs in Postgres - DataChomp</title>
+  <title>heroku pg-extras builds bridges - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my Thankyou app &hellip;">
+  <meta name="description" content="It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.github.com/archives/writable-ctes-in-postgres">
+  <link rel="canonical" href="http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Writable CTEs in Postgres</h1>
+      <h1 class="entry-title">Heroku Pg-extras Builds Bridges</h1>
     
     
       <p class="meta">
@@ -99,72 +99,53 @@
   
 
 
-<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+<time datetime="2013-11-20T19:10:00-06:00" pubdate data-updated="true">Nov 20<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
-First, lets new up some data:</p>
+<div class="entry-content"><p>It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different languages, yelling at each and saying hurtful things&hellip; all the while the app and db sit in their servers neglected and needing love.</p>
 
-<pre><code>drop table if exists thanks;
-create table thanks (
-    id serial primary key,
-    who text not null,
-    picked boolean not null default 'false',
-    created_at date default now(),
-    last_picked date default '-infinity'
-);
+<h3>pg_therapy</h3>
 
-insert into thanks (who)
-values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
-, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
+<p>While many of us that live in the database have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku.  Heroku has put out a very helpful add in to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language, they don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
 
-select * from thanks;
+<h3>Pump you up</h3>
+
+<p>Installtion is a breeze:</p>
+
+<pre><code>heroku plugins:install git://github.com/heroku/heroku-pg-extras.git
 </code></pre>
 
-<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
+<p>Using it a breeze:</p>
 
-<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+<pre><code>heroku pg:bloat  #one of my favorites!
 </code></pre>
 
-<p>Now we can put it in a normal CTE:</p>
+<p>When I run that, it tells me that I didn&rsquo;t specify a database:<br/>
+! Unknown database. Valid options are: HEROKU_POSTGRESQL_BLACK_URL, HEROKU_POSTGRESQL_PINK_URL</p>
 
-<pre><code>with guesswho as (
-    select * from thanks 
-    where picked = false or last_picked &lt; now() - interval '9 months')
-select guesswho.id, guesswho.who
-from guesswho;
+<p>I run it again with the proper db:</p>
+
+<pre><code>heroku pg:bloat HEROKU_POSTGRESQL_BLACK_URL
 </code></pre>
 
-<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+<p>Now I have an easy to use snapshot of our database that has an incredibly low barrier of entry to execute for myself or anyone. What is also cool, is that the person doesn&rsquo;t trust me or perhaps I&rsquo;m in a burrito coma, they can always refer to the <a href="https://devcenter.heroku.com/articles/heroku-postgres-database-tuning">heroku database tuning site</a> and get sound information.</p>
 
-<pre><code>with guesswho as (
-    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
-    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
-, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
-select guesswho.id, guesswho.who
-from guesswho, onlyone
-where champs = onlyone.tops;
+<h3>Dude, I don&rsquo;t even have time for that.</h3>
+
+<p>Maybe the above is a bit too much to stomach. That&rsquo;s cool, we&rsquo;ll just flip another easy switch:</p>
+
+<pre><code>heroku addons:add librato
 </code></pre>
 
-<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+<p><a href="http://librato.com">Librato</a> is a beautiful dashboard that is fun to look at, easy to use and will give us some historical context for troubleshooting the typically ill fated &ldquo;I think my database is slow&rdquo; question. What is nice about tooling like Librato is not only does it show our db stats, we also get the context of the Application(Dyno&rsquo;s, router latency, etc). For more information on this, checkout Craig Kerstiens post on <a href="https://postgres.heroku.com/blog/past/2013/10/9/monitoring_your_heroku_postgres_database/">Monitoring with Librato</a>.</p>
 
-<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
-    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
-, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+<h3>Hugs and Queries</h3>
 
-, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
-guesswho.champs = onlyone.tops RETURNING thanks.picked)
-
-select guesswho.id, guesswho.who
-from guesswho, onlyone, adios
-where champs = onlyone.tops;
-</code></pre>
-
-<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
+<p>I love this type of solution because it gets us looking at hard numbers and can easily as well as objectively say it is the DBs fault, the Apps fault, heroku&rsquo;s fault, or no ones fault and everything is fine. Librato and Postgres don&rsquo;t keep track of our egos, our mood or our fatigue &ndash; they keep us honest and on topics that really matter&hellip; something we all could use a little more of.</p>
 </div>
 
 
@@ -187,7 +168,7 @@ where champs = onlyone.tops;
   
 
 
-<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+<time datetime="2013-11-20T19:10:00-06:00" pubdate data-updated="true">Nov 20<span>th</span>, 2013</time>
       
 
 
@@ -195,7 +176,7 @@ where champs = onlyone.tops;
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/writable-ctes-in-postgres/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/writable-ctes-in-postgres/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges/" >Tweet</a>
   
   
   
@@ -204,10 +185,8 @@ where champs = onlyone.tops;
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/my-friend-rob/" title="Previous Post: My Friend Rob">&laquo; My Friend Rob</a>
+        <a class="basic-alignment left" href="/archives/sequel-and-postgres-range-types/" title="Previous Post: Sequel and Postgres Range Types">&laquo; Sequel and Postgres Range Types</a>
       
-      
-        <a class="basic-alignment right" href="/archives/sequel-and-postgres-range-types/" title="Next Post: Sequel and Postgres Range Types">Sequel and Postgres Range Types &raquo;</a>
       
     </p>
   </footer>
@@ -277,8 +256,8 @@ where champs = onlyone.tops;
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
-        var disqus_url = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
+        var disqus_identifier = 'http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges/';
+        var disqus_url = 'http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges/';
         var disqus_script = 'embed.js';
       
     (function () {
