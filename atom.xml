@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:40:52-06:00</updated>
+  <updated>2013-11-25T16:41:35-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -58,7 +58,7 @@ select * from burritodances;
     5;"fuego de la cocina"
 </code></pre>
 
-<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence manually:</p>
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence to any value manually:</p>
 
 <pre><code>delete from burritodances where id &gt;= 2;
 alter sequence burritodances_id_seq restart with 2; -- an option

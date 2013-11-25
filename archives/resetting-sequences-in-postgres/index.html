@@ -146,7 +146,7 @@ select * from burritodances;
     5;"fuego de la cocina"
 </code></pre>
 
-<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence manually:</p>
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence to any value manually:</p>
 
 <pre><code>delete from burritodances where id &gt;= 2;
 alter sequence burritodances_id_seq restart with 2; -- an option
