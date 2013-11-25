@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different &hellip;">
+  <meta name="description" content="When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data. For example, when I truncate a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,95 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-25T16:24:00-06:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data.</p>
+
+<p>For example, when I truncate a table and go to insert more data, it doesn&rsquo;t automatically reset the sequence:</p>
+
+<pre><code>create table burritodances (id serial primary key, title text not null);
+insert into burritodances (title) -- hola data
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+truncate table burritodances; -- adios data
+insert into burritodances (title) -- welcome back
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    4;"toptrot"
+    5;"beanwaltz"
+    6;"lamb-ada"
+</code></pre>
+
+<p>The inserted value starts with 4… that&rsquo;s no bueno por la burritodances. There is a pretty easy fix for this by issuing the sequence reset command after we truncate the table:</p>
+
+<pre><code>truncate table burritodances;
+alter sequence burritodances_id_seq restart;
+insert into burritodances (title)
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    1;"toptrot"
+    2;"beanwaltz"
+    3;"lamb-ada"
+</code></pre>
+
+<p>Now we have nice sequential id&rsquo;s. Perhaps instead of truncating, we need to delete the last 2 rows for whatever reason:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+select currval('burritodances_id_seq'); -- uh oh
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    4;"chicken dance"
+    5;"fuego de la cocina"
+</code></pre>
+
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence manually:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+alter sequence burritodances_id_seq restart with 2; -- an option
+select SETVAL('burritodances_id_seq', MAX(id) ) from burritodances;
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    2;"chicken dance"
+    3;"fuego de la cocina"
+</code></pre>
+
+<p>and now we&rsquo;re back in business again. In the above code, I showed 2 ways to achieve the desired result. The newer way, with the alter sequence code, and the more old school way with SETVAL function. Both work perfectly fine and as always, postgres itself has pretty <a href="http://www.postgresql.org/docs/current/static/sql-altersequence.html">nice documentation</a> on the various alter sequence commands you can run.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -765,87 +854,6 @@ and on... and on... and on ...
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-29T21:19:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and at that point, everything in this world of Ruby started clicking.</p>
-
-<h3>Iocane Powder</h3>
-
-<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Like Iocane Powder, sequel_pg has no smell which means that you don&rsquo;t have to change any of your existing code. All you need to do is declare it in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder making it safe to use. If your life blood is coursing with MySQL then adding sequel_pg can be an extremely fatal move. Though, that may not be a bad thing. <em>zing!</em></p>
-
-<h3>Say Hello To My Little Friend</h3>
-
-<p>Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
-
-<pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
-CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
-
-INSERT INTO kvburritos (details)
-VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado, peppers", price=&gt; 4.50')
-, ('burritoname =&gt; "MS Server", toppings =&gt; "chicken", price =&gt; "15.50"')
-, ('burritoname =&gt; "Redis", toppings =&gt; "steak, cheese, spinach", price =&gt; "3.50"')
-, ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
-, ('burritoname =&gt; "Oracle", toppings =&gt; "gold, diamonds, elitism", price =&gt; "Call for a Quote"'); -- don't run this
-</code></pre>
-
-<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence out loud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
-
-<pre><code>require 'sequel'
-Sequel.extension(:pg_hstore, :pg_hstore_ops, :pg_array)
-DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&gt;'burritomix', :user=&gt;'kencollins')
-</code></pre>
-
-<p>I put that array one on there for free. When we use this in our app, instead of a gutless, soulless, faceless hstore hash from the DB, we&rsquo;re getting awesome, tangible, huggable data:</p>
-
-<pre><code>#our model:
-#get the burritos that have cheese on them. Replace with Avacado in Production
-@cheesylist = DB.fetch("SELECT * FROM kvburritos WHERE lower(details-&gt;'toppings') LIKE '%cheese%';")
-
-#our view:
-&lt;h2&gt;So Cheezy&lt;/h2&gt;
-  &lt;ul&gt;
-  &lt;% @cheesylist.each do |c| %&gt;
-  &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
-  &lt;% end %&gt;
-  &lt;/ul&gt;
-</code></pre>
-
-<h3>Be still my beating DAL</h3>
-
-<p>I love this! We can now build as fast as we want with semi structured data&hellip; and when our data becomes important and matures a little bit, we can easily break into relational schemas &ndash; Just as God intended.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -865,6 +873,10 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
@@ -878,10 +890,6 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
     
       <li class="post">
         <a href="/archives/my-friend-rob/">My Friend Rob</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
   </ul>

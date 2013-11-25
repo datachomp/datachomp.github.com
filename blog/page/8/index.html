@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Two guys walk into a language bar, the smart one unregister it If you don&rsquo;t need the language bar, then uninstall it by: Start Run "regsvr32. &hellip;">
+  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy, DATEPART(yyyy, &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,99 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/who-said-programmers-are-un-date-able/">Who Said Programmers Are Un-date-able ?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p><strong>First day of the month:</strong>
+<code></p>
+
+<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
+</code></pre>
+
+<p></code>
+<strong>First day of the week:</strong>
+<code></p>
+
+<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
+</code></pre>
+
+<p></code>
+<strong>Last day of the month:</strong>
+<code></p>
+
+<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
+</code></pre>
+
+<p></code>
+<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
+</strong>
+<code></p>
+
+<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
+THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
+THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
+</code></pre>
+
+<p></code></p>
+
+<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
+<code></p>
+
+<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
+AS 
+BEGIN
+SET DATEFIRST 1 
+DECLARE @Now DATETIME 
+    ,@LDOTM DATETIME --Last Day Of The Month
+SET @Now= GETDATE() 
+SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
+SELECT 
+@Now AS Today 
+, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
+, @LDOTM AS Last_day_of_month
+, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
+    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
+    ELSE @LDOTM END AS Last_Business_day_of_month 
+END
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -349,14 +442,14 @@ This will let use the report servers service credentials to authenticate to the 
 &mdash; send a normal mail
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#x6d;&#97;&#105;&#108;&#116;&#x6f;&#58;&#110;&#x75;&#x6d;&#x62;&#x65;&#114;&#x40;&#x63;&#x69;&#x6e;&#x67;&#x75;&#108;&#x61;&#114;&#109;&#101;&#x2e;&#99;&#x6f;&#109;">&#110;&#x75;&#x6d;&#x62;&#x65;&#114;&#x40;&#x63;&#x69;&#x6e;&#103;&#117;&#x6c;&#x61;&#x72;&#x6d;&#x65;&#46;&#99;&#111;&#x6d;</a>&rsquo;
+,@recipients=&lsquo;name@domain.com;<a href="&#109;&#x61;&#x69;&#108;&#x74;&#x6f;&#58;&#110;&#x75;&#x6d;&#x62;&#x65;&#114;&#x40;&#99;&#105;&#110;&#x67;&#x75;&#x6c;&#x61;&#x72;&#x6d;&#101;&#46;&#99;&#111;&#109;">&#110;&#117;&#109;&#98;&#x65;&#x72;&#64;&#x63;&#105;&#110;&#x67;&#117;&#x6c;&#97;&#x72;&#109;&#x65;&#x2e;&#99;&#x6f;&#109;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
 &mdash; send with an attachment
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#x6d;&#x61;&#105;&#x6c;&#x74;&#111;&#58;&#x6e;&#97;&#109;&#x65;&#x40;&#100;&#111;&#109;&#97;&#x69;&#x6e;&#x2e;&#x63;&#x6f;&#x6d;">&#110;&#x61;&#109;&#x65;&#64;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;</a>&rsquo;
+,@recipients=&lsquo;<a href="&#109;&#x61;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#110;&#97;&#x6d;&#x65;&#64;&#x64;&#x6f;&#109;&#97;&#105;&#x6e;&#x2e;&#99;&#111;&#x6d;">&#110;&#97;&#109;&#101;&#64;&#x64;&#111;&#x6d;&#x61;&#105;&#110;&#46;&#x63;&#111;&#x6d;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
@@ -369,7 +462,7 @@ If sending to multiple peeps and one fails to send&hellip; queued up and resends
 <p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
 
 <p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#97;&#x69;&#108;&#x74;&#111;&#58;&#110;&#97;&#109;&#x65;&#64;&#x64;&#111;&#x6d;&#97;&#105;&#110;&#46;&#x63;&#111;&#x6d;">&#110;&#x61;&#109;&#101;&#64;&#x64;&#x6f;&#x6d;&#97;&#x69;&#x6e;&#46;&#x63;&#111;&#109;</a>). )</p>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#109;&#x61;&#x69;&#x6c;&#116;&#111;&#58;&#x6e;&#97;&#x6d;&#x65;&#x40;&#100;&#111;&#x6d;&#x61;&#105;&#x6e;&#x2e;&#99;&#x6f;&#109;">&#110;&#x61;&#x6d;&#x65;&#x40;&#x64;&#111;&#109;&#97;&#x69;&#x6e;&#46;&#99;&#x6f;&#109;</a>). )</p>
 
 <p>&mdash; antivirus port 25 block<br/>
 The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
@@ -498,6 +591,10 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
@@ -511,10 +608,6 @@ The mail could not be sent to the recipients because of the mail server failure.
     
       <li class="post">
         <a href="/archives/my-friend-rob/">My Friend Rob</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
   </ul>

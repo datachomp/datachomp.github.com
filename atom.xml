@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-20T20:05:39-06:00</updated>
+  <updated>2013-11-25T16:40:52-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[resetting sequences in postgres]]></title>
+    <link href="http://datachomp.github.com/archives/resetting-sequences-in-postgres/"/>
+    <updated>2013-11-25T16:24:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/resetting-sequences-in-postgres</id>
+    <content type="html"><![CDATA[<p>When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data.</p>
+
+<p>For example, when I truncate a table and go to insert more data, it doesn&rsquo;t automatically reset the sequence:</p>
+
+<pre><code>create table burritodances (id serial primary key, title text not null);
+insert into burritodances (title) -- hola data
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+truncate table burritodances; -- adios data
+insert into burritodances (title) -- welcome back
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    4;"toptrot"
+    5;"beanwaltz"
+    6;"lamb-ada"
+</code></pre>
+
+<p>The inserted value starts with 4… that&rsquo;s no bueno por la burritodances. There is a pretty easy fix for this by issuing the sequence reset command after we truncate the table:</p>
+
+<pre><code>truncate table burritodances;
+alter sequence burritodances_id_seq restart;
+insert into burritodances (title)
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    1;"toptrot"
+    2;"beanwaltz"
+    3;"lamb-ada"
+</code></pre>
+
+<p>Now we have nice sequential id&rsquo;s. Perhaps instead of truncating, we need to delete the last 2 rows for whatever reason:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+select currval('burritodances_id_seq'); -- uh oh
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    4;"chicken dance"
+    5;"fuego de la cocina"
+</code></pre>
+
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence manually:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+alter sequence burritodances_id_seq restart with 2; -- an option
+select SETVAL('burritodances_id_seq', MAX(id) ) from burritodances;
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    2;"chicken dance"
+    3;"fuego de la cocina"
+</code></pre>
+
+<p>and now we&rsquo;re back in business again. In the above code, I showed 2 ways to achieve the desired result. The newer way, with the alter sequence code, and the more old school way with SETVAL function. Both work perfectly fine and as always, postgres itself has pretty <a href="http://www.postgresql.org/docs/current/static/sql-altersequence.html">nice documentation</a> on the various alter sequence commands you can run.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[heroku pg-extras builds bridges]]></title>
@@ -766,29 +828,6 @@ Ha, having issues getting the code to display properly so just check this link:<
 <p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
 
 <p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Running the right rubies on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/running-the-right-rubies-on-heroku/"/>
-    <updated>2013-02-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/running-the-right-rubies-on-heroku</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
-<code>
-source "https://rubygems.org"
-ruby '1.9.3'
-</code></p>
-
-<p>You can get a list of the latest rubies supported by Heroku here:<br/>
-<a href="https://devcenter.heroku.com/articles/ruby-support#ruby-versions" title="Heroku Rubies">Heroku Rubies</a></p>
-
-<p>If you are an RVM user like myself, feel free to add an .rvmrc file that will match what version Heroku is on for even more consistency goodness.<br/>
-<code>
-rvm --create --rvmrc 1.9.3-p327@mycoolproject
-</code></p>
 ]]></content>
   </entry>
   

@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I have a great hosting provider &ndash; Arvixe and they are on the ball for both my Linux hosting as well as my .NET stuff. So as I started cranking &hellip;">
+  <meta name="description" content="I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,64 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/lets-open-some-new-doors-mvc/">Lets Open Some New Doors &#8211; MVC</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time constraint or any number of excuses. However, last night I decided to change all that and really give MVC a fair chance. The more I tinker around in Ruby and iphone development the more I buy into the validity of the MVC approach. Here is a bit of the technology roadmap I want to drive down:</p>
+
+<p><a href="http://mvccontrib.codeplex.com/wikipage?title=T4MVC">T4</a> &ndash; I hear about it, time to see what the fuss is about. Besides, <a href="http://twitter.com/davidebbo">David Ebbo</a> is the man.</p>
+
+<p><a href="http://code.google.com/p/elmah/">Elmah</a> will be a proof of concept before I roll into <a href="http://www.exceptioneer.com/public/WhatIsExceptioneer.aspx">Exceptioneer</a>.</p>
+
+<p><a href="https://aws.amazon.com/s3/">S3</a> &ndash; I have already started playing around with this and love it. It will likely be serving the images and public files.</p>
+
+<p>Routing &ndash; a vanity name like implementation for users will be my head first dive into routing.</p>
+
+<p>Model &ndash; As a DBA, the data layer and ADO are my bread and butter. But it is time to step forward and see what the fuss is about. I will likely be trying out EF and <a href="http://subsonicproject.com/">Subsonic</a>.</p>
+
+<p>Charting &ndash; I&rsquo;m a stat nerd, so I will be capturing stats, I hope to be able to throw some of them into the charting control.</p>
+
+<p>NoSQL &ndash; I&rsquo;m not sure how to work it in yet, but at some point, I am planning on having a <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>/<a href="http://ravendb.net/">RavenDB</a>/<a href="http://www.mongodb.org/">MongoDB</a> section just to explore and have knowledge outside of a half dozen tech articles.</p>
+
+<p>Lastly, it is time to branch away from Web services and start playing around with WCF. This will really come into play for the iphone app being done in <a href="http://monotouch.net/">MonoTouch</a> which really is an exciting piece of work.</p>
+
+<p>Once we are done with ASP.NET MVC, I plan to move to Ruby 3 and try and to build the same apps in that. Should be a great compare and contrast.</p>
+
+<p>So that is it for now, time to see if I can stick to it and see this through&hellip; or give up and step back into web forms.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -722,59 +780,6 @@ For other services/protocols I tend to use:<br/>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/databasemail-time-to-clean-house/">DatabaseMail Time to Clean House</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
-
-<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
-<code></p>
-
-<pre><code>DECLARE @Retention_days SMALLINT
-    , @Delete_Date DATETIME
-
-SET @Retention_Days = -90  -- 3 months
-SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
-
-EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
-EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -796,6 +801,10 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
@@ -809,10 +818,6 @@ EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
     
       <li class="post">
         <a href="/archives/my-friend-rob/">My Friend Rob</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a>
       </li>
     
   </ul>
