@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: ASP.NET | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/asp-dot-net/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/asp-dot-net/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Deploy MVC3 to Shared Hosting]]></title>
-    <link href="http://datachomp.github.com/archives/deploy-mvc3-to-shared-hosting/"/>
+    <link href="http://datachomp.github.io/archives/deploy-mvc3-to-shared-hosting/"/>
     <updated>2011-01-23T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/deploy-mvc3-to-shared-hosting</id>
+    <id>http://datachomp.github.io/archives/deploy-mvc3-to-shared-hosting</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn&rsquo;t have (and I didn&rsquo;t request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to &lsquo;copy local&rsquo; to get it to work on shared hosting.</p>
@@ -41,9 +41,9 @@
   
   <entry>
     <title type="html"><![CDATA[Upload file to S3 with ASP.NET]]></title>
-    <link href="http://datachomp.github.com/archives/upload-file-to-s3-with-asp-net/"/>
+    <link href="http://datachomp.github.io/archives/upload-file-to-s3-with-asp-net/"/>
     <updated>2010-09-21T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/upload-file-to-s3-with-asp-net</id>
+    <id>http://datachomp.github.io/archives/upload-file-to-s3-with-asp-net</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
@@ -126,9 +126,9 @@ WebForm:</p>
   
   <entry>
     <title type="html"><![CDATA[JQuery CDN failover]]></title>
-    <link href="http://datachomp.github.com/archives/jquery-cdn-failover/"/>
+    <link href="http://datachomp.github.io/archives/jquery-cdn-failover/"/>
     <updated>2010-08-31T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/jquery-cdn-failover</id>
+    <id>http://datachomp.github.io/archives/jquery-cdn-failover</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>With &lsquo;high availability&rsquo; being a nicely stressed buzzword coupled with issues in the &lsquo;cloud&rsquo;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&rsquo;t dig into the reasons for using a CDN for jquery but will plug the usual &ndash; It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&hellip;. and it is quite easy really since 1.4 :
@@ -152,9 +152,9 @@ WebForm:</p>
   
   <entry>
     <title type="html"><![CDATA[Helper Classes]]></title>
-    <link href="http://datachomp.github.com/archives/helper-classes/"/>
+    <link href="http://datachomp.github.io/archives/helper-classes/"/>
     <updated>2010-07-20T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/helper-classes</id>
+    <id>http://datachomp.github.io/archives/helper-classes</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
@@ -192,9 +192,9 @@ Once that was completed, I added a few methods like:
   
   <entry>
     <title type="html"><![CDATA[SSL &#8211; a secure way to waste money]]></title>
-    <link href="http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money/"/>
+    <link href="http://datachomp.github.io/archives/ssl-a-secure-way-to-waste-money/"/>
     <updated>2010-06-28T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money</id>
+    <id>http://datachomp.github.io/archives/ssl-a-secure-way-to-waste-money</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>

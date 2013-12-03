@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Databases | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/databases/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/databases/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
-    <link href="http://datachomp.github.com/archives/what-net-orm-should-i-use/"/>
+    <link href="http://datachomp.github.io/archives/what-net-orm-should-i-use/"/>
     <updated>2012-11-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
+    <id>http://datachomp.github.io/archives/what-net-orm-should-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
@@ -64,9 +64,9 @@
   
   <entry>
     <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
-    <link href="http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
+    <link href="http://datachomp.github.io/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
     <updated>2012-03-13T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
+    <id>http://datachomp.github.io/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>If you want the back story on what this topic is all about &ndash;</p>
@@ -75,9 +75,9 @@
   
   <entry>
     <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
-    <link href="http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres/"/>
+    <link href="http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres/"/>
     <updated>2012-03-07T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres</id>
+    <id>http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
@@ -90,9 +90,9 @@
   
   <entry>
     <title type="html"><![CDATA[Hey App, quit wasting my time sorting your data]]></title>
-    <link href="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/"/>
+    <link href="http://datachomp.github.io/archives/hey-app-quit-wasting-my-time-sorting-your-data/"/>
     <updated>2012-01-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data</id>
+    <id>http://datachomp.github.io/archives/hey-app-quit-wasting-my-time-sorting-your-data</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
@@ -147,9 +147,9 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
   
   <entry>
     <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
-    <link href="http://datachomp.github.com/archives/git-and-red-gate-sql-source-control/"/>
+    <link href="http://datachomp.github.io/archives/git-and-red-gate-sql-source-control/"/>
     <updated>2012-01-28T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/git-and-red-gate-sql-source-control</id>
+    <id>http://datachomp.github.io/archives/git-and-red-gate-sql-source-control</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>

@@ -1,4 +1,4 @@
 User-agent: *
 Disallow: 
 
-Sitemap: http://datachomp.github.com/sitemap.xml 
+Sitemap: http://datachomp.github.io/sitemap.xml 

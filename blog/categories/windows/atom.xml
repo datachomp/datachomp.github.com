@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Windows | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/windows/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/windows/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Rock out with your Procmon out]]></title>
-    <link href="http://datachomp.github.com/archives/rock-out-with-your-procmon-out/"/>
+    <link href="http://datachomp.github.io/archives/rock-out-with-your-procmon-out/"/>
     <updated>2011-07-26T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/rock-out-with-your-procmon-out</id>
+    <id>http://datachomp.github.io/archives/rock-out-with-your-procmon-out</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
@@ -31,9 +31,9 @@ Start run live.sysinternals.comtools</p>
   
   <entry>
     <title type="html"><![CDATA[Windows Server Core &#8211; basic operations]]></title>
-    <link href="http://datachomp.github.com/archives/windows-server-core-basic-operations/"/>
+    <link href="http://datachomp.github.io/archives/windows-server-core-basic-operations/"/>
     <updated>2011-04-25T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/windows-server-core-basic-operations</id>
+    <id>http://datachomp.github.io/archives/windows-server-core-basic-operations</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition.</p>
@@ -45,9 +45,9 @@ sconfig.cmd tool</p>
   
   <entry>
     <title type="html"><![CDATA[Windows Tools I use]]></title>
-    <link href="http://datachomp.github.com/archives/windows-tools-i-use/"/>
+    <link href="http://datachomp.github.io/archives/windows-tools-i-use/"/>
     <updated>2010-02-02T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/windows-tools-i-use</id>
+    <id>http://datachomp.github.io/archives/windows-tools-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>NOTE: As of 2013, I no longer use Windows&hellip; so this post is a bit dated.</p>

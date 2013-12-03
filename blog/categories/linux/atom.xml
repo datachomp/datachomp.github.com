@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Linux | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/linux/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/linux/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
-    <link href="http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
+    <link href="http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem/"/>
     <updated>2012-05-02T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
+    <id>http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
@@ -44,9 +44,9 @@ sudo ./bin/runAll.bat start
   
   <entry>
     <title type="html"><![CDATA[Running ASP.NET MVC4 on Ubuntu 12.04]]></title>
-    <link href="http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
+    <link href="http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
     <updated>2012-04-24T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
+    <id>http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &ldquo;How are you running your app on Linux?&rdquo; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&rsquo;s best interest if I just blog it out. Technology moves fast&hellip; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &ldquo;has been&rdquo; Ubuntu 11.10, we&rsquo;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&rsquo;re so bleeding edge you can call us cutters!</p>
@@ -118,9 +118,9 @@ chmod 755 install_mono-2.11.sh
   
   <entry>
     <title type="html"><![CDATA[Virtual Victory &#8211; AWS gives out a year of usage]]></title>
-    <link href="http://datachomp.github.com/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
+    <link href="http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
     <updated>2010-10-23T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
+    <id>http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
@@ -142,9 +142,9 @@ chmod 755 install_mono-2.11.sh
   
   <entry>
     <title type="html"><![CDATA[Installing MongoDB on Ubuntu]]></title>
-    <link href="http://datachomp.github.com/archives/installing-mongodb-on-ubuntu/"/>
+    <link href="http://datachomp.github.io/archives/installing-mongodb-on-ubuntu/"/>
     <updated>2010-09-04T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/installing-mongodb-on-ubuntu</id>
+    <id>http://datachomp.github.io/archives/installing-mongodb-on-ubuntu</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>

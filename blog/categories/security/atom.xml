@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Security | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/security/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/security/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Change iPhone root password after jailbreak]]></title>
-    <link href="http://datachomp.github.com/archives/change-iphone-root-password-after-jailbreak/"/>
+    <link href="http://datachomp.github.io/archives/change-iphone-root-password-after-jailbreak/"/>
     <updated>2010-07-07T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/change-iphone-root-password-after-jailbreak</id>
+    <id>http://datachomp.github.io/archives/change-iphone-root-password-after-jailbreak</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
@@ -36,9 +36,9 @@ For more information, check out these handy posts:</p>
   
   <entry>
     <title type="html"><![CDATA[SSL &#8211; a secure way to waste money]]></title>
-    <link href="http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money/"/>
+    <link href="http://datachomp.github.io/archives/ssl-a-secure-way-to-waste-money/"/>
     <updated>2010-06-28T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ssl-a-secure-way-to-waste-money</id>
+    <id>http://datachomp.github.io/archives/ssl-a-secure-way-to-waste-money</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>

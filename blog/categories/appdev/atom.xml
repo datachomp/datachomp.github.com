@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: AppDev | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/appdev/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/appdev/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Running the right rubies on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/running-the-right-rubies-on-heroku/"/>
+    <link href="http://datachomp.github.io/archives/running-the-right-rubies-on-heroku/"/>
     <updated>2013-02-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/running-the-right-rubies-on-heroku</id>
+    <id>http://datachomp.github.io/archives/running-the-right-rubies-on-heroku</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
@@ -38,9 +38,9 @@ rvm --create --rvmrc 1.9.3-p327@mycoolproject
   
   <entry>
     <title type="html"><![CDATA[A little bit more about sorting]]></title>
-    <link href="http://datachomp.github.com/archives/a-little-bit-more-about-sorting/"/>
+    <link href="http://datachomp.github.io/archives/a-little-bit-more-about-sorting/"/>
     <updated>2012-12-01T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/a-little-bit-more-about-sorting</id>
+    <id>http://datachomp.github.io/archives/a-little-bit-more-about-sorting</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
@@ -116,9 +116,9 @@ Can you dig our tacos?
   
   <entry>
     <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
-    <link href="http://datachomp.github.com/archives/what-net-orm-should-i-use/"/>
+    <link href="http://datachomp.github.io/archives/what-net-orm-should-i-use/"/>
     <updated>2012-11-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
+    <id>http://datachomp.github.io/archives/what-net-orm-should-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
@@ -165,9 +165,9 @@ Can you dig our tacos?
   
   <entry>
     <title type="html"><![CDATA[Using Unicorn with Sinatra or Padrino on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
+    <link href="http://datachomp.github.io/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
     <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
+    <id>http://datachomp.github.io/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
@@ -191,9 +191,9 @@ You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets 
   
   <entry>
     <title type="html"><![CDATA[Content length issue on 404 pages in Padrino 10.7]]></title>
-    <link href="http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
+    <link href="http://datachomp.github.io/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
     <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
+    <id>http://datachomp.github.io/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>

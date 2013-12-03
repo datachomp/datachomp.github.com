@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Apple | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/apple/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/apple/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[OSX Tools I use]]></title>
-    <link href="http://datachomp.github.com/archives/osx-tools-i-use/"/>
+    <link href="http://datachomp.github.io/archives/osx-tools-i-use/"/>
     <updated>2011-07-21T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/osx-tools-i-use</id>
+    <id>http://datachomp.github.io/archives/osx-tools-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p><strong>Misc:</strong><br/>

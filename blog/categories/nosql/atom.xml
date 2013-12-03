@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: NoSQL | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/nosql/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/nosql/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[SQL Server Variety Hour]]></title>
-    <link href="http://datachomp.github.com/archives/sql-server-variety-hour/"/>
+    <link href="http://datachomp.github.io/archives/sql-server-variety-hour/"/>
     <updated>2010-12-14T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/sql-server-variety-hour</id>
+    <id>http://datachomp.github.io/archives/sql-server-variety-hour</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
@@ -42,9 +42,9 @@
   
   <entry>
     <title type="html"><![CDATA[Virtual Victory &#8211; AWS gives out a year of usage]]></title>
-    <link href="http://datachomp.github.com/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
+    <link href="http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
     <updated>2010-10-23T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
+    <id>http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
@@ -66,9 +66,9 @@
   
   <entry>
     <title type="html"><![CDATA[Installing MongoDB on Ubuntu]]></title>
-    <link href="http://datachomp.github.com/archives/installing-mongodb-on-ubuntu/"/>
+    <link href="http://datachomp.github.io/archives/installing-mongodb-on-ubuntu/"/>
     <updated>2010-09-04T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/installing-mongodb-on-ubuntu</id>
+    <id>http://datachomp.github.io/archives/installing-mongodb-on-ubuntu</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>

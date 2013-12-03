@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Tools | DataChomp]]></title>
-  <link href="http://datachomp.github.com/blog/categories/tools/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.com/"/>
-  <updated>2013-11-25T16:41:35-06:00</updated>
-  <id>http://datachomp.github.com/</id>
+  <link href="http://datachomp.github.io/blog/categories/tools/atom.xml" rel="self"/>
+  <link href="http://datachomp.github.io/"/>
+  <updated>2013-12-02T22:59:38-06:00</updated>
+  <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
-    <link href="http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
+    <link href="http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem/"/>
     <updated>2012-05-02T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
+    <id>http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
@@ -44,9 +44,9 @@ sudo ./bin/runAll.bat start
   
   <entry>
     <title type="html"><![CDATA[Rock out with your Procmon out]]></title>
-    <link href="http://datachomp.github.com/archives/rock-out-with-your-procmon-out/"/>
+    <link href="http://datachomp.github.io/archives/rock-out-with-your-procmon-out/"/>
     <updated>2011-07-26T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/rock-out-with-your-procmon-out</id>
+    <id>http://datachomp.github.io/archives/rock-out-with-your-procmon-out</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
@@ -60,9 +60,9 @@ Start run live.sysinternals.comtools</p>
   
   <entry>
     <title type="html"><![CDATA[Tekpub &#8211; Full Throttle with Rob Sullivan show notes]]></title>
-    <link href="http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
+    <link href="http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
     <updated>2011-06-04T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
+    <id>http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
@@ -100,9 +100,9 @@ SQL Server 2008 R2 / Management Studio<br/>
   
   <entry>
     <title type="html"><![CDATA[My subversion ignore list for Visual Studio / Anhksvn]]></title>
-    <link href="http://datachomp.github.com/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/"/>
+    <link href="http://datachomp.github.io/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/"/>
     <updated>2011-01-11T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/my-subversion-ignore-list-for-visual-studio-anhksvn</id>
+    <id>http://datachomp.github.io/archives/my-subversion-ignore-list-for-visual-studio-anhksvn</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn&rsquo;t bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
@@ -127,9 +127,9 @@ SQL Server 2008 R2 / Management Studio<br/>
   
   <entry>
     <title type="html"><![CDATA[SQL Server Variety Hour]]></title>
-    <link href="http://datachomp.github.com/archives/sql-server-variety-hour/"/>
+    <link href="http://datachomp.github.io/archives/sql-server-variety-hour/"/>
     <updated>2010-12-14T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/sql-server-variety-hour</id>
+    <id>http://datachomp.github.io/archives/sql-server-variety-hour</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
