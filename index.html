@@ -123,7 +123,7 @@ sudo nano /etc/pgbouncer/userlist.txt
 &gt; "elguapo" "hefe"
 sudo nano /etc/pgbouncer/pgbouncer.ini
 &gt; [databases]
-&gt; burrito_hq = host=localhost dbname=burrito_hq user=elguapo password=hefe
+&gt; burrito_hq = host=localhost port=5432 dbname=burrito_hq user=elguapo password=hefe
 &gt; [pgbouncer]
 &gt; listen_addr = *
 &gt; auth_type = md5
