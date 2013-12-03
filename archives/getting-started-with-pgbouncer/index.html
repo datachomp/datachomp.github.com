@@ -139,7 +139,7 @@ Let&rsquo;s test our settings by firing up pgbouncer. Pgbouncer is closely tied 
 <pre><code>psql -h 172.16.150.128 -p 6432 -U elguapo -d burrito_hq 
 </code></pre>
 
-<p>and hopefully we&rsquo;re in!  Once we know our settings are in good shape, lets turn pgbouncer into auto start mode:</p>
+<p>and hopefully we&rsquo;re in!  Once we know our settings are in good shape, lets turn pgbouncer auto start mode on:</p>
 
 <pre><code>sudo nano /etc/default/pgbouncer
 &gt; START=1
