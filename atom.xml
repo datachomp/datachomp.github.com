@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.io/atom.xml" rel="self"/>
   <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-02T23:08:20-06:00</updated>
+  <updated>2013-12-02T23:11:38-06:00</updated>
   <id>http://datachomp.github.io/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -58,7 +58,7 @@ Let&rsquo;s test our settings by firing up pgbouncer. Pgbouncer is closely tied 
 sudo reboot #reboot the box to test it out
 </code></pre>
 
-<p>When the server comes back online, hopefully you can connect again from the client.</p>
+<p>When the server comes back online, hopefully you can connect again from the client. Now that things are stable, it&rsquo;s time to go get completely lost in the <a href="http://pgbouncer.projects.pgfoundry.org/doc/usage.html">documentation</a> and let the tool really shine.</p>
 ]]></content>
   </entry>
   
