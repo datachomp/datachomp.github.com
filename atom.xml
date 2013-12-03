@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.github.com/atom.xml" rel="self"/>
   <link href="http://datachomp.github.com/"/>
-  <updated>2013-08-30T11:28:35-05:00</updated>
+  <updated>2013-11-25T16:41:35-06:00</updated>
   <id>http://datachomp.github.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,509 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[resetting sequences in postgres]]></title>
+    <link href="http://datachomp.github.com/archives/resetting-sequences-in-postgres/"/>
+    <updated>2013-11-25T16:24:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/resetting-sequences-in-postgres</id>
+    <content type="html"><![CDATA[<p>When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data.</p>
+
+<p>For example, when I truncate a table and go to insert more data, it doesn&rsquo;t automatically reset the sequence:</p>
+
+<pre><code>create table burritodances (id serial primary key, title text not null);
+insert into burritodances (title) -- hola data
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+truncate table burritodances; -- adios data
+insert into burritodances (title) -- welcome back
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    4;"toptrot"
+    5;"beanwaltz"
+    6;"lamb-ada"
+</code></pre>
+
+<p>The inserted value starts with 4… that&rsquo;s no bueno por la burritodances. There is a pretty easy fix for this by issuing the sequence reset command after we truncate the table:</p>
+
+<pre><code>truncate table burritodances;
+alter sequence burritodances_id_seq restart;
+insert into burritodances (title)
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    1;"toptrot"
+    2;"beanwaltz"
+    3;"lamb-ada"
+</code></pre>
+
+<p>Now we have nice sequential id&rsquo;s. Perhaps instead of truncating, we need to delete the last 2 rows for whatever reason:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+select currval('burritodances_id_seq'); -- uh oh
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    4;"chicken dance"
+    5;"fuego de la cocina"
+</code></pre>
+
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence to any value manually:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+alter sequence burritodances_id_seq restart with 2; -- an option
+select SETVAL('burritodances_id_seq', MAX(id) ) from burritodances;
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    2;"chicken dance"
+    3;"fuego de la cocina"
+</code></pre>
+
+<p>and now we&rsquo;re back in business again. In the above code, I showed 2 ways to achieve the desired result. The newer way, with the alter sequence code, and the more old school way with SETVAL function. Both work perfectly fine and as always, postgres itself has pretty <a href="http://www.postgresql.org/docs/current/static/sql-altersequence.html">nice documentation</a> on the various alter sequence commands you can run.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[heroku pg-extras builds bridges]]></title>
+    <link href="http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges/"/>
+    <updated>2013-11-20T19:10:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/heroku-pg-extras-builds-bridges</id>
+    <content type="html"><![CDATA[<p>It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different languages, yelling at each and saying hurtful things&hellip; all the while the app and db sit in their servers neglected and needing love.</p>
+
+<h3>pg_therapy</h3>
+
+<p>While many of us that live in the database layer have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your .psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku. To accomodate its users, Heroku has put out a very helpful plugin to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language. They don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
+
+<h3>Pump you up</h3>
+
+<p>Installation is a breeze:</p>
+
+<pre><code>heroku plugins:install git://github.com/heroku/heroku-pg-extras.git
+</code></pre>
+
+<p>Using it a breeze:</p>
+
+<pre><code>heroku pg:bloat  #one of my favorites!
+</code></pre>
+
+<p>When I run that, it tells me that I didn&rsquo;t specify a database:<br/>
+! Unknown database. Valid options are: HEROKU_POSTGRESQL_BLACK_URL, HEROKU_POSTGRESQL_PINK_URL</p>
+
+<p>I run it again with the proper db:</p>
+
+<pre><code>heroku pg:bloat HEROKU_POSTGRESQL_BLACK_URL
+</code></pre>
+
+<p>Now I have an easy to use snapshot of our database that has an incredibly low barrier of entry to execute for myself or anyone. Let&rsquo;s say that the person running it doesn&rsquo;t trust me or perhaps I&rsquo;m in a burrito coma, they can always refer to the <a href="https://devcenter.heroku.com/articles/heroku-postgres-database-tuning">heroku database tuning site</a> and get sound information.</p>
+
+<h3>Dude, I don&rsquo;t even have time for that.</h3>
+
+<p>Maybe the above is a bit too much to stomach. That&rsquo;s cool, we&rsquo;ll just flip another easy switch:</p>
+
+<pre><code>heroku addons:add librato
+</code></pre>
+
+<p><a href="http://librato.com">Librato</a> is a beautiful dashboard that is fun to look at, easy to use and will give us some historical context for troubleshooting the typically ill fated &ldquo;I think my database is slow&rdquo; situation. What is nice about tooling like Librato is not only does it show our db stats, we also get the context of the Application(Dyno&rsquo;s, router latency, etc). For more information on this, checkout Craig Kerstiens post on <a href="https://postgres.heroku.com/blog/past/2013/10/9/monitoring_your_heroku_postgres_database/">Monitoring with Librato</a>.</p>
+
+<h3>Hugs and Queries</h3>
+
+<p>I love this type of solution because it gets us looking at hard numbers and can easily as well as objectively say it is the DBs fault, the Apps fault, heroku&rsquo;s fault, or no ones fault and everything is fine. Librato and Postgres don&rsquo;t keep track of our egos, our mood or our fatigue &ndash; they keep us honest and on topics that really matter&hellip; something we all could use a little more of.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Sequel and Postgres Range Types]]></title>
+    <link href="http://datachomp.github.com/archives/sequel-and-postgres-range-types/"/>
+    <updated>2013-11-15T21:20:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/sequel-and-postgres-range-types</id>
+    <content type="html"><![CDATA[<p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
+
+<pre><code>CREATE TABLE burritotrucks
+(
+  id serial primary key,
+  truckname text not null,
+  onsite daterange not null --or tsrange if busy schedule
+);
+
+insert into burritotrucks (truckname, onsite)
+values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
+('chompy delight', '[2013-11-15, 2013-11-17]'),
+('no dogs allowed', '[2013-11-16, 2013-11-21]'),
+('government cheese wagon', '[2013-11-11, 2013-11-14]'),
+('tortuga mochilla', '[2013-11-13, 2013-11-18]');
+</code></pre>
+
+<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()
+</code></pre>
+
+<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()::date
+</code></pre>
+
+<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
+
+<pre><code>Sequel.extension(:pg_range)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>We query the database:</p>
+
+<pre><code>options = DB[:burritotrucks].all
+p options
+</code></pre>
+
+<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
+
+<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
+p options
+</code></pre>
+
+<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
+
+<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
+
+<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
+p options
+</code></pre>
+
+<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Writable CTEs in Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/writable-ctes-in-postgres/"/>
+    <updated>2013-11-15T18:10:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/writable-ctes-in-postgres</id>
+    <content type="html"><![CDATA[<p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+First, lets new up some data:</p>
+
+<pre><code>drop table if exists thanks;
+create table thanks (
+    id serial primary key,
+    who text not null,
+    picked boolean not null default 'false',
+    created_at date default now(),
+    last_picked date default '-infinity'
+);
+
+insert into thanks (who)
+values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
+, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
+
+select * from thanks;
+</code></pre>
+
+<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
+
+<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+</code></pre>
+
+<p>Now we can put it in a normal CTE:</p>
+
+<pre><code>with guesswho as (
+    select * from thanks 
+    where picked = false or last_picked &lt; now() - interval '9 months')
+select guesswho.id, guesswho.who
+from guesswho;
+</code></pre>
+
+<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+
+<pre><code>with guesswho as (
+    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+select guesswho.id, guesswho.who
+from guesswho, onlyone
+where champs = onlyone.tops;
+</code></pre>
+
+<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+
+<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+
+, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
+guesswho.champs = onlyone.tops RETURNING thanks.picked)
+
+select guesswho.id, guesswho.who
+from guesswho, onlyone, adios
+where champs = onlyone.tops;
+</code></pre>
+
+<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[My Friend Rob]]></title>
+    <link href="http://datachomp.github.com/archives/my-friend-rob/"/>
+    <updated>2013-11-14T22:05:00-06:00</updated>
+    <id>http://datachomp.github.com/archives/my-friend-rob</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I started getting complacent and taking everything for granted.</p>
+
+<h3>Always Be Coding</h3>
+
+<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me once a week because what good is data if you don&rsquo;t use it?</p>
+
+<h3>It Passes in a Flash</h3>
+
+<p>The past few months have been amazing. The team I work with at Raisemore is top notch and it is an incredible feeling to be working with and helping non-profits every day. Tekpub got acquired by Pluralsight. That experience has been a lot of work and an absolute blast building videos with them. I&rsquo;ve also helped reboot our local Ruby user group with 2 other friends and spoke to that group today on two topics I absolutely love &ndash; Sequel and Postgres.</p>
+
+<h3>For Whom The Phone Tolls</h3>
+
+<p>We just got back from dinner and I&rsquo;m checking my usual blog posts and nightly reading when I get the familiar email every Friday at 00:00:00 UTC:<br/>
+Subject: Be Thankful<br/>
+Body: 1 &ndash; Rob Conery</p>
+
+<p>I don&rsquo;t know if it gets anymore serendipitous than that. Rob is the first entry I put in the table. Since I&rsquo;ve met Rob, he has challenged me to be a better DBA, challenged my comfort zones and to be an overall better person. Some of the above he&rsquo;s done directly, some of it indirectly and I&rsquo;m thankful for all if it.</p>
+
+<h3>perspective.empty?</h3>
+
+<p>I can&rsquo;t wait to see who/what shows up in my inbox next week. I can&rsquo;t wait to reflect on what is was that connected with me. When I get the next mail, I don&rsquo;t know yet if I&rsquo;ll take the time to personally thank them or the project. What I do know is that between now and when I get my next mail, I hope that I can have the same effect on others my list has had on me.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Helping Asset Pipeline Open Up A Little]]></title>
+    <link href="http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little/"/>
+    <updated>2013-10-26T14:42:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/helping-asset-pipeline-open-up-a-little</id>
+    <content type="html"><![CDATA[<p>A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in my Rails 3 app is the:</p>
+
+<pre><code>undefined method `directory?' for nil:NilClass
+rake aborted
+</code></pre>
+
+<p>Thanks AP, for breaking and basically telling me nothing. Luckily, it doesn&rsquo;t have to be this way. If we take a moment to stop and get to know AP, we can get it to open up and be more helpful to us. We start by setting our bundler editor in .bashrc by adding the following line:</p>
+
+<pre><code>export BUNDLER_EDITOR=subl   #I set mine to sublimetext
+</code></pre>
+
+<p>Next up, we hop into terminal and go for an in home visit right into the code itself:</p>
+
+<pre><code>bundle open sprockets  #sprockets is AP's birth name
+</code></pre>
+
+<p>Navigate to lib->sprockets->base.rb</p>
+
+<p>find your way to the &ldquo;def each_entry(root, &amp;block)&rdquo; section of code and you&rsquo;ll likely see a lack of error handling there. To fix it, I wrap a rescue around the &ldquo;directory?&rdquo; check like so:</p>
+
+<pre><code>begin
+    if stat(path).directory?
+      each_entry(path) do |subpath|
+        paths &lt;&lt; subpath
+      end
+    end
+    rescue
+      puts "Hey friend, I have an issue at: #{path}"
+    end
+end
+</code></pre>
+
+<p>This doesn&rsquo;t fix all of AP&rsquo;s problems, none of us are perfect, but it does coax the gem into letting us know where the problem is. Once we know where the problem is, we can work on it together rather than just throwing our arms up in the air and quitting.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Radius Queries in Postgres]]></title>
+    <link href="http://datachomp.github.com/archives/radius-queries-in-postgres/"/>
+    <updated>2013-10-07T13:56:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/radius-queries-in-postgres</id>
+    <content type="html"><![CDATA[<p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
+
+<h4>Where oh where to begin</h4>
+
+<p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
+
+<pre><code>--Hello Table!
+CREATE TABLE burritoplaces
+(id serial PRIMARY KEY,
+establishment varchar(50) not null,
+lat double precision,
+lon double precision);  
+--Hello Data!
+INSERT INTO burritoplaces(establishment, lat,lon)
+VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
+,('Locos Lobos', 35.496025,-97.510185)
+,('Captain Crustacean', 35.51468,-97.524347)
+,('Double Stuffers Cafe', 35.523762,-97.508039)
+,('Cafe Truncate of Watonga', 35.866413,-98.473206);
+</code></pre>
+
+<p>The data checks out:</p>
+
+<pre><code>-- all 5 entries
+SELECT * FROM burritoplaces;
+</code></pre>
+
+<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do it outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
+
+<pre><code>--turn on the magic
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+</code></pre>
+
+<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of the four countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
+
+<pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
+SELECT *, point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)::point AS burrito_distance
+FROM burritoplaces
+WHERE (point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)) &lt; 10 --feel free to play this!
+ORDER by burrito_distance;
+</code></pre>
+
+<p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
+
+<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
+
+<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
+FROM burritoplaces
+WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
+ORDER by burrito_distance;
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[application_name in sequel]]></title>
+    <link href="http://datachomp.github.com/archives/application-name-in-sequel/"/>
+    <updated>2013-10-02T09:22:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/application-name-in-sequel</id>
+    <content type="html"><![CDATA[<p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
+
+<p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
+
+<pre><code>require 'sequel'
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'datachomp', :user=&gt;'rob', :max_connections =&gt; 10
+, :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
+</code></pre>
+
+<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
+
+<pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
+</code></pre>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Postgres.app and shared_preload_libraries]]></title>
+    <link href="http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries/"/>
+    <updated>2013-09-18T09:28:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/postgres-dot-app-and-shared-preload-libraries</id>
+    <content type="html"><![CDATA[<p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
+
+<pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
+create extension "uuid-ossp"; -- it's alive!
+</code></pre>
+
+<p>and to make sure it&rsquo;s active:</p>
+
+<pre><code>select * from pg_extension; -- we should see it listed
+</code></pre>
+
+<p>But not all extensions are created equal. If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion. This extension gives you  deeper view of what has been running in your database. Adding it to a database is easy enough:</p>
+
+<pre><code>create extension "pg_stat_statements";
+select * from pg_stat_statements;  
+</code></pre>
+
+<p>Uh oh, we&rsquo;re greeted with a error that can be a little intimidating:<br/>
+<font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
+
+<p>Ummmm what? Some extensions have special needs that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
+
+<pre><code>sudo apt-get install -y postgresql-contrib-9.3
+</code></pre>
+
+<p>Head on over to our configuration at /etc/postgresql/9.3/main/postgres.conf and look for the shared_preload_libraries setting and reference the extension:</p>
+
+<pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
+</code></pre>
+
+<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of Postgres.app and run the following:</p>
+
+<pre><code>show all;        -- This is a list of a bunch of settings... whoa!
+show config_all; -- Ahhhh, here is what we want
+</code></pre>
+
+<p>Now that we have the location of our configuration file, just throw it into the Unholy Explorer(AKA Finder), start scrolling the file and add the pg_stat_statements setting to the shared_preload_libraries.</p>
+
+<h4>buyer beware</h4>
+
+<p>This works wonderfully in Postgres.app 9.3.0.0. In earlier versions of the app, it does has issues finding the contrib modules. This is a bit of a bummer and when I get my act together, I&rsquo;ll file an issue. Of course, you&rsquo;re more than welcome to beat me to the punch.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[nginx block php requests]]></title>
+    <link href="http://datachomp.github.com/archives/nginx-block-php-requests/"/>
+    <updated>2013-09-13T22:28:00-05:00</updated>
+    <id>http://datachomp.github.com/archives/nginx-block-php-requests</id>
+    <content type="html"><![CDATA[<h3>problem:</h3>
+
+<p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 lines or so of stack junk going into your application log &ndash; much of what is inserted you don&rsquo;t care about. In a normal, healthy, fun loving rails app, the majority of the routing errors come from script kiddies or an exec&rsquo;s infected home machine making php requests. These requests are just casting out a broad net and looking for low hanging fruit exploits. We need something to help tune the signal to noise occuring in our application logs as well as to stop wasting our apps time on bots.</p>
+
+<h3>solution:</h3>
+
+<p>Just throw in a quick nginx location rule in your apps nginx config to catch and handle all the requests before they even hit your server.</p>
+
+<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+}
+</code></pre>
+
+<p>For those curious what I&rsquo;m talking about -<br/>
+Here is an application log before:</p>
+
+<pre><code>Started GET "/login.php" for 80.241.16.10 at 2013-09-13 09:01:38 +0000
+
+ActionController::RoutingError (No route matches [GET] "/login.php"):
+actionpack (3.2.14) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+railties (3.2.14) lib/rails/rack/logger.rb:32:in `call_app'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `block in call'
+activesupport (3.2.14) lib/active_support/tagged_logging.rb:22:in `tagged'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+rack (1.4.5) lib/rack/lock.rb:15:in `call'
+rack-cache (1.2) lib/rack/cache/context.rb:136:in `forward'
+rack-cache (1.2) lib/rack/cache/context.rb:245:in `fetch'
+rack-cache (1.2) lib/rack/cache/context.rb:185:in `lookup'
+rack-cache (1.2) lib/rack/cache/context.rb:66:in `call!'
+rack-cache (1.2) lib/rack/cache/context.rb:51:in `call'
+rack-mini-profiler (0.1.29) Ruby/lib/mini_profiler/profiler.rb:188:in `call'
+railties (3.2.14) lib/rails/engine.rb:484:in `call'
+railties (3.2.14) lib/rails/application.rb:231:in `call'
+railties (3.2.14) lib/rails/railtie/configurable.rb:30:in `method_missing'
+and on... and on... and on ...
+</code></pre>
+
+<p>Here is one after:</p>
+
+<pre><code>  
+
+</code></pre>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Extending Sequel with hstore]]></title>
@@ -72,7 +575,9 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
     <link href="http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
     <updated>2013-08-27T23:26:00-05:00</updated>
     <id>http://datachomp.github.com/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
-    <content type="html"><![CDATA[<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
+    <content type="html"><![CDATA[<p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
+
+<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
 
 <h3>Magic Strings of Wonderful Glory</h3>
 
@@ -323,400 +828,6 @@ Ha, having issues getting the code to display properly so just check this link:<
 <p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
 
 <p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Running the right rubies on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/running-the-right-rubies-on-heroku/"/>
-    <updated>2013-02-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/running-the-right-rubies-on-heroku</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
-<code>
-source "https://rubygems.org"
-ruby '1.9.3'
-</code></p>
-
-<p>You can get a list of the latest rubies supported by Heroku here:<br/>
-<a href="https://devcenter.heroku.com/articles/ruby-support#ruby-versions" title="Heroku Rubies">Heroku Rubies</a></p>
-
-<p>If you are an RVM user like myself, feel free to add an .rvmrc file that will match what version Heroku is on for even more consistency goodness.<br/>
-<code>
-rvm --create --rvmrc 1.9.3-p327@mycoolproject
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A little bit more about sorting]]></title>
-    <link href="http://datachomp.github.com/archives/a-little-bit-more-about-sorting/"/>
-    <updated>2012-12-01T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/a-little-bit-more-about-sorting</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
-
-<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
-
-<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
-
-<p><strong>Code Time<br/>
-Controller:</strong>
-<code></p>
-
-<pre><code>var burritos = db.Select("select name,price from burritos");
-var tacos = db.Select("select name,price from tacos");
-
-var viewModel = new viewmodel_Food
-{
-  burritos = burritos
-  , tacos = tacos
-};
-return View(viewModel);
-</code></pre>
-
-<p></code>
-<strong>View:</strong>
-<code></p>
-
-<pre><code>@model burritoroll.web.Models.viewmodel_Food
-@{
-    ViewBag.Title = "Index";
-}
-
-Index
-
-Can you dig our burritos?
-BurritoPrice
-
-
-
-Can you dig our tacos?
-
-
-  TacoPrice
-
-
-
-
-
-@section scripts{
-
-    function viewModel() {
-        var self = this;
-
-        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
-        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
-
-        var sortitFunction = function (a, b) {
-            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
-        };
-
-        self.tacosarray.sort(sortitFunction);
-        self.burritosarray.sort(sortitFunction);
-    }
-
-    ko.applyBindings(new viewModel());
-
-}
-</code></pre>
-
-<p></code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
-    <link href="http://datachomp.github.com/archives/what-net-orm-should-i-use/"/>
-    <updated>2012-11-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/what-net-orm-should-i-use</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
-
-<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
-
-<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
-
-<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
-
-<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
-
-<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
-
-<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
-
-<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
-
-<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
-
-<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
-
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
-
-<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
-
-<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
-
-<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
-
-<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
-
-<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
-
-<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
-
-<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
-
-<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
-
-<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Using Unicorn with Sinatra or Padrino on Heroku]]></title>
-    <link href="http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
-    <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
-
-<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
-<code>worker_processes 3<br/>
-timeout 30<br/>
-preload_app true</code></p>
-
-<p>2nd: I added Unicorn to my GemFile:<br/>
-<code>#rack server<br/>
-gem &lsquo;unicorn&rsquo;</code>
-You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
-
-<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
-<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
-
-<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Content length issue on 404 pages in Padrino 10.7]]></title>
-    <link href="http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
-    <updated>2012-10-15T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>
-<code></p>
-
-<pre><code>error 404 do
-    response.status = 404
-    render 'errors/404', :layout=&gt;:applayout
-end
-</code></pre>
-
-<p></code></p>
-
-<p>It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
-<code></p>
-
-<pre><code>gem 'rake'
-gem 'sinatra', '1.3.2'
-gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
-</code></pre>
-
-<p></code></p>
-
-<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
-    <link href="http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
-    <updated>2012-05-02T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/ci-with-mvc4-and-linux-no-problem</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
-
-<p>On our Ubuntu box, after we finish the easy as candy install, we&rsquo;re going to want to install Mono. Check out <a href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/" title="Install Mono on Ubuntu">this previous post</a> on how to do that and set it up in your /etc/environment.</p>
-
-<p>Now that Mono is rocking, lets hop over to our CI install. At the time of this post, the latest version of TeamCity is 7.0.2a. Looking at the code below, we&rsquo;re going to install Java, pull down the latest version of the TeamCity linux tar, decompress it, switch directories and fire it up :<br/>
-<code></p>
-
-<pre><code>sudo apt-get install openjdk-7-jre
-wget - http://download.jetbrains.com/teamcity/TeamCity-7.0.2a.tar.gz
-tar xfz TeamCity-7.0.2a.tar.gz
-cd Teamcity
-sudo ./bin/runAll.bat start
-</code></pre>
-
-<p></code></p>
-
-<p>Pretty easy right? Lets check out our web interface:<a href="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png"><img src="http://files.datachomp.com/AppDev/mono/teamcitywelcome.png" alt="TeamcityWelcome" /></a></p>
-
-<p>Yay! Everything works! You&rsquo;re also at a ubiquitous web interface which will likely give the Softie in you some solace. There are tons of resources online for setting up your project in TeamCity to check it out, build it, run tests, deploy, yada yada yada. If you are just getting started, I highly recommend <a href="http://www.troyhunt.com/2010/11/you-deploying-it-wrong-teamcity.html" title="Troy Hunt Deployments">Troy Hunt&rsquo;s post.</a> You can also install Ruby on this server and have a wonderfully awesome auto-deployment method via <a href="https://github.com/capistrano/capistrano/wiki/Documentation-v2.x" title="Capistrano">Capistrano</a>. If you are interested in deploying with Capistrano, let me know I&rsquo;ll try to barf out a quick post on it. This is a pretty short and to the point post, if it needs more content with regards to project checkouts and stuff, let me know and I can barf that out as well.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Running ASP.NET MVC4 on Ubuntu 12.04]]></title>
-    <link href="http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
-    <updated>2012-04-24T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &ldquo;How are you running your app on Linux?&rdquo; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&rsquo;s best interest if I just blog it out. Technology moves fast&hellip; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &ldquo;has been&rdquo; Ubuntu 11.10, we&rsquo;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&rsquo;re so bleeding edge you can call us cutters!</p>
-
-<p>I&rsquo;m not going to show you how to set up and install your Ubuntu Server, as there is a ton of internet out there that can handle that for you and the installer itself is pretty hard to mess up. What I will cover is what to do after that last reboot where it is just you and Bash, together&hellip; at last.</p>
-
-<p>SSH into your fancy new Ubuntu box with <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" title="Putty">Putty</a> and Run this:<br/>
-<code>sudo apt-get update &amp;&amp; sudo apt-get -y install git-core curl python-software-properties</code></p>
-
-<p>This is going to let us add the ppa(think of this as a package location) to install a current nginx:<br/>
-<code></p>
-
-<pre><code>sudo add-apt-repository ppa:nginx/stable
-sudo apt-get update &amp;&amp; sudo apt-get -y install nginx
-</code></pre>
-
-<p></code></p>
-
-<p>Yes! We can now git things, we can curl things, and we can nginx things! Rawwrr!!! Let&rsquo;s kick some other processes to the curb&hellip; like that skank MySQL and that wet blanket Apache:<br/>
-<code>sudo update-rc.d mysql remove &amp;&amp;<br/>
-sudo update-rc.d apache2 remove &amp;&amp; mkdir mycoolapp</code></p>
-
-<p>Now for the fun part, let&rsquo;s get Mono up and running. We really want the latest version of Mono, and like Nuget, not all packages in Ubuntu stay current. The fix for this in the mono world is to just grab <a href="http://www.integratedwebsystems.com/2012/04/install-mono-2-11/" title="Nathan Bridgewater">this dudes</a> install script and go have a drink because it takes a bit to finish:<br/>
-<code></p>
-
-<pre><code>mkdir mono-2.11
-cd mono-2.11
-wget --no-check-certificate https://github.com/nathanb/iws-snippets/raw/master/mono-install-scripts/ubuntu/install_mono-2.11.sh
-chmod 755 install_mono-2.11.sh
-./install_mono-2.11.sh
-</code></pre>
-
-<p></code></p>
-
-<p>Now to check that we have the current version, we just run the following:<br/>
-<code>/opt/mono-2.11/bin/mono -V</code></p>
-
-<p>Cool! We&rsquo;re current, but what we really need is to just be able to run &ldquo;mono -V&rdquo; anywhere we want. We can do that by modifying our /etc/environment file:<br/>
-<code>sudo nano /etc/environment</code></p>
-
-<h1>then insert &ldquo;:/opt/mono-2.11/bin&rdquo;  at the end of that path string. Log out, log in for it to take effect.`</h1>
-
-<p>I don&rsquo;t now about you, but all this sys-admin crap is putting me to sleep and I want to code. Back on our Widows/Dev box, we&rsquo;re going to new up an empty MVC4 project (up to you to figure out how to get MVC4 going on your box, I used Web Platform Installer). After the project is new&#8217;ed up:</p>
-
-<ul>
-<li>Add a controller</li>
-<li>Add a view based on that controller</li>
-<li>Hit F5 and make sure it works</li>
-<li>Remove the EntityFramework.dll because we love our data and don&rsquo;t want to give our app a low self esteem</li>
-<li>Once removed, hit F5 again</li>
-</ul>
-
-
-<p>If everything is still running, then do a file system deploy to a local folder of your choice. Go check out what was just deployed, specifically the &lsquo;/bin&rsquo; folder. We want to remove the Web.Infrastructure.dll because Mono already has this built into its GAC. High Five Mono! With that out of the way, we are going to copy that deployment over to the &lsquo;mycoolapp&rsquo; folder on our Linux server using <a href="http://winscp.net/eng/index.php" title="Winscp">WinsCP</a>. While I don&rsquo;t have a WordPress plugin to read your mind, I hear you thinking &ldquo;Rob, surely there are better ways to do this.&rdquo; and you are right. However, this post is long enough and that topic will likely go into its own post.</p>
-
-<p>SSH back into your linux box, and &lsquo;cd mycoolapp&rsquo;. &ldquo;cd&rdquo; into your &ldquo;mycoolapp&rdquo; directory, type in &lsquo;ls&rsquo; to see the contents and make sure your app made it over. Once we see it, we can do a cassini like run of it by typeing out xsp4 and hitting enter. Try and hit your box on the port 8080 (xsp4 should tell you what it is running on) and see if you can see your app:</p>
-
-<p><img src="http://files.datachomp.com/AppDev/mono/monoapp.png" alt="" /></p>
-
-<p>Yay! Our code works and we&rsquo;re so open source now that we can wear tight jeans at Starbucks and put Bon Iver on our ipod&hellip; just like those <a href="http://wekeroad.com/" title="Lead Rails Wanker">Rails wankers</a>! As for nginx and running our site as a Mono service, we can just use some of the nice documentation over at the Mono site:</p>
-
-<p>Nginx config:<br/>
-<a href="http://www.mono-project.com/FastCGI_Nginx" title="FastCGI_Nginx">http://www.mono-project.com/FastCGI_Nginx</a></p>
-
-<p>Mono as a service:<br/>
-<a href="http://yojimbo87.github.com/2010/03/14/mono-startup-script.html" title="Monoserve">http://yojimbo87.github.com/2010/03/14/mono-startup-script.html</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
-    <link href="http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
-    <updated>2012-03-13T00:00:00-05:00</updated>
-    <id>http://datachomp.github.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>If you want the back story on what this topic is all about &ndash;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
-    <link href="http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres/"/>
-    <updated>2012-03-07T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/im-leaving-sql-server-for-postgres</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
-
-<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
-
-<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hey App, quit wasting my time sorting your data]]></title>
-    <link href="http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/"/>
-    <updated>2012-01-29T00:00:00-06:00</updated>
-    <id>http://datachomp.github.com/archives/hey-app-quit-wasting-my-time-sorting-your-data</id>
-    <content type="html"><![CDATA[<h1></h1>
-
-<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
-
-<p><strong>Nut Kicking:</strong><br/>
-In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
-
-<p><strong>Code Please:</strong><br/>
-Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
-Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254;<br/>
-SELECT Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254<br/>
-ORDER BY name DESC;</code>
-And this is the execution plan it creates:<br/>
-<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
-
-<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
-
-<p><strong>Just Fix It</strong><br/>
-In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
-
-<p><code>
-public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
-{</p>
-
-<pre><code>var table = new Badges();
-var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
-return badges.OrderBy(x=&gt;x.Name);
-//return badges.OrderByDescending(x =&gt; x.Name);
-</code></pre>
-
-<p>}
-</code>
-That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
-
-<p><strong>Does this make us happy?</strong><br/>
-I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
-
-<p><strong>But But But, our servers are busy too!</strong><br/>
-Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
-
-<p>There are a ton of ways to do this:<br/>
-<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
-
-<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
 ]]></content>
   </entry>
   

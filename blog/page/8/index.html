@@ -1,0 +1,667 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy, DATEPART(yyyy, &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/blog/page/8">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/who-said-programmers-are-un-date-able/">Who Said Programmers Are Un-date-able ?</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p><strong>First day of the month:</strong>
+<code></p>
+
+<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
+</code></pre>
+
+<p></code>
+<strong>First day of the week:</strong>
+<code></p>
+
+<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
+</code></pre>
+
+<p></code>
+<strong>Last day of the month:</strong>
+<code></p>
+
+<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
+</code></pre>
+
+<p></code>
+<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
+</strong>
+<code></p>
+
+<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
+THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
+THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
+    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
+</code></pre>
+
+<p></code></p>
+
+<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
+<code></p>
+
+<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
+AS 
+BEGIN
+SET DATEFIRST 1 
+DECLARE @Now DATETIME 
+    ,@LDOTM DATETIME --Last Day Of The Month
+SET @Now= GETDATE() 
+SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
+SELECT 
+@Now AS Today 
+, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
+, @LDOTM AS Last_day_of_month
+, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
+    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
+    ELSE @LDOTM END AS Last_Business_day_of_month 
+END
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/unregister-language-bar/">Unregister Language Bar</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<h2>Two guys walk into a language bar, the smart one unregister it</h2>
+
+<p>If you don&rsquo;t need the language bar, then uninstall it by:</p>
+
+<p><code>Start   Run   "regsvr32.exe /u msutb.dll"    (minus the quotes)</code></p>
+
+<p>Setting god mode in Windows 7<br/>
+Create a folder and rename it to :<br/>
+GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/tempdb-on-the-move/">TempDB on the Move</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p><code>
+By default, your tempDB files are in the following locations:  <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf <br/>
+C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf</p>
+
+<p>The below commands will change the default tempDB locations for SQL Server <br/>
+and have it create the tempDB files there upon start up. <br/>
+</code>
+<code>
+USE master <br/>
+GO <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = &lsquo;E:Datatempdb.mdf&rsquo;)  <br/>
+GO  <br/>
+ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = &lsquo;F:Logtemplog.ldf&rsquo;)  <br/>
+GO
+</code>
+<code>
+You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p>
+
+<p>More reading on the topic:  <br/>
+<a href="http://www.databasejournal.com/features/mssql/article.php/3379901">http://www.databasejournal.com/features/mssql/article.php/3379901</a>  <br/>
+</code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-report-server-outbound-email-configuration/">SQL Report Server Outbound Email Configuration</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So you get your handy dandy <a href="http://technet.microsoft.com/en-us/library/ms345234.aspx">SQL Server Report Server all set up for email</a> and are looking good then you go to have it email to an outbound address.  All of a sudden you get the &lsquo;The e-mail address of one or more recipients is not valid.&#8217;   While there could be a couple reasons for this issue, the main two I run into is SMTP authentication and user aliases.  The fix to both of these involves updating the ReportServer.Config file usually found in the filesystem with a folder structure resembling &ndash; &ldquo;c:program filesmicrosoft SQL ServerMSRS10.MSSQLSERVER&rdquo;</p>
+
+<p>You want to pop it open and then search for &ldquo;SMTPServer&rdquo; which will take you to something that looks like this:
+<code></p>
+
+<pre><code>&lt;RSEmailDPConfiguration&gt;
+&lt;SMTPServer&gt;email.example.com&lt;/SMTPServer&gt;
+&lt;SMTPServerPort&gt;&lt;/SMTPServerPort&gt;
+&lt;SMTPAccountName&gt;&lt;/SMTPAccountName&gt;
+&lt;SMTPConnectionTimeout&gt;&lt;/SMTPConnectionTimeout&gt;
+&lt;SMTPServerPickupDirectory&gt;&lt;/SMTPServerPickupDirectory&gt;
+&lt;SMTPUseSSL&gt;&lt;/SMTPUseSSL&gt;
+&lt;SendUsing&gt;2&lt;/SendUsing&gt;
+&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt;
+&lt;From&gt;MrMail@example.com&lt;/From&gt;
+&lt;EmbeddedRenderFormats&gt;&lt;RenderingExtension&gt;MHTML&lt;/RenderingExtension&gt;&lt;/EmbeddedRenderFormats&gt;
+&lt;PrivilegedUserRenderFormats&gt;&lt;/PrivilegedUserRenderFormats&gt;
+&lt;ExcludedRenderFormats&gt;&lt;RenderingExtension&gt;HTMLOWC&lt;/RenderingExtension&gt;
+&lt;RenderingExtension&gt;NULL&lt;/RenderingExtension&gt;&lt;RenderingExtension&gt;RGDI&lt;/RenderingExtension&gt;
+&lt;/ExcludedRenderFormats&gt;
+&lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+&lt;DefaultHostName&gt;Example.com&lt;/DefaultHostName&gt;
+&lt;PermittedHosts&gt;&lt;/PermittedHosts&gt;
+&lt;/RSEmailDPConfiguration&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>The two fields you want to focus on are:<br/>
+<code></p>
+
+<pre><code>&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+</code></pre>
+
+<p></code>
+You will want to change these to
+<code></p>
+
+<pre><code>&lt;SMTPAuthenticate&gt;2&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;False&lt;/SendEmailToUserAlias&gt;
+</code></pre>
+
+<p></code>
+This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
+
+<p>This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
+
+<p>For more information about the report server configuration settings,  see here: <a href="http://msdn.microsoft.com/en-us/library/ms157273.aspx" title="ReportServer Configuration File">http://msdn.microsoft.com/en-us/library/ms157273.aspx</a></p>
+
+<p>This post also makes the assumption you do SMTP authenticate for outbound emails&hellip;. If you are unsure, then double check that you are not currently operating an open relay email server.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/msdn-on-the-down-low-bandwidth/">MSDN on the Down Low Bandwidth</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>For the most part, I find online <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> to be a complete and utter slow pain in the compiler. It appears that MS has fixed this by offering &lsquo;low bandwidth&rsquo; view for both <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> and Technet. I am pleased to have this information tool back.</p>
+
+<p>You can trigger this by click on the &ldquo;Switch on low bandwidth view&rdquo; link on <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> or Technet.</p>
+
+<p><img src="http://images.datachomp.com/AppDev/Low_Bandwidth_MSDN.jpg" alt="" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/databasemail-man/">DatabaseMail Man</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:
+<code>
+&mdash; send a normal mail
+EXEC msdb.dbo.sp_send_dbmail
+@Profile_Name = @@ServerName
+,@recipients=&lsquo;name@domain.com;<a href="&#109;&#x61;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6e;&#117;&#x6d;&#98;&#101;&#114;&#x40;&#99;&#105;&#110;&#103;&#117;&#108;&#97;&#114;&#109;&#101;&#x2e;&#99;&#111;&#x6d;">&#110;&#117;&#x6d;&#98;&#x65;&#x72;&#x40;&#99;&#105;&#x6e;&#103;&#117;&#108;&#97;&#114;&#109;&#x65;&#46;&#99;&#111;&#x6d;</a>&rsquo;
+,@subject = &lsquo;Dev Transfer to 19&rsquo;
+,@body = &lsquo;Task Complete&rsquo;
+,@body_format = &lsquo;HTML&rsquo;
+&mdash; send with an attachment
+EXEC msdb.dbo.sp_send_dbmail
+@Profile_Name = @@SERVERNAME
+,@recipients=&lsquo;<a href="&#109;&#97;&#x69;&#108;&#116;&#x6f;&#x3a;&#110;&#97;&#x6d;&#101;&#64;&#100;&#111;&#x6d;&#x61;&#105;&#110;&#x2e;&#x63;&#111;&#x6d;">&#x6e;&#97;&#109;&#x65;&#x40;&#100;&#x6f;&#x6d;&#x61;&#x69;&#x6e;&#46;&#x63;&#111;&#109;</a>&rsquo;
+,@subject = &lsquo;Dev Transfer to 19&rsquo;
+,@body = &lsquo;Task Complete&rsquo;
+,@body_format = &lsquo;HTML&rsquo;
+,@file_attachments = @SourcePath;
+</code>
+/*<br/>
+&mdash;Odds and Ends<br/>
+If sending to multiple peeps and one fails to send&hellip; queued up and resends to all.</p>
+
+<p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
+
+<p>&mdash; SMTP Authentication<br/>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#109;&#97;&#105;&#x6c;&#x74;&#111;&#x3a;&#x6e;&#x61;&#109;&#x65;&#x40;&#x64;&#111;&#x6d;&#x61;&#x69;&#x6e;&#x2e;&#99;&#x6f;&#x6d;">&#x6e;&#97;&#x6d;&#101;&#64;&#x64;&#x6f;&#109;&#x61;&#105;&#110;&#x2e;&#x63;&#x6f;&#x6d;</a>). )</p>
+
+<p>&mdash; antivirus port 25 block<br/>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
+
+<p>&mdash;Select * from sysmail_allitems order by mailitem_id desc   &mdash; look up mails<br/>
+&mdash;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &mdash; look up the mails details<br/>
+*/</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/application-connection-ocd/">Application Connection OCD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Do you have this problem:</p>
+
+<p> </p>
+
+<p><img src="http://images.datachomp.com/AppDev/ApplicationConnectionOCD.png" alt="" /></p>
+
+<p>Multiple connections from various applications and you don&rsquo;t know which is which.  There is a fix to this.  It involves telling the app dev team to create a nice clean connection string with the Application Name property being set. This gets double awesome when you add the hostname to the application name so you know exactly where in the webfarm something is coming from.</p>
+
+<p>Here is an example:</p>
+
+<p><code></p>
+
+<pre><code>&lt; connectionStrings&gt; 
+&lt;add name="PaymentsConnStr" connectionString="Data Source=SuperServer;Initial Catalog=DB_Name;MultipleActiveResultSets=True;Persist Security Info=True;User ID=user1;Password=password1;Application Name=OCD App;" providerName="System.Data.SqlClient"/&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/all-your-errors-are-belong-to-us-elmah/">All Your Errors Are Belong to Us &#8211; ELMAH</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So I&rsquo;ve been working on a step by step on ELMAH and how to set it up for F5Compliant &hellip; when today I came across Scott Mitchels tutorial on <a href="http://asp.net/">ASP.NET</a></p>
+
+<p>One thing he seems to have left out is using SQLite.  Since moving from my in house servers to online hosting, I am still often surprised by the DB limitations faced.  Before I went with a hosted solution, it just felt commonplace to spin up a new DB for X project and go.   With many shared hosting plans, one becomes a little miserly with their DB&rsquo;s as more DB&rsquo;s with the hosting plan incur more cost.   SQLite seems to fill that void quite nicely.  One thing to be aware of though is that SQLite requires full trust in order to run, so you will probably need to contact your hosting provider for them to set the permissions.   I use SoftSysHosting and their team takes care of this incredibly fast which is nice.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+    <a class="next" href="/blog/page/7/">Newer &rarr;</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<br/>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>	
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

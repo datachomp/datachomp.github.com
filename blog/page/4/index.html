@@ -9,9 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I always forget this so it is going in a blog for quick reference: SP_CONFIGURE 'show advanced options',1
-RECONFIGURE WITH override
-GO SP_CONFIGURE &hellip;">
+  <meta name="description" content="I am a huge fan of Red Gate SQL Source Control because it makes source controlling/deploying your database easier. I am aware of the MS Database &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -88,7 +86,7 @@ GO SP_CONFIGURE &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/default-backups-to-compressed-in-sql-server/">Default Backup Compression in SQL Server</a></h1>
+      <h1 class="entry-title"><a href="/archives/git-and-red-gate-sql-source-control/">GIT and Red Gate SQL Source Control</a></h1>
     
     
       <p class="meta">
@@ -104,7 +102,7 @@ GO SP_CONFIGURE &hellip;">
   
 
 
-<time datetime="2011-04-07T00:00:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2011</time>
+<time datetime="2012-01-28T00:00:00-06:00" pubdate data-updated="true">Jan 28<span>th</span>, 2012</time>
         
       </p>
     
@@ -113,19 +111,55 @@ GO SP_CONFIGURE &hellip;">
 
   <div class="entry-content"><h1></h1>
 
-<p>I always forget this so it is going in a blog for quick reference:
-<code></p>
+<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
 
-<pre><code>SP_CONFIGURE 'show advanced options',1
-RECONFIGURE WITH override
-GO
+<p><strong>Install Git:</strong><br/>
+Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
+While you are mindlessly clicking &lsquo;next&rsquo; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png"></a></p>
 
-SP_CONFIGURE 'backup compression default',1
-RECONFIGURE WITH override
-GO
-</code></pre>
+<p><strong>Aside:</strong> I&rsquo;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&rsquo;t nearly as bad as you think once you get going.</p>
 
-<p></code></p>
+<p><strong>Repo Hosting</strong><br/>
+Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
+
+<p><strong>Repo Man</strong><br/>
+In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
+Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout"></a><br/>
+You don&rsquo;t have to do it like that, but again, that is the way I currently like to do it.</p>
+
+<p><strong>Lets hook up the DB!</strong><br/>
+Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&rsquo;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
+From there, go to SSMS and link up the DB to your local repository:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko"></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko"></a></p>
+
+<p><strong>Command Line Interface &hellip; or whatever</strong><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
+Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
+Go into that branch: <code>git checkout dbobjects</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard"></a></p>
+
+<p>Now, we go back to SSMS and commit our changes:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!"></a></p>
+
+<p>Cool! Our &ldquo;dbobjects&rdquo; branch has been committed locally, now we just need to merge it into our master branch!</p>
+
+<p>From there, go back to master: <code>git checkout master</code><br/>
+and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
+After we have merged, we can delete the branch we were working in by running:<br/>
+<code>git branch -d dbobjects</code>
+and the process will end up looking like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge"></a></p>
+
+<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &ldquo;push&#8221;ing to the origin: <code>git push -u origin master</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin"></a></p>
+
+<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay"></a></p>
+
+<p>We can see them there for people pulling down changes. You&rsquo;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
 </div>
   
   
@@ -138,7 +172,7 @@ GO
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3-part-2/">Getting Started With Massive in MVC3 &#8211; Part 2</a></h1>
+      <h1 class="entry-title"><a href="/archives/oklahoma-city-javascript-group/">Oklahoma City JavaScript Group</a></h1>
     
     
       <p class="meta">
@@ -154,7 +188,7 @@ GO
   
 
 
-<time datetime="2011-02-19T00:00:00-06:00" pubdate data-updated="true">Feb 19<span>th</span>, 2011</time>
+<time datetime="2012-01-18T00:00:00-06:00" pubdate data-updated="true">Jan 18<span>th</span>, 2012</time>
         
       </p>
     
@@ -163,672 +197,564 @@ GO
 
   <div class="entry-content"><h1></h1>
 
-<p>If you read over my first post on this you probably have some questions going through your mind&hellip;. I know I did&hellip; So lets ask them:</p>
+<p>A <a href="http://okcjs.com/">new user group is starting in Oklahoma City</a> and it is one I find<br/>
+completely fascinating&hellip; a Javascript group! With the monumental surge in popularity of Javascript over the past year or so, this type of group is a can&rsquo;t miss.</p>
 
-<p><strong>Rob, your queries make no sense to me because I have no idea about this &lsquo;drinks&rsquo; table you&rsquo;re hitting.</strong><br/>
-I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&rsquo;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
+<p>Who should attend you might ask? <strong>All of us</strong> in the tech field because it is pretty much everywhere now. Even a database douche bag like myself is attending because I have finally accepted that Javascript is inescapable. Javascript is all over the web, going to be all over the desktop with Windows 8, appearing in the mobile markets, and starting to take over the back end with rad technologies like <a href="http://nodejs.org/">NodeJS</a>.</p>
 
-<p><strong>All this stuff is dynamic and I don&rsquo;t know how to deal with it.</strong> I&rsquo;m just as strongly typed as the next guy so this was an emotional hurdle. But we&rsquo;re not here for therapy so lets code using one of my favorite examples &ndash; Credit Cards!<br/>
-Class:
-<code></p>
+<p>I&rsquo;m a complete noob with Javascript and I feel completely comfortable coming to this group because with as fast as this technology is moving, we&rsquo;re all noobs and need to learn from each other. This group will not waste your time because</p>
 
-<pre><code>public class CreditCard : DynamicModel
-    {  public CreditCard()  : base("AW_Sales_ConnStr")
-        { 
-            PrimaryKeyField = "CreditCardID"; 
-        }
-    }
+<p><strong>Learning is cumulative.</strong></p>
+
+<p>As a speed freak, my primary interest lies in <a href="http://nodejs.org/">NodeJS</a>, but I know for a fact that I will learn something to help me with Node from <a href="http://www.vancelucas.com/">Vance</a> talking about BDD testing with a testing framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. That is just how it works. He gives, I take, and down the road I give back. Even if you don&rsquo;t know or care a thing about Javascript, it can be a good networking opportunity with some of the people in our community that have a true passion for tech and are trying to push tech boundaries. If that doesn&rsquo;t interest you, you can <a href="http://i.imgur.com/0cFLk.gif">lurk in the back and watch me </a>ask stupid questions as I try and get the info to the highly firewall&#8217;ed learning center that is my brain&hellip; or just show up for a free lunch. You have options.</p>
+
+<p>If you don&rsquo;t go or don&rsquo;t plan to go&hellip;no worries. I&rsquo;ll still love you (as a friend), but in our very fluid industry, dropping an hour a month of your time on something like this is an incredibly way to not go stagnant.</p>
+
+<p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&hellip;. help me learn this stuff!</p>
+
+<p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/simple-talk-sql-test-write-up/">Simple-Talk &#8211; SQL Test Write Up</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-16T00:00:00-06:00" pubdate data-updated="true">Dec 16<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m anxious to see just how much David and his team can improve it.</p>
+
+<p><a href="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/" title="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/">http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/</a></p>
+
+<p>In other news, being published on Simple-Talk is also another thing <a href="http://troyhunt.com/" title="Troy Hunt">Troy Hunt</a> won&rsquo;t be able to 1-Up me with.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/getting-started-with-postgres-and-mvc3/">Getting Started With Postgres and MVC3</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-11-20T00:00:00-06:00" pubdate data-updated="true">Nov 20<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>&ldquo;<strong><em><a href="http://www.postgresql.org/">Postgres</a>? WTF man, you&rsquo;re a SQL Server DBA!</em></strong>&rdquo; It&rsquo;s true, I am a SQL Server DBA but even I have to admit that the Postgres team is doing some <a href="http://www.postgresql.org/about/featurematrix">wildy exciting stuff</a>. With that in mind, lets take a quick look at just how quickly we can replace SQL Server with a free/open full bore Enterprise database system like <a href="http://www.postgresql.org/">Postgres</a>.</p>
+
+<p>One of the first things you will notice is Postgres is way easier to install than SQL Server. The SQL Server install is born from a truck stop romance between TFS and Sharepoint that someone found in a garbage bag in a dumpster and burned to a DVD. Postgres takes a different angle and opts for a &lsquo;less is more&rsquo; type of approach. One of the big things you will want to pay attention to is the password you give the default &lsquo;postgres&rsquo; account. Think of him as the SA account in SQL Server as he too wields a mighty big stick.</p>
+
+<p>Once we finish the installer, lets open up pgAdmin III (henceforth known as pgAdmin). If you are accustomed to SSMS with SQL Server and always wished it went on a diet&hellip; then you might like pgAdmin. Be warned though, pgAdmin isn&rsquo;t SSMS on a diet&hellip; it is like SSMS with Anorexia. Once pgAdmin is opened and you are connected, then drill down to &lsquo;databases&rsquo; and do a &lsquo;new database&rsquo; and use the GUI to make your fancy new demo database, or just run the raw sql:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE DATABASE "Demo"
+
+3.    WITH ENCODING='UTF8'
+
+4.         OWNER=postgres
+
+5.         CONNECTION LIMIT=-1;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>Next, lets hop in that database and throw up some tables/data:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE TABLE "Colors"
+
+3.  &amp;#40;
+
+4.      colorid serial NOT NULL,
+
+5.      colorname character varying&amp;#40;50&amp;#41; NOT NULL,
+
+6.      constraint pk_colorid PRIMARY KEY &amp;#40;colorid&amp;#41;
+
+7.  &amp;#41;
+
+8.  WITH &amp;#40;OIDS=false&amp;#41;;
+
+9.  &amp;nbsp;
+
+10. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+11. VALUES &amp;#40;'red'&amp;#41;;
+
+12. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+13. VALUES &amp;#40;'blue'&amp;#41;;
+
+14. SELECT * FROM "Colors";
+
+15. &amp;nbsp;
+</code></pre>
+
+<p>So why the quotes around the table names you might be asking&hellip; well, SQL Server has a bit of Honey Badger approach to what case you assign names and Postgres treats it like a pretty big deal. Luckily, overcoming it isn&rsquo;t a big deal, we just double quote it. Now, if you don&rsquo;t have years of tsql or <a href="http://en.wikipedia.org/wiki/CamelCase">camelcasing</a> drilled into your brain, you can easy just do everything in lower case and not fight the double quote dragon.<br/>
+What else sticks out there&hellip; oh Data Types! You will have to adjust to some variance in data types, but in a good way. Postgres has a lavish assortment of data types for you to fall in love with and one of which is using &lsquo;serial&rsquo; instead of the whole IDENTITY(1,1) you might be used to in SQL Server. There are also some really cool things called Sequences in Postgres which are blazing fast and give you the value of the ID before you insert it. DBAs like them because it can get you AppDevs away from fatty GUID primary keys.</p>
+
+<p>Fire up a new MVC3 app and hop into the Nuget console. From there, we&rsquo;re going to add our <a href="http://www.nuget.org/List/Packages/Npgsql">Postgre provider</a> with &ldquo;<strong>Install-Package Npgsql</strong>&rdquo;. Now that we have our vital provider assemblies, lets go mess around in the web.config.</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.      
+
+4.          
+
+5.              
+
+10.         
+
+11.     
+
+12. &amp;nbsp;
+
+13.     
+
+14.         
+
+15.     
+
+16. &amp;nbsp;
+</code></pre>
+
+<p>Yeah! We have our provider factory rocking and our connection string. Yes, I am using the postgres account in this demo and yes that is wrong/stupid, but I&rsquo;m having so much fun playing with the Postgres engine that I decided to take a shortcut there for this entry.</p>
+
+<p>So our color app is pretty quick and dirty. In keeping with that spirit, I&rsquo;m going to use <a href="https://github.com/robconery/massive">Massive</a> as my ORM of choice. It already has a <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> ready to go. <a href="https://github.com/toptensoftware/petapoco">PetaPoco</a> has some very nice Postgres options in it, but Massive is very quick/easy and the Expandos makes all the strong-typers uncomfortable and I love a good code-trolling.</p>
+
+<p>In the Model folder of our app, I create a new class file called Massive and I copy/paste the <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> into it, and I also created a new class file called &ldquo;Colors&rdquo; that I pasted the following in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.      public class Color : DynamicModel
+
+3.      &amp;#123;
+
+4.          public Color&amp;#40;&amp;#41; : base&amp;#40;"pg", "Colors", "colorid"&amp;#41; &amp;#123; &amp;#125;
+
+5.  &amp;nbsp;
+
+6.      &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>All wired up! In the home controller, we&rsquo;ll throw some code to play with our table in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  var table = [new][8] Color&amp;#40;&amp;#41;;
+
+3.  var colors = table.All&amp;#40;&amp;#41;;
+
+4.  ViewBag.colors = colors;
+
+5.  &amp;nbsp;
+</code></pre>
+
+<p>And then in our view:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  @foreach &amp;#40;var color in ViewBag.colors&amp;#41;
+
+3.  &amp;#123; 
+
+4.       @: @color.colorid @color.colorname
+
+5.  &amp;#125;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>F5 and what do we get? BOOM!!! &ldquo;Error 42P01: relation &#8220;colors&rdquo; does not exist&#8221;<br/>
+So remember when I started our Colors table with a capital C? This is where it can come back to bite you&hellip; and also one of the reasons I absolutely love Micro-ORMs. Fast, malleable, and so easy a DBA can use it. Let&rsquo;s hop into Massive and throw some quotes around our table access:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  string sql = limit &gt;  ? "SELECT TOP "   limit   " {0} FROM "&amp;#123;1&amp;#125;" " : "SELECT {0} FROM "&amp;#123;1&amp;#125;" ";
+
+3.  &amp;nbsp;
+</code></pre>
+
+<p>and Viola! It works! In pretty much the time it takes to install SQL Server, we&rsquo;re already rocking our stunning and highly valuable colors app!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/rock-out-with-your-procmon-out/">Rock Out With Your Procmon Out</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-26T00:00:00-05:00" pubdate data-updated="true">Jul 26<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
+Start run live.sysinternals.comtools</p>
+
+<p>If you are already a gigantic nerd like me and have various login scripts that run, it is way easy to simply map that share by throwing the following into your login scripts:</p>
+
+<p>net use s: live.sysinternals.comtools</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/osx-tools-i-use/">OSX Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-07-21T00:00:00-05:00" pubdate data-updated="true">Jul 21<span>st</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p><strong>Misc:</strong><br/>
+<a href="http://www.clamxav.com/">ClamXav</a> &ndash; antivirus<br/>
+<a href="http://www.evernote.com/">Evernote</a> &ndash; for note taking<br/>
+<a href="http://handbrake.fr/">Handbrake</a> &ndash; for media conversion<br/>
+<a href="http://www.libreoffice.org/download/">LibreOffice</a> &ndash; for working on office docs&hellip; though starting to use Keynote for presentations<br/>
+<a href="http://www.titanium.free.fr/">Onyx</a> &ndash; mac maintenance app<br/>
+<a href="http://www.videolan.org/vlc/">VLC</a> &ndash; for watching media on the mac<br/>
+<a href="http://www.shazoor.in/post/30223922874/vox-for-mountain-lion-fixed">Vox</a> &ndash; nice clean music player<br/>
+<a href="http://www.transmissionbt.com/" title="Transmission">Transmission</a> &ndash; for bittorrent<br/>
+<a href="http://imageoptim.com/">ImageOptim</a> &ndash; image compression<br/>
+<a href="http://www.hogbaysoftware.com/products/writeroom">WriteRoom</a> &ndash; for writing</p>
+
+<p><strong>Internet:</strong><br/>
+<a href="http://adium.im/">Adium</a> &ndash; for XMPP and stuff<br/>
+<a href="http://colloquy.info/">Colloquy</a> &ndash; for IRC<br/>
+<a href="http://cyberduck.ch/">CyberDuck</a> &ndash; for FTPness<br/>
+<a href="http://www.mozilla.com/en-US/firefox/fx/">Firefox</a> &ndash; for browsing<br/>
+<a href="http://www.opera.com/">Opera</a> &ndash; for fast browsing<br/>
+Skype<br/>
+&ndash; <a href="http://www.ecamm.com/mac/callrecorder/">Call Recorder</a> &ndash; for recording Skype calls<br/>
+<a href="https://www.macupdate.com/app/mac/9517/chicken-of-the-vnc">Chicken of the VNC</a> &ndash; for remoting</p>
+
+<p><strong>Dev:</strong><br/>
+<a href="http://www.sublimetext.com/2">Sublime Text</a> &ndash; text editor <br/>
+<a href="http://postgresapp.com/">Postgres App</a> &ndash; best way to run postgres on osx<br/>
+<a href="http://macromates.com/">TextMate</a> &ndash; Editing things<br/>
+<a href="http://www.vmware.com/products/fusion/overview.html">VMWare Fusion</a> to virtualize things<br/>
+<a href="http://www.iterm2.com/#/section/home">iterm2</a> &ndash; cooler terminal</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/why-red-gate-and-i-are-friends-with-benefits/">Why Red Gate and I Are Friends With Benefits</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-29T00:00:00-05:00" pubdate data-updated="true">Jun 29<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>What a great link bait title right? The purpose of this post is to give my reasoning for joining the<a href="http://www.red-gate.com/our-company/about/community-relations/friends-of-rg"> Friends of Red Gate</a> program. So without further ado:</p>
+
+<p><strong>Education &ndash;</strong> I simply love software development with all my heart. Much of this love is channeled towards learning. In the SQL Server arena there are a couple resources that just stand out above the others&hellip; I&rsquo;m talking about <a href="http://www.sqlservercentral.com/">SQL Server Central</a>, <a href="http://www.simple-talk.com/">Simple-Talk</a>, the wealth of information that Brad McGehee(<a href="http://www.bradmcgehee.com/">blog </a>| <a href="https://twitter.com/#!/bradmcgehee">twitter</a>) puts out, Grant Fritchney(<a href="http://www.scarydba.com/">blog </a>| <a href="https://twitter.com/#!/GFritchey">twitter</a>), and the <a href="http://www.red-gate.com/our-company/about/book-store/">various books</a>. It became quite apparent that a lot of what has made me such a successful DBA is because Red Gate shares that same passion for building great software.</p>
+
+<p><strong>Community &ndash;</strong> Another manifestation of this love shows itself in community events. Whenever I put on an event or attend one, there is one company I know of that consistently steps up to the plate. Red Gate. Even during slower economic times, when some sponsors required coaxing and justification, when it came to community, Red Gate was always on board. While they are a company and these events are advertising or promotional opportunities, that aspect of it never comes on. No matter how big or how small the event, I always feel like they genuinely want all of us to learn and be better at our craft. I have a tremendous amount of respect for that company on this alone.</p>
+
+<p><strong>Tools &ndash;</strong> When I first downloaded and installed the beta of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">SQL Source Control</a>, my knees became weak. In the chaotic world of database change management and DDL triggers, this tool absolutely blew my mind. When I started playing with this tool, it was like I had just won a lifetime supply of pizza and cupcakes. Everyone has schema/data compare tools or backup tools, but a native source control tool? Way to step up to the plate Red Gate. I wanted to email customer support and ask for SQL Source Controls ring size because I was hooked. We use TFS at work, but on the side I use a combination of Subversion and GIT&hellip; SQL Source control doesn&rsquo;t even care &ndash; it just does its job. The quality, ease of use, and the need that tool fills made me think that Red Gate loves software development just as much as I do.</p>
+
+<p>I am not a salesman and I don&rsquo;t try to be. I&rsquo;m not trying to sell you Red Gate tools. All I can do is tell you how they have worked for me and let you make the best decision for your situation. One message I do hope I convey is that the next time you are at an event that Red Gate sponsors or take advantage of any of their various learning resources, take a moment to thank them. They do a lot of things in front of and behind the scenes to help all of us reach success without any of us being forced to buy their tools and I find that amount of passion in a company both admirable and rare.</p>
+
+<p><img src="http://www.red-gate.com/assets/images/logos/friends-of-rg-logo.png" alt="Friends of Red Gate" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/">Tekpub &#8211; Full Throttle With Rob Sullivan Show Notes</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-06-04T00:00:00-05:00" pubdate data-updated="true">Jun 4<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
+
+<p><strong>Questions:</strong>*<br/>
+<strong>How do you get the stats to appear in the &ldquo;messages&rdquo; window?</strong><br/>
+Those stats come from the following commands:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;<br/>
+If you don&rsquo;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
+Tools &ndash;> Options &ndash;> Query Execution &ndash;> SQL Server &ndash;> Advanced<br/>
+then check:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;
+<strong>Lock Pages in Memory, is that always good?</strong><br/>
+No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: <a href="http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/">http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/</a>
+<strong>Why no filtered index on Posts?</strong><br/>
+In our first scenario, to get the front page up&hellip; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
+
+<p><strong>What were you using for &ldquo;Intellisense&rdquo; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
+
+<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
+
+<p><strong>Tech used in the series:</strong><br/>
+Visual Studio 2010 / MVC3 / EF 4.1<br/>
+SQL Server 2008 R2 / Management Studio<br/>
+<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &ldquo;Intellisense&rdquo; and &ldquo;snippets&rdquo; in Management Studio<br/>
+<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
+<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
+<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
+
+<p><strong>Source code:</strong></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/windows-server-core-basic-operations/">Windows Server Core &#8211; Basic Operations</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-25T00:00:00-05:00" pubdate data-updated="true">Apr 25<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition.</p>
+
+<p><strong>Quick tool to handle basic configurations like computer name/updates/time:</strong><br/>
+sconfig.cmd tool</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/massive-and-using-multiple-args/">Massive and Using Multiple Args:</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>
+
+<p><code></p>
+
+<pre><code>var tbl = new Products();
+var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
 </code></pre>
 
 <p></code>
-ViewModel:
+It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&rsquo;t take to kindly to that sort of syntax.</p>
+
+<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
 <code></p>
 
-<pre><code>public class CreditCardViewModel
-    {public IEnumerable&lt;Cards&gt;{ get; set; } }
+<pre><code>object[] queryargs = {"Okapi", "online"};
+var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
 </code></pre>
 
 <p></code>
-Controller:
-<code></p>
-
-<pre><code>public ActionResult Index()
-{
-      var table = new CreditCard();
-      var cards = table.All();
-
-    var viewModel = new CreditCardViewModel
-    {
-          Cards = cards
-         };
-    return View(viewModel);
-}
-</code></pre>
-
-<p></code>
-View:
-<code></p>
-
-<pre><code>@model Kona.Web.Models.CreditCardViewModel
-@{ViewBag.Title = "Adventure Works Card Stealer";}
-
-&lt;table&gt;
-@foreach (var item in Model.Cards)
-{
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;@item.CardType&lt;/td&gt;
-&lt;td&gt;@item.CardNumber&lt;/td&gt;
-&lt;td&gt;@item.ExpMonth&lt;/td&gt;
-&lt;td&gt;@item.ExpYear&lt;/td&gt;
-&lt;/tr&gt;
-}&lt;/tbody&gt;
-&lt;/table&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&hellip;. So since we have a special case where we care a whole bunch about not returning that data&hellip; lets change our controller:
-<code></p>
-
-<pre><code>var table = new CreditCard();
-//var cards = table.All();
-var cards = table.Query(@"SELECT CardType, ExpMonth ,ExpYear from CreditCard");
-</code></pre>
-
-<p></code>
-Sweet! it compiles, we&rsquo;re ready to check in and go grab a beer right? Heh, nope&hellip;. refresh your app:<br/>
-<em>&lsquo;System.Dynamic.ExpandoObject&rsquo; does not contain a definition for &lsquo;CardNumber&rsquo;</em></p>
-
-<p>So we update our view&hellip;.
-<code></p>
-
-<pre><code>{
-@item.CardType
-@item.ExpMonth
-@item.ExpYear
-}
-</code></pre>
-
-<p></code></p>
-
-<p>and all is well again.</p>
-
-<p>Make no mistake about it&hellip; Massive will give you all the rope you want to easily swing around your apps data jungle&hellip; it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 (<a href="http://thisdeveloperslife.com/post/1-0-8-motivation">And don&rsquo;t get me wrong, I like EF4</a>) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I&rsquo;ll get it done.</p>
-
-<p>Welcome to dynamic!</p>
-
-<p>One last bit because this is getting lengthy:<br/>
-<strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&rsquo;t figure out how make my class take &ldquo;advantage&rdquo; of that</strong><br/>
-This is a fun thing we DBA&rsquo;s like to do for the sole purpose of driving AppDev&rsquo;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
-<code></p>
-
-<pre><code>public CreditCard() : base("AW_Sales_ConnStr")
-        { 
-            TableName = "[Sales].[CreditCard]";
-            PrimaryKeyField = "CreditCardID"; 
-        }
-</code></pre>
-
-<p></code></p>
-
-<p>That setting in the base() maps to my web.config:
-<code></p>
-
-<pre><code>add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
-</code></pre>
-
-<p></code></p>
-
-<p>and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:
-<code></p>
-
-<pre><code>CREATE USER [aw_Kona_Sales] FOR LOGIN [aw_Kona_Sales] WITH DEFAULT_SCHEMA=[Sales]
-</code></pre>
-
-<p></code></p>
-
-<p>Last thing, I promise &hellip; In my first post, I included how the commands were rendering out in the SQL Server. I didn&rsquo;t this time because this edition is more focused on a &ldquo;getting things done in MVC&rdquo; side of things.<br/>
-Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3/">Getting Started With Massive in MVC3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p><a href="http://blog.wekeroad.com/">Rob Conery</a> has created a new ORM of sorts   and as a DBA, I must say I like what I see so far.</p>
-
-<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&rsquo;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&hellip; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
-
-<p>We DBA&rsquo;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &lsquo;plan cache poisoning&rsquo;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &lsquo;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&hellip; it doesn&rsquo;t have to compile a new plan&hellip; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&hellip;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&hellip;  it would compile a plan for &#8216;Rob&rsquo;, a plan for &lsquo;Robert&rsquo;,  a plan for &lsquo;Mike&rsquo; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&rsquo;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
-
-<p>To make  basic call with Massive on a Drinks Table (DrinkID, DrinkName) we do this:</p>
-
-<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
-
-2.  var drinks = table.All&amp;#40;&amp;#41;;
-</code></pre>
-
-<p>If you have done any Linq or EF you know that even a basic call like that is going to cause Linq or EF to create<br/>
-the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &lsquo;hey look at me&#8217;<br/>
-Does Massive have this problem? Nope, looking at profiler we get straight forward SQL &ndash;</p>
-
-<pre><code>1.  SELECT * FROM DRINKS
-</code></pre>
-
-<p>Well, that&rsquo;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
-Rarely, so lets move to some conditions&hellip; lets look up a drink name:</p>
-
-<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
-
-2.  var drinks = table.All&amp;#40;where: "WHERE DrinkName=@0", args: "Fire Rock Pale Ale"&amp;#41;;
-</code></pre>
-
-<p>Knowing EF, we&rsquo;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
-In Massive, we get:</p>
-
-<pre><code>1.  EXEC SP_EXECUTESQL N'SELECT * FROM Drinks WHERE DrinkName=@0',N'@0 nvarchar(4000)',@=N'Fire Rock Pale Ale'
-</code></pre>
-
-<p>In addition to a simple to grok TSQL, we also start getting reusable query plans.</p>
-
-<p>More examples to come as I start to peel back the covers a bit on this new tool.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/security-and-code-analysis-tools-i-use/">Security and Code Analysis Tools I Use</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Here are some of the tools I use for Security and Code analysis  (I bet you didn&rsquo;t see that coming from!)</p>
-
-<p>WebConfig Analyzer &ndash; you can do a stand alone download and feed your webconfig into it</p>
-
-<p><a href="http://www.wireshark.org/">WireShark</a> Use this to see what is going on on the network.</p>
-
-<p><a href="http://www.fiddler2.com/fiddler2/">Fiddler </a>&ndash; Great for https inspection.</p>
-
-<p><a href="http://www.mavitunasecurity.com/communityedition/">Netsparker</a> Use it to hit test sites and see if throws back anything useful.</p>
-
-<p><a href="http://www.backtrack-linux.org/">BackTrack 4</a> Not sure what needs to be said here other than the best way to get a white hat, is to take a black hat and bleach it.</p>
-
-<p><a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=917023f6-d5b7-41bb-bbc0-411a7d66cf3c">FXCop</a> I tun this against my code when I want to feel stupid and see how many places I&rsquo;ve goofed.  Things putting getters and setters on read only data. Doh!</p>
-
-<p><a href="http://www.red-gate.com/products/dotnet-development/reflector/">Reflector</a> Other peoples code and programs look pretty fun when uncompiled. Likewise, this is also good for making sure you didn&rsquo;t leave any sensitive information in your own binaries.</p>
-
-<p>FireFox add-ons:</p>
-
-<p><a href="https://addons.mozilla.org/en-US/firefox/addon/viewstate-size/">ViewState</a></p>
-
-<p><a href="http://getfirebug.com/">FireBug</a></p>
-
-<p>And then everything else that SnipeyHead (<a href="http://www.snipe.net/">Blog</a> | <a href="http://twitter.com/#!/snipeyhead">Twitter</a>) uses:</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/pack-the-powder-light-the-wick/">Pack the Powder, Light the Wick!</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>There is going to be a strong disturbance in the force, Dallas Feb 21st &ndash; 25th when the <a href="http://www.sqlskills.com/">SQLSkills</a> team comes down for a Master Immersion class : <a href="http://www.sqlskills.com/Master1-Dallas-20110221.asp">http://www.sqlskills.com/Master1-Dallas-20110221.asp</a> .</p>
-
-<p>I am not going to spend a lot of time talking about why I want to attend a class taught by Paul Randal (<a href="http://www.sqlskills.com/BLOGS/PAUL/">blog</a> | <a href="http://twitter.com/#!/paulrandal">twitter</a>) and Kimberly Tripp (<a href="http://www.sqlskills.com/BLOGS/Kimberly/">blog</a> | <a href="http://twitter.com/#!/kimberlyltripp">twitter</a>). Their body of work in both the education and SQL Server stands second to no one, so trying to go on about this just belabors the point. Simply put, if you want to be among the best, then one should find the best and learn from them.</p>
-
-<p>Now, let us graduate to the less obvious aspect of this post, which is why I would make the best use of this knowledge.  With technical debt, you sometimes have to write SQL checks that your brain can&rsquo;t cash. This class is like adding a few 0&rsquo;s to your brain balance.   As I take in the knowledge from this class, it is going to manifest itself into a trident to attack the following issues:</p>
-
-<p><strong>Personal: </strong> Let&rsquo;s be honest, keeping up with technology is an infinite and exhaustive grind.  Unfortunately, this can eventually create stress on one&rsquo;s work/life balance as the unending need to keep learning is often standing right in the way of the unending need to be with one&rsquo;s family. The quality and depth of this immersion event is an incredible opportunity to trade a few days in order to receive many years worth of nights. I personally think a good DBA is a &ldquo;Jack of all trades, Master of one&rdquo;&hellip; it is time I establish my mastery.</p>
-
-<p><strong>Professional:</strong> I currently work as the lone DBA for a virtual high school. This is simply the most fascinating job I have ever had for a variety of reasons. Having never had a DBA and more the point, no solid guidance in how to do things, the situations I come across can be truly migraine-inducing. The quicker I am able diagnose the correct path,  the more time I can spend on what really matters. Things like building analysis cubes which enable our teachers and staff to quickly identify where the system is breaking down with regards to the students&#8217; education. By doing this, it creates an opportunity for system efficiencies and satisfying end user experiences which are far more interesting and worthwhile than trying to continually identify where our SQL Servers are breaking down.</p>
-
-<p><strong>Community:</strong> As a founder of the Oklahoma City SQL Server Developers Group, what you teach me doesn&rsquo;t stop at my front lobe. You essentially essentially aid me in becoming Johnny SQL-Seed, spreading my knowledge to our community as I continue to give more talks to our group and region. In addition, my hope is that the networking from this class will enable us to find more speakers, as well as bring different points of views and technological diversity to our meetings. Without question, being involved in the SQL community is a lot of fun. However, the downside is that while I am organizing or speaking, I tend to miss out on a lot of content. This class is a chance for me to participate instead of provide, and I can&rsquo;t wait to be immersed in this baptism of SQL.</p>
-
-<p>In closing, this is an incredible opportunity put out there by the <a href="http://www.sqlskills.com/">SQLSkills</a> team and I truly hope to INNER JOIN them in Dallas.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/deploy-mvc3-to-shared-hosting/">Deploy MVC3 to Shared Hosting</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn&rsquo;t have (and I didn&rsquo;t request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to &lsquo;copy local&rsquo; to get it to work on shared hosting.</p>
-
-<p>The list of assemblies to set to copy local = true is:</p>
-
-<ul>
-<li>Microsoft.Web.Infrastructure</li>
-<li>System.Web.Helpers</li>
-<li>System.Web.Mvc</li>
-<li>System.Web.Razor</li>
-<li>System.Web.Webpages</li>
-<li>System.Web.WebPages.Deployment</li>
-<li>System.Web.Webpages.Razor</li>
-</ul>
-
-
-<p>Drew Miller ( <a href="http://drew-prog.blogspot.com/">blog</a> | <a href="http://twitter.com/anglicangeek">twitter</a> ) has a great breakdown on this : <a href="http://drew-prog.blogspot.com/2011/01/how-to-deploy-aspnet-mvc-3-app-to-web.html">Click for Breakdown </a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/">My Subversion Ignore List for Visual Studio / Anhksvn</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-01-11T00:00:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn&rsquo;t bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
-
-<p><strong>UPDATE:</strong> Jim motivated me to actually spend the extra time to track down the actual links I used.  <a href="http://stackoverflow.com/questions/85353/best-general-svn-ignore-pattern" title="Link1">Link1</a> and  <a href="http://stackoverflow.com/questions/4375971/tortoise-svn-global-ignore-pattern" title="Link2">Link2</a></p>
-
-<p>I use  <a href="http://ankhsvn.open.collab.net/" title="AnkhSVN">AhnkSVN</a> as my visual studio source control plugin.  I right click on the solution,  select &lsquo;subversion&rsquo;,  select &lsquo;solution properties&rsquo;.  That brings up a box and you will want to click &lsquo;add&rsquo;.  From there,  select  svn.Ignore  and copy/paste the below:</p>
-
-<p>Solution Level:</p>
-
-<p>*.csproj.user Bin obj Obj Release debug Debug release</p>
-
-<p>Note: I don&rsquo;t use Reshaper, if you do, there are other exclusions you will want to add</p>
-
-<p>In <a href="http://tortoisesvn.tigris.org/" title="TortoiseSVN">Tortoisesvn</a>,  my exclusion list is :</p>
-
-<p><em>.o </em>.lo <em>.la </em>.al .libs <em>.so *.so.[0-9]* </em>.a <em>.pyc </em>.pyo <em>.rej </em>~ #<em># .#</em> .<em>.swp .DS_Store </em>.csproj.user Bin obj Obj Release debug Debug release *.suo</p>
-
-<p>When you go into your TortoiseSVN settings,  on the &lsquo;general&rsquo; tab,  copy/paste that into the  &#8217;Global Ignore Pattern:&lsquo; box.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/sql-server-variety-hour/">SQL Server Variety Hour</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-12-14T00:00:00-06:00" pubdate data-updated="true">Dec 14<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
-
-<p>WhoIsActive &ndash; <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
-
-<p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
-
-<p>SQL SourceControl- <a href="http://www.red-gate.com/products/sql-development/sql-source-control/" title="http://www.red-gate.com/products/sql-development/sql-source-control/">http://www.red-gate.com/products/sql-development/sql-source-control/</a></p>
-
-<p>.Net Reflector- <a href="http://www.red-gate.com/products/dotnet-development/reflector/" title="http://www.red-gate.com/products/dotnet-development/reflector/">http://www.red-gate.com/products/dotnet-development/reflector/</a></p>
-
-<p>LinqPad- <a href="http://linqpad.net/" title="http://linqpad.net/">http://linqpad.net/</a></p>
-
-<p>EF Profiler- <a href="http://efprof.com/" title="http://efprof.com/">http://efprof.com/</a></p>
-
-<p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
-
-<p>Virtualization &ndash; <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/stored-procedure-output-params-and-return-values/">Stored Procedure Output Params and Return Values</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:
-<code></p>
-
-<pre><code>SET @TheID = SCOPE_IDENTITY();
-RETURN @TheID
-</code></pre>
-
-<p></code></p>
-
-<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:
-<code></p>
-
-<pre><code>--drop table dbo.pizza
-CREATE TABLE Pizza (pizzaid TINYINT IDENTITY(1,1), pizzasize VARCHAR(10), numberoftoppings TINYINT, pizzaname VARCHAR(40) )
-
-CREATE PROCEDURE dbo.asp_InsertNewPizza
-    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
-AS
-
-BEGIN TRY
-INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
-VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
-
-SELECT @PizzaID = SCOPE_IDENTITY();
-RETURN 0;
-END Try
-BEGIN Catch
-    RETURN -1
-END Catch
-GO
-
-DECLARE @InsertedID TINYINT, @RunOK INT;
-EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
-SELECT @RunOK, @InsertedID
-</code></pre>
-
-<p></code></p>
-
-<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&rsquo;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &ldquo;Fine, in that case don&rsquo;t do the above&rdquo; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
-<code></p>
-
-<pre><code>CREATE PROCEDURE dbo.asp_InsertNewPizza
-    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
-AS
-
-IF EXISTS (SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName)
-BEGIN
-    SET @PizzaID = NULL;
-    RETURN 1;   
-END
-ELSE
-BEGIN TRY
-    INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
-    VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
-
-    SELECT @PizzaID = SCOPE_IDENTITY();
-    RETURN 0;
-END TRY
-BEGIN CATCH
-    RETURN -1
-END CATCH
-
-GO
-</code></pre>
-
-<p></code></p>
-
-<p>Without catching the Return Values&hellip; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&rsquo;t from an error, but that a certain business rule had been met.</p>
-
-<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&rsquo;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
-<code></p>
-
-<pre><code>SqlCommand databaseCMD = new SqlCommand ("asp_InsertNewPizza", pizzaConn);
-
-databaseCMD.CommandType = CommandType.StoredProcedure;
-
-SqlParameter PizzaSize = databaseCMD.Parameters.Add ("@pizzaSize", SqlDbType.VarChar, 10);
-PizzaSize.Direction = ParameterDirection.Input;
-SqlParameter NumberOfToppings = databaseCMD.Parameters.Add ("@NumberOfToppings", SqlDbType.TinyInt);
-NumberOfToppings.Direction = ParameterDirection.Input;
-SqlParameter PizzaName = databaseCMD.Parameters.Add ("@PizzaName", SqlDbType.VarChar, 40);
-PizzaName.Direction = ParameterDirection.Input;
-
-
-SqlParameter PizzaID = databaseCMD.Parameters.Add ("@PizzaID", SqlDbType.TinyInt);
-PizzaID.Direction = ParameterDirection.Output ;
-SqlParameter ReturnValue = databaseCMD.Parameters.Add ("RetVal", SqlDbType.Int);
-RetVal.Direction = ParameterDirection.ReturnValue;
-
-int pizzaID;
-pizzaConn.Open();
-
-pizzaID =databaseCMD.ExecuteScalar ().ToString() ;
-
-if (ReturnValue == 0){
-ResponseWrite("The Pizza was added. The pizzaID is : " + pizzaID.ToString() );
-ResponseWreite("Return Value: " + RetVal.Value);
-}
-else if{ ReturnValue == 1) {
-ResponseWrite("Sorry friend, that pizza name already exists.");
-ResponseWreite("Return Value: " + RetVal.Value);
-}
-else { FreakOut(); }
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/virtual-victory-aws-gives-out-a-year-of-usage/">Virtual Victory &#8211; AWS Gives Out a Year of Usage</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-23T00:00:00-05:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
-
-<p>So what can I do with this you might ask? Here are some ideas: (I am doing these off the top of my head so feel free to criticize them by suggesting a better ideas)</p>
-
-<ol>
-<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the &lsquo;will this mess up my system&rsquo; fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
-<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon&rsquo;s simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA&rsquo;s, NOSQL stands for &ldquo;Not Only SQL&rdquo; not for No &ndash; SQL as in SQL Void.</p></li>
-<li><p>Embrace the awesome of Amazon S3. Ever wonder why Dropbox/JungleDisk and various other companies can give you so much storage for so cheap? Amazon S3 is pretty much the answer to that question. I typically use the cheapest hosting plans possible and S3 as a CDN to smoke/mirror performance.</p></li>
-<li><p>SQL Server testing &ndash; Microsoft provides trial software for pretty much all their projects. If you are curious about &hellip; say playing with some feature of replication or maybe wondering about online indexing &hellip; Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
-<li><p>.Net testing or running a service &ndash; With shared hosting, I don&rsquo;t have a way of keeping an ongoing on demand service per say&hellip; So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app&hellip;. Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don&rsquo;t really support SQL Server SSIS&hellip; so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
-</ol>
-
-
-<p>Now, some of this isn&rsquo;t without a learning curve, but we are in the software development industry&hellip; if we can&rsquo;t navigate learning curves or don&rsquo;t even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
+and low and behold the magic happens.</p>
 </div>
   
   
@@ -857,23 +783,23 @@ else { FreakOut(); }
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
       <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
       <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

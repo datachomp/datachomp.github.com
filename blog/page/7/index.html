@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="First day of the month: DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE())) First day of the week: DATEADD(yyyy, DATEPART(yyyy, &hellip;">
+  <meta name="description" content="So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,7 +86,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/who-said-programmers-are-un-date-able/">Who Said Programmers Are Un-date-able ?</a></h1>
+      <h1 class="entry-title"><a href="/archives/databasemail-time-to-clean-house/">DatabaseMail Time to Clean House</a></h1>
     
     
       <p class="meta">
@@ -102,7 +102,7 @@
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
         
       </p>
     
@@ -111,59 +111,19 @@
 
   <div class="entry-content"><h1></h1>
 
-<p><strong>First day of the month:</strong>
+<p>So hopefully you have moved to databasemail and started enjoying its many benefits. Remember that cool benefit of it logging all the emails for you and such? Well that comes at a price, and the price is an ever growing MSDB. So, you should consider setting a retention date for your servers and create or add the following to your maintenance packages/jobs.</p>
+
+<p>This script will clear out the mail items and the log based on the @Retention_Days variable:
 <code></p>
 
-<pre><code>DATEADD(dd,-(DAY(DATEADD(mm,1,GETDATE()))-1),DATEADD(mm,0,GETDATE()))
-</code></pre>
+<pre><code>DECLARE @Retention_days SMALLINT
+    , @Delete_Date DATETIME
 
-<p></code>
-<strong>First day of the week:</strong>
-<code></p>
+SET @Retention_Days = -90  -- 3 months
+SET @Delete_Date = DATEADD(d, @Retention_Days, GETDATE())
 
-<pre><code>DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday, 1-DATEPART(weekday, GETDATE()),GETDATE()))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,   1-DATEPART(weekday, GETDATE()), GETDATE()))-1,0)
-</code></pre>
-
-<p></code>
-<strong>Last day of the month:</strong>
-<code></p>
-
-<pre><code>DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))
-</code></pre>
-
-<p></code>
-<strong>Last Business Day of the Month:  (buckle up for this one)<br/>
-</strong>
-<code></p>
-
-<pre><code>CASE WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=7 
-THEN DATEADD(DAY,-2, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
-    WHEN DATEPART(DW, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)))=6 
-THEN DATEADD(DAY,-1, DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0))) 
-    ELSE DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,GETDATE())),0)) END AS Last_Business_day_of_month 
-</code></pre>
-
-<p></code></p>
-
-<p><strong>What can I do with this you ask? Well, You can put it in a procedure for SSRS reports to get a dynamic date on subscriptions with a hidden parameter.</strong>
-<code></p>
-
-<pre><code>ALTER PROCEDURE usp_CommonDates_Report 
-AS 
-BEGIN
-SET DATEFIRST 1 
-DECLARE @Now DATETIME 
-    ,@LDOTM DATETIME --Last Day Of The Month
-SET @Now= GETDATE() 
-SET @LDOTM = DATEADD(ms, -3, DATEADD (m,DATEDIFF(m,0,DATEADD(m,1,@Now)),0))
-SELECT 
-@Now AS Today 
-, DATEADD(yyyy, DATEPART(yyyy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1900, 0) + DATEADD(dy, DATEPART(dy, DATEADD(weekday,1-DATEPART(weekday, @Now),@Now))-1,0) AS Week_Start 
-, @LDOTM AS Last_day_of_month
-, CASE WHEN DATEPART(DW, @LDOTM)=7 THEN DATEADD(DAY,-2, @LDOTM) 
-    WHEN DATEPART(DW, @LDOTM)=6 THEN DATEADD(DAY,-1, @LDOTM) 
-    ELSE @LDOTM END AS Last_Business_day_of_month 
-END
+EXECUTE msdb.dbo.sysmail_delete_mailitems_sp @sent_before = @Delete_Date
+EXECUTE msdb.dbo.sysmail_delete_log_sp @logged_before = @Delete_Date
 </code></pre>
 
 <p></code></p>
@@ -179,7 +139,7 @@ END
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/unregister-language-bar/">Unregister Language Bar</a></h1>
+      <h1 class="entry-title"><a href="/archives/getting-started-with-solid-state-drives/">Getting Started With Solid State Drives</a></h1>
     
     
       <p class="meta">
@@ -195,7 +155,7 @@ END
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2010-06-26T00:00:00-05:00" pubdate data-updated="true">Jun 26<span>th</span>, 2010</time>
         
       </p>
     
@@ -204,15 +164,12 @@ END
 
   <div class="entry-content"><h1></h1>
 
-<h2>Two guys walk into a language bar, the smart one unregister it</h2>
+<p>Step 1 &ndash; Make sure AHCI is working in the bios. This is used for TRIM and such.<br/>
+Step 2 &ndash; Make sure the SSD is aligned. Pull up &ldquo;msinfo32&rdquo;, navigate to Components &ndash;> Storage &ndash;> Disks, and look for &ldquo;Partition Starting Offset&rdquo;. Use those numbers and <a href="http://www.techpowerup.com/articles/other/157">Techpowerup &ndash; SSD Alignment Calculator</a> to make sure your disk is aligned.</p>
 
-<p>If you don&rsquo;t need the language bar, then uninstall it by:</p>
+<p>Step 3 &ndash; Make sure TRIM is enabled. At the command prompt, type-> &ldquo;fsutil behavior query disabledeletenotify&rdquo; A 0 means that TRIM is on, a 1 means it is off. To turn Trim on type, &ldquo;fsutil behavior set disabledeletenotify 0&rdquo; .</p>
 
-<p><code>Start   Run   "regsvr32.exe /u msutb.dll"    (minus the quotes)</code></p>
-
-<p>Setting god mode in Windows 7<br/>
-Create a folder and rename it to :<br/>
-GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
+<p>Step 4 &ndash; Use programs like Filemon and such to see if you have something that is doing heavy writes on your SSD. Depending on what they are, you might want to move them to something else.</p>
 </div>
   
   
@@ -225,7 +182,7 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/tempdb-on-the-move/">TempDB on the Move</a></h1>
+      <h1 class="entry-title"><a href="/archives/ssis-and-the-embedded-delimiter-fail/">SSIS and the Embedded Delimiter Fail</a></h1>
     
     
       <p class="meta">
@@ -241,7 +198,7 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true">May 31<span>st</span>, 2010</time>
         
       </p>
     
@@ -250,28 +207,13 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
 
   <div class="entry-content"><h1></h1>
 
-<p><code>
-By default, your tempDB files are in the following locations:  <br/>
-C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf <br/>
-C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf</p>
+<p>Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server 2005 SSIS. Of course, it is a bit of a mystery while they keep removing functionality but that isn&rsquo;t the point of this post. The point of this post is to show a solution&hellip;</p>
 
-<p>The below commands will change the default tempDB locations for SQL Server <br/>
-and have it create the tempDB files there upon start up. <br/>
-</code>
-<code>
-USE master <br/>
-GO <br/>
-ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = &lsquo;E:Datatempdb.mdf&rsquo;)  <br/>
-GO  <br/>
-ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = &lsquo;F:Logtemplog.ldf&rsquo;)  <br/>
-GO
-</code>
-<code>
-You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p>
+<p>The solution comes by way of the Microsoft SQL Server Community Samples: Integration Services (yes, it is a long name for &lsquo;Look dudes! We are giving you a work around!&rsquo; but it works non the less).</p>
 
-<p>More reading on the topic:  <br/>
-<a href="http://www.databasejournal.com/features/mssql/article.php/3379901">http://www.databasejournal.com/features/mssql/article.php/3379901</a>  <br/>
-</code></p>
+<p><a href="http://sqlsrvintegrationsrv.codeplex.com/">http://sqlsrvintegrationsrv.codeplex.com/</a></p>
+
+<p>I tried the delimited file reader in a variety of scenarios and it passed with flying colors. How nice it is to be able do the same imports that were effortless in SQL 2000.</p>
 </div>
   
   
@@ -284,7 +226,7 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/sql-report-server-outbound-email-configuration/">SQL Report Server Outbound Email Configuration</a></h1>
+      <h1 class="entry-title"><a href="/archives/how-to-test-email-with-port-25-blocked/">How to Test Email With Port 25 Blocked</a></h1>
     
     
       <p class="meta">
@@ -300,7 +242,7 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2010-02-21T00:00:00-06:00" pubdate data-updated="true">Feb 21<span>st</span>, 2010</time>
         
       </p>
     
@@ -309,262 +251,377 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
 
   <div class="entry-content"><h1></h1>
 
-<p>So you get your handy dandy <a href="http://technet.microsoft.com/en-us/library/ms345234.aspx">SQL Server Report Server all set up for email</a> and are looking good then you go to have it email to an outbound address.  All of a sudden you get the &lsquo;The e-mail address of one or more recipients is not valid.&#8217;   While there could be a couple reasons for this issue, the main two I run into is SMTP authentication and user aliases.  The fix to both of these involves updating the ReportServer.Config file usually found in the filesystem with a folder structure resembling &ndash; &ldquo;c:program filesmicrosoft SQL ServerMSRS10.MSSQLSERVER&rdquo;</p>
+<p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&rsquo;t a real deal breaker as when I&rsquo;m coding/debugging I&rsquo;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
 
-<p>You want to pop it open and then search for &ldquo;SMTPServer&rdquo; which will take you to something that looks like this:
+<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
 <code></p>
 
-<pre><code>&lt;RSEmailDPConfiguration&gt;
-&lt;SMTPServer&gt;email.example.com&lt;/SMTPServer&gt;
-&lt;SMTPServerPort&gt;&lt;/SMTPServerPort&gt;
-&lt;SMTPAccountName&gt;&lt;/SMTPAccountName&gt;
-&lt;SMTPConnectionTimeout&gt;&lt;/SMTPConnectionTimeout&gt;
-&lt;SMTPServerPickupDirectory&gt;&lt;/SMTPServerPickupDirectory&gt;
-&lt;SMTPUseSSL&gt;&lt;/SMTPUseSSL&gt;
-&lt;SendUsing&gt;2&lt;/SendUsing&gt;
-&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt;
-&lt;From&gt;MrMail@example.com&lt;/From&gt;
-&lt;EmbeddedRenderFormats&gt;&lt;RenderingExtension&gt;MHTML&lt;/RenderingExtension&gt;&lt;/EmbeddedRenderFormats&gt;
-&lt;PrivilegedUserRenderFormats&gt;&lt;/PrivilegedUserRenderFormats&gt;
-&lt;ExcludedRenderFormats&gt;&lt;RenderingExtension&gt;HTMLOWC&lt;/RenderingExtension&gt;
-&lt;RenderingExtension&gt;NULL&lt;/RenderingExtension&gt;&lt;RenderingExtension&gt;RGDI&lt;/RenderingExtension&gt;
-&lt;/ExcludedRenderFormats&gt;
-&lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
-&lt;DefaultHostName&gt;Example.com&lt;/DefaultHostName&gt;
-&lt;PermittedHosts&gt;&lt;/PermittedHosts&gt;
-&lt;/RSEmailDPConfiguration&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>The two fields you want to focus on are:<br/>
-<code></p>
-
-<pre><code>&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
+<pre><code>&lt;system.net&gt;
+    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
+        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
+    &lt;/mailSettings&gt;
+&lt;/system.net&gt;
 </code></pre>
 
 <p></code>
-You will want to change these to
+At this point you just check the local directory for email when you are testing your application. If you don&rsquo;t have system for production deployments, then don&rsquo;t forget to change to the network delivery when you deploy.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-server-20052008-alert-pack/">SQL Server 2005/2008 Alert Pack</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Outside of the daily WTF&rsquo;s I create&hellip; one of the larger WTF&rsquo;s I know is the SQL Server team removing the built in alerts in SQL Server 2005 and SQL Server 2008. Naturally I am going to gloss over a lot of this and just link up the code. To go more in depth on this, read the &lsquo;related link&rsquo; at the bottom.</p>
+
+<p>Lets walk through the file- (Make sure you have DatabaseMail set up and set the Agent to use DatabaseMail)</p>
+
+<ol>
+<li>In the @email list variable&hellip; set the notification emails you want</li>
+<li>Notice the &lsquo;use MSDB&rsquo; &ndash; that is SQL Agent&rsquo;s crib</li>
+<li>You are then going to see the create statements for a variety of alerts in the agent</li>
+<li><p>the SQL 2000 alerts have some different delay intervals that throw warnings in 05/08. my script fixes that</p></li>
+<li><p>Create an operator named &lsquo;DBA&rsquo; and assign it the desired emails.</p></li>
+<li>Add the DBA operator to the alerts and tell it to use email notification</li>
+</ol>
+
+
+<p>Here is the file:</p>
+
+<p>Related Link:<br/>
+<a href="http://www.karaszi.com/SQLServer/util_agent_alerts.asp">http://www.karaszi.com/SQLServer/util_agent_alerts.asp</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/with-fruit-rollup/">With Fruit Rollup</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-13T00:00:00-06:00" pubdate data-updated="true">Feb 13<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Anyone who has to do reporting on a recurring basis knows what a pain it can be when you have to provide columns totals for the app. Treatment for this pain can be found with the ROLLUP command.<br/>
+Run this example to see what I mean:</p>
+
+<p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
+   , Account_Name VARCHAR(50), balance smallmoney);<br/>
+INSERT INTO #temper <br/>
+VALUES (&lsquo;Jimmy Johns&rsquo;, 50),(&lsquo;Qdoba&rsquo;,60)<br/>
+   ,(&lsquo;Big Truck Tacos&rsquo;, 70),(&lsquo;Hideaway&rsquo;, 80),(&lsquo;Teds&rsquo;, 90);<br/>
+SELECT Account_Name, SUM(balance) AS BALANCE<br/>
+FROM #temper<br/>
+GROUP BY Account_Name WITH ROLLUP;<br/>
+DROP TABLE #temper;</p>
+
+<p>Pretty cool right?  The downside being that there is a NULL to deal with and that isn&rsquo;t a very descript name for the total.  So maybe we plaster on a CASE statement to replace the NULL with something a little digestible to a user:</p>
+
+<p>CREATE TABLE #temper (row_id INT IDENTITY(1,1)<br/>
+   , Account_Name VARCHAR(50), balance smallmoney);<br/>
+INSERT INTO #temper <br/>
+VALUES (&lsquo;Jimmy Johns&rsquo;, 50),(&lsquo;Qdoba&rsquo;,60)<br/>
+   ,(&lsquo;Big Truck Tacos&rsquo;, 70),(&lsquo;Hideaway&rsquo;, 80),(&lsquo;Teds&rsquo;, 90);<br/>
+SELECT CASE<br/>
+   WHEN (Grouping(Account_Name)=1) THEN &#8217;Total&#8217;<br/>
+   ELSE Account_Name<br/>
+   END AS Account_Name<br/>
+   , SUM(balance) AS BALANCE<br/>
+FROM #temper<br/>
+GROUP BY Account_Name WITH ROLLUP;<br/>
+DROP TABLE #temper;</p>
+
+<p>For more a more wordy version of this, consult the 4 Guys:</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/windows-tools-i-use/">Windows Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>NOTE: As of 2013, I no longer use Windows&hellip; so this post is a bit dated.</p>
+
+<p>This is a living document of Applications you will find on my Windows OS:</p>
+
+<p><a href="http://filezilla-project.org/">FileZilla</a> &ndash; great FTP client and server<br/>
+<a href="http://getfirefox.com">Firefox</a></p>
+
+<p><a href="http://adblockplus.org/en/">Adblock plus</a></p>
+
+<p><a href="http://www.colorzilla.com/firefox/">colorzilla</a></p>
+
+<p><a href="http://getfirebug.com/">firebug</a></p>
+
+<p><a href="https://www.dropbox.com/">Dropbox</a> &ndash; File syncs and backups<br/>
+<a href="http://launchy.net/"> Launchy </a> &ndash; application launcher<br/>
+<a href="http://lightscreen.sourceforge.net/"> LightScreen</a> &ndash; replacement for snip it<br/>
+<a href="http://www.foobar2000.org/"> Foobar 2000</a> &ndash; music player replacement<br/>
+<a href="http://www.getpaint.net/"> Paint.net</a> open source image editor<br/>
+<a href="http://www.videolan.org/vlc/">VLC</a> &ndash; Media player<br/>
+<a href="http://blog.kowalczyk.info/software/sumatrapdf/index.html">SumatraPDF</a> &ndash; lightweight pdf viewer<br/>
+<a href="http://Ninite.com">Ninite</a> &ndash; mass installer of basic apps<br/>
+<a href="http://www.pidgin.im/">pidgin</a> &ndash; chat client<br/>
+<a href="http://www.utorrent.com/">utorrent</a> &ndash; torrent tool<br/>
+<a href="http://store.steampowered.com/about/">steam</a> &ndash; game platform<br/>
+<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">putty</a> -<br/>
+<a href="http://winscp.net/eng/index.php">winSCP</a> -<br/>
+<a href="http://www.imgburn.com/">imgBurn</a> &ndash; burns my iso files<br/>
+<a href="http://www.7-zip.org/">7zip</a> &ndash; compression tool<br/>
+<a href="http://www.openoffice.org/">OpenOffice</a> &ndash; haven&rsquo;t found anything I use in MS office that this can&rsquo;t replace.<br/>
+<a href="http://cdexos.sourceforge.net/">Cdex</a> &ndash; program to help with personal backups of CD&#8217;s<br/>
+<a href="http://www.dvdshrink.org/">DVDShrink</a> -program to help with personal backups of DVD&rsquo;s</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/database-tools-i-use/">Database Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of tools I use:<br/>
+SQL Server-<br/>
+SQL Server 2000 Query Analyzer<br/>
+SQL Server 2005<br/>
+SQL Server 2008<br/>
+<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
+<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
+SQL Examiner- <a href="http://www.sqlaccessories.com/SQL_Examiner/  ">http://www.sqlaccessories.com/SQL_Examiner/  </a>
+SQLPing3- <a href="http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  ">http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  </a>
+<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
+SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</a></p>
+
+<p><a href="http://www.sqlite.org/">SQLite</a><br/>
+<a href="http://www.postgresql.org/">PostGre</a><br/>
+<a href="http://www.mongodb.org/">MongoDB</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/appdev-tools-i-use/">AppDev Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of Application Development Tools I use:<br/>
+<a href="http://tortoisesvn.tigris.org/">TortoiseSVN</a> -<br/>
+<a href="http://notepad-plus.sourceforge.net/uk/site.htm">Notepad </a><br/>
+<a href="http://www.vmware.com/">VMWare</a><br/>
+Visual Studio</p>
+
+<ul>
+<li><a href="http://www.jetbrains.com/resharper/index.html">Resharper</a></li>
+<li>AnhkSVN
+
+<ul>
+<li>TracExplorer<br/>
+<a href="http://monodevelop.com/">MonoDevelop</a><br/>
+<a href="http://projectlocker.com/">ProjectLocker</a><br/>
+<a href="http://code.google.com/p/elmah/">ELMAH</a><br/>
+<a href="http://home.snafu.de/tilman/xenulink.html">Xenu</a></li>
+</ul>
+</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/you-literaled-my-css/">You Literaled My CSS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>On the main F5 page, I needed a way to adjust the CSS properties on the menu based on what is in a content page.  Enter ASP.NET literals.  Essentially a literal lives up to its name&hellip; it allows you to define literal html.</p>
+
+<p>So, in the master I have:<br/>
 <code></p>
 
-<pre><code>&lt;SMTPAuthenticate&gt;2&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;False&lt;/SendEmailToUserAlias&gt;
+<pre><code>&lt;asp:Literal ID="lit_About" runat=server Text='&lt;li&gt;&lt;a href="About.aspx" title="About"&gt;About&lt;/a&gt;&lt;/li&gt;' /&gt;
 </code></pre>
-
-<p></code>
-This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
-
-<p>This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
-
-<p>For more information about the report server configuration settings,  see here: <a href="http://msdn.microsoft.com/en-us/library/ms157273.aspx" title="ReportServer Configuration File">http://msdn.microsoft.com/en-us/library/ms157273.aspx</a></p>
-
-<p>This post also makes the assumption you do SMTP authenticate for outbound emails&hellip;. If you are unsure, then double check that you are not currently operating an open relay email server.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/msdn-on-the-down-low-bandwidth/">MSDN on the Down Low Bandwidth</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>For the most part, I find online <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> to be a complete and utter slow pain in the compiler. It appears that MS has fixed this by offering &lsquo;low bandwidth&rsquo; view for both <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> and Technet. I am pleased to have this information tool back.</p>
-
-<p>You can trigger this by click on the &ldquo;Switch on low bandwidth view&rdquo; link on <a href="http://msdn.microsoft.com/en-us/default.aspx">MSDN</a> or Technet.</p>
-
-<p><img src="http://images.datachomp.com/AppDev/Low_Bandwidth_MSDN.jpg" alt="" /></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/databasemail-man/">DatabaseMail Man</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:
-<code>
-&mdash; send a normal mail
-EXEC msdb.dbo.sp_send_dbmail
-@Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#109;&#x61;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#x75;&#x6d;&#98;&#x65;&#114;&#x40;&#x63;&#x69;&#110;&#103;&#117;&#x6c;&#x61;&#x72;&#109;&#x65;&#46;&#99;&#x6f;&#x6d;">&#x6e;&#117;&#109;&#98;&#x65;&#114;&#x40;&#x63;&#105;&#110;&#x67;&#117;&#108;&#x61;&#x72;&#109;&#x65;&#46;&#x63;&#x6f;&#x6d;</a>&rsquo;
-,@subject = &lsquo;Dev Transfer to 19&rsquo;
-,@body = &lsquo;Task Complete&rsquo;
-,@body_format = &lsquo;HTML&rsquo;
-&mdash; send with an attachment
-EXEC msdb.dbo.sp_send_dbmail
-@Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#109;&#97;&#105;&#x6c;&#x74;&#x6f;&#x3a;&#x6e;&#97;&#109;&#x65;&#64;&#100;&#x6f;&#109;&#x61;&#105;&#x6e;&#x2e;&#x63;&#111;&#x6d;">&#x6e;&#97;&#x6d;&#x65;&#x40;&#x64;&#111;&#109;&#97;&#105;&#110;&#46;&#x63;&#x6f;&#x6d;</a>&rsquo;
-,@subject = &lsquo;Dev Transfer to 19&rsquo;
-,@body = &lsquo;Task Complete&rsquo;
-,@body_format = &lsquo;HTML&rsquo;
-,@file_attachments = @SourcePath;
-</code>
-/*<br/>
-&mdash;Odds and Ends<br/>
-If sending to multiple peeps and one fails to send&hellip; queued up and resends to all.</p>
-
-<p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
-
-<p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x6e;&#97;&#109;&#x65;&#64;&#x64;&#111;&#109;&#x61;&#x69;&#110;&#46;&#99;&#x6f;&#x6d;">&#x6e;&#x61;&#109;&#x65;&#64;&#100;&#x6f;&#x6d;&#97;&#x69;&#110;&#46;&#99;&#111;&#109;</a>). )</p>
-
-<p>&mdash; antivirus port 25 block<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
-
-<p>&mdash;Select * from sysmail_allitems order by mailitem_id desc   &mdash; look up mails<br/>
-&mdash;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &mdash; look up the mails details<br/>
-*/</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/application-connection-ocd/">Application Connection OCD</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Do you have this problem:</p>
-
-<p> </p>
-
-<p><img src="http://images.datachomp.com/AppDev/ApplicationConnectionOCD.png" alt="" /></p>
-
-<p>Multiple connections from various applications and you don&rsquo;t know which is which.  There is a fix to this.  It involves telling the app dev team to create a nice clean connection string with the Application Name property being set. This gets double awesome when you add the hostname to the application name so you know exactly where in the webfarm something is coming from.</p>
-
-<p>Here is an example:</p>
 
 <p><code></p>
 
-<pre><code>&lt; connectionStrings&gt; 
-&lt;add name="PaymentsConnStr" connectionString="Data Source=SuperServer;Initial Catalog=DB_Name;MultipleActiveResultSets=True;Persist Security Info=True;User ID=user1;Password=password1;Application Name=OCD App;" providerName="System.Data.SqlClient"/&gt;
-&lt;/connectionStrings&gt;
+<p>How do I manipulate that to trigger the proper CSS class you ask?  By doing this in the code behind on the content page:<br/>
+<code></p>
+
+<pre><code>protected void Page_Load(object sender, EventArgs e) 
+{ 
+Literal menucontrol = Page.Master.FindControl("lit_About") as Literal; 
+menucontrol.Text = "&lt;li class='active'&gt;&lt;a href='About.aspx' title='About'&gt;About&lt;/a&gt;&lt;/li&gt;";  
+}
 </code></pre>
 
 <p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/all-your-errors-are-belong-to-us-elmah/">All Your Errors Are Belong to Us &#8211; ELMAH</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So I&rsquo;ve been working on a step by step on ELMAH and how to set it up for F5Compliant &hellip; when today I came across Scott Mitchels tutorial on <a href="http://asp.net/">ASP.NET</a></p>
-
-<p>One thing he seems to have left out is using SQLite.  Since moving from my in house servers to online hosting, I am still often surprised by the DB limitations faced.  Before I went with a hosted solution, it just felt commonplace to spin up a new DB for X project and go.   With many shared hosting plans, one becomes a little miserly with their DB&rsquo;s as more DB&rsquo;s with the hosting plan incur more cost.   SQLite seems to fill that void quite nicely.  One thing to be aware of though is that SQLite requires full trust in order to run, so you will probably need to contact your hosting provider for them to set the permissions.   I use SoftSysHosting and their team takes care of this incredibly fast which is nice.</p>
 </div>
   
   
@@ -573,6 +630,8 @@ The mail could not be sent to the recipients because of the mail server failure.
     </article>
   
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/8/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -591,23 +650,23 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
       <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
       <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

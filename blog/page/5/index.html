@@ -9,7 +9,9 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time &hellip;">
+  <meta name="description" content="I always forget this so it is going in a blog for quick reference: SP_CONFIGURE 'show advanced options',1
+RECONFIGURE WITH override
+GO SP_CONFIGURE &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,7 +88,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/lets-open-some-new-doors-mvc/">Lets Open Some New Doors &#8211; MVC</a></h1>
+      <h1 class="entry-title"><a href="/archives/default-backups-to-compressed-in-sql-server/">Default Backup Compression in SQL Server</a></h1>
     
     
       <p class="meta">
@@ -102,7 +104,7 @@
   
 
 
-<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
+<time datetime="2011-04-07T00:00:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2011</time>
         
       </p>
     
@@ -111,398 +113,19 @@
 
   <div class="entry-content"><h1></h1>
 
-<p>I have tried ASP.NET MVC a couple times and after a couple hours seem to always roll back to webforms because it is &ldquo;easier&rdquo; or a time constraint or any number of excuses. However, last night I decided to change all that and really give MVC a fair chance. The more I tinker around in Ruby and iphone development the more I buy into the validity of the MVC approach. Here is a bit of the technology roadmap I want to drive down:</p>
-
-<p><a href="http://mvccontrib.codeplex.com/wikipage?title=T4MVC">T4</a> &ndash; I hear about it, time to see what the fuss is about. Besides, <a href="http://twitter.com/davidebbo">David Ebbo</a> is the man.</p>
-
-<p><a href="http://code.google.com/p/elmah/">Elmah</a> will be a proof of concept before I roll into <a href="http://www.exceptioneer.com/public/WhatIsExceptioneer.aspx">Exceptioneer</a>.</p>
-
-<p><a href="https://aws.amazon.com/s3/">S3</a> &ndash; I have already started playing around with this and love it. It will likely be serving the images and public files.</p>
-
-<p>Routing &ndash; a vanity name like implementation for users will be my head first dive into routing.</p>
-
-<p>Model &ndash; As a DBA, the data layer and ADO are my bread and butter. But it is time to step forward and see what the fuss is about. I will likely be trying out EF and <a href="http://subsonicproject.com/">Subsonic</a>.</p>
-
-<p>Charting &ndash; I&rsquo;m a stat nerd, so I will be capturing stats, I hope to be able to throw some of them into the charting control.</p>
-
-<p>NoSQL &ndash; I&rsquo;m not sure how to work it in yet, but at some point, I am planning on having a <a href="http://aws.amazon.com/simpledb/">SimpleDB</a>/<a href="http://ravendb.net/">RavenDB</a>/<a href="http://www.mongodb.org/">MongoDB</a> section just to explore and have knowledge outside of a half dozen tech articles.</p>
-
-<p>Lastly, it is time to branch away from Web services and start playing around with WCF. This will really come into play for the iphone app being done in <a href="http://monotouch.net/">MonoTouch</a> which really is an exciting piece of work.</p>
-
-<p>Once we are done with ASP.NET MVC, I plan to move to Ruby 3 and try and to build the same apps in that. Should be a great compare and contrast.</p>
-
-<p>So that is it for now, time to see if I can stick to it and see this through&hellip; or give up and step back into web forms.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/early-mvc-pitfalls-shared-hosting-and-action-link/">Early MVC Pitfalls &#8211; Shared Hosting and Action Link</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-28T00:00:00-05:00" pubdate data-updated="true">Sep 28<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>I have a great hosting provider &ndash; <a href="http://www.arvixe.com/">Arvixe</a> and they are on the ball for both my Linux hosting as well as my .NET stuff. So as I started cranking out apps and went to deploy I knew I could count on them to handle the hosting task at hand. So, compile&hellip; deploy&hellip; and we&rsquo;re erroring out. Oh! I forgot to set my site to integrated pipeline&hellip;. fix that, drop some control f5 and still an issue. So, CustomErrors=OFF, deploy and see that it is an error with the System.Web.MVC assembly. That&rsquo;s odd, well a google searching showed that this is a bit of known error. To fix, you simply click on the properties of that assembly, and set the &ldquo;copy local&rdquo; property to true. More information can be found here:<br/>
-<a href="http://www.britishdeveloper.co.uk/2010/05/mvc2-deploy-could-not-load-file-or.html">This dudes blog</a><br/>
-and from Haacked himself: <a href="http://haacked.com/archive/2008/11/03/bin-deploy-aspnetmvc.aspx">clickey</a></p>
-
-<p>MVC ActionLink returns ?Length= &ndash; This was a real WTF for me. Turns out that if you specify a htmlattributes overload for ActionLink and don&rsquo;t put in something like null for the route values overload, it will append some stupid length=# string to your href.</p>
-
-<p><code></p>
-
-<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", new { @class = "active" })%&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>Generates the following html:
+<p>I always forget this so it is going in a blog for quick reference:
 <code></p>
 
-<pre><code>&lt;a class="active" href="/?Length=4"&gt;Home&lt;/a&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>So we throw in null for the routeValues overload:
-<code></p>
-
-<pre><code>&lt;%: Html.ActionLink("Home", "Index", "Home", null ,new { @class = "active" })%&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>and we get the html we want.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/upload-file-to-s3-with-asp-net/">Upload File to S3 With ASP.NET</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-21T00:00:00-05:00" pubdate data-updated="true">Sep 21<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>I suppose the subject pulls no punches with what we&rsquo;re going to do. We are going to have simple form with a file upload and a button. Once we hit the button, whatever file was selected is going to ride the magic internet carpet and appear in an Amazon S3 bucket.<br/>
-WebForm:</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  
-
-3.  
-</code></pre>
-
-<p>Code behind:</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  protected void Button1_Click&amp;#40;object sender, EventArgs e&amp;#41;
-
-3.          &amp;#123;
-
-4.              string result = Program.GetServiceOutput&amp;#40;&amp;#41;;
-
-5.              Label1.Text = result;
-
-6.          &amp;#125;
-
-7.  &amp;nbsp;
-</code></pre>
-
-<p>Class file for AWSCalls;</p>
-
-<pre><code>1.  &amp;nbsp;
-
-2.  using Amazon;   // these are part of the AWSSDK.dll that you add to the project
-
-3.  using Amazon.S3;
-
-4.  using Amazon.S3.Model;
-
-5.  ....
-
-6.  public static void SendFileToS3&amp;#40;string filename, Stream ImgStream&amp;#41;
-
-7.          &amp;#123;
-
-8.              string accessKey = "Access Key here!";
-
-9.              string secretAccessKey = "Secret Key goes here!";
-
-10.             string bucketName = "Bucket Name goes Here!";
-
-11.             string keyName = filename; 
-
-12. &amp;nbsp;
-
-13.             AmazonS3 client = Amazon.AWSClientFactory.CreateAmazonS3Client&amp;#40;accessKey, secretAccessKey&amp;#41;;
-
-14.             PutObjectRequest request = [new][1] PutObjectRequest&amp;#40;&amp;#41;;
-
-15. &amp;nbsp;
-
-16.             request.WithInputStream&amp;#40;ImgStream&amp;#41;;
-
-17. &amp;nbsp;
-
-18.             request.WithBucketName&amp;#40;bucketName&amp;#41;;
-
-19.             request.WithKey&amp;#40;keyName&amp;#41;;
-
-20.             request.StorageClass = S3StorageClass.ReducedRedundancy; //set storage to reduced redundancy
-
-21.             client.PutObject&amp;#40;request&amp;#41;;
-
-22.         &amp;#125;
-</code></pre>
-
-<p>So there you have it! We take a file, throw it into a page&hellip;. and that page does a heave-ho to Amazon S3. It also goes the extra step to set it to ReducedRedundancy to save you a pretty penny.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/installing-mongodb-on-ubuntu/">Installing MongoDB on Ubuntu</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-09-04T00:00:00-05:00" pubdate data-updated="true">Sep 4<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>First step to getting started with toying around with NoSQL is getting it running. Currently, MongoDB is my choice in the land of learning. To get it going on my VM&rsquo;s I do the following after my Ubuntu server is installed.</p>
-
-<p>Navigate to: /etc/apt/sources.list<br/>
-Then: sudo pico sources.list<br/>
-In your sources, add the following line: deb <a href="http://downloads.mongodb.org/distros/ubuntu">http://downloads.mongodb.org/distros/ubuntu</a> 10.4 10gen<br/>
-Save/exit the file, then add the key: sudo apt-key adv &mdash;keyserver keyserver.ubuntu.com &mdash;recv 7F0CEB10</p>
-
-<p>Once that is done, you&rsquo;re ready to update and install.<br/>
-Update: sudo apt-get update<br/>
-Install: sudo apt-get install mongodb-stable</p>
-
-<p>Well now what?<br/>
-If you need to configure MongoDB further, then navigate to: /etc/mongodb.conf<br/>
-If you need to add/remove/mess with the database, it lives in: /var/lib/mongodb<br/>
-Want the logs? They are here: /var/log/mongodb/ (.log extension)</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/jquery-cdn-failover/">JQuery CDN Failover</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>With &lsquo;high availability&rsquo; being a nicely stressed buzzword coupled with issues in the &lsquo;cloud&rsquo;, an issue can arise of what to do about your jquery references in the event that where you are hosting it is down? I won&rsquo;t dig into the reasons for using a CDN for jquery but will plug the usual &ndash; It will typically be cached by the time your site is hit if you use Google or Microsoft CDN as well as will likely be faster to load in general as a browser will thread out to load it (as opposed to if it is hosted under the current domain). I also have some links at the bottom for further reading on it. So, on to the failover&hellip;. and it is quite easy really since 1.4 :
-<code></p>
-
-<pre><code>&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.4/jquery.min.js"&gt;&lt;/script&gt;
-&lt;script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.4/jquery-ui.js"&gt;&lt;/script&gt;
-
-&lt;script type="text/javascript"&gt;
-  if (typeof jQuery == 'undefined')
-  {
-     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jquery-1.4.4.min.js' type='text/javascript'%3E%3C/script%3E"));
-     document.write(unescape("%3Cscript src='http://ajax.microsoft.com/ajax/jquery/jqueryui-1.8.4.min.js' type='text/javascript'%3E%3C/script%3E"));
-  }
-  &lt;/script&gt;
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-sql-clr-part-2/">Getting Started With SQL CLR Part 2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-08-31T00:00:00-05:00" pubdate data-updated="true">Aug 31<span>st</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>As you start playing with SQL CLR, you learn pretty quick that the built in namespaces can be a little handicapping. You can skip this by creating an &lsquo;unsafe&rsquo; assembly in your database. In the following demo, we&rsquo;re going to load a 3rd party .library for XMPP messaging into our SQL Server instance, and use a stored procedure to send XMPP messages.</p>
-
-<p>The XMPP library I&rsquo;ll be using is <a href="http://www.ag-software.de/agsxmpp-sdk.html">agsXMPP</a>. As you&rsquo;ll see in my code below, I tend to just use a common shared library folder so I can house various libraries and it makes it easier from an organizational standpoint to cram them into the database. I use the following code to &lsquo;cram&rsquo; the library into my instance so I&rsquo;ll be able to use it in a CLR procedure:</p>
-
-<p><code></p>
-
-<pre><code>CREATE ASSEMBLY [agsXMPP]
-FROM 'C:SubversionShared LibsagsxmppagsXMPP.dll'
-WITH PERMISSION_SET = UNSAFE
+<pre><code>SP_CONFIGURE 'show advanced options',1
+RECONFIGURE WITH override
+GO
+
+SP_CONFIGURE 'backup compression default',1
+RECONFIGURE WITH override
 GO
 </code></pre>
 
 <p></code></p>
-
-<p>Once that is out of the way, we can roll our CLR proc, deploy and message to our hearts content (or until the network drops)
-<code></p>
-
-<pre><code>using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using Microsoft.SqlServer.Server;
-
-using agsXMPP;
-using agsXMPP.protocol.client;
-// yes,  domains and names have been changed to protect the innocent servers.
-public partial class StoredProcedures
-{
-    [Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_SendXMPP()
-    {
-        XmppClientConnection xmpp;
-        xmpp = new XmppClientConnection();
-        xmpp.AutoPresence = true;
-
-        xmpp.AutoResolveConnectServer = true;
-        xmpp.Port = 5222;
-        xmpp.UseSSL = false;
-        xmpp.Server = "xmpp.datachomp.com";
-        xmpp.Username = "SQLAlert";
-        xmpp.Password = "SqlClr";
-
-        xmpp.Open();
-
-        xmpp.OnLogin += delegate(object o) { xmpp.Send(new Message(new Jid("Gatir@xmpp.datachomp.com"), MessageType.chat, "This really should be a variable yes?")); };
-    }
-};
-</code></pre>
-
-<p></code></p>
 </div>
   
   
@@ -515,7 +138,7 @@ public partial class StoredProcedures
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/getting-started-with-sql-clr-part-1/">Getting Started With SQL CLR Part 1</a></h1>
+      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3-part-2/">Getting Started With Massive in MVC3 &#8211; Part 2</a></h1>
     
     
       <p class="meta">
@@ -531,7 +154,7 @@ public partial class StoredProcedures
   
 
 
-<time datetime="2010-07-27T00:00:00-05:00" pubdate data-updated="true">Jul 27<span>th</span>, 2010</time>
+<time datetime="2011-02-19T00:00:00-06:00" pubdate data-updated="true">Feb 19<span>th</span>, 2011</time>
         
       </p>
     
@@ -540,74 +163,133 @@ public partial class StoredProcedures
 
   <div class="entry-content"><h1></h1>
 
-<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&rsquo;s get started:</p>
+<p>If you read over my first post on this you probably have some questions going through your mind&hellip;. I know I did&hellip; So lets ask them:</p>
 
-<p>First, we need to enable CLR on our database:</p>
+<p><strong>Rob, your queries make no sense to me because I have no idea about this &lsquo;drinks&rsquo; table you&rsquo;re hitting.</strong><br/>
+I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&rsquo;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
 
-<pre><code>sp_configure 'clr enabled', 1
-GO
-RECONFIGURE
-GO
-</code></pre>
-
-<p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
-<img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
-
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &lsquo;database&rsquo; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
+<p><strong>All this stuff is dynamic and I don&rsquo;t know how to deal with it.</strong> I&rsquo;m just as strongly typed as the next guy so this was an emotional hurdle. But we&rsquo;re not here for therapy so lets code using one of my favorite examples &ndash; Credit Cards!<br/>
+Class:
 <code></p>
 
-<pre><code>using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using Microsoft.SqlServer.Server;
-
-
-public partial class StoredProcedures
-{
-    [Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_Chomp()
-    {
-        // Put your code here
+<pre><code>public class CreditCard : DynamicModel
+    {  public CreditCard()  : base("AW_Sales_ConnStr")
+        { 
+            PrimaryKeyField = "CreditCardID"; 
+        }
     }
-};
-</code></pre>
-
-<p></code></p>
-
-<p>Let&rsquo;s throw in some code:
-<code></p>
-
-<pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_Chomp(out string Chomps)
-    {
-        Chomps = "Chomp Chomp Chomp Chomp";
-    }
-</code></pre>
-
-<p></code></p>
-
-<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &lsquo;Chomp&rsquo; X 4.<br/>
-Compile, and deploy. Gotcha &ndash; For those of us that use VS 2010 our default framework is 4.0 &hellip;. this won&rsquo;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
-Make sure you are in the proper database and run it:
-<code></p>
-
-<pre><code>DECLARE @words VARCHAR(25)
-EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
-SELECT @words
-</code></pre>
-
-<p></code></p>
-
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&rsquo;s. If it didn&rsquo;t work for you then:
-<code></p>
-
-<pre><code>GOTO START;
 </code></pre>
 
 <p></code>
-In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
-In Part 3, I will likely look at performance and some other items to help round out the series.</p>
+ViewModel:
+<code></p>
+
+<pre><code>public class CreditCardViewModel
+    {public IEnumerable&lt;Cards&gt;{ get; set; } }
+</code></pre>
+
+<p></code>
+Controller:
+<code></p>
+
+<pre><code>public ActionResult Index()
+{
+      var table = new CreditCard();
+      var cards = table.All();
+
+    var viewModel = new CreditCardViewModel
+    {
+          Cards = cards
+         };
+    return View(viewModel);
+}
+</code></pre>
+
+<p></code>
+View:
+<code></p>
+
+<pre><code>@model Kona.Web.Models.CreditCardViewModel
+@{ViewBag.Title = "Adventure Works Card Stealer";}
+
+&lt;table&gt;
+@foreach (var item in Model.Cards)
+{
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;@item.CardType&lt;/td&gt;
+&lt;td&gt;@item.CardNumber&lt;/td&gt;
+&lt;td&gt;@item.ExpMonth&lt;/td&gt;
+&lt;td&gt;@item.ExpYear&lt;/td&gt;
+&lt;/tr&gt;
+}&lt;/tbody&gt;
+&lt;/table&gt;
+</code></pre>
+
+<p></code></p>
+
+<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&hellip;. So since we have a special case where we care a whole bunch about not returning that data&hellip; lets change our controller:
+<code></p>
+
+<pre><code>var table = new CreditCard();
+//var cards = table.All();
+var cards = table.Query(@"SELECT CardType, ExpMonth ,ExpYear from CreditCard");
+</code></pre>
+
+<p></code>
+Sweet! it compiles, we&rsquo;re ready to check in and go grab a beer right? Heh, nope&hellip;. refresh your app:<br/>
+<em>&lsquo;System.Dynamic.ExpandoObject&rsquo; does not contain a definition for &lsquo;CardNumber&rsquo;</em></p>
+
+<p>So we update our view&hellip;.
+<code></p>
+
+<pre><code>{
+@item.CardType
+@item.ExpMonth
+@item.ExpYear
+}
+</code></pre>
+
+<p></code></p>
+
+<p>and all is well again.</p>
+
+<p>Make no mistake about it&hellip; Massive will give you all the rope you want to easily swing around your apps data jungle&hellip; it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 (<a href="http://thisdeveloperslife.com/post/1-0-8-motivation">And don&rsquo;t get me wrong, I like EF4</a>) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I&rsquo;ll get it done.</p>
+
+<p>Welcome to dynamic!</p>
+
+<p>One last bit because this is getting lengthy:<br/>
+<strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&rsquo;t figure out how make my class take &ldquo;advantage&rdquo; of that</strong><br/>
+This is a fun thing we DBA&rsquo;s like to do for the sole purpose of driving AppDev&rsquo;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
+<code></p>
+
+<pre><code>public CreditCard() : base("AW_Sales_ConnStr")
+        { 
+            TableName = "[Sales].[CreditCard]";
+            PrimaryKeyField = "CreditCardID"; 
+        }
+</code></pre>
+
+<p></code></p>
+
+<p>That setting in the base() maps to my web.config:
+<code></p>
+
+<pre><code>add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
+</code></pre>
+
+<p></code></p>
+
+<p>and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:
+<code></p>
+
+<pre><code>CREATE USER [aw_Kona_Sales] FOR LOGIN [aw_Kona_Sales] WITH DEFAULT_SCHEMA=[Sales]
+</code></pre>
+
+<p></code></p>
+
+<p>Last thing, I promise &hellip; In my first post, I included how the commands were rendering out in the SQL Server. I didn&rsquo;t this time because this edition is more focused on a &ldquo;getting things done in MVC&rdquo; side of things.<br/>
+Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.</p>
 </div>
   
   
@@ -620,7 +302,7 @@ In Part 3, I will likely look at performance and some other items to help round 
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/helper-classes/">Helper Classes</a></h1>
+      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3/">Getting Started With Massive in MVC3</a></h1>
     
     
       <p class="meta">
@@ -636,7 +318,7 @@ In Part 3, I will likely look at performance and some other items to help round 
   
 
 
-<time datetime="2010-07-20T00:00:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2010</time>
+<time datetime="2011-02-18T00:00:00-06:00" pubdate data-updated="true">Feb 18<span>th</span>, 2011</time>
         
       </p>
     
@@ -645,36 +327,43 @@ In Part 3, I will likely look at performance and some other items to help round 
 
   <div class="entry-content"><h1></h1>
 
-<p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
+<p><a href="http://blog.wekeroad.com/">Rob Conery</a> has created a new ORM of sorts   and as a DBA, I must say I like what I see so far.</p>
 
-<p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called &lsquo;Helpers&rsquo; and added a new class object called &lsquo;StringManip&rsquo;.<br/>
-Once that was completed, I added a few methods like:
-<code></p>
+<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&rsquo;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&hellip; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
 
-<pre><code>public static string UpperString(string val)
-{ return val.ToUpper(); }
+<p>We DBA&rsquo;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &lsquo;plan cache poisoning&rsquo;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &lsquo;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&hellip; it doesn&rsquo;t have to compile a new plan&hellip; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&hellip;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&hellip;  it would compile a plan for &#8216;Rob&rsquo;, a plan for &lsquo;Robert&rsquo;,  a plan for &lsquo;Mike&rsquo; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&rsquo;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
+
+<p>To make  basic call with Massive on a Drinks Table (DrinkID, DrinkName) we do this:</p>
+
+<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
+
+2.  var drinks = table.All&amp;#40;&amp;#41;;
 </code></pre>
 
-<p></code></p>
+<p>If you have done any Linq or EF you know that even a basic call like that is going to cause Linq or EF to create<br/>
+the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &lsquo;hey look at me&#8217;<br/>
+Does Massive have this problem? Nope, looking at profiler we get straight forward SQL &ndash;</p>
 
-<p>In my code behind, I reference the class through a using statement:
-<code></p>
-
-<pre><code>using HelperClass.Helpers;
+<pre><code>1.  SELECT * FROM DRINKS
 </code></pre>
 
-<p></code></p>
+<p>Well, that&rsquo;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
+Rarely, so lets move to some conditions&hellip; lets look up a drink name:</p>
 
-<p>And then I can call the methods:
-<code></p>
+<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
 
-<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
+2.  var drinks = table.All&amp;#40;where: "WHERE DrinkName=@0", args: "Fire Rock Pale Ale"&amp;#41;;
 </code></pre>
 
-<p></code></p>
+<p>Knowing EF, we&rsquo;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
+In Massive, we get:</p>
 
-<p>If the above isn&rsquo;t enough to get you rolling&hellip;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
+<pre><code>1.  EXEC SP_EXECUTESQL N'SELECT * FROM Drinks WHERE DrinkName=@0',N'@0 nvarchar(4000)',@=N'Fire Rock Pale Ale'
+</code></pre>
+
+<p>In addition to a simple to grok TSQL, we also start getting reusable query plans.</p>
+
+<p>More examples to come as I start to peel back the covers a bit on this new tool.</p>
 </div>
   
   
@@ -687,7 +376,7 @@ Once that was completed, I added a few methods like:
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/change-iphone-root-password-after-jailbreak/">Change iPhone Root Password After Jailbreak</a></h1>
+      <h1 class="entry-title"><a href="/archives/security-and-code-analysis-tools-i-use/">Security and Code Analysis Tools I Use</a></h1>
     
     
       <p class="meta">
@@ -703,7 +392,7 @@ Once that was completed, I added a few methods like:
   
 
 
-<time datetime="2010-07-07T00:00:00-05:00" pubdate data-updated="true">Jul 7<span>th</span>, 2010</time>
+<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
         
       </p>
     
@@ -712,17 +401,29 @@ Once that was completed, I added a few methods like:
 
   <div class="entry-content"><h1></h1>
 
-<p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>
+<p>Here are some of the tools I use for Security and Code analysis  (I bet you didn&rsquo;t see that coming from!)</p>
 
-<p>In Cydia, go to the &ldquo;Search&rdquo; section and find the app called <strong><em>MobileTerminal</em></strong>. Install it, then launch it.<br/>
-From there, type in <strong><em>su root</em></strong> and hit return. This changes us to the root user so we can access/change the password for it. It will then prompt you to type in that global root password of <strong><em>alpine</em></strong> . Once you are root, just type <strong><em>passwd</em></strong> then hit return. From there, you will need to enter, then re-enter your password and the change should take place. Simply type in <strong><em>exit</em></strong> to leave the root account and get back to the standard prompt.</p>
+<p>WebConfig Analyzer &ndash; you can do a stand alone download and feed your webconfig into it</p>
 
-<p><strong>Another Notch: Changing the Mobile User</strong><br/>
-You should also consider doing the same thing for your Mobile user as it uses a global password of &ldquo;alpine&rdquo; as well<br/>
-You start the MobileTerminal app as the Mobile user, so to change the password for it simply type <strong>*passwd</strong> Then type alpine when it prompts, then fill out the stuff for the new password and start sleeping better at night knowing that you have just put up a basic security fence for your sweet sweet jailbroken phone.
-For more information, check out these handy posts:</p>
+<p><a href="http://www.wireshark.org/">WireShark</a> Use this to see what is going on on the network.</p>
 
-<p>and</p>
+<p><a href="http://www.fiddler2.com/fiddler2/">Fiddler </a>&ndash; Great for https inspection.</p>
+
+<p><a href="http://www.mavitunasecurity.com/communityedition/">Netsparker</a> Use it to hit test sites and see if throws back anything useful.</p>
+
+<p><a href="http://www.backtrack-linux.org/">BackTrack 4</a> Not sure what needs to be said here other than the best way to get a white hat, is to take a black hat and bleach it.</p>
+
+<p><a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=917023f6-d5b7-41bb-bbc0-411a7d66cf3c">FXCop</a> I tun this against my code when I want to feel stupid and see how many places I&rsquo;ve goofed.  Things putting getters and setters on read only data. Doh!</p>
+
+<p><a href="http://www.red-gate.com/products/dotnet-development/reflector/">Reflector</a> Other peoples code and programs look pretty fun when uncompiled. Likewise, this is also good for making sure you didn&rsquo;t leave any sensitive information in your own binaries.</p>
+
+<p>FireFox add-ons:</p>
+
+<p><a href="https://addons.mozilla.org/en-US/firefox/addon/viewstate-size/">ViewState</a></p>
+
+<p><a href="http://getfirebug.com/">FireBug</a></p>
+
+<p>And then everything else that SnipeyHead (<a href="http://www.snipe.net/">Blog</a> | <a href="http://twitter.com/#!/snipeyhead">Twitter</a>) uses:</p>
 </div>
   
   
@@ -735,7 +436,7 @@ For more information, check out these handy posts:</p>
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/ssl-a-secure-way-to-waste-money/">SSL &#8211; a Secure Way to Waste Money</a></h1>
+      <h1 class="entry-title"><a href="/archives/pack-the-powder-light-the-wick/">Pack the Powder, Light the Wick!</a></h1>
     
     
       <p class="meta">
@@ -751,7 +452,7 @@ For more information, check out these handy posts:</p>
   
 
 
-<time datetime="2010-06-28T00:00:00-05:00" pubdate data-updated="true">Jun 28<span>th</span>, 2010</time>
+<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
         
       </p>
     
@@ -760,19 +461,374 @@ For more information, check out these handy posts:</p>
 
   <div class="entry-content"><h1></h1>
 
-<p>It seems like every place I go, companies are dropping an incredible amount money on an overpriced Verisign certificate which essentially proves nothing. I am not going to tirade on Verisign&rsquo;s prices, product, or just the general crappy nature of the company&hellip; but I will list alternatives:</p>
+<p>There is going to be a strong disturbance in the force, Dallas Feb 21st &ndash; 25th when the <a href="http://www.sqlskills.com/">SQLSkills</a> team comes down for a Master Immersion class : <a href="http://www.sqlskills.com/Master1-Dallas-20110221.asp">http://www.sqlskills.com/Master1-Dallas-20110221.asp</a> .</p>
 
-<p>The current ones I use and it rocks:<br/>
-For http SSL I use: <a href="http://cert.startcom.org/">Start Com</a><br/>
-For other services/protocols I tend to use:<br/>
-<a href="http://www.cacert.org/">CA Cert Org</a></p>
+<p>I am not going to spend a lot of time talking about why I want to attend a class taught by Paul Randal (<a href="http://www.sqlskills.com/BLOGS/PAUL/">blog</a> | <a href="http://twitter.com/#!/paulrandal">twitter</a>) and Kimberly Tripp (<a href="http://www.sqlskills.com/BLOGS/Kimberly/">blog</a> | <a href="http://twitter.com/#!/kimberlyltripp">twitter</a>). Their body of work in both the education and SQL Server stands second to no one, so trying to go on about this just belabors the point. Simply put, if you want to be among the best, then one should find the best and learn from them.</p>
 
-<p>I don&rsquo;t think cacert is any better/worse than startcom, I just mostly use cacert for internal stuff out of habit and I generally like the group.</p>
+<p>Now, let us graduate to the less obvious aspect of this post, which is why I would make the best use of this knowledge.  With technical debt, you sometimes have to write SQL checks that your brain can&rsquo;t cash. This class is like adding a few 0&rsquo;s to your brain balance.   As I take in the knowledge from this class, it is going to manifest itself into a trident to attack the following issues:</p>
 
-<p>Equally excellent CA&rsquo;s that are not free:<br/>
-<a href="http://www.dynadot.com/ssl/about.html">Dynadot.com</a><br/>
-<a href="http://www.rapidssl.com/index_ssl.htm">Rapidssl.com</a><br/>
-<a href="http://www.geotrust.com/">Geotrust.com</a></p>
+<p><strong>Personal: </strong> Let&rsquo;s be honest, keeping up with technology is an infinite and exhaustive grind.  Unfortunately, this can eventually create stress on one&rsquo;s work/life balance as the unending need to keep learning is often standing right in the way of the unending need to be with one&rsquo;s family. The quality and depth of this immersion event is an incredible opportunity to trade a few days in order to receive many years worth of nights. I personally think a good DBA is a &ldquo;Jack of all trades, Master of one&rdquo;&hellip; it is time I establish my mastery.</p>
+
+<p><strong>Professional:</strong> I currently work as the lone DBA for a virtual high school. This is simply the most fascinating job I have ever had for a variety of reasons. Having never had a DBA and more the point, no solid guidance in how to do things, the situations I come across can be truly migraine-inducing. The quicker I am able diagnose the correct path,  the more time I can spend on what really matters. Things like building analysis cubes which enable our teachers and staff to quickly identify where the system is breaking down with regards to the students&#8217; education. By doing this, it creates an opportunity for system efficiencies and satisfying end user experiences which are far more interesting and worthwhile than trying to continually identify where our SQL Servers are breaking down.</p>
+
+<p><strong>Community:</strong> As a founder of the Oklahoma City SQL Server Developers Group, what you teach me doesn&rsquo;t stop at my front lobe. You essentially essentially aid me in becoming Johnny SQL-Seed, spreading my knowledge to our community as I continue to give more talks to our group and region. In addition, my hope is that the networking from this class will enable us to find more speakers, as well as bring different points of views and technological diversity to our meetings. Without question, being involved in the SQL community is a lot of fun. However, the downside is that while I am organizing or speaking, I tend to miss out on a lot of content. This class is a chance for me to participate instead of provide, and I can&rsquo;t wait to be immersed in this baptism of SQL.</p>
+
+<p>In closing, this is an incredible opportunity put out there by the <a href="http://www.sqlskills.com/">SQLSkills</a> team and I truly hope to INNER JOIN them in Dallas.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/deploy-mvc3-to-shared-hosting/">Deploy MVC3 to Shared Hosting</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-23T00:00:00-06:00" pubdate data-updated="true">Jan 23<span>rd</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Deploying ASP MVC3 to shared hosting isn&rsquo;t always sunshine and lollipops.   Though my beloved hosting company <a href="http://www.arvixe.com/851.html">Arvixe</a> is pretty cutting edge,  it didn&rsquo;t have (and I didn&rsquo;t request) that they hop on MVC3 or its beta.   Regardless, I went to deploy an MVC3 app and it blew up because of a variety of dependencies.   As <a href="http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/" title="discovered">discovered</a> in early MVC2 work, you have to set some assemblies to &lsquo;copy local&rsquo; to get it to work on shared hosting.</p>
+
+<p>The list of assemblies to set to copy local = true is:</p>
+
+<ul>
+<li>Microsoft.Web.Infrastructure</li>
+<li>System.Web.Helpers</li>
+<li>System.Web.Mvc</li>
+<li>System.Web.Razor</li>
+<li>System.Web.Webpages</li>
+<li>System.Web.WebPages.Deployment</li>
+<li>System.Web.Webpages.Razor</li>
+</ul>
+
+
+<p>Drew Miller ( <a href="http://drew-prog.blogspot.com/">blog</a> | <a href="http://twitter.com/anglicangeek">twitter</a> ) has a great breakdown on this : <a href="http://drew-prog.blogspot.com/2011/01/how-to-deploy-aspnet-mvc-3-app-to-web.html">Click for Breakdown </a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/">My Subversion Ignore List for Visual Studio / Anhksvn</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-11T00:00:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn&rsquo;t bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
+
+<p><strong>UPDATE:</strong> Jim motivated me to actually spend the extra time to track down the actual links I used.  <a href="http://stackoverflow.com/questions/85353/best-general-svn-ignore-pattern" title="Link1">Link1</a> and  <a href="http://stackoverflow.com/questions/4375971/tortoise-svn-global-ignore-pattern" title="Link2">Link2</a></p>
+
+<p>I use  <a href="http://ankhsvn.open.collab.net/" title="AnkhSVN">AhnkSVN</a> as my visual studio source control plugin.  I right click on the solution,  select &lsquo;subversion&rsquo;,  select &lsquo;solution properties&rsquo;.  That brings up a box and you will want to click &lsquo;add&rsquo;.  From there,  select  svn.Ignore  and copy/paste the below:</p>
+
+<p>Solution Level:</p>
+
+<p>*.csproj.user Bin obj Obj Release debug Debug release</p>
+
+<p>Note: I don&rsquo;t use Reshaper, if you do, there are other exclusions you will want to add</p>
+
+<p>In <a href="http://tortoisesvn.tigris.org/" title="TortoiseSVN">Tortoisesvn</a>,  my exclusion list is :</p>
+
+<p><em>.o </em>.lo <em>.la </em>.al .libs <em>.so *.so.[0-9]* </em>.a <em>.pyc </em>.pyo <em>.rej </em>~ #<em># .#</em> .<em>.swp .DS_Store </em>.csproj.user Bin obj Obj Release debug Debug release *.suo</p>
+
+<p>When you go into your TortoiseSVN settings,  on the &lsquo;general&rsquo; tab,  copy/paste that into the  &#8217;Global Ignore Pattern:&lsquo; box.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sql-server-variety-hour/">SQL Server Variety Hour</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-12-14T00:00:00-06:00" pubdate data-updated="true">Dec 14<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any links in my slides, I figured I would link up the stuff we talked about:</p>
+
+<p>WhoIsActive &ndash; <a href="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx" title="http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx">http://sqlblog.com/blogs/adam_machanic/archive/2010/10/21/who-is-active-v10-00-dmv-monitoring-made-easy.aspx</a></p>
+
+<p>SQLioSim- <a href="http://support.microsoft.com/kb/231619" title="http://support.microsoft.com/kb/231619">http://support.microsoft.com/kb/231619</a></p>
+
+<p>SQL SourceControl- <a href="http://www.red-gate.com/products/sql-development/sql-source-control/" title="http://www.red-gate.com/products/sql-development/sql-source-control/">http://www.red-gate.com/products/sql-development/sql-source-control/</a></p>
+
+<p>.Net Reflector- <a href="http://www.red-gate.com/products/dotnet-development/reflector/" title="http://www.red-gate.com/products/dotnet-development/reflector/">http://www.red-gate.com/products/dotnet-development/reflector/</a></p>
+
+<p>LinqPad- <a href="http://linqpad.net/" title="http://linqpad.net/">http://linqpad.net/</a></p>
+
+<p>EF Profiler- <a href="http://efprof.com/" title="http://efprof.com/">http://efprof.com/</a></p>
+
+<p>RavenDB- <a href="http://ravendb.net/" title="http://ravendb.net/">http://ravendb.net/</a></p>
+
+<p>Virtualization &ndash; <a href="http://www.vmware.com/" title="http://www.vmware.com/">http://www.vmware.com/</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/stored-procedure-output-params-and-return-values/">Stored Procedure Output Params and Return Values</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-24T00:00:00-05:00" pubdate data-updated="true">Oct 24<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Many times I see abuse of the Return Value in a stored procedure. What I mean by this is essentially using the Return Value to send back say an identity value or something like:
+<code></p>
+
+<pre><code>SET @TheID = SCOPE_IDENTITY();
+RETURN @TheID
+</code></pre>
+
+<p></code></p>
+
+<p>My personal thought on the matter is that you use the Return Values are for determining the execution health of the procedure you called, and that to get an ID value either from a record set or an OUTPUT parameter. This allows a separation of concerns and provides a way for an application to completely understand the intent of the procedure that executed. Lets jump to the code to see what I mean:
+<code></p>
+
+<pre><code>--drop table dbo.pizza
+CREATE TABLE Pizza (pizzaid TINYINT IDENTITY(1,1), pizzasize VARCHAR(10), numberoftoppings TINYINT, pizzaname VARCHAR(40) )
+
+CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
+
+BEGIN TRY
+INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
+
+SELECT @PizzaID = SCOPE_IDENTITY();
+RETURN 0;
+END Try
+BEGIN Catch
+    RETURN -1
+END Catch
+GO
+
+DECLARE @InsertedID TINYINT, @RunOK INT;
+EXEC @RunOK = dbo.asp_InsertNewPizza @pizzaSize = 'Medium',@NumberOfToppings=2, @PizzaName='Medium Cheese and Sausage', @PizzaID=@InsertedID OUT
+SELECT @RunOK, @InsertedID
+</code></pre>
+
+<p></code></p>
+
+<p>So, when we run the above code, we get a 0 for the return value (@RunOK), and a 1 for the inserted ID. Had we received a -1 for the return value, we would know that something was jacked up and not to trust the value of the OUTPUT param. Of course, like many demo&rsquo;s, this is an incredibly simple demo just to show proof of concept. We could go a huge discourse about handling failures inside the procedure, application level transactions, or any number of scenarios that might result in a &ldquo;Fine, in that case don&rsquo;t do the above&rdquo; but all that does is take away from the general message of separation of concerns and being able to quickly convey what actually happened. Lets look at this slight alteration to our operation:
+<code></p>
+
+<pre><code>CREATE PROCEDURE dbo.asp_InsertNewPizza
+    (@PizzaSize VARCHAR(10),@NumberofToppings TINYINT,@pizzaName VARCHAR(40),@PizzaID TINYINT OUTPUT
+AS
+
+IF EXISTS (SELECT pizzaID FROM dbo.Pizza WHERE pizzaname = @pizzaName)
+BEGIN
+    SET @PizzaID = NULL;
+    RETURN 1;   
+END
+ELSE
+BEGIN TRY
+    INSERT INTO dbo.Pizza (pizzaSize, NumberOftoppings,pizzaname)
+    VALUES (@PizzaSize, @NumberofToppings, @pizzaName)
+
+    SELECT @PizzaID = SCOPE_IDENTITY();
+    RETURN 0;
+END TRY
+BEGIN CATCH
+    RETURN -1
+END CATCH
+
+GO
+</code></pre>
+
+<p></code></p>
+
+<p>Without catching the Return Values&hellip; if we get a NULL for the identity, how do we know if it is from an issue with inserting the values or an issue with a pizza name already existing? If we capture the ReturnValue and see that it is >= 0 we know that it wasn&rsquo;t from an error, but that a certain business rule had been met.</p>
+
+<p>Well this is all good and well to us the database people, but what do we do if the app devs say it is too hard to won&rsquo;t help them. Here is just a basic call in C# with ADO.NET and how it could be used:
+<code></p>
+
+<pre><code>SqlCommand databaseCMD = new SqlCommand ("asp_InsertNewPizza", pizzaConn);
+
+databaseCMD.CommandType = CommandType.StoredProcedure;
+
+SqlParameter PizzaSize = databaseCMD.Parameters.Add ("@pizzaSize", SqlDbType.VarChar, 10);
+PizzaSize.Direction = ParameterDirection.Input;
+SqlParameter NumberOfToppings = databaseCMD.Parameters.Add ("@NumberOfToppings", SqlDbType.TinyInt);
+NumberOfToppings.Direction = ParameterDirection.Input;
+SqlParameter PizzaName = databaseCMD.Parameters.Add ("@PizzaName", SqlDbType.VarChar, 40);
+PizzaName.Direction = ParameterDirection.Input;
+
+
+SqlParameter PizzaID = databaseCMD.Parameters.Add ("@PizzaID", SqlDbType.TinyInt);
+PizzaID.Direction = ParameterDirection.Output ;
+SqlParameter ReturnValue = databaseCMD.Parameters.Add ("RetVal", SqlDbType.Int);
+RetVal.Direction = ParameterDirection.ReturnValue;
+
+int pizzaID;
+pizzaConn.Open();
+
+pizzaID =databaseCMD.ExecuteScalar ().ToString() ;
+
+if (ReturnValue == 0){
+ResponseWrite("The Pizza was added. The pizzaID is : " + pizzaID.ToString() );
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else if{ ReturnValue == 1) {
+ResponseWrite("Sorry friend, that pizza name already exists.");
+ResponseWreite("Return Value: " + RetVal.Value);
+}
+else { FreakOut(); }
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/virtual-victory-aws-gives-out-a-year-of-usage/">Virtual Victory &#8211; AWS Gives Out a Year of Usage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-10-23T00:00:00-05:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
+
+<p>So what can I do with this you might ask? Here are some ideas: (I am doing these off the top of my head so feel free to criticize them by suggesting a better ideas)</p>
+
+<ol>
+<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the &lsquo;will this mess up my system&rsquo; fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
+<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon&rsquo;s simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA&rsquo;s, NOSQL stands for &ldquo;Not Only SQL&rdquo; not for No &ndash; SQL as in SQL Void.</p></li>
+<li><p>Embrace the awesome of Amazon S3. Ever wonder why Dropbox/JungleDisk and various other companies can give you so much storage for so cheap? Amazon S3 is pretty much the answer to that question. I typically use the cheapest hosting plans possible and S3 as a CDN to smoke/mirror performance.</p></li>
+<li><p>SQL Server testing &ndash; Microsoft provides trial software for pretty much all their projects. If you are curious about &hellip; say playing with some feature of replication or maybe wondering about online indexing &hellip; Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
+<li><p>.Net testing or running a service &ndash; With shared hosting, I don&rsquo;t have a way of keeping an ongoing on demand service per say&hellip; So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app&hellip;. Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don&rsquo;t really support SQL Server SSIS&hellip; so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
+</ol>
+
+
+<p>Now, some of this isn&rsquo;t without a learning curve, but we are in the software development industry&hellip; if we can&rsquo;t navigate learning curves or don&rsquo;t even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
 </div>
   
   
@@ -801,23 +857,23 @@ For other services/protocols I tend to use:<br/>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
       <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
       <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

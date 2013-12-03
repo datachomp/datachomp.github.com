@@ -1,0 +1,312 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Writable CTEs in Postgres - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my Thankyou app &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.github.com/archives/writable-ctes-in-postgres">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.github.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Writable CTEs in Postgres</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+First, lets new up some data:</p>
+
+<pre><code>drop table if exists thanks;
+create table thanks (
+    id serial primary key,
+    who text not null,
+    picked boolean not null default 'false',
+    created_at date default now(),
+    last_picked date default '-infinity'
+);
+
+insert into thanks (who)
+values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
+, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
+
+select * from thanks;
+</code></pre>
+
+<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
+
+<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+</code></pre>
+
+<p>Now we can put it in a normal CTE:</p>
+
+<pre><code>with guesswho as (
+    select * from thanks 
+    where picked = false or last_picked &lt; now() - interval '9 months')
+select guesswho.id, guesswho.who
+from guesswho;
+</code></pre>
+
+<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+
+<pre><code>with guesswho as (
+    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+select guesswho.id, guesswho.who
+from guesswho, onlyone
+where champs = onlyone.tops;
+</code></pre>
+
+<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+
+<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+
+, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
+guesswho.champs = onlyone.tops RETURNING thanks.picked)
+
+select guesswho.id, guesswho.who
+from guesswho, onlyone, adios
+where champs = onlyone.tops;
+</code></pre>
+
+<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.github.com/archives/writable-ctes-in-postgres/" data-via="datachomp" data-counturl="http://datachomp.github.com/archives/writable-ctes-in-postgres/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/my-friend-rob/" title="Previous Post: My Friend Rob">&laquo; My Friend Rob</a>
+      
+      
+        <a class="basic-alignment right" href="/archives/sequel-and-postgres-range-types/" title="Next Post: Sequel and Postgres Range Types">Sequel and Postgres Range Types &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+	<a href="http://tekpub.com/collections/everything/products/pg"><img src="http://static.datachomp.com/pg_thumb.png" alt="Tekpub" width=120 height=80 /></a>
+	<br/>
+	<a href="http://tekpub.com/collections/everything/products/ft_sullivan"><img src="http://static.datachomp.com/ft_sullivan_thumb.png" alt="Tekpub" /></a>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
+        var disqus_url = 'http://datachomp.github.com/archives/writable-ctes-in-postgres/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

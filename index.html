@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, Active Record was like putting my App in a fat suit. &hellip;">
+  <meta name="description" content="When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data. For example, when I truncate a &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,7 +86,7 @@
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a></h1>
+      <h1 class="entry-title"><a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a></h1>
     
     
       <p class="meta">
@@ -102,130 +102,667 @@
   
 
 
-<time datetime="2013-08-29T21:19:00-05:00" pubdate data-updated="true">Aug 29<span>th</span>, 2013</time>
+<time datetime="2013-11-25T16:24:00-06:00" pubdate data-updated="true">Nov 25<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and at that point, everything in this world of Ruby started clicking.</p>
+  <div class="entry-content"><p>When you first start using sequences, you can definitely be hit with some surprises when you begin manipulating data.</p>
 
-<h3>Iocane Powder</h3>
+<p>For example, when I truncate a table and go to insert more data, it doesn&rsquo;t automatically reset the sequence:</p>
 
-<p>Now that I am 100% on Postgres, Sequel can be made even sweeter (ie: faster) with the <a href="https://github.com/jeremyevans/sequel_pg">sequel_pg</a> gem. Like Iocane Powder, sequel_pg has no smell which means that you don&rsquo;t have to change any of your existing code. All you need to do is declare it in your Gemfile and get back to coding. If you are using Postgres, then your App will have a built up immunity to Iocane Powder making it safe to use. If your life blood is coursing with MySQL then adding sequel_pg can be an extremely fatal move. Though, that may not be a bad thing. <em>zing!</em></p>
-
-<h3>Say Hello To My Little Friend</h3>
-
-<p>Part of the absolute joy of using an object relational database like Postgres is&hellip; well, using objects. One of the coolest ways to turn our DB into Robocop is with an extension called <a href="http://www.postgresql.org/docs/current/static/hstore.html">hstore</a> which allows for a Key-Value store inside our DB. Here is how flip the hstore switch and insert some data:</p>
-
-<pre><code>CREATE EXTENSION IF NOT EXISTS hstore;  
-CREATE TABLE kvburritos (id serial not null, details hstore not null, CONSTRAINT kvburritos_pkey PRIMARY KEY (id));
-
-INSERT INTO kvburritos (details)
-VALUES ('burritoname =&gt; "Postgres", toppings =&gt; "chicken, cheese, avacado, peppers", price=&gt; 4.50')
-, ('burritoname =&gt; "MS Server", toppings =&gt; "chicken", price =&gt; "15.50"')
-, ('burritoname =&gt; "Redis", toppings =&gt; "steak, cheese, spinach", price =&gt; "3.50"')
-, ('burritoname =&gt; "Rethink", toppings =&gt; "egg, chorizo, bacon", price =&gt; "5.00"')
-, ('burritoname =&gt; "Oracle", toppings =&gt; "gold, diamonds, elitism", price =&gt; "Call for a Quote"'); -- don't run this
+<pre><code>create table burritodances (id serial primary key, title text not null);
+insert into burritodances (title) -- hola data
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+truncate table burritodances; -- adios data
+insert into burritodances (title) -- welcome back
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    4;"toptrot"
+    5;"beanwaltz"
+    6;"lamb-ada"
 </code></pre>
 
-<p>Yay! I&rsquo;m not going to do any more examples in SQL since there are plenty to go around (or just use the documentation linked above). The problem we are faced with now, is that SQL does not necessarily help us out with Sequel&hellip;have fun reading that sentence out loud. Fear not, <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a> and friends already have our back with extensions you can apply to Sequel. Check it out:</p>
+<p>The inserted value starts with 4… that&rsquo;s no bueno por la burritodances. There is a pretty easy fix for this by issuing the sequence reset command after we truncate the table:</p>
+
+<pre><code>truncate table burritodances;
+alter sequence burritodances_id_seq restart;
+insert into burritodances (title)
+values ('toptrot'),('beanwaltz'), ('lamb-ada');
+select * from burritodances;
+    1;"toptrot"
+    2;"beanwaltz"
+    3;"lamb-ada"
+</code></pre>
+
+<p>Now we have nice sequential id&rsquo;s. Perhaps instead of truncating, we need to delete the last 2 rows for whatever reason:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+select currval('burritodances_id_seq'); -- uh oh
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    4;"chicken dance"
+    5;"fuego de la cocina"
+</code></pre>
+
+<p>We&rsquo;re out of whack again. Luckily, it is pretty easy to reset the sequence to any value manually:</p>
+
+<pre><code>delete from burritodances where id &gt;= 2;
+alter sequence burritodances_id_seq restart with 2; -- an option
+select SETVAL('burritodances_id_seq', MAX(id) ) from burritodances;
+insert into burritodances (title)
+values ('chicken dance'), ('fuego de la cocina');
+select * from burritodances;
+    1;"toptrot"
+    2;"chicken dance"
+    3;"fuego de la cocina"
+</code></pre>
+
+<p>and now we&rsquo;re back in business again. In the above code, I showed 2 ways to achieve the desired result. The newer way, with the alter sequence code, and the more old school way with SETVAL function. Both work perfectly fine and as always, postgres itself has pretty <a href="http://www.postgresql.org/docs/current/static/sql-altersequence.html">nice documentation</a> on the various alter sequence commands you can run.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-20T19:10:00-06:00" pubdate data-updated="true">Nov 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different languages, yelling at each and saying hurtful things&hellip; all the while the app and db sit in their servers neglected and needing love.</p>
+
+<h3>pg_therapy</h3>
+
+<p>While many of us that live in the database layer have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your .psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku. To accomodate its users, Heroku has put out a very helpful plugin to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language. They don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
+
+<h3>Pump you up</h3>
+
+<p>Installation is a breeze:</p>
+
+<pre><code>heroku plugins:install git://github.com/heroku/heroku-pg-extras.git
+</code></pre>
+
+<p>Using it a breeze:</p>
+
+<pre><code>heroku pg:bloat  #one of my favorites!
+</code></pre>
+
+<p>When I run that, it tells me that I didn&rsquo;t specify a database:<br/>
+! Unknown database. Valid options are: HEROKU_POSTGRESQL_BLACK_URL, HEROKU_POSTGRESQL_PINK_URL</p>
+
+<p>I run it again with the proper db:</p>
+
+<pre><code>heroku pg:bloat HEROKU_POSTGRESQL_BLACK_URL
+</code></pre>
+
+<p>Now I have an easy to use snapshot of our database that has an incredibly low barrier of entry to execute for myself or anyone. Let&rsquo;s say that the person running it doesn&rsquo;t trust me or perhaps I&rsquo;m in a burrito coma, they can always refer to the <a href="https://devcenter.heroku.com/articles/heroku-postgres-database-tuning">heroku database tuning site</a> and get sound information.</p>
+
+<h3>Dude, I don&rsquo;t even have time for that.</h3>
+
+<p>Maybe the above is a bit too much to stomach. That&rsquo;s cool, we&rsquo;ll just flip another easy switch:</p>
+
+<pre><code>heroku addons:add librato
+</code></pre>
+
+<p><a href="http://librato.com">Librato</a> is a beautiful dashboard that is fun to look at, easy to use and will give us some historical context for troubleshooting the typically ill fated &ldquo;I think my database is slow&rdquo; situation. What is nice about tooling like Librato is not only does it show our db stats, we also get the context of the Application(Dyno&rsquo;s, router latency, etc). For more information on this, checkout Craig Kerstiens post on <a href="https://postgres.heroku.com/blog/past/2013/10/9/monitoring_your_heroku_postgres_database/">Monitoring with Librato</a>.</p>
+
+<h3>Hugs and Queries</h3>
+
+<p>I love this type of solution because it gets us looking at hard numbers and can easily as well as objectively say it is the DBs fault, the Apps fault, heroku&rsquo;s fault, or no ones fault and everything is fine. Librato and Postgres don&rsquo;t keep track of our egos, our mood or our fatigue &ndash; they keep us honest and on topics that really matter&hellip; something we all could use a little more of.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T21:20:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
+
+<pre><code>CREATE TABLE burritotrucks
+(
+  id serial primary key,
+  truckname text not null,
+  onsite daterange not null --or tsrange if busy schedule
+);
+
+insert into burritotrucks (truckname, onsite)
+values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
+('chompy delight', '[2013-11-15, 2013-11-17]'),
+('no dogs allowed', '[2013-11-16, 2013-11-21]'),
+('government cheese wagon', '[2013-11-11, 2013-11-14]'),
+('tortuga mochilla', '[2013-11-13, 2013-11-18]');
+</code></pre>
+
+<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()
+</code></pre>
+
+<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
+
+<pre><code>select * from burritotrucks where onsite @&gt; now()::date
+</code></pre>
+
+<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
+
+<pre><code>Sequel.extension(:pg_range)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>We query the database:</p>
+
+<pre><code>options = DB[:burritotrucks].all
+p options
+</code></pre>
+
+<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
+
+<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
+p options
+</code></pre>
+
+<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
+
+<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'frontyard', :user=&gt;'dc')
+</code></pre>
+
+<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
+
+<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
+p options
+</code></pre>
+
+<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
+First, lets new up some data:</p>
+
+<pre><code>drop table if exists thanks;
+create table thanks (
+    id serial primary key,
+    who text not null,
+    picked boolean not null default 'false',
+    created_at date default now(),
+    last_picked date default '-infinity'
+);
+
+insert into thanks (who)
+values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
+, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
+
+select * from thanks;
+</code></pre>
+
+<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
+
+<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
+</code></pre>
+
+<p>Now we can put it in a normal CTE:</p>
+
+<pre><code>with guesswho as (
+    select * from thanks 
+    where picked = false or last_picked &lt; now() - interval '9 months')
+select guesswho.id, guesswho.who
+from guesswho;
+</code></pre>
+
+<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
+
+<pre><code>with guesswho as (
+    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+select guesswho.id, guesswho.who
+from guesswho, onlyone
+where champs = onlyone.tops;
+</code></pre>
+
+<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
+
+<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
+    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
+, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
+
+, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
+guesswho.champs = onlyone.tops RETURNING thanks.picked)
+
+select guesswho.id, guesswho.who
+from guesswho, onlyone, adios
+where champs = onlyone.tops;
+</code></pre>
+
+<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/my-friend-rob/">My Friend Rob</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-14T22:05:00-06:00" pubdate data-updated="true">Nov 14<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I started getting complacent and taking everything for granted.</p>
+
+<h3>Always Be Coding</h3>
+
+<p>To counteract this concern, I made a little database full of projects and people I&rsquo;m thankful for. You&rsquo;ll see projects like sidekiq, hstore, pg_stat_statements, sinatra and you&rsquo;ll also see people like Josh Berkus, Ryan Bates, Demis Bellot… It&rsquo;s become a pretty big table because I&rsquo;m thankful to so many. I also made a little console app to pick a random row and email it to me once a week because what good is data if you don&rsquo;t use it?</p>
+
+<h3>It Passes in a Flash</h3>
+
+<p>The past few months have been amazing. The team I work with at Raisemore is top notch and it is an incredible feeling to be working with and helping non-profits every day. Tekpub got acquired by Pluralsight. That experience has been a lot of work and an absolute blast building videos with them. I&rsquo;ve also helped reboot our local Ruby user group with 2 other friends and spoke to that group today on two topics I absolutely love &ndash; Sequel and Postgres.</p>
+
+<h3>For Whom The Phone Tolls</h3>
+
+<p>We just got back from dinner and I&rsquo;m checking my usual blog posts and nightly reading when I get the familiar email every Friday at 00:00:00 UTC:<br/>
+Subject: Be Thankful<br/>
+Body: 1 &ndash; Rob Conery</p>
+
+<p>I don&rsquo;t know if it gets anymore serendipitous than that. Rob is the first entry I put in the table. Since I&rsquo;ve met Rob, he has challenged me to be a better DBA, challenged my comfort zones and to be an overall better person. Some of the above he&rsquo;s done directly, some of it indirectly and I&rsquo;m thankful for all if it.</p>
+
+<h3>perspective.empty?</h3>
+
+<p>I can&rsquo;t wait to see who/what shows up in my inbox next week. I can&rsquo;t wait to reflect on what is was that connected with me. When I get the next mail, I don&rsquo;t know yet if I&rsquo;ll take the time to personally thank them or the project. What I do know is that between now and when I get my next mail, I hope that I can have the same effect on others my list has had on me.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-26T14:42:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in my Rails 3 app is the:</p>
+
+<pre><code>undefined method `directory?' for nil:NilClass
+rake aborted
+</code></pre>
+
+<p>Thanks AP, for breaking and basically telling me nothing. Luckily, it doesn&rsquo;t have to be this way. If we take a moment to stop and get to know AP, we can get it to open up and be more helpful to us. We start by setting our bundler editor in .bashrc by adding the following line:</p>
+
+<pre><code>export BUNDLER_EDITOR=subl   #I set mine to sublimetext
+</code></pre>
+
+<p>Next up, we hop into terminal and go for an in home visit right into the code itself:</p>
+
+<pre><code>bundle open sprockets  #sprockets is AP's birth name
+</code></pre>
+
+<p>Navigate to lib->sprockets->base.rb</p>
+
+<p>find your way to the &ldquo;def each_entry(root, &amp;block)&rdquo; section of code and you&rsquo;ll likely see a lack of error handling there. To fix it, I wrap a rescue around the &ldquo;directory?&rdquo; check like so:</p>
+
+<pre><code>begin
+    if stat(path).directory?
+      each_entry(path) do |subpath|
+        paths &lt;&lt; subpath
+      end
+    end
+    rescue
+      puts "Hey friend, I have an issue at: #{path}"
+    end
+end
+</code></pre>
+
+<p>This doesn&rsquo;t fix all of AP&rsquo;s problems, none of us are perfect, but it does coax the gem into letting us know where the problem is. Once we know where the problem is, we can work on it together rather than just throwing our arms up in the air and quitting.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T13:56:00-05:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
+
+<h4>Where oh where to begin</h4>
+
+<p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
+
+<pre><code>--Hello Table!
+CREATE TABLE burritoplaces
+(id serial PRIMARY KEY,
+establishment varchar(50) not null,
+lat double precision,
+lon double precision);  
+--Hello Data!
+INSERT INTO burritoplaces(establishment, lat,lon)
+VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
+,('Locos Lobos', 35.496025,-97.510185)
+,('Captain Crustacean', 35.51468,-97.524347)
+,('Double Stuffers Cafe', 35.523762,-97.508039)
+,('Cafe Truncate of Watonga', 35.866413,-98.473206);
+</code></pre>
+
+<p>The data checks out:</p>
+
+<pre><code>-- all 5 entries
+SELECT * FROM burritoplaces;
+</code></pre>
+
+<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do it outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
+
+<pre><code>--turn on the magic
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+</code></pre>
+
+<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of the four countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
+
+<pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
+SELECT *, point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)::point AS burrito_distance
+FROM burritoplaces
+WHERE (point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)) &lt; 10 --feel free to play this!
+ORDER by burrito_distance;
+</code></pre>
+
+<p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
+
+<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
+
+<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
+FROM burritoplaces
+WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
+ORDER by burrito_distance;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/application-name-in-sequel/">Application_name in Sequel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-02T09:22:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
+
+<p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
 
 <pre><code>require 'sequel'
-Sequel.extension(:pg_hstore, :pg_hstore_ops, :pg_array)
-DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&gt;'burritomix', :user=&gt;'kencollins')
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'datachomp', :user=&gt;'rob', :max_connections =&gt; 10
+, :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
 </code></pre>
 
-<p>I put that array one on there for free. When we use this in our app, instead of a gutless, soulless, faceless hstore hash from the DB, we&rsquo;re getting awesome, tangible, huggable data:</p>
+<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
 
-<pre><code>#our model:
-#get the burritos that have cheese on them. Replace with Avacado in Production
-@cheesylist = DB.fetch("SELECT * FROM kvburritos WHERE lower(details-&gt;'toppings') LIKE '%cheese%';")
+<pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
+</code></pre>
+</div>
+  
+  
 
-#our view:
-&lt;h2&gt;So Cheezy&lt;/h2&gt;
-  &lt;ul&gt;
-  &lt;% @cheesylist.each do |c| %&gt;
-  &lt;li&gt;&lt;%= c[:details][:burritoname] %&gt; - &lt;%=  c[:details][:toppings] %&gt;&lt;/li&gt;
-  &lt;% end %&gt;
-  &lt;/ul&gt;
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-18T09:28:00-05:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
+
+<pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
+create extension "uuid-ossp"; -- it's alive!
 </code></pre>
 
-<h3>Be still my beating DAL</h3>
+<p>and to make sure it&rsquo;s active:</p>
 
-<p>I love this! We can now build as fast as we want with semi structured data&hellip; and when our data becomes important and matures a little bit, we can easily break into relational schemas &ndash; Just as God intended.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-27T23:26:00-05:00" pubdate data-updated="true">Aug 27<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
-
-<h3>Magic Strings of Wonderful Glory</h3>
-
-<p>After you get your feet under you, you might find yourself needing to use more than the base modules that come with the nginx inside Passenger. As I would go to install or update Passenger, I would end up having to run something like this:</p>
-
-<pre><code>gem install passenger
-
-passenger-install-nginx-module --nginx-source-dir=/usr/src/nginx-1.5.3 ---with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with --without-http_scgi_module --without-http_uwsgi_module --without-http_fastcgi_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --with-http_realip_module --add-module=/opt/nginxmodules/headers-more
+<pre><code>select * from pg_extension; -- we should see it listed
 </code></pre>
 
-<p>This creates a few issues. Issue #1: I have to keep wget&#8217;ing new versions of source when I need to update.<br/>
-Issue #2: I have a completely different workflow/scripts for managing a passenger nginx instance than I do for a unicorn/puma instance. This variance drives me nuts and be a source of script churn.</p>
+<p>But not all extensions are created equal. If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion. This extension gives you  deeper view of what has been running in your database. Adding it to a database is easy enough:</p>
 
-<h3>Antacids</h3>
-
-<p>I kept thinking there had to be a better way. Then the sky hash parted and a beam of light shown directly on a ppa from the brightbox team. This package uses a traditional installation of nginx, which means that I can easily install the nginx-extras package and get all my extra modules I need for load balancing and nginx_status. Here is how I do it:</p>
-
-<pre><code>sudo apt-get install -y python-software-properties curl git-core  
-sudo apt-add-repository -y ppa:brightbox/passenger-experimental  
-sudo apt-get update
-
-sudo apt-get install -y nginx-full  
-sudo apt-get install -y nginx-extras  #extras headers and stuff  
-
-\curl -L https://get.rvm.io | bash  
-source ~/.profile  
-
-rvm install 2.0.0-p247  
-rvm --default use 2.0.0-p247  
-
-sudo service nginx restart  
+<pre><code>create extension "pg_stat_statements";
+select * from pg_stat_statements;  
 </code></pre>
 
-<p>Most of how to do this is covered at:<br/>
-<a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
+<p>Uh oh, we&rsquo;re greeted with a error that can be a little intimidating:<br/>
+<font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
+
+<p>Ummmm what? Some extensions have special needs that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
+
+<pre><code>sudo apt-get install -y postgresql-contrib-9.3
+</code></pre>
+
+<p>Head on over to our configuration at /etc/postgresql/9.3/main/postgres.conf and look for the shared_preload_libraries setting and reference the extension:</p>
+
+<pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
+</code></pre>
+
+<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of Postgres.app and run the following:</p>
+
+<pre><code>show all;        -- This is a list of a bunch of settings... whoa!
+show config_all; -- Ahhhh, here is what we want
+</code></pre>
+
+<p>Now that we have the location of our configuration file, just throw it into the Unholy Explorer(AKA Finder), start scrolling the file and add the pg_stat_statements setting to the shared_preload_libraries.</p>
+
+<h4>buyer beware</h4>
+
+<p>This works wonderfully in Postgres.app 9.3.0.0. In earlier versions of the app, it does has issues finding the contrib modules. This is a bit of a bummer and when I get my act together, I&rsquo;ll file an issue. Of course, you&rsquo;re more than welcome to beat me to the punch.</p>
 </div>
   
   
@@ -238,7 +775,7 @@ sudo service nginx restart
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a></h1>
+      <h1 class="entry-title"><a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a></h1>
     
     
       <p class="meta">
@@ -254,409 +791,62 @@ sudo service nginx restart
   
 
 
-<time datetime="2013-08-09T10:05:00-05:00" pubdate data-updated="true">Aug 9<span>th</span>, 2013</time>
+<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-  <div class="entry-content"><p>For quite a few months now, I&rsquo;ve been playing around with a treadmill
-desk. I have a pretty large hydraulic desk from <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Geek Desk</a> that I have
-partitioned into 2 workstations:</p>
+  <div class="entry-content"><h3>problem:</h3>
 
-<p><a href="http://images.datachomp.com/treadmill/desktop.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_desktop.jpg" title="On Top of The Desk World" alt="On Top of The Desk World" Height="200" Width="400" /></a></p>
+<p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 lines or so of stack junk going into your application log &ndash; much of what is inserted you don&rsquo;t care about. In a normal, healthy, fun loving rails app, the majority of the routing errors come from script kiddies or an exec&rsquo;s infected home machine making php requests. These requests are just casting out a broad net and looking for low hanging fruit exploits. We need something to help tune the signal to noise occuring in our application logs as well as to stop wasting our apps time on bots.</p>
 
+<h3>solution:</h3>
 
-<p><strong>What is This?</strong><br/>
-On the left is my coding/recording station, and on the right is my learning/gaming station.
-When I&rsquo;m simply consuming content, I can easily work on my treadmill station. For $200, I bought a <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Confidence Power Plus</a> treadmill that I <a href="http://www.treadmilldeskdiary.com/setting-up-my-confidence-power-plus-treadmill-for-a-desk/">mostly disassembled</a> and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn&rsquo;t focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.</p>
+<p>Just throw in a quick nginx location rule in your apps nginx config to catch and handle all the requests before they even hit your server.</p>
 
-<p><a href="http://images.datachomp.com/treadmill/underview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_underview.jpg" title="Under the hood" alt="Under the hood" Height="200" Width="400" /></a></p>
+<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+}
+</code></pre>
 
+<p>For those curious what I&rsquo;m talking about -<br/>
+Here is an application log before:</p>
 
-<p><strong>These Reboots Were Made For Walking</strong><br/>
-Since I know I will be tread&#8217;ing at some point in the day &ndash; and I know it will kill itself every 30 minutes &ndash; I&rsquo;ve been using tools like <a href="http://getpocket.com/">Pocket</a> and stuff to help me avoid distractions on my ~creation station~ because I know I can just punt it right over to the treadmill box and consume a lot of content distraction free. I am finally reaching a point where I can read at 2.8 mph, and watch screencasts at 4 mph. This makes me a huge fan of screencasts&hellip; They are better for me.</p>
+<pre><code>Started GET "/login.php" for 80.241.16.10 at 2013-09-13 09:01:38 +0000
 
-<p><a href="http://images.datachomp.com/treadmill/fullview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_fullview.jpg" title="Back That Desk Up" alt="Back that Desk Up" Height="400" Width="200" /></a></p>
+ActionController::RoutingError (No route matches [GET] "/login.php"):
+actionpack (3.2.14) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+railties (3.2.14) lib/rails/rack/logger.rb:32:in `call_app'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `block in call'
+activesupport (3.2.14) lib/active_support/tagged_logging.rb:22:in `tagged'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+rack (1.4.5) lib/rack/lock.rb:15:in `call'
+rack-cache (1.2) lib/rack/cache/context.rb:136:in `forward'
+rack-cache (1.2) lib/rack/cache/context.rb:245:in `fetch'
+rack-cache (1.2) lib/rack/cache/context.rb:185:in `lookup'
+rack-cache (1.2) lib/rack/cache/context.rb:66:in `call!'
+rack-cache (1.2) lib/rack/cache/context.rb:51:in `call'
+rack-mini-profiler (0.1.29) Ruby/lib/mini_profiler/profiler.rb:188:in `call'
+railties (3.2.14) lib/rails/engine.rb:484:in `call'
+railties (3.2.14) lib/rails/application.rb:231:in `call'
+railties (3.2.14) lib/rails/railtie/configurable.rb:30:in `method_missing'
+and on... and on... and on ...
+</code></pre>
 
+<p>Here is one after:</p>
 
-<p><strong>tail -m thedragon</strong><br/>
-Recently, I started adding games to the mix. If you are expecting to be able to play twitch games&hellip; Just stop that thought now. Any game that relies on twitch or precision is a no go. I&rsquo;m a huge fan of <a href="http://www.youtube.com/watch?v=VxeW6urxLfY">Skyrim</a> and rpg&rsquo;s in general, but my current schedule/commits don&rsquo;t really allow me much indulgence in those time sinks. However, the need for a game that doesn&rsquo;t require heavy precision + the 30 minute cutoff on my treadmill allows an incredible pairing to occur.</p>
+<pre><code>  
 
-<p>Am I healthier because of my treadmill setup?  Maybe. Am I happier, more productive and having more fun? You bet!</p>
-</div>
-  
-  
+</code></pre>
 
 
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-08-09T00:23:00-05:00" pubdate data-updated="true">Aug 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;m a hardware nut who likes both building and upgrading my dev boxes. I&rsquo;m getting ready to refresh my box this year and the biggest difference &ndash; I&rsquo;m no longer doing .NET/SQL Server. I&rsquo;m also not on Windows.</p>
-
-<p>So what&rsquo;s different?</p>
-
-<p><strong>Remoting</strong><br/>
-Instead of a laggy/sluggish RDP sessions doing password dances, I&rsquo;m all in with SSH and loving it.</p>
-
-<p><strong>IDE</strong><br/>
-Instead of the behemoth Visual Studio &ndash; I just use a text editor or bash or any number of focused tools that get out of my way.</p>
-
-<p><strong>Database</strong><br/>
-SQL Server is replaced with a lean Postgres and a tricked out <a href="http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/">psql</a>. This still blows my mind and loving it every day.</p>
-
-<p><strong>OS</strong><br/>
-Instead of a fatty windows &ndash; I run <a href="http://www.ubuntu.com/">Ubuntu</a>. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster &ndash; I can run <a href="http://crunchbang.org/">Crunchbang</a> and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like <a href="http://crunchbang.org/">Crunchbang</a> is like going from a bicycle to a Ducati. The difference is further illustrated by the fact that I&rsquo;ve been able to install versions of Linux that have the same memory footprint as just the Activation/License checker on Windows. I&rsquo;ve often thought it would be cool if instead of more Windows Modern-UI for plebes, Microsoft had a more <a href="http://openbox.org/">OpenBox</a> type windows manager built on top of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my <a href="http://www.indiegogo.com/projects/ubuntu-edge">phone</a>.</p>
-
-<p><strong>Virtual Desktops</strong><br/>
-Having an OS with native virtual desktops is a complete joy. Sometimes I&rsquo;m doing just data, sometimes I&rsquo;m wallowing around in code, other times I&rsquo;m browsing/social networking. Having dedicated desktops for this and not having to resort to &lsquo;I need a ton of monitors&rsquo; Windows syndrome has been a welcome change as well.</p>
-
-<p><strong>Virtuals</strong><br/>
-Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
-
-<p>For me, Linux is clean and focused and Windows is <a href="http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg">Teletubbies</a>. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-05-05T12:50:00-05:00" pubdate data-updated="true">May 5<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
-
-<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
-
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&rsquo;s and then it barfed on a &lsquo;mysql&rsquo; dependency (not to be confused with mysql2 gem dependency). I installed the &lsquo;mysql&rsquo; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
-
-<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
-
-<p>A couple things I like about Valkyrie:</p>
-
-<ul>
-<li>It is simple. I just provide a mysql source and postgres destination.</li>
-<li>It uses <a href="https://github.com/jeremyevans/sequel">Sequel</a>.</li>
-<li>I can keep re-running it without it duplicating source data.</li>
-</ul>
-
-
-<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
-
-<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/more-nerdy-hipchat-emoticons/">More Nerdy Hipchat Emoticons</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-17T22:43:00-05:00" pubdate data-updated="true">Apr 17<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&hellip;</p>
-
-<p>Here is what I have so far:</p>
-
-<div style="text-align: center;">
-<table style="margin: 0px auto; table-layout: fixed; width: 650px;">
-<tr>
-<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(css)<br/><img src="http://static.datachomp.com/emoticons/css.png" /></td><td>(jquery)<br/><img src="http://static.datachomp.com/emoticons/jquery.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
-</tr>
-<td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(poshgit)<br/><img src="http://static.datachomp.com/emoticons/poshgit.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
-</tr>
-<tr>
-<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(ruby)<br/><img src="http://static.datachomp.com/emoticons/ruby.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td>(vs)<br/><img src="http://static.datachomp.com/emoticons/vs.png" /></td><td>(xamarin)<br/><img src="http://static.datachomp.com/emoticons/xamarinhq.png" /></td><td>(sublime)<br/><img src="http://static.datachomp.com/emoticons/sublimetext.png" /></td>
-</tr>
-<tr>
-<td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td> </td>
-</tr>
-</table>
-</div>
-
-
-<p>Special thanks to <a href="https://twitter.com/motowilliams">@motowilliams</a> for a variety of these</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T10:46:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&hellip; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&rsquo;m favoring Postgres over SQL Server from a technical/business aspect.</p>
-
-<br />
-
-
-
-
-<hr />
-
-
-<ol>
-<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &ldquo;feature&rdquo; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
-<li><p>Compression out of the box. With SQL Server, compression is an &ldquo;Enterprise Edition and Up&rdquo; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
-<li><p>Concurrent Index Creation. You are going to find a recurring theme there&hellip;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
-<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&rsquo;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&rsquo;re writing huge checks to pull this off.</p></li>
-<li><p>Indexable functions &ndash; In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&rsquo;re stuck in the cruel world of table scans when this happens.</p></li>
-<li><p>Modules/Extensions &ndash; Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&hellip; It quickly becomes your grandparents&#8217; database.</p></li>
-<li><p>Works everywhere &ndash; Linux, Mac, BSD, Windows&hellip; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
-<li><p>Arrays &ndash; Everyone loves arrays and they are a core part of programming&hellip;except in SQL Server, where they don&rsquo;t exist.</p></li>
-<li><p>JSON / V8 support &ndash; You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
-<li><p>Unicode by default &ndash; No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-10T21:54:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
-
-<p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
-
-<blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
-
-<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&rsquo;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&rsquo;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&hellip; and that is ok. It&rsquo;s not the lazy route, but I feel it is the most rewarding.</p>
-
-<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&rsquo;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
-
-<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
-
-<p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/later-wordpress/">Later Wordpress</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-10T15:25:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
-
-<h2>Right Tool for the Right Blog</h2>
-
-<p>I have really wanted another level of simplicity that wordpress can&rsquo;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/stopping-spam-in-contact-form-7/">Stopping Spam in Contact Form 7</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
-Ha, having issues getting the code to display properly so just check this link:</p>
-
-<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
-
-<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
 </div>
   
   
@@ -683,23 +873,23 @@ Ha, having issues getting the code to display properly so just check this link:<
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/extending-sequel-with-hstore/">Extending Sequel With Hstore</a>
+        <a href="/archives/resetting-sequences-in-postgres/">Resetting Sequences in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a>
+        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
       <li class="post">
-        <a href="/archives/treadmill-desk-setup/">Treadmill Desk Setup</a>
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
       <li class="post">
-        <a href="/archives/no-longer-buying-aircraft-carriers/">No Longer Buying Aircraft Carriers</a>
+        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
       <li class="post">
-        <a href="/archives/quickly-migrate-a-db-from-mysql-to-postgres/">Quickly Migrate a DB From MySQL to Postgres</a>
+        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>
