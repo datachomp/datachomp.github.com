@@ -132,7 +132,7 @@ sudo nano /etc/pgbouncer/pgbouncer.ini
 </code></pre>
 
 <p>Above are some of the settings I changed to get started. As you get more familiar with Pgbouncer, change the <a href="http://pgbouncer.projects.pgfoundry.org/doc/config.html">various settings</a> as you see fit and for your workload.<br/>
-Let&rsquo;s test our settings by firing up pgbouncer. Pgbouncer is closely tied to the postgres user on the server, so we&rsquo;ll &lsquo;switch user&rsquo; into the postgres account and fire up pgbouncer:</p>
+Let&rsquo;s test our settings by firing up pgbouncer. Pgbouncer is closely tied to the postgres user on the server, so we&rsquo;ll &lsquo;switch user&rsquo; into the postgres account to crank it up:</p>
 
 <pre><code>sudo su postgres -c"pgbouncer -d /etc/pgbouncer/pgbouncer.ini"
 </code></pre>
