@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: iPhone | DataChomp]]></title>
-  <link href="http://datachomp.github.io/blog/categories/iphone/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/blog/categories/iphone/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Change iPhone root password after jailbreak]]></title>
-    <link href="http://datachomp.github.io/archives/change-iphone-root-password-after-jailbreak/"/>
+    <link href="http://datachomp.com/archives/change-iphone-root-password-after-jailbreak/"/>
     <updated>2010-07-07T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/change-iphone-root-password-after-jailbreak</id>
+    <id>http://datachomp.com/archives/change-iphone-root-password-after-jailbreak</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH feature and the fact that the phone has the same global password for all iPhones. Luckily, there is a quick fix for this.</p>

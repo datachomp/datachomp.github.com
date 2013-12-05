@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: MVC | DataChomp]]></title>
-  <link href="http://datachomp.github.io/blog/categories/mvc/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/blog/categories/mvc/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[CI with MVC4 and Linux? No Problem]]></title>
-    <link href="http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem/"/>
+    <link href="http://datachomp.com/archives/ci-with-mvc4-and-linux-no-problem/"/>
     <updated>2012-05-02T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/ci-with-mvc4-and-linux-no-problem</id>
+    <id>http://datachomp.com/archives/ci-with-mvc4-and-linux-no-problem</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>There are a lot of tools out there that we can use to automate our awesomeness. One of those easy/free/fun tools is a continuous integration (CI) server. Since we are building in Windows and deploying to Linux, we can go ahead and upgrade a CI server from &lsquo;important&rsquo; to essential. There are various products out there that can accomplish this; I&rsquo;m going with what I know and that is <a href="http://www.jetbrains.com/teamcity/" title="TeamCity">TeamCity</a> from JetBrains.</p>
@@ -44,9 +44,9 @@ sudo ./bin/runAll.bat start
   
   <entry>
     <title type="html"><![CDATA[Running ASP.NET MVC4 on Ubuntu 12.04]]></title>
-    <link href="http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
+    <link href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
     <updated>2012-04-24T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
+    <id>http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &ldquo;How are you running your app on Linux?&rdquo; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&rsquo;s best interest if I just blog it out. Technology moves fast&hellip; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &ldquo;has been&rdquo; Ubuntu 11.10, we&rsquo;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&rsquo;re so bleeding edge you can call us cutters!</p>
@@ -118,9 +118,9 @@ chmod 755 install_mono-2.11.sh
   
   <entry>
     <title type="html"><![CDATA[Getting started with Postgres and MVC3]]></title>
-    <link href="http://datachomp.github.io/archives/getting-started-with-postgres-and-mvc3/"/>
+    <link href="http://datachomp.com/archives/getting-started-with-postgres-and-mvc3/"/>
     <updated>2011-11-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/getting-started-with-postgres-and-mvc3</id>
+    <id>http://datachomp.com/archives/getting-started-with-postgres-and-mvc3</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>&ldquo;<strong><em><a href="http://www.postgresql.org/">Postgres</a>? WTF man, you&rsquo;re a SQL Server DBA!</em></strong>&rdquo; It&rsquo;s true, I am a SQL Server DBA but even I have to admit that the Postgres team is doing some <a href="http://www.postgresql.org/about/featurematrix">wildy exciting stuff</a>. With that in mind, lets take a quick look at just how quickly we can replace SQL Server with a free/open full bore Enterprise database system like <a href="http://www.postgresql.org/">Postgres</a>.</p>
@@ -270,9 +270,9 @@ So remember when I started our Colors table with a capital C? This is where it c
   
   <entry>
     <title type="html"><![CDATA[Tekpub &#8211; Full Throttle with Rob Sullivan show notes]]></title>
-    <link href="http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
+    <link href="http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
     <updated>2011-06-04T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
+    <id>http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
@@ -310,9 +310,9 @@ SQL Server 2008 R2 / Management Studio<br/>
   
   <entry>
     <title type="html"><![CDATA[Massive and using multiple args:]]></title>
-    <link href="http://datachomp.github.io/archives/massive-and-using-multiple-args/"/>
+    <link href="http://datachomp.com/archives/massive-and-using-multiple-args/"/>
     <updated>2011-04-14T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/massive-and-using-multiple-args</id>
+    <id>http://datachomp.com/archives/massive-and-using-multiple-args</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>

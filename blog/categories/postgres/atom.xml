@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: Postgres | DataChomp]]></title>
-  <link href="http://datachomp.github.io/blog/categories/postgres/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/blog/categories/postgres/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
-    <link href="http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres/"/>
+    <link href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/"/>
     <updated>2012-03-07T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres</id>
+    <id>http://datachomp.com/archives/im-leaving-sql-server-for-postgres</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
@@ -30,9 +30,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting started with Postgres and MVC3]]></title>
-    <link href="http://datachomp.github.io/archives/getting-started-with-postgres-and-mvc3/"/>
+    <link href="http://datachomp.com/archives/getting-started-with-postgres-and-mvc3/"/>
     <updated>2011-11-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/getting-started-with-postgres-and-mvc3</id>
+    <id>http://datachomp.com/archives/getting-started-with-postgres-and-mvc3</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>&ldquo;<strong><em><a href="http://www.postgresql.org/">Postgres</a>? WTF man, you&rsquo;re a SQL Server DBA!</em></strong>&rdquo; It&rsquo;s true, I am a SQL Server DBA but even I have to admit that the Postgres team is doing some <a href="http://www.postgresql.org/about/featurematrix">wildy exciting stuff</a>. With that in mind, lets take a quick look at just how quickly we can replace SQL Server with a free/open full bore Enterprise database system like <a href="http://www.postgresql.org/">Postgres</a>.</p>

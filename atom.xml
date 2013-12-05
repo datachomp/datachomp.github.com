@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[DataChomp]]></title>
-  <link href="http://datachomp.github.io/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Getting Started With PGBouncer]]></title>
-    <link href="http://datachomp.github.io/archives/getting-started-with-pgbouncer/"/>
+    <link href="http://datachomp.com/archives/getting-started-with-pgbouncer/"/>
     <updated>2013-12-02T22:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/getting-started-with-pgbouncer</id>
+    <id>http://datachomp.com/archives/getting-started-with-pgbouncer</id>
     <content type="html"><![CDATA[<p>One of the issues we face at Raisemore is a continuous flux in our number of connections to our primary Postgres database. If our load increases and we have to spin up more front end servers or spin up more backend servers. This can quickly wreck our connection limit. One solution, is for me to babysit the connection size on the pg server itself&hellip; or perhaps I can give the Apps the middle finger and starve their connection limit &ndash; neither of these lead to happy outcomes for everyone involved.</p>
 
 <h3>apt-get install happiness</h3>
@@ -64,9 +64,9 @@ sudo reboot #reboot the box to test it out
   
   <entry>
     <title type="html"><![CDATA[heroku pg-extras builds bridges]]></title>
-    <link href="http://datachomp.github.io/archives/heroku-pg-extras-builds-bridges/"/>
+    <link href="http://datachomp.com/archives/heroku-pg-extras-builds-bridges/"/>
     <updated>2013-11-20T19:10:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/heroku-pg-extras-builds-bridges</id>
+    <id>http://datachomp.com/archives/heroku-pg-extras-builds-bridges</id>
     <content type="html"><![CDATA[<p>It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different languages, yelling at each and saying hurtful things&hellip; all the while the app and db sit in their servers neglected and needing love.</p>
 
 <h3>pg_therapy</h3>
@@ -112,9 +112,9 @@ sudo reboot #reboot the box to test it out
   
   <entry>
     <title type="html"><![CDATA[Sequel and Postgres Range Types]]></title>
-    <link href="http://datachomp.github.io/archives/sequel-and-postgres-range-types/"/>
+    <link href="http://datachomp.com/archives/sequel-and-postgres-range-types/"/>
     <updated>2013-11-15T21:20:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/sequel-and-postgres-range-types</id>
+    <id>http://datachomp.com/archives/sequel-and-postgres-range-types</id>
     <content type="html"><![CDATA[<p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
 
 <pre><code>CREATE TABLE burritotrucks
@@ -180,9 +180,9 @@ p options
   
   <entry>
     <title type="html"><![CDATA[Writable CTEs in Postgres]]></title>
-    <link href="http://datachomp.github.io/archives/writable-ctes-in-postgres/"/>
+    <link href="http://datachomp.com/archives/writable-ctes-in-postgres/"/>
     <updated>2013-11-15T18:10:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/writable-ctes-in-postgres</id>
+    <id>http://datachomp.com/archives/writable-ctes-in-postgres</id>
     <content type="html"><![CDATA[<p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
 First, lets new up some data:</p>
 
@@ -247,9 +247,9 @@ where champs = onlyone.tops;
   
   <entry>
     <title type="html"><![CDATA[My Friend Rob]]></title>
-    <link href="http://datachomp.github.io/archives/my-friend-rob/"/>
+    <link href="http://datachomp.com/archives/my-friend-rob/"/>
     <updated>2013-11-14T22:05:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/my-friend-rob</id>
+    <id>http://datachomp.com/archives/my-friend-rob</id>
     <content type="html"><![CDATA[<p>It&rsquo;s been a little over 6 months since I left .Net and one of the personal concerns I had with Postgres/Ruby was how long it would be before I started getting complacent and taking everything for granted.</p>
 
 <h3>Always Be Coding</h3>
@@ -276,9 +276,9 @@ Body: 1 &ndash; Rob Conery</p>
   
   <entry>
     <title type="html"><![CDATA[Helping Asset Pipeline Open Up A Little]]></title>
-    <link href="http://datachomp.github.io/archives/helping-asset-pipeline-open-up-a-little/"/>
+    <link href="http://datachomp.com/archives/helping-asset-pipeline-open-up-a-little/"/>
     <updated>2013-10-26T14:42:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/helping-asset-pipeline-open-up-a-little</id>
+    <id>http://datachomp.com/archives/helping-asset-pipeline-open-up-a-little</id>
     <content type="html"><![CDATA[<p>A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in my Rails 3 app is the:</p>
 
 <pre><code>undefined method `directory?' for nil:NilClass
@@ -317,9 +317,9 @@ end
   
   <entry>
     <title type="html"><![CDATA[Radius Queries in Postgres]]></title>
-    <link href="http://datachomp.github.io/archives/radius-queries-in-postgres/"/>
+    <link href="http://datachomp.com/archives/radius-queries-in-postgres/"/>
     <updated>2013-10-07T13:56:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/radius-queries-in-postgres</id>
+    <id>http://datachomp.com/archives/radius-queries-in-postgres</id>
     <content type="html"><![CDATA[<p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
 
 <h4>Where oh where to begin</h4>
@@ -377,9 +377,9 @@ ORDER by burrito_distance;
   
   <entry>
     <title type="html"><![CDATA[application_name in sequel]]></title>
-    <link href="http://datachomp.github.io/archives/application-name-in-sequel/"/>
+    <link href="http://datachomp.com/archives/application-name-in-sequel/"/>
     <updated>2013-10-02T09:22:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/application-name-in-sequel</id>
+    <id>http://datachomp.com/archives/application-name-in-sequel</id>
     <content type="html"><![CDATA[<p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
 
 <p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
@@ -399,9 +399,9 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
   
   <entry>
     <title type="html"><![CDATA[Postgres.app and shared_preload_libraries]]></title>
-    <link href="http://datachomp.github.io/archives/postgres-dot-app-and-shared-preload-libraries/"/>
+    <link href="http://datachomp.com/archives/postgres-dot-app-and-shared-preload-libraries/"/>
     <updated>2013-09-18T09:28:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/postgres-dot-app-and-shared-preload-libraries</id>
+    <id>http://datachomp.com/archives/postgres-dot-app-and-shared-preload-libraries</id>
     <content type="html"><![CDATA[<p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
 
 <pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
@@ -448,9 +448,9 @@ show config_all; -- Ahhhh, here is what we want
   
   <entry>
     <title type="html"><![CDATA[nginx block php requests]]></title>
-    <link href="http://datachomp.github.io/archives/nginx-block-php-requests/"/>
+    <link href="http://datachomp.com/archives/nginx-block-php-requests/"/>
     <updated>2013-09-13T22:28:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/nginx-block-php-requests</id>
+    <id>http://datachomp.com/archives/nginx-block-php-requests</id>
     <content type="html"><![CDATA[<h3>problem:</h3>
 
 <p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 lines or so of stack junk going into your application log &ndash; much of what is inserted you don&rsquo;t care about. In a normal, healthy, fun loving rails app, the majority of the routing errors come from script kiddies or an exec&rsquo;s infected home machine making php requests. These requests are just casting out a broad net and looking for low hanging fruit exploits. We need something to help tune the signal to noise occuring in our application logs as well as to stop wasting our apps time on bots.</p>
@@ -505,9 +505,9 @@ and on... and on... and on ...
   
   <entry>
     <title type="html"><![CDATA[Extending Sequel with hstore]]></title>
-    <link href="http://datachomp.github.io/archives/extending-sequel-with-hstore/"/>
+    <link href="http://datachomp.com/archives/extending-sequel-with-hstore/"/>
     <updated>2013-08-29T21:19:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/extending-sequel-with-hstore</id>
+    <id>http://datachomp.com/archives/extending-sequel-with-hstore</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, <a href="http://www.comiclist.com/media/blogs/news/AngryStayPuftBank.jpg">Active Record</a> was like putting my App in a fat suit. In the search for something leaner, I found <a href="https://github.com/jeremyevans/sequel">Sequel</a>. It reminded me a lot of <a href="https://github.com/robconery/massive">Massive</a> in .NET and at that point, everything in this world of Ruby started clicking.</p>
 
 <h3>Iocane Powder</h3>
@@ -559,9 +559,9 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
   
   <entry>
     <title type="html"><![CDATA[Passenger: No Longer in /opt/ion]]></title>
-    <link href="http://datachomp.github.io/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
+    <link href="http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
     <updated>2013-08-27T23:26:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
+    <id>http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
     <content type="html"><![CDATA[<p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
 
 <p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
@@ -605,9 +605,9 @@ sudo service nginx restart
   
   <entry>
     <title type="html"><![CDATA[Treadmill Desk Setup]]></title>
-    <link href="http://datachomp.github.io/archives/treadmill-desk-setup/"/>
+    <link href="http://datachomp.com/archives/treadmill-desk-setup/"/>
     <updated>2013-08-09T10:05:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/treadmill-desk-setup</id>
+    <id>http://datachomp.com/archives/treadmill-desk-setup</id>
     <content type="html"><![CDATA[<p>For quite a few months now, I&rsquo;ve been playing around with a treadmill
 desk. I have a pretty large hydraulic desk from <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Geek Desk</a> that I have
 partitioned into 2 workstations:</p>
@@ -637,9 +637,9 @@ Recently, I started adding games to the mix. If you are expecting to be able to 
   
   <entry>
     <title type="html"><![CDATA[No Longer Buying Aircraft Carriers]]></title>
-    <link href="http://datachomp.github.io/archives/no-longer-buying-aircraft-carriers/"/>
+    <link href="http://datachomp.com/archives/no-longer-buying-aircraft-carriers/"/>
     <updated>2013-08-09T00:23:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/no-longer-buying-aircraft-carriers</id>
+    <id>http://datachomp.com/archives/no-longer-buying-aircraft-carriers</id>
     <content type="html"><![CDATA[<p>I&rsquo;m a hardware nut who likes both building and upgrading my dev boxes. I&rsquo;m getting ready to refresh my box this year and the biggest difference &ndash; I&rsquo;m no longer doing .NET/SQL Server. I&rsquo;m also not on Windows.</p>
 
 <p>So what&rsquo;s different?</p>
@@ -668,9 +668,9 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
   
   <entry>
     <title type="html"><![CDATA[Quickly Migrate A DB From MySQL To Postgres]]></title>
-    <link href="http://datachomp.github.io/archives/quickly-migrate-a-db-from-mysql-to-postgres/"/>
+    <link href="http://datachomp.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/"/>
     <updated>2013-05-05T12:50:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/quickly-migrate-a-db-from-mysql-to-postgres</id>
+    <id>http://datachomp.com/archives/quickly-migrate-a-db-from-mysql-to-postgres</id>
     <content type="html"><![CDATA[<p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
 
 <p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
@@ -696,9 +696,9 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
   
   <entry>
     <title type="html"><![CDATA[More Nerdy Hipchat Emoticons]]></title>
-    <link href="http://datachomp.github.io/archives/more-nerdy-hipchat-emoticons/"/>
+    <link href="http://datachomp.com/archives/more-nerdy-hipchat-emoticons/"/>
     <updated>2013-04-17T22:43:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/more-nerdy-hipchat-emoticons</id>
+    <id>http://datachomp.com/archives/more-nerdy-hipchat-emoticons</id>
     <content type="html"><![CDATA[<p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&hellip;</p>
 
 <p>Here is what I have so far:</p>
@@ -732,9 +732,9 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
   
   <entry>
     <title type="html"><![CDATA[Top 10 Reasons I like Postgres Over SQL Server]]></title>
-    <link href="http://datachomp.github.io/archives/top-10-reasons-i-like-postgres-over-sql-server/"/>
+    <link href="http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/"/>
     <updated>2013-04-07T10:46:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/top-10-reasons-i-like-postgres-over-sql-server</id>
+    <id>http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server</id>
     <content type="html"><![CDATA[<p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
 While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&hellip; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&rsquo;m favoring Postgres over SQL Server from a technical/business aspect.</p>
 
@@ -764,9 +764,9 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   
   <entry>
     <title type="html"><![CDATA[So Long and Thanks For All The Deadlocks]]></title>
-    <link href="http://datachomp.github.io/archives/so-long-and-thanks-for-all-the-deadlocks/"/>
+    <link href="http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks/"/>
     <updated>2013-03-10T21:54:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/so-long-and-thanks-for-all-the-deadlocks</id>
+    <id>http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks</id>
     <content type="html"><![CDATA[<p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
 
 <p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
@@ -774,7 +774,7 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 <blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
 
 
-<script async src="http://datachomp.github.io//platform.twitter.com/widgets.js" charset="utf-8"></script>
+<script async src="http://datachomp.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 
 <p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
@@ -791,9 +791,9 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   
   <entry>
     <title type="html"><![CDATA[Later Wordpress]]></title>
-    <link href="http://datachomp.github.io/archives/later-wordpress/"/>
+    <link href="http://datachomp.com/archives/later-wordpress/"/>
     <updated>2013-03-10T15:25:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/later-wordpress</id>
+    <id>http://datachomp.com/archives/later-wordpress</id>
     <content type="html"><![CDATA[<p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
 
 <h2>Right Tool for the Right Blog</h2>
@@ -804,9 +804,9 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   
   <entry>
     <title type="html"><![CDATA[Stopping spam in Contact Form 7]]></title>
-    <link href="http://datachomp.github.io/archives/stopping-spam-in-contact-form-7/"/>
+    <link href="http://datachomp.com/archives/stopping-spam-in-contact-form-7/"/>
     <updated>2013-02-20T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/stopping-spam-in-contact-form-7</id>
+    <id>http://datachomp.com/archives/stopping-spam-in-contact-form-7</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>

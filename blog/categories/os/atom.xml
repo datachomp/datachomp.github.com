@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: OS | DataChomp]]></title>
-  <link href="http://datachomp.github.io/blog/categories/os/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/blog/categories/os/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Running ASP.NET MVC4 on Ubuntu 12.04]]></title>
-    <link href="http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
+    <link href="http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/"/>
     <updated>2012-04-24T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
+    <id>http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The single most question I get regarding our <a href="http://tekpub.com/productions/pg" title="Hello Postgres">Hello Postgres</a> series over Tekpub is &ldquo;How are you running your app on Linux?&rdquo; As much as I enjoy sending volleys of fragmented explanations over emails to people, I decided it might be in everyone&rsquo;s best interest if I just blog it out. Technology moves fast&hellip; like super fast. So instead of showing you how to deploy an old and busted MVC3 app to a &ldquo;has been&rdquo; Ubuntu 11.10, we&rsquo;re going to be going with MVC4 and <a href="https://wiki.ubuntu.com/PrecisePangolin/TechnicalOverview/Beta2" title="Ubuntu 12.04 beta 2">Ubuntu 12.04</a>. We&rsquo;re so bleeding edge you can call us cutters!</p>
@@ -89,9 +89,9 @@ chmod 755 install_mono-2.11.sh
   
   <entry>
     <title type="html"><![CDATA[Rock out with your Procmon out]]></title>
-    <link href="http://datachomp.github.io/archives/rock-out-with-your-procmon-out/"/>
+    <link href="http://datachomp.com/archives/rock-out-with-your-procmon-out/"/>
     <updated>2011-07-26T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/rock-out-with-your-procmon-out</id>
+    <id>http://datachomp.com/archives/rock-out-with-your-procmon-out</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>If you are not a fan of Sysinternals tools then you clearly do not have your geek merit badge. While I have always kept a local copy in the past, there is now a cool and easy way to get to Sysinternals and it is via<br/>
@@ -105,9 +105,9 @@ Start run live.sysinternals.comtools</p>
   
   <entry>
     <title type="html"><![CDATA[OSX Tools I use]]></title>
-    <link href="http://datachomp.github.io/archives/osx-tools-i-use/"/>
+    <link href="http://datachomp.com/archives/osx-tools-i-use/"/>
     <updated>2011-07-21T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/osx-tools-i-use</id>
+    <id>http://datachomp.com/archives/osx-tools-i-use</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p><strong>Misc:</strong><br/>
@@ -143,9 +143,9 @@ Skype<br/>
   
   <entry>
     <title type="html"><![CDATA[Windows Server Core &#8211; basic operations]]></title>
-    <link href="http://datachomp.github.io/archives/windows-server-core-basic-operations/"/>
+    <link href="http://datachomp.com/archives/windows-server-core-basic-operations/"/>
     <updated>2011-04-25T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/windows-server-core-basic-operations</id>
+    <id>http://datachomp.com/archives/windows-server-core-basic-operations</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>This post will basically be a collection of some of the crap I use while working on Windows Server 2008 R2 Core edition.</p>
@@ -157,9 +157,9 @@ sconfig.cmd tool</p>
   
   <entry>
     <title type="html"><![CDATA[Virtual Victory &#8211; AWS gives out a year of usage]]></title>
-    <link href="http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
+    <link href="http://datachomp.com/archives/virtual-victory-aws-gives-out-a-year-of-usage/"/>
     <updated>2010-10-23T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
+    <id>http://datachomp.com/archives/virtual-victory-aws-gives-out-a-year-of-usage</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>

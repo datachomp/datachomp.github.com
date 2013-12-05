@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[Category: SQL Server | DataChomp]]></title>
-  <link href="http://datachomp.github.io/blog/categories/sql-server/atom.xml" rel="self"/>
-  <link href="http://datachomp.github.io/"/>
-  <updated>2013-12-03T09:55:44-06:00</updated>
-  <id>http://datachomp.github.io/</id>
+  <link href="http://datachomp.com/blog/categories/sql-server/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2013-12-05T12:31:57-06:00</updated>
+  <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
     <email><![CDATA[rob@datachomp.com]]></email>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
-    <link href="http://datachomp.github.io/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
+    <link href="http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
     <updated>2012-03-13T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
+    <id>http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>If you want the back story on what this topic is all about &ndash;</p>
@@ -26,9 +26,9 @@
   
   <entry>
     <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
-    <link href="http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres/"/>
+    <link href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/"/>
     <updated>2012-03-07T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/im-leaving-sql-server-for-postgres</id>
+    <id>http://datachomp.com/archives/im-leaving-sql-server-for-postgres</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
@@ -41,9 +41,9 @@
   
   <entry>
     <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
-    <link href="http://datachomp.github.io/archives/git-and-red-gate-sql-source-control/"/>
+    <link href="http://datachomp.com/archives/git-and-red-gate-sql-source-control/"/>
     <updated>2012-01-28T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/git-and-red-gate-sql-source-control</id>
+    <id>http://datachomp.com/archives/git-and-red-gate-sql-source-control</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
@@ -100,9 +100,9 @@ and the process will end up looking like this:<br/>
   
   <entry>
     <title type="html"><![CDATA[Simple-Talk &#8211; SQL Test write up]]></title>
-    <link href="http://datachomp.github.io/archives/simple-talk-sql-test-write-up/"/>
+    <link href="http://datachomp.com/archives/simple-talk-sql-test-write-up/"/>
     <updated>2011-12-16T00:00:00-06:00</updated>
-    <id>http://datachomp.github.io/archives/simple-talk-sql-test-write-up</id>
+    <id>http://datachomp.com/archives/simple-talk-sql-test-write-up</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m anxious to see just how much David and his team can improve it.</p>
@@ -115,9 +115,9 @@ and the process will end up looking like this:<br/>
   
   <entry>
     <title type="html"><![CDATA[Tekpub &#8211; Full Throttle with Rob Sullivan show notes]]></title>
-    <link href="http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
+    <link href="http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
     <updated>2011-06-04T00:00:00-05:00</updated>
-    <id>http://datachomp.github.io/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
+    <id>http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
     <content type="html"><![CDATA[<h1></h1>
 
 <p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
