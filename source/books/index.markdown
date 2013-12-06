@@ -34,9 +34,11 @@ vim and vi tips
 [mastering nginx][89]  
 [RubyMotion][]  
 [Rails Recipes][]  
+[Heroku Up and Running][]  
 
 [RubyMotion]: http://pragprog.com/book/carubym/rubymotion/ "RubyMotion"
 [Rails Recipes]: http://pragprog.com/book/rr2/rails-recipes/ "Rails Recipes"
+[Heroku Up and Running]: http://www.amazon.com/gp/product/144934139X/ref=oh_details_o01_s00_i00?ie=UTF8&psc=1
 
 **Misc:**  
 [Ready Player One][90]  

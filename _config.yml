@@ -2,7 +2,8 @@
 #      Main Configs       #
 # ----------------------- #
 
-url: http://datachomp.github.com
+#url: http://datachomp.github.io
+url: http://datachomp.com
 title: DataChomp
 subtitle: Chomping At The Bits
 author: Rob Sullivan
