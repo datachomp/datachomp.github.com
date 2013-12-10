@@ -20,6 +20,8 @@ It is worth mentioning that in addition to reading, I spend a good chunk of time
 I wanted to start recording which books I've read.
 
 **Database:**  
+[Pro SQL Server Policy Based Management](http://www.amazon.com/Server-Policy-Based-Management-Experts-Voice/dp/1430229101/ref=sr_1_1?s=books&ie=UTF8&qid=1386655240&sr=1-1&keywords=policy+based+management)  
+[Pro SQL Server Service Broker](http://www.amazon.com/Pro-Server-2008-Service-Broker/dp/1430243023/ref=sr_1_2?s=books&ie=UTF8&qid=1386655198&sr=1-2&keywords=service+broker)  
 [postgres backup and restore][86]  
 [postgres instant starter][87]  
 [SQL Server 2012 Query Performance Tuning][88]  
@@ -61,13 +63,12 @@ vim and vi tips
  [5]: http://www.assoc-amazon.com/e/ir?t=data03c5-20&l=as2&o=1&a=1430219122
 
 **Database:**  
-[SQL Server Interview Questions and Answers: For All Database Developers and Developers Administrators][6]![][7]  
+[SQL Server Interview Questions and Answers: For All Database Developers and Developers Administrators][6]  
 [The Little Redis Book][8]  
 [PostgreSQL: Up and Running][9]![][10]  
 [Couchbase Manual 1.8][11]
 
  [6]: http://www.amazon.com/gp/product/B006H932IK/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=1789&creative=390957&creativeASIN=B006H932IK
- [7]: http://www.assoc-amazon.com/e/ir?t=data03c5-20&l=as2&o=1&a=B006H932IK
  [8]: http://openmymind.net/2012/1/23/The-Little-Redis-Book/
  [9]: http://www.amazon.com/gp/product/1449326331/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1449326331&linkCode=as2&tag=data03c5-20
  [10]: http://www.assoc-amazon.com/e/ir?t=data03c5-20&l=as2&o=1&a=1449326331
