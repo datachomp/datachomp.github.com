@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="One of the issues we face at Raisemore is a continuous flux in our number of connections to our primary Postgres database. If our load increases and &hellip;">
+  <meta name="description" content="In my many years of Enterprise DBA servitude, there would be many instances of blanket &lsquo;the devs are idiots&rsquo; statements. Sometimes by me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-20T23:28:00-06:00" pubdate data-updated="true">Dec 20<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In my many years of Enterprise DBA servitude, there would be many instances of blanket &lsquo;the devs are idiots&rsquo; statements. Sometimes by me, sometimes by others and from the perspective of the database it was usually justifiable. In these enviornments, this is acceptable. I have no idea what busy work task they have come up with and why should I even care about anything out side of my database? These AppsDevs are disgusting dirty creatures that just sling filth everywhere as they stomp their hooves on the keyboard. Worthless.</p>
+
+<h4>Inner Joined at the Hip</h4>
+
+<p>What I enjoy most about the above mindset is the expectation of the AppDev to know their job as well as my own. They must be fluent in the language of Stored Procedures else everything collapses from the data hate speech that comes from their object-pooriented programs. I&rsquo;ve often wondered where this one sidedness originated from. For a bit I thought it was just something that happened at places I worked. It&rsquo;s not just there though. Check out your local communities and you&rsquo;ll see the imbalance there as well. I attend both database user groups and developer based user groups. I often see a fair amount of AppDevs at sql events&hellip; I pretty much never see DBAs at developer events.</p>
+
+<h4>Cross Apply What You Know</h4>
+
+<p>A few years back, I got involved in with a few open source .NET ORMs. It goes without saying that ORMs are the Vietnam of the software world and I was pretty much blown away at how desperate these projects were for feedback. It was so easy and fun to help out and it totally changed my opinion of ORMs. It also changed my opinion of the curmudgeoned DBA.</p>
+
+<h4>Refactor the  Query</h4>
+
+<p>The more time you spend with AppDevs the more you realize just how many of them are stuck with really bad DBAs. Now when I hear DBAs complain I ask the following of them:
+What open source work do you do?
+What dev conferences do you attend with the team?
+What have you personally built?
+What source control do you use so that the team can see your scripts and ask about them?</p>
+
+<p>You don&rsquo;t have to be Nostradamus to know how the people I&rsquo;m talking about answer the above questions. Like so many things with humans, the loud ones with the most generic argument are typically doing the least to fix the problem. If you are an Oracle/SQL Server DBA, don&rsquo;t just hide behind our industry specific firewalls &ndash; get out there. Talk. Review some code, help some project, make your scripts public. We&rsquo;ve sat in our foxholes long enough and the AppDevs are not our enemy. It&rsquo;s our turn to build the bridge.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -757,90 +811,6 @@ show config_all; -- Ahhhh, here is what we want
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h3>problem:</h3>
-
-<p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 lines or so of stack junk going into your application log &ndash; much of what is inserted you don&rsquo;t care about. In a normal, healthy, fun loving rails app, the majority of the routing errors come from script kiddies or an exec&rsquo;s infected home machine making php requests. These requests are just casting out a broad net and looking for low hanging fruit exploits. We need something to help tune the signal to noise occuring in our application logs as well as to stop wasting our apps time on bots.</p>
-
-<h3>solution:</h3>
-
-<p>Just throw in a quick nginx location rule in your apps nginx config to catch and handle all the requests before they even hit your server.</p>
-
-<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
-    return 404;
-}
-</code></pre>
-
-<p>For those curious what I&rsquo;m talking about -<br/>
-Here is an application log before:</p>
-
-<pre><code>Started GET "/login.php" for 80.241.16.10 at 2013-09-13 09:01:38 +0000
-
-ActionController::RoutingError (No route matches [GET] "/login.php"):
-actionpack (3.2.14) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
-actionpack (3.2.14) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
-railties (3.2.14) lib/rails/rack/logger.rb:32:in `call_app'
-railties (3.2.14) lib/rails/rack/logger.rb:16:in `block in call'
-activesupport (3.2.14) lib/active_support/tagged_logging.rb:22:in `tagged'
-railties (3.2.14) lib/rails/rack/logger.rb:16:in `call'
-actionpack (3.2.14) lib/action_dispatch/middleware/request_id.rb:22:in `call'
-rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
-rack (1.4.5) lib/rack/runtime.rb:17:in `call'
-rack (1.4.5) lib/rack/lock.rb:15:in `call'
-rack-cache (1.2) lib/rack/cache/context.rb:136:in `forward'
-rack-cache (1.2) lib/rack/cache/context.rb:245:in `fetch'
-rack-cache (1.2) lib/rack/cache/context.rb:185:in `lookup'
-rack-cache (1.2) lib/rack/cache/context.rb:66:in `call!'
-rack-cache (1.2) lib/rack/cache/context.rb:51:in `call'
-rack-mini-profiler (0.1.29) Ruby/lib/mini_profiler/profiler.rb:188:in `call'
-railties (3.2.14) lib/rails/engine.rb:484:in `call'
-railties (3.2.14) lib/rails/application.rb:231:in `call'
-railties (3.2.14) lib/rails/railtie/configurable.rb:30:in `method_missing'
-and on... and on... and on ...
-</code></pre>
-
-<p>Here is one after:</p>
-
-<pre><code>  
-
-</code></pre>
-
-
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -860,6 +830,10 @@ and on... and on... and on ...
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
       </li>
     
@@ -873,10 +847,6 @@ and on... and on... and on ...
     
       <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Top 10 Reasons I like Postgres Over SQL Server - DataChomp</title>
+  <title>The AppDevs are idiots - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="While at Waza this year, I had a chance to talk to my friend Guillaume Roques. In addition to talking about SalesForce, we took advantage of our &hellip;">
+  <meta name="description" content="In my many years of Enterprise DBA servitude, there would be many instances of blanket &lsquo;the devs are idiots&rsquo; statements. Sometimes by me &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server">
+  <link rel="canonical" href="http://datachomp.com/archives/the-appdevs-are-idiots">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Top 10 Reasons I Like Postgres Over SQL Server</h1>
+      <h1 class="entry-title">The AppDevs Are Idiots</h1>
     
     
       <p class="meta">
@@ -99,37 +99,32 @@
   
 
 
-<time datetime="2013-04-07T10:46:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+<time datetime="2013-12-20T23:28:00-06:00" pubdate data-updated="true">Dec 20<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&hellip; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&rsquo;m favoring Postgres over SQL Server from a technical/business aspect.</p>
+<div class="entry-content"><p>In my many years of Enterprise DBA servitude, there would be many instances of blanket &lsquo;the devs are idiots&rsquo; statements. Sometimes by me, sometimes by others and from the perspective of the database it was usually justifiable. In these enviornments, this is acceptable. I have no idea what busy work task they have come up with and why should I even care about anything out side of my database? These AppsDevs are disgusting dirty creatures that just sling filth everywhere as they stomp their hooves on the keyboard. Worthless.</p>
 
-<br />
+<h4>Inner Joined at the Hip</h4>
 
+<p>What I enjoy most about the above mindset is the expectation of the AppDev to know their job as well as my own. They must be fluent in the language of Stored Procedures else everything collapses from the data hate speech that comes from their object-pooriented programs. I&rsquo;ve often wondered where this one sidedness originated from. For a bit I thought it was just something that happened at places I worked. It&rsquo;s not just there though. Check out your local communities and you&rsquo;ll see the imbalance there as well. I attend both database user groups and developer based user groups. I often see a fair amount of AppDevs at sql events&hellip; I pretty much never see DBAs at developer events.</p>
 
+<h4>Cross Apply What You Know</h4>
 
+<p>A few years back, I got involved in with a few open source .NET ORMs. It goes without saying that ORMs are the Vietnam of the software world and I was pretty much blown away at how desperate these projects were for feedback. It was so easy and fun to help out and it totally changed my opinion of ORMs. It also changed my opinion of the curmudgeoned DBA.</p>
 
-<hr />
+<h4>Refactor the  Query</h4>
 
+<p>The more time you spend with AppDevs the more you realize just how many of them are stuck with really bad DBAs. Now when I hear DBAs complain I ask the following of them:
+What open source work do you do?
+What dev conferences do you attend with the team?
+What have you personally built?
+What source control do you use so that the team can see your scripts and ask about them?</p>
 
-<ol>
-<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &ldquo;feature&rdquo; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
-<li><p>Compression out of the box. With SQL Server, compression is an &ldquo;Enterprise Edition and Up&rdquo; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
-<li><p>Concurrent Index Creation. You are going to find a recurring theme there&hellip;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
-<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&rsquo;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&rsquo;re writing huge checks to pull this off.</p></li>
-<li><p>Indexable functions &ndash; In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&rsquo;re stuck in the cruel world of table scans when this happens.</p></li>
-<li><p>Modules/Extensions &ndash; Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&hellip; It quickly becomes your grandparents&#8217; database.</p></li>
-<li><p>Works everywhere &ndash; Linux, Mac, BSD, Windows&hellip; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
-<li><p>Arrays &ndash; Everyone loves arrays and they are a core part of programming&hellip;except in SQL Server, where they don&rsquo;t exist.</p></li>
-<li><p>JSON / V8 support &ndash; You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
-<li><p>Unicode by default &ndash; No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
-</ol>
-
+<p>You don&rsquo;t have to be Nostradamus to know how the people I&rsquo;m talking about answer the above questions. Like so many things with humans, the loud ones with the most generic argument are typically doing the least to fix the problem. If you are an Oracle/SQL Server DBA, don&rsquo;t just hide behind our industry specific firewalls &ndash; get out there. Talk. Review some code, help some project, make your scripts public. We&rsquo;ve sat in our foxholes long enough and the AppDevs are not our enemy. It&rsquo;s our turn to build the bridge.</p>
 </div>
 
 
@@ -152,7 +147,7 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   
 
 
-<time datetime="2013-04-07T10:46:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
+<time datetime="2013-12-20T23:28:00-06:00" pubdate data-updated="true">Dec 20<span>th</span>, 2013</time>
       
 
 
@@ -160,7 +155,7 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/" data-via="datachomp" data-counturl="http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/the-appdevs-are-idiots/" data-via="datachomp" data-counturl="http://datachomp.com/archives/the-appdevs-are-idiots/" >Tweet</a>
   
   
   
@@ -169,10 +164,8 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/so-long-and-thanks-for-all-the-deadlocks/" title="Previous Post: So Long and Thanks For All The Deadlocks">&laquo; So Long and Thanks For All The Deadlocks</a>
+        <a class="basic-alignment left" href="/archives/getting-started-with-pgbouncer/" title="Previous Post: Getting Started With PGBouncer">&laquo; Getting Started With PGBouncer</a>
       
-      
-        <a class="basic-alignment right" href="/archives/more-nerdy-hipchat-emoticons/" title="Next Post: More Nerdy Hipchat Emoticons">More Nerdy Hipchat Emoticons &raquo;</a>
       
     </p>
   </footer>
@@ -242,8 +235,8 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/';
-        var disqus_url = 'http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/';
+        var disqus_identifier = 'http://datachomp.com/archives/the-appdevs-are-idiots/';
+        var disqus_url = 'http://datachomp.com/archives/the-appdevs-are-idiots/';
         var disqus_script = 'embed.js';
       
     (function () {

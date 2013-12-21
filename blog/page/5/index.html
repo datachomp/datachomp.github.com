@@ -9,9 +9,8 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I always forget this so it is going in a blog for quick reference: SP_CONFIGURE 'show advanced options',1
-RECONFIGURE WITH override
-GO SP_CONFIGURE &hellip;">
+  <meta name="description" content="So, in Rob Conery&rsquo;s example of using multiple args in a query var tbl = new Products();
+var products = tbl.All(where: "CategoryID = @0 AND &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -82,6 +81,63 @@ GO SP_CONFIGURE &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/massive-and-using-multiple-args/">Massive and Using Multiple Args:</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>
+
+<p><code></p>
+
+<pre><code>var tbl = new Products();
+var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
+</code></pre>
+
+<p></code>
+It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&rsquo;t take to kindly to that sort of syntax.</p>
+
+<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
+<code></p>
+
+<pre><code>object[] queryargs = {"Okapi", "online"};
+var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
+</code></pre>
+
+<p></code>
+and low and behold the magic happens.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -785,57 +841,6 @@ else { FreakOut(); }
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/virtual-victory-aws-gives-out-a-year-of-usage/">Virtual Victory &#8211; AWS Gives Out a Year of Usage</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-10-23T00:00:00-05:00" pubdate data-updated="true">Oct 23<span>rd</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Amazon has just done something amazing&hellip; <a href="http://aws.amazon.com/free/">Amazingness</a>&hellip; They are essentially doing a conditional year free of their services. While I am a huge fan of VMWare, what Amazon is offering is something completely unmatched by VCloud or MS Azure.  (Please see Craig&rsquo;s comment as this claim has the possibility of being debunked. Thanks Craig!)</p>
-
-<p>So what can I do with this you might ask? Here are some ideas: (I am doing these off the top of my head so feel free to criticize them by suggesting a better ideas)</p>
-
-<ol>
-<li><p>If you have never played with Linux/Ruby or anything else, here is a good/free way to to dabble without the &lsquo;will this mess up my system&rsquo; fear. Microsoft is continuing their adoption of features from these platforms and it can only benefit you to see these ideas they are using from Ruby(gems) or Apache(modularization). The more you know, the more you grow.</p></li>
-<li><p>NOSQL? What is a NOSQL? Want a simple way to learn about NOSQL? Then try out Amazon&rsquo;s simpleDB. They have various demos and such you can run and play with and start trying to see what all the hype is about. Remember fellow fearful DBA&rsquo;s, NOSQL stands for &ldquo;Not Only SQL&rdquo; not for No &ndash; SQL as in SQL Void.</p></li>
-<li><p>Embrace the awesome of Amazon S3. Ever wonder why Dropbox/JungleDisk and various other companies can give you so much storage for so cheap? Amazon S3 is pretty much the answer to that question. I typically use the cheapest hosting plans possible and S3 as a CDN to smoke/mirror performance.</p></li>
-<li><p>SQL Server testing &ndash; Microsoft provides trial software for pretty much all their projects. If you are curious about &hellip; say playing with some feature of replication or maybe wondering about online indexing &hellip; Fire up 1 or more instances of EC2 and actually try it. You no longer have an excuse to put it off.</p></li>
-<li><p>.Net testing or running a service &ndash; With shared hosting, I don&rsquo;t have a way of keeping an ongoing on demand service per say&hellip; So why not have a micro instance where you can deploy services and such. For example, say you need to add SMS services to your app&hellip;. Sign up for <a href="http://www.twilio.com/">Twilio</a>, create a little service, throw it on your free AWS EC2 instance and poll every hour or so. Most shared hosting sites don&rsquo;t really support SQL Server SSIS&hellip; so why not have an AWS EC2 instance that fires up at night and starts some SSIS packages?</p></li>
-</ol>
-
-
-<p>Now, some of this isn&rsquo;t without a learning curve, but we are in the software development industry&hellip; if we can&rsquo;t navigate learning curves or don&rsquo;t even pursue learning to begin with we add more nails to our career coffin as well as start becoming the problem.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/6/">&larr; Older</a>
@@ -857,6 +862,10 @@ else { FreakOut(); }
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
       </li>
     
@@ -870,10 +879,6 @@ else { FreakOut(); }
     
       <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

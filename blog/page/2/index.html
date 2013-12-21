@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I&rsquo;ve always been a fan of the cleaner simpler ORMs. When I was getting started with Ruby, Active Record was like putting my App in a fat suit. &hellip;">
+  <meta name="description" content="problem: When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/nginx-block-php-requests/">Nginx Block Php Requests</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-13T22:28:00-05:00" pubdate data-updated="true">Sep 13<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h3>problem:</h3>
+
+<p>When your rails app barfs on an error, what goes into the app logs isn&rsquo;t pretty. Even with a basic routing error, you can count on 30 lines or so of stack junk going into your application log &ndash; much of what is inserted you don&rsquo;t care about. In a normal, healthy, fun loving rails app, the majority of the routing errors come from script kiddies or an exec&rsquo;s infected home machine making php requests. These requests are just casting out a broad net and looking for low hanging fruit exploits. We need something to help tune the signal to noise occuring in our application logs as well as to stop wasting our apps time on bots.</p>
+
+<h3>solution:</h3>
+
+<p>Just throw in a quick nginx location rule in your apps nginx config to catch and handle all the requests before they even hit your server.</p>
+
+<pre><code>location ~ (\.php|.aspx|.asp|myadmin) {
+    return 404;
+}
+</code></pre>
+
+<p>For those curious what I&rsquo;m talking about -<br/>
+Here is an application log before:</p>
+
+<pre><code>Started GET "/login.php" for 80.241.16.10 at 2013-09-13 09:01:38 +0000
+
+ActionController::RoutingError (No route matches [GET] "/login.php"):
+actionpack (3.2.14) lib/action_dispatch/middleware/debug_exceptions.rb:21:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/show_exceptions.rb:56:in `call'
+railties (3.2.14) lib/rails/rack/logger.rb:32:in `call_app'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `block in call'
+activesupport (3.2.14) lib/active_support/tagged_logging.rb:22:in `tagged'
+railties (3.2.14) lib/rails/rack/logger.rb:16:in `call'
+actionpack (3.2.14) lib/action_dispatch/middleware/request_id.rb:22:in `call'
+rack (1.4.5) lib/rack/methodoverride.rb:21:in `call'
+rack (1.4.5) lib/rack/runtime.rb:17:in `call'
+rack (1.4.5) lib/rack/lock.rb:15:in `call'
+rack-cache (1.2) lib/rack/cache/context.rb:136:in `forward'
+rack-cache (1.2) lib/rack/cache/context.rb:245:in `fetch'
+rack-cache (1.2) lib/rack/cache/context.rb:185:in `lookup'
+rack-cache (1.2) lib/rack/cache/context.rb:66:in `call!'
+rack-cache (1.2) lib/rack/cache/context.rb:51:in `call'
+rack-mini-profiler (0.1.29) Ruby/lib/mini_profiler/profiler.rb:188:in `call'
+railties (3.2.14) lib/rails/engine.rb:484:in `call'
+railties (3.2.14) lib/rails/application.rb:231:in `call'
+railties (3.2.14) lib/rails/railtie/configurable.rb:30:in `method_missing'
+and on... and on... and on ...
+</code></pre>
+
+<p>Here is one after:</p>
+
+<pre><code>  
+
+</code></pre>
+
+
+
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -623,49 +707,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/stopping-spam-in-contact-form-7/">Stopping Spam in Contact Form 7</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-02-20T00:00:00-06:00" pubdate data-updated="true">Feb 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
-Ha, having issues getting the code to display properly so just check this link:</p>
-
-<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
-
-<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -687,6 +728,10 @@ Ha, having issues getting the code to display properly so just check this link:<
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
       </li>
     
@@ -700,10 +745,6 @@ Ha, having issues getting the code to display properly so just check this link:<
     
       <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>

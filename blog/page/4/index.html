@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="This post is over 2 years old and dealt with early versions of the product. A lot has changed since then. I am a huge fan of Red Gate SQL Source &hellip;">
+  <meta name="description" content="An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,90 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/hey-app-quit-wasting-my-time-sorting-your-data/">Hey App, Quit Wasting My Time Sorting Your Data</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true">Jan 29<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
+
+<p><strong>Nut Kicking:</strong><br/>
+In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
+
+<p><strong>Code Please:</strong><br/>
+Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
+Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
+And this is the execution plan it creates:<br/>
+<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+
+<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
+
+<p><strong>Just Fix It</strong><br/>
+In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
+
+<p><code>
+public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
+{</p>
+
+<pre><code>var table = new Badges();
+var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
+return badges.OrderBy(x=&gt;x.Name);
+//return badges.OrderByDescending(x =&gt; x.Name);
+</code></pre>
+
+<p>}
+</code>
+That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
+
+<p><strong>Does this make us happy?</strong><br/>
+I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
+
+<p><strong>But But But, our servers are busy too!</strong><br/>
+Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
+
+<p>There are a ton of ways to do this:<br/>
+<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
+
+<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -706,63 +790,6 @@ sconfig.cmd tool</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/massive-and-using-multiple-args/">Massive and Using Multiple Args:</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-04-14T00:00:00-05:00" pubdate data-updated="true">Apr 14<span>th</span>, 2011</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So, in <a href="http://blog.wekeroad.com/helpy-stuff/and-i-shall-call-it-massive">Rob Conery&rsquo;s example</a> of using multiple args in a query</p>
-
-<p><code></p>
-
-<pre><code>var tbl = new Products();
-var products = tbl.All(where: "CategoryID = @0 AND UnitPrice &gt; @1", orderBy: "ProductName", limit: 20, args: 5,20);
-</code></pre>
-
-<p></code>
-It makes the args appear to be this completely bad ass and intelligent command that knows exactly when and where to parse/apply the values. Well, in the real world versions of Massive the compiler doesn&rsquo;t take to kindly to that sort of syntax.</p>
-
-<p>args: is a parameter of type object [] so the way I use multiple params is as follows:
-<code></p>
-
-<pre><code>object[] queryargs = {"Okapi", "online"};
-var DBBasics = table.All(where: "WHERE ServerName=@0 and status = @1", args: queryargs );
-</code></pre>
-
-<p></code>
-and low and behold the magic happens.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/5/">&larr; Older</a>
@@ -784,6 +811,10 @@ and low and behold the magic happens.</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
       </li>
     
@@ -797,10 +828,6 @@ and low and behold the magic happens.</p>
     
       <li class="post">
         <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/my-friend-rob/">My Friend Rob</a>
       </li>
     
   </ul>
