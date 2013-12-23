@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2013-12-20T23:59:47-06:00</updated>
+  <updated>2013-12-23T08:45:03-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -26,7 +26,7 @@
 
 <h4>Cross Apply What You Know</h4>
 
-<p>A few years back, I got involved in with a few open source .NET ORMs. It goes without saying that ORMs are the Vietnam of the software world and I was pretty much blown away at how desperate these projects were for feedback. It was so easy and fun to help out and it totally changed my opinion of ORMs. It also changed my opinion of the curmudgeoned DBA.</p>
+<p>A few years back, I got involved in with a few open source .NET ORMs. It goes without saying that ORMs are the <a href="http://www.codinghorror.com/blog/2006/06/object-relational-mapping-is-the-vietnam-of-computer-science.html">Vietnam of the software world</a> and I was pretty much blown away at how desperate these projects were for feedback. It was so easy and fun to help out and it totally changed my opinion of ORMs. It also changed my opinion of the curmudgeoned DBA.</p>
 
 <h4>Refactor the  Query</h4>
 
