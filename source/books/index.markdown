@@ -8,24 +8,29 @@ footer: true
 ---
 # 
 
-It is worth mentioning that in addition to reading, I spend a good chunk of time on sites like [Tekpub][], [CodeSchool][], [Railscasts][], [RubyTapas][] and occasionally [Peepcode][].  
+It is worth mentioning that in addition to reading, I spend a good chunk of time on sites like [Metacasts][], [CodeSchool][], [Railscasts][], [RubyTapas][].  
 
 
-[Tekpub]: http://tekpub.com/ "Tekpub"
+[Metacasts]: http://www.metacasts.tv/ "MetaCasts"
 [CodeSchool]: http://codeschool.com/ "CodeSchool"
 [Railscasts]: http://railscasts.com/ "Railscasts"
 [RubyTapas]: http://rubytapas.com/ "RubyTapas"
-[Peepcode]: http://peepcode.com/ "Peepcode"
   
 I wanted to start recording which books I've read.
 
+
+\---|\---|-- 2013 \---|\---|--  
 **Database:**  
 [Pro SQL Server Policy Based Management](http://www.amazon.com/Server-Policy-Based-Management-Experts-Voice/dp/1430229101/ref=sr_1_1?s=books&ie=UTF8&qid=1386655240&sr=1-1&keywords=policy+based+management)  
 [Pro SQL Server Service Broker](http://www.amazon.com/Pro-Server-2008-Service-Broker/dp/1430243023/ref=sr_1_2?s=books&ie=UTF8&qid=1386655198&sr=1-2&keywords=service+broker)  
 [postgres backup and restore][86]  
 [postgres instant starter][87]  
 [SQL Server 2012 Query Performance Tuning][88]  
-[Delivering Business Intelligence with Microsoft SQL Server 2012][]
+[Delivering Business Intelligence with Microsoft SQL Server 2012][]  
+[Getting Started With Redshift][]  
+
+[Getting Started With Redshift]: [http://www.amazon.com/Getting-Started-Amazon-Redshift-Stefan/dp/1782178082]
+
 
 [Delivering Business Intelligence with Microsoft SQL Server 2012]: http://www.amazon.com/Delivering-Business-Intelligence-Microsoft-Server/dp/0071759387 "2012 BI Tools"  
 
@@ -37,10 +42,12 @@ vim and vi tips
 [RubyMotion][]  
 [Rails Recipes][]  
 [Heroku Up and Running][]  
+[Ruby on Rails 4.0 Guide][]
 
 [RubyMotion]: http://pragprog.com/book/carubym/rubymotion/ "RubyMotion"
 [Rails Recipes]: http://pragprog.com/book/rr2/rails-recipes/ "Rails Recipes"
 [Heroku Up and Running]: http://www.amazon.com/gp/product/144934139X/ref=oh_details_o01_s00_i00?ie=UTF8&psc=1
+[Ruby on Rails 4.0 Guide]: http://www.amazon.com/Ruby-Rails-Guide-Stefan-Wintermeyer-ebook/dp/B00E25KVLW
 
 **Misc:**  
 [Ready Player One][90]  
