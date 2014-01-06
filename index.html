@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="In my many years of Enterprise DBA servitude, there would be many instances of blanket &lsquo;the devs are idiots&rsquo; statements. Sometimes by me &hellip;">
+  <meta name="description" content="I&rsquo;ve never really thought about how bad of a blogger I am. I mean, I always knew deep in my heart I wasn&rsquo;t very good, but a few &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,66 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-06T16:43:00-06:00" pubdate data-updated="true">Jan 6<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve never really thought about how bad of a blogger I am. I mean, I always knew deep in my heart I wasn&rsquo;t very good, but a few conversations over the past few months have really solidified just how bad I am. My confession begins.</p>
+
+<h4>Some person in Somalia has your content</h4>
+
+<p>Over the years, I&rsquo;ve seen a lot of emotional breakdowns and anger when someone sees their content reposted on bottom feeder sites. Some people have event pointed out to me when things from this blog appear on there. Each time this has happened, I&rsquo;ve been unable to get angry or motivated enough to try to get it removed. I remember some people like Tom LaRock putting ridiculous
+&ldquo;If you are not at thomaslarock.com, this material has been plagiarized by someone who steals content from others.&rdquo; Tynt scripts into their publicly pasted query and just being bewildered by the whole thing. For this lack of sharing without conditions, I&rsquo;m a bad blogger.</p>
+
+<h4>Always Be Tweeting</h4>
+
+<p>I don&rsquo;t tweet or retweet my same entries multiple times a day. I blame this partly on the fact
+that I&rsquo;m not a consultant and thus don&rsquo;t need to shamelessly market myself over and over. Another thing I do very poorly is submit a post to Hacker News and then stand on the tweet corner begging for upvotes. Because of this lack of effort, I am a bad blogger.</p>
+
+<h4>Thanks for writing my idea</h4>
+
+<p>me: &lsquo;Your post isn&rsquo;t any different than the press release.&#8217;<br/>
+blogger: &ldquo;That is what they told us to say.&#8221;<br/>
+To this day, the above conversation has never made sense to me. I&rsquo;m always fascinated by people who do a repost of a marketing piece given to them and also celebrate what a prolific blogger they are. This failure to care about a raw number of blog posts as well as not being an echo chamber for a company is completely my fault and I apologize.</p>
+
+<h4>A Number of Reasons</h4>
+
+<p>&ldquo;How many readers do you have?&rdquo;, &ldquo;How do you tweak your SEO?&rdquo;, &ldquo;How often do you reblog your most popular post?&rdquo; and on and on. Some people think I&rsquo;m just joking when I say I have no idea on the above questions, but it&rsquo;s the truth. More than pretty charts and clicks per minute, I tend to be more inspired by someone just saying &lsquo;hey dude, I checked out that thing on pgbouncer and it worked for me.&rsquo; While this does cement that I&rsquo;ll never be an elite blogger, it does let me take acceptance that I&rsquo;m just a bad blogger.</p>
+
+<h4>Truncate Table Opinions</h4>
+
+<p>There are a lot of reasons to blog, and for the most part mine are incredibly selfish. I blog to try to remember things, I blog so I can reference certain posts later&hellip; I blog to help put my thoughts into words and refine an opinion on something. The archive on this site might deceive you, but I tend to &lsquo;blog&rsquo; at least once a week. A great majority of these never get published, but there is something therapeutic and reinforcing about writing something out or laying out a process into steps. If you want to get technical, you could say that I keep a journal that I sometimes publish out of and I wouldn&rsquo;t fight you on it. When you stop caring about others opinions or turning things into a popularity contest, you might be surprised at how easy &ldquo;blogging&rdquo; starts to become and how helpful it get in an industry that doesn&rsquo;t slow down.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -735,82 +795,6 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/postgres-dot-app-and-shared-preload-libraries/">Postgres.app and Shared_preload_libraries</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-18T09:28:00-05:00" pubdate data-updated="true">Sep 18<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and you&rsquo;re off to the races:</p>
-
-<pre><code>select * from pg_available_extensions where name = 'uuid-ossp'; -- check for uuid-ossp
-create extension "uuid-ossp"; -- it's alive!
-</code></pre>
-
-<p>and to make sure it&rsquo;s active:</p>
-
-<pre><code>select * from pg_extension; -- we should see it listed
-</code></pre>
-
-<p>But not all extensions are created equal. If you live in DBA world, one of the extensions you come to lean on is the <a href="http://www.postgresql.org/docs/current/static/pgstatstatements.html">pg_stat_statements</a> extenion. This extension gives you  deeper view of what has been running in your database. Adding it to a database is easy enough:</p>
-
-<pre><code>create extension "pg_stat_statements";
-select * from pg_stat_statements;  
-</code></pre>
-
-<p>Uh oh, we&rsquo;re greeted with a error that can be a little intimidating:<br/>
-<font color=red>ERROR:  pg_stat_statements must be loaded via shared_preload_libraries</font></p>
-
-<p>Ummmm what? Some extensions have special needs that require us to alter our configuration for our entire Postgres instance. pg_stat_statements has some additional memory requirements that need to be satisfied on startup thus requiring us to add it to the shared_preload_libraries. If we&rsquo;re on Ubuntu, we make sure we have our contrib module installed:</p>
-
-<pre><code>sudo apt-get install -y postgresql-contrib-9.3
-</code></pre>
-
-<p>Head on over to our configuration at /etc/postgresql/9.3/main/postgres.conf and look for the shared_preload_libraries setting and reference the extension:</p>
-
-<pre><code>shared_preload_libraries = 'pg_stat_statements' # (change requires restart)
-</code></pre>
-
-<p>This works great for us trench diggers on Linux, but what about the AppDev&rsquo;s that can&rsquo;t be separated from their Mac&rsquo;s? If you are on a Mac, I sincerely hope you&rsquo;re using the awesome <a href="http://postgresapp.com/">Postgres.App</a>, but finding the config for it isn&rsquo;t straight forward. Luckily, Postgres has our back. Connect to your instance of Postgres.app and run the following:</p>
-
-<pre><code>show all;        -- This is a list of a bunch of settings... whoa!
-show config_all; -- Ahhhh, here is what we want
-</code></pre>
-
-<p>Now that we have the location of our configuration file, just throw it into the Unholy Explorer(AKA Finder), start scrolling the file and add the pg_stat_statements setting to the shared_preload_libraries.</p>
-
-<h4>buyer beware</h4>
-
-<p>This works wonderfully in Postgres.app 9.3.0.0. In earlier versions of the app, it does has issues finding the contrib modules. This is a bit of a bummer and when I get my act together, I&rsquo;ll file an issue. Of course, you&rsquo;re more than welcome to beat me to the punch.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -830,6 +814,10 @@ show config_all; -- Ahhhh, here is what we want
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
       </li>
     
@@ -843,10 +831,6 @@ show config_all; -- Ahhhh, here is what we want
     
       <li class="post">
         <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a>
       </li>
     
   </ul>

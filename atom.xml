@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-01-02T10:35:37-06:00</updated>
+  <updated>2014-01-06T17:01:10-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,39 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[I am a bad blogger]]></title>
+    <link href="http://datachomp.com/archives/i-am-a-bad-blogger/"/>
+    <updated>2014-01-06T16:43:00-06:00</updated>
+    <id>http://datachomp.com/archives/i-am-a-bad-blogger</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve never really thought about how bad of a blogger I am. I mean, I always knew deep in my heart I wasn&rsquo;t very good, but a few conversations over the past few months have really solidified just how bad I am. My confession begins.</p>
+
+<h4>Some person in Somalia has your content</h4>
+
+<p>Over the years, I&rsquo;ve seen a lot of emotional breakdowns and anger when someone sees their content reposted on bottom feeder sites. Some people have event pointed out to me when things from this blog appear on there. Each time this has happened, I&rsquo;ve been unable to get angry or motivated enough to try to get it removed. I remember some people like Tom LaRock putting ridiculous
+&ldquo;If you are not at thomaslarock.com, this material has been plagiarized by someone who steals content from others.&rdquo; Tynt scripts into their publicly pasted query and just being bewildered by the whole thing. For this lack of sharing without conditions, I&rsquo;m a bad blogger.</p>
+
+<h4>Always Be Tweeting</h4>
+
+<p>I don&rsquo;t tweet or retweet my same entries multiple times a day. I blame this partly on the fact
+that I&rsquo;m not a consultant and thus don&rsquo;t need to shamelessly market myself over and over. Another thing I do very poorly is submit a post to Hacker News and then stand on the tweet corner begging for upvotes. Because of this lack of effort, I am a bad blogger.</p>
+
+<h4>Thanks for writing my idea</h4>
+
+<p>me: &lsquo;Your post isn&rsquo;t any different than the press release.&#8217;<br/>
+blogger: &ldquo;That is what they told us to say.&#8221;<br/>
+To this day, the above conversation has never made sense to me. I&rsquo;m always fascinated by people who do a repost of a marketing piece given to them and also celebrate what a prolific blogger they are. This failure to care about a raw number of blog posts as well as not being an echo chamber for a company is completely my fault and I apologize.</p>
+
+<h4>A Number of Reasons</h4>
+
+<p>&ldquo;How many readers do you have?&rdquo;, &ldquo;How do you tweak your SEO?&rdquo;, &ldquo;How often do you reblog your most popular post?&rdquo; and on and on. Some people think I&rsquo;m just joking when I say I have no idea on the above questions, but it&rsquo;s the truth. More than pretty charts and clicks per minute, I tend to be more inspired by someone just saying &lsquo;hey dude, I checked out that thing on pgbouncer and it worked for me.&rsquo; While this does cement that I&rsquo;ll never be an elite blogger, it does let me take acceptance that I&rsquo;m just a bad blogger.</p>
+
+<h4>Truncate Table Opinions</h4>
+
+<p>There are a lot of reasons to blog, and for the most part mine are incredibly selfish. I blog to try to remember things, I blog so I can reference certain posts later&hellip; I blog to help put my thoughts into words and refine an opinion on something. The archive on this site might deceive you, but I tend to &lsquo;blog&rsquo; at least once a week. A great majority of these never get published, but there is something therapeutic and reinforcing about writing something out or laying out a process into steps. If you want to get technical, you could say that I keep a journal that I sometimes publish out of and I wouldn&rsquo;t fight you on it. When you stop caring about others opinions or turning things into a popularity contest, you might be surprised at how easy &ldquo;blogging&rdquo; starts to become and how helpful it get in an industry that doesn&rsquo;t slow down.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The AppDevs are idiots]]></title>
@@ -813,19 +846,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 <p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
 
 <p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Later Wordpress]]></title>
-    <link href="http://datachomp.com/archives/later-wordpress/"/>
-    <updated>2013-03-10T15:25:00-05:00</updated>
-    <id>http://datachomp.com/archives/later-wordpress</id>
-    <content type="html"><![CDATA[<p>I finally did it. I <a href="https://github.com/benbalter/wordpress-to-jekyll-exporter">imported all of my wordpress</a> entries into <a href="http://octopress.org">Octopress</a> and I am rocking an awesome new blog engine. From my previous entry of stopping spam in contact form 7, it might be obvious that my tolerance for wordpress was wearing thin. In addition, I recently moved the WP version of datachomp to a $3/month server and learned very quickly that it buckles on loads greater than <a href="http://blitz.io/bgJW7CxbnCQFQ6ZUKQ4SwJQ">40 concurrent users</a>&hellip; and yes, that was with a configured supercache. Get what you pay for right?</p>
-
-<h2>Right Tool for the Right Blog</h2>
-
-<p>I have really wanted another level of simplicity that wordpress can&rsquo;t provide. Unlike many of my data peers, I find that having a laughable database like MySQL and pages being repeatedly generated by php to be incredibly silly. Part of being a good DBA is knowing when and when not to use a database and a simple tech blog is a silly reason to run one.</p>
 ]]></content>
   </entry>
   
