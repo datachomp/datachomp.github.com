@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-01-06T17:07:28-06:00</updated>
+  <updated>2014-01-06T17:14:48-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[I am a bad blogger]]></title>
+    <title type="html"><![CDATA[I am A bad blogger]]></title>
     <link href="http://datachomp.com/archives/i-am-a-bad-blogger/"/>
     <updated>2014-01-06T16:43:00-06:00</updated>
     <id>http://datachomp.com/archives/i-am-a-bad-blogger</id>
