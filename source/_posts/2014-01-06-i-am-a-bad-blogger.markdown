@@ -12,8 +12,8 @@ Over the years, I've seen a lot of emotional breakdowns and anger when someone s
 "If you are not at thomaslarock.com, this material has been plagiarized by someone who steals content from others." Tynt scripts into his publicly pasted query and just being bewildered by the drama surrounding these episodes. For this lack of sharing without conditions and unwillingness to feign vitriol at a bot, I'm a bad blogger.
 
 #### Always Be Tweeting
-I don't tweet or retweet my same entries multiple times a day. I blame this partly on the fact
-that I'm not a consultant nor the self esteem issues to need to shamelessly market and remarket myself over and over. Another thing I do very poorly is submit a post to Hacker News and then stand on the tweet corner begging for upvotes. Because of this lack of pandering and repetitious pollution, I am a bad blogger.
+I don't tweet or retweet my same entry multiple times a day. I blame this partly on the fact
+that I'm not a consultant nor have the self esteem issues needed to shamelessly market and remarket myself over and over. Another thing I do very poorly is submit a post to Hacker News and then stand on the tweet corner begging for upvotes. Because of this lack of pandering and repetitious pollution, I am a bad blogger.
 
 #### Thanks for Writing My Opinion
 me: 'Your post isn't any different than the press release.'  
