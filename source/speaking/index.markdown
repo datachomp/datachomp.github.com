@@ -8,7 +8,10 @@ footer: true
 ---
 # 
 
-Here are my plans for the years... I hope to catch you at one of the following:
+Here are my plans for the years... I hope to catch you at one of the following:  
+
+\---|-- 2014 \---|--  
+Jan 09, 2012 - Tulsa SQL - SQL Server vs The World 
 
 \---|-- 2013 \---|--  
 Nov 14, 2013 - OKC Ruby - Slinging data with Sequel  
@@ -18,7 +21,7 @@ Aug 12, 2013 - OKC SQL - SQL Server vs The World
 Jun 13, 2013 - Oslo Norway - Speaking at NDC Oslo on SQL Server's Last Breath [video](http://vimeo.com/68334905)    
 May 03, 2013 - Kansas City - Speaking at KCDC on killing your SQL Server  
 Feb 28, 2013 - San Francisco - Speaking at the Heroku Waza on the Cost of Indifference [video](http://vimeo.com/61113158)    
-Feb 11, 2013 - OKCSQL - Speaking on Automate All The Things
+Feb 11, 2013 - OKCSQL - Speaking on Automate All The Things  
 
 \---|-- 2012 \---|--  
 Dec ##, 2012 - OKCJS - Postgres/V8/MassiveJS!  
