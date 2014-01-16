@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to &hellip;">
+  <meta name="description" content="One of the great benefits to having a jailbroken iPhone is the SSH feature. One of the great security risks of having a jailbroken iPhone is the SSH &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,73 +80,6 @@
     <div id="content">
       <div class="blog-index">
   
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/helper-classes/">Helper Classes</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-20T00:00:00-05:00" pubdate data-updated="true">Jul 20<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Trust me when I say I&rsquo;m no stranger to abusing repeat methods in code behinds&hellip; however, it does reach a point where something has to give. When you reach that point, your solution is a &lsquo;helper&rsquo; class.</p>
-
-<p>Below is a quick/basic example of how to get started with helper classes.<br/>
-In my solution, I created a folder called &lsquo;Helpers&rsquo; and added a new class object called &lsquo;StringManip&rsquo;.<br/>
-Once that was completed, I added a few methods like:
-<code></p>
-
-<pre><code>public static string UpperString(string val)
-{ return val.ToUpper(); }
-</code></pre>
-
-<p></code></p>
-
-<p>In my code behind, I reference the class through a using statement:
-<code></p>
-
-<pre><code>using HelperClass.Helpers;
-</code></pre>
-
-<p></code></p>
-
-<p>And then I can call the methods:
-<code></p>
-
-<pre><code>lbl_aspnet.Text = StringManip.UpperString(lbl_aspnet.Text);
-</code></pre>
-
-<p></code></p>
-
-<p>If the above isn&rsquo;t enough to get you rolling&hellip;. then download the demo solution by <a href="http://files.datachomp.com/AppDev/HelperClass.zip">Clicking Here</a></p>
-</div>
-  
-  
-
-
-    </article>
   
   
     <article>
@@ -627,6 +560,58 @@ DROP TABLE #temper;</p>
 
     </article>
   
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/database-tools-i-use/">Database Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of tools I use:<br/>
+SQL Server-<br/>
+SQL Server 2000 Query Analyzer<br/>
+SQL Server 2005<br/>
+SQL Server 2008<br/>
+<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
+<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
+SQL Examiner- <a href="http://www.sqlaccessories.com/SQL_Examiner/  ">http://www.sqlaccessories.com/SQL_Examiner/  </a>
+SQLPing3- <a href="http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  ">http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  </a>
+<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
+SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</a></p>
+
+<p><a href="http://www.sqlite.org/">SQLite</a><br/>
+<a href="http://www.postgresql.org/">PostGre</a><br/>
+<a href="http://www.mongodb.org/">MongoDB</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/8/">&larr; Older</a>
@@ -648,10 +633,6 @@ DROP TABLE #temper;</p>
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a>
-      </li>
-    
-      <li class="post">
         <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
@@ -665,6 +646,10 @@ DROP TABLE #temper;</p>
     
       <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
   </ul>
