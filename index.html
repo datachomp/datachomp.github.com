@@ -9,7 +9,8 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I&rsquo;ve never really thought about how bad of a blogger I am. I mean, I always knew deep in my heart I wasn&rsquo;t very good, but a few &hellip;">
+  <meta name="description" content="If we get over the notion that all data is created equal, it opens up options for us.
+For example, your DBA wants some sort of data consistency and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,97 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-11T10:11:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>If we get over the notion that all data is created equal, it opens up options for us.
+For example, your DBA wants some sort of data consistency and integrity&hellip; both very good things
+but you are just making a quick little 1 off table that you don&rsquo;t want to sprawl to 4 or 5 tables with foreign keys.</p>
+
+<h4>enum my heart</h4>
+
+<p>For these situations, I like to just use <a href="http://www.postgresql.org/docs/current/static/datatype-enum.html">postgres enums</a>. Check it out:</p>
+
+<pre><code>&lt;pre&gt;
+create type verdict as enum ('gross', 'can eat', 'amazing');
+
+create table burritos (id serial not null primary key, title varchar(50), thoughts verdict not null);
+insert into burritos (title, thoughts) values ('road kill burrito', 'yummy');
+
+insert into burritos (title, thoughts) values ('road kill burrito', 'gross');
+--Complete Failure
+
+insert into burritos (title, thoughts) values ('grande queso burrito', 'amazing');
+--Complete Awesome
+&lt;/pre&gt;
+</code></pre>
+
+<p>Sweet! We&rsquo;re getting the data we want in, we&rsquo;re not having to query maintain multiple tables to get our data.
+Another benfit to this is that AppDev isn&rsquo;t continually questioning if they set up the FK correctly.</p>
+
+<p>But how maintainble is it?   Say we need to add to our list:</p>
+
+<pre><code>ALTER TYPE verdict ADD VALUE 'lawsuit' BEFORE 'gross';
+insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
+</code></pre>
+
+<h5>query</h5>
+
+<p>How do we know what our valid values are? We can query some system tables like this:</p>
+
+<pre><code>select n.nspname as enum_schema,  
+       t.typname as enum_name,  
+       e.enumlabel as enum_value
+from pg_type t 
+   join pg_enum e on t.oid = e.enumtypid  
+   join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+where t.typname = 'verdict'
+</code></pre>
+
+<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears running down their mustache. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
+
+<pre><code>create view my_lovely_enums as 
+select n.nspname as enum_schema,  
+       t.typname as enum_name,  
+       e.enumlabel as enum_value
+from pg_type t 
+    inner join pg_enum e on t.oid = e.enumtypid  
+    inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace;
+</code></pre>
+
+<p>_</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -752,55 +844,6 @@ ORDER by burrito_distance;
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/application-name-in-sequel/">Application_name in Sequel</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-02T09:22:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
-
-<p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
-
-<pre><code>require 'sequel'
-DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
-, :database=&gt;'datachomp', :user=&gt;'rob', :max_connections =&gt; 10
-, :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
-</code></pre>
-
-<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
-
-<pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -820,6 +863,10 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
@@ -833,10 +880,6 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
     
       <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
   </ul>

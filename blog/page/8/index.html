@@ -9,11 +9,12 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="This is a living document of Application Development Tools I use:
-TortoiseSVN -
-Notepad VMWare
-Visual Studio Resharper
-AnhkSVN TracExplorer &hellip;">
+  <meta name="description" content="This is a living document of tools I use:
+SQL Server-
+SQL Server 2000 Query Analyzer
+SQL Server 2005
+SQL Server 2008
+Red Gate Source Control &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -84,6 +85,58 @@ AnhkSVN TracExplorer &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/database-tools-i-use/">Database Tools I Use</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true">Feb 2<span>nd</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>This is a living document of tools I use:<br/>
+SQL Server-<br/>
+SQL Server 2000 Query Analyzer<br/>
+SQL Server 2005<br/>
+SQL Server 2008<br/>
+<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
+<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
+SQL Examiner- <a href="http://www.sqlaccessories.com/SQL_Examiner/  ">http://www.sqlaccessories.com/SQL_Examiner/  </a>
+SQLPing3- <a href="http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  ">http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  </a>
+<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
+SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</a></p>
+
+<p><a href="http://www.sqlite.org/">SQLite</a><br/>
+<a href="http://www.postgresql.org/">PostGre</a><br/>
+<a href="http://www.mongodb.org/">MongoDB</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -561,14 +614,14 @@ This will let use the report servers service credentials to authenticate to the 
 &mdash; send a normal mail
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#109;&#97;&#x69;&#x6c;&#116;&#x6f;&#x3a;&#110;&#x75;&#109;&#98;&#101;&#x72;&#64;&#99;&#105;&#110;&#103;&#117;&#108;&#97;&#114;&#x6d;&#101;&#x2e;&#99;&#111;&#109;">&#110;&#x75;&#109;&#98;&#x65;&#x72;&#x40;&#x63;&#x69;&#110;&#x67;&#117;&#108;&#97;&#114;&#109;&#101;&#46;&#99;&#x6f;&#109;</a>&rsquo;
+,@recipients=&lsquo;name@domain.com;<a href="&#x6d;&#97;&#105;&#x6c;&#x74;&#111;&#58;&#x6e;&#117;&#109;&#98;&#101;&#114;&#x40;&#99;&#105;&#x6e;&#x67;&#x75;&#108;&#97;&#114;&#x6d;&#101;&#46;&#99;&#111;&#109;">&#110;&#117;&#x6d;&#x62;&#101;&#x72;&#x40;&#99;&#x69;&#x6e;&#x67;&#x75;&#x6c;&#x61;&#114;&#x6d;&#101;&#46;&#x63;&#x6f;&#x6d;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
 &mdash; send with an attachment
 EXEC msdb.dbo.sp_send_dbmail
 @Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#109;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#58;&#x6e;&#x61;&#109;&#101;&#64;&#100;&#111;&#x6d;&#97;&#105;&#x6e;&#x2e;&#99;&#111;&#x6d;">&#x6e;&#97;&#109;&#x65;&#x40;&#100;&#x6f;&#109;&#x61;&#105;&#x6e;&#46;&#x63;&#111;&#x6d;</a>&rsquo;
+,@recipients=&lsquo;<a href="&#109;&#x61;&#105;&#108;&#116;&#111;&#x3a;&#x6e;&#97;&#x6d;&#x65;&#64;&#100;&#111;&#109;&#x61;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;">&#x6e;&#97;&#109;&#101;&#64;&#100;&#x6f;&#x6d;&#97;&#x69;&#x6e;&#46;&#99;&#x6f;&#109;</a>&rsquo;
 ,@subject = &lsquo;Dev Transfer to 19&rsquo;
 ,@body = &lsquo;Task Complete&rsquo;
 ,@body_format = &lsquo;HTML&rsquo;
@@ -581,7 +634,7 @@ If sending to multiple peeps and one fails to send&hellip; queued up and resends
 <p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
 
 <p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#110;&#x61;&#x6d;&#101;&#64;&#100;&#x6f;&#x6d;&#97;&#105;&#x6e;&#46;&#x63;&#111;&#109;">&#110;&#97;&#x6d;&#101;&#64;&#x64;&#x6f;&#109;&#97;&#105;&#110;&#46;&#x63;&#111;&#109;</a>). )</p>
+The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#97;&#105;&#108;&#x74;&#111;&#x3a;&#110;&#97;&#109;&#x65;&#x40;&#x64;&#111;&#109;&#97;&#x69;&#x6e;&#46;&#99;&#x6f;&#x6d;">&#x6e;&#x61;&#x6d;&#x65;&#64;&#x64;&#x6f;&#x6d;&#x61;&#105;&#110;&#x2e;&#99;&#x6f;&#x6d;</a>). )</p>
 
 <p>&mdash; antivirus port 25 block<br/>
 The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
@@ -651,47 +704,9 @@ The mail could not be sent to the recipients because of the mail server failure.
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/all-your-errors-are-belong-to-us-elmah/">All Your Errors Are Belong to Us &#8211; ELMAH</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So I&rsquo;ve been working on a step by step on ELMAH and how to set it up for F5Compliant &hellip; when today I came across Scott Mitchels tutorial on <a href="http://asp.net/">ASP.NET</a></p>
-
-<p>One thing he seems to have left out is using SQLite.  Since moving from my in house servers to online hosting, I am still often surprised by the DB limitations faced.  Before I went with a hosted solution, it just felt commonplace to spin up a new DB for X project and go.   With many shared hosting plans, one becomes a little miserly with their DB&rsquo;s as more DB&rsquo;s with the hosting plan incur more cost.   SQLite seems to fill that void quite nicely.  One thing to be aware of though is that SQLite requires full trust in order to run, so you will probably need to contact your hosting provider for them to set the permissions.   I use SoftSysHosting and their team takes care of this incredibly fast which is nice.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
+    
+      <a class="prev" href="/blog/page/9/">&larr; Older</a>
     
     <a href="/blog/archives">Blog Archives</a>
     
@@ -710,6 +725,10 @@ The mail could not be sent to the recipients because of the mail server failure.
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
@@ -723,10 +742,6 @@ The mail could not be sent to the recipients because of the mail server failure.
     
       <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
   </ul>
