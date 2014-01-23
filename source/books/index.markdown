@@ -18,6 +18,11 @@ It is worth mentioning that in addition to reading, I spend a good chunk of time
   
 I wanted to start recording which books I've read.
 
+\---|\---|-- 2014 \---|\---|--  
+**AppDev:**  
+[Rails Recipes][recipe]  
+
+[recipe]: http://pragprog.com/book/rr2/rails-recipes
 
 \---|\---|-- 2013 \---|\---|--  
 **Database:**  
