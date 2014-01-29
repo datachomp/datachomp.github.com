@@ -87,7 +87,7 @@ For example, your DBA wants some sort of data consistency and &hellip;">
       
   <header>
     
-      <h1 class="entry-title"><a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a></h1>
+      <h1 class="entry-title"><a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a></h1>
     
     
       <p class="meta">
@@ -135,7 +135,7 @@ Another benefit to this is that AppDev isn&rsquo;t continually questioning if th
 
 <h4>blowing in the winds of change</h4>
 
-<p>But how maintainble is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
+<p>But how maintainable is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
 
 <pre><code>alter type verdict add value 'lawsuit' before 'gross';
 insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
@@ -154,7 +154,7 @@ where t.typname = 'verdict' and n.nspname = 'public'
 
 <h4>re-fear-factor</h4>
 
-<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of saddness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
+<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of sadness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
 
 <pre><code>create view my_lovely_enums as 
 select t.typname as enum_name,  
@@ -882,7 +882,7 @@ ORDER by burrito_distance;
   <ul id="recent_posts">
     
       <li class="post">
-        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a>
+        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
       <li class="post">

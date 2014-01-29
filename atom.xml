@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-01-29T12:43:18-06:00</updated>
+  <updated>2014-01-29T13:28:04-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Enums for when you just cant hande another foreign key]]></title>
+    <title type="html"><![CDATA[Enums for when you just cant handle another foreign key]]></title>
     <link href="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/"/>
     <updated>2014-01-29T10:11:00-06:00</updated>
     <id>http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key</id>
@@ -43,7 +43,7 @@ Another benefit to this is that AppDev isn&rsquo;t continually questioning if th
 
 <h4>blowing in the winds of change</h4>
 
-<p>But how maintainble is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
+<p>But how maintainable is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
 
 <pre><code>alter type verdict add value 'lawsuit' before 'gross';
 insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
@@ -62,7 +62,7 @@ where t.typname = 'verdict' and n.nspname = 'public'
 
 <h4>re-fear-factor</h4>
 
-<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of saddness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
+<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of sadness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
 
 <pre><code>create view my_lovely_enums as 
 select t.typname as enum_name,  
