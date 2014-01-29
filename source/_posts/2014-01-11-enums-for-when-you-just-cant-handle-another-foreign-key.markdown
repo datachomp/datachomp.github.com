@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Enums for when you just cant hande another foreign key"
+title: "Enums for when you just cant handle another foreign key"
 date: 2014-01-29 10:11
 comments: true
 categories: 
@@ -27,7 +27,7 @@ Sweet! We're getting the data we want in, it looks legit, and there is no queryi
 Another benefit to this is that AppDev isn't continually questioning if they set up the FK correctly.
 
 #### blowing in the winds of change
-But how maintainble is it? Say we had a less than ideal experience... one that requires a lawyer.  need to add to our list:
+But how maintainable is it? Say we had a less than ideal experience... one that requires a lawyer.  need to add to our list:
 
 	alter type verdict add value 'lawsuit' before 'gross';
 	insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
@@ -43,7 +43,7 @@ That was pretty easy, though I must say I'm a little confused on exactly which v
 	where t.typname = 'verdict' and n.nspname = 'public'
 
 #### re-fear-factor
-If you are ok with the above code... then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of saddness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:
+If you are ok with the above code... then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of sadness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:
 
 	create view my_lovely_enums as 
 	select t.typname as enum_name,  
