@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Modules and extensions are one of the awesome features that keep Postgres so relevant in modern development. Need GUIDs? Just add the extension and &hellip;">
+  <meta name="description" content="When I was in the .net world, I was pretty adamant about the importance of giving your App a nice application_name to help out your DBA. Now that I& &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,55 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/application-name-in-sequel/">Application_name in Sequel</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-02T09:22:00-05:00" pubdate data-updated="true">Oct 2<span>nd</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When I was in the .net world, I was pretty adamant about the importance of giving your App a nice <a href="http://datachomp.com/archives/application-connection-ocd/">application_name</a> to help out your DBA. Now that I&rsquo;m in the ruby/postgres world, the same still holds true.</p>
+
+<p>As much as I want to like ActiveRecord, I can&rsquo;t seem to get past anything more than a casual friendship with it. My tool of choice is <a href="https://github.com/jeremyevans/sequel">Sequel</a>. One of the problems with Sequel is that setting the application name isn&rsquo;t very intuitive. Luckily, the awesome maintainer <a href="https://twitter.com/jeremyevans0">Jeremy Evans</a>, pointed me in the right direction with the :after_connect option. Check it out:</p>
+
+<pre><code>require 'sequel'
+DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
+, :database=&gt;'datachomp', :user=&gt;'rob', :max_connections =&gt; 10
+, :after_connect=&gt;(proc do |conn| conn.execute("SET application_name TO 'dbahugs'") end))
+</code></pre>
+
+<p> When I look at my pg_stat_activity, I&rsquo;m able to filter down properly and predictably:</p>
+
+<pre><code>select * from pg_stat_activity where application_name = 'dbahugs'
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -699,60 +748,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/so-long-and-thanks-for-all-the-deadlocks/">So Long and Thanks for All the Deadlocks</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-03-10T21:54:00-05:00" pubdate data-updated="true">Mar 10<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
-
-<p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
-
-<blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
-
-
-<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
-
-<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&rsquo;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&rsquo;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&hellip; and that is ok. It&rsquo;s not the lazy route, but I feel it is the most rewarding.</p>
-
-<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&rsquo;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
-
-<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
-
-<p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -774,6 +769,10 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/enums-for-when-you-just-cant-hande-another-foreign-key/">Enums for When You Just Cant Hande Another Foreign Key</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
@@ -787,10 +786,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
     
       <li class="post">
         <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a>
       </li>
     
   </ul>

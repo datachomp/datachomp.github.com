@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-01-23T15:02:03-06:00</updated>
+  <updated>2014-01-29T10:32:28-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,89 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Enums for when you just cant hande another foreign key]]></title>
+    <link href="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/"/>
+    <updated>2014-01-11T10:11:00-06:00</updated>
+    <id>http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key</id>
+    <content type="html"><![CDATA[<p>If we get over the notion that all data is created equal, it opens up options for us.
+For example, your DBA wants some sort of data consistency and integrity&hellip; both very good things
+but you are just making a quick little 1 off table that you don&rsquo;t want to sprawl to 4 or 5 tables with foreign keys.</p>
+
+<h4>enum my heart</h4>
+
+<p>For these situations, I like to just use <a href="http://www.postgresql.org/docs/current/static/datatype-enum.html">postgres enums</a>. Check it out:</p>
+
+<pre><code>create type verdict as enum ('gross', 'can eat', 'amazing');
+
+create table burritos (id serial not null primary key, title varchar(50), thoughts verdict not null);
+insert into burritos (title, thoughts) values ('road kill burrito', 'yummy');
+
+insert into burritos (title, thoughts) values ('road kill burrito', 'gross');
+--Complete Failure
+
+insert into burritos (title, thoughts) values ('grande queso burrito', 'amazing');
+--Complete Awesome
+</code></pre>
+
+<p>Sweet! We&rsquo;re getting the data we want in, it looks legit, and there is no querying of multiple tables to get the values back.
+Another benefit to this is that AppDev isn&rsquo;t continually questioning if they set up the FK correctly.</p>
+
+<h4>blowing in the winds of change</h4>
+
+<p>But how maintainble is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
+
+<pre><code>alter type verdict add value 'lawsuit' before 'gross';
+insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
+</code></pre>
+
+<p>That was pretty easy, though I must say I&rsquo;m a little confused on exactly which values I have in my enum. Good thing we&rsquo;re in a database and can just query it!!!:</p>
+
+<pre><code>select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema
+from pg_type t 
+   inner join pg_enum e on t.oid = e.enumtypid  
+   inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+where t.typname = 'verdict' and n.nspname = 'public'
+</code></pre>
+
+<h4>re-fear-factor</h4>
+
+<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of saddness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
+
+<pre><code>create view my_lovely_enums as 
+select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema 
+from pg_type t 
+    inner join pg_enum e on t.oid = e.enumtypid  
+    inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+where t.typname = 'verdict' and n.nspname = 'public';
+</code></pre>
+
+<p>Hardcoding &lsquo;verdict&rsquo; like that creates a pretty brittle where clause. I tend to remove that part and go a little more flexible with a predicate/scope to select your enum of choice:</p>
+
+<pre><code>create or replace view my_lovely_enums as 
+select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema
+from pg_type t 
+    inner join pg_enum e on t.oid = e.enumtypid  
+    inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace;
+select * from my_lovely_enums where enum_name = 'verdict' and n.nspname = 'public';
+"verdict";"gross";"public"
+"verdict";"can eat";"public"
+"verdict";"lawsuit";"public"
+"verdict";"burrito dreams";"public"
+</code></pre>
+
+<p>For some more information on this topic, check out a lovely write up at <a href="http://postgresguide.com/sexy/enums.html">postgresguide.com</a>. The bottom of that article has this handy little  buyer-beware:<br/>
+&ldquo;At the time of this writing, Postgres does not provide a way to remove values from enums.&rdquo;
+While this approach can&rsquo;t be used for all situations, using it where you can get creates a tremendous amount of simplicity in your app without compromising integrity &ndash; affectionally known as a win-win.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[I am A bad blogger]]></title>
@@ -835,33 +918,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
 <li><p>Unicode by default &ndash; No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
 </ol>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[So Long and Thanks For All The Deadlocks]]></title>
-    <link href="http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks/"/>
-    <updated>2013-03-10T21:54:00-05:00</updated>
-    <id>http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks</id>
-    <content type="html"><![CDATA[<p>It was about a year ago today when we launched the <a href="http://tekpub.com/productions/pg/">Postgres episode</a> over at <a href="http://tekpub.com/">Tekpub</a>, and it is some of the most fun I have had building software. I even joked about <a href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/">quitting SQL Server for Postgres</a>. Fast forward 12 months&hellip;it was less joking and more foreshadowing.</p>
-
-<p>While getting ready to write this post, I saw the following exchange between some .NET AppDevs talking about the .NET culture.</p>
-
-<blockquote class="twitter-tweet"><p>Right, now I&#8217;m wiser but too heavily invested. Either I or the platform has to change, I&#8217;m lazy, hoping its not me :)</p>&mdash; Demis Bellot (@demisbellot) <a href="https://twitter.com/demisbellot/status/309754561499906048">March 7, 2013</a></blockquote>
-
-
-<script async src="http://datachomp.com//platform.twitter.com/widgets.js" charset="utf-8"></script>
-
-
-<p><a href="http://mythz.servicestack.net/">Demis</a> is a .NET AppDev I love and truly respect. I really relate to his fear of change by way of being &ldquo;too heavily invested&rdquo; in the Microsoft ecosystem. As someone who has been administering SQL Server for 10+ years, it is comforting and easy to hold on to what I already know. That being said, <a href="http://mythz.servicestack.net/">Demis</a> and I do have one difference &ndash; I have decided to be the change in my situation.</p>
-
-<p>I have always felt that DBAs need to care more about their data than about their platform. I plan to really put that to the test in a few days. I&rsquo;ve quit my luxurious and well paid job as a SQL Server DBA and will be going full time on Ruby and <a href="http://www.postgresql.org/">Postgres</a>. I&rsquo;ll likely be taking a pretty decent pay cut, taking on more responsibility and having to learn a lot more&hellip; and that is ok. It&rsquo;s not the lazy route, but I feel it is the most rewarding.</p>
-
-<p>This should not be taken as a slam on SQL Server. It is a really good database, but I want something that keeps pace with web/mobile and doesn&rsquo;t involve me interpreting corporate licensing matrices. I want to build and ship software with talented people, not spend an AppDevs worth of salary for features like basic data compression. I want to give my apps some nice JSON love and SQL Server seems to still think XML is the future.</p>
-
-<p>Lastly, SQL Server is also really focused on 3+ year release cycles so at least I won&rsquo;t be worried that I&rsquo;ll be falling behind. In fact, playing with Ruby and Postgres has kept me ahead of SQL Server and ASP MVC. I got to shove my donuts in my face while my fellow SQL Server DBA&rsquo;s were trying to figure out sequences in SQL Server 2012.</p>
-
-<p>So in short, SQL Server&hellip; it&rsquo;s not you, it&rsquo;s me. And I&rsquo;m cool with that. I&rsquo;ll have to work a little harder, but it will be on my terms not yours. So long, and thanks for all the deadlocks.</p>
 ]]></content>
   </entry>
   

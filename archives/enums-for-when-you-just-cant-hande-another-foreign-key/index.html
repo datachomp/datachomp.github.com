@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Passenger: No Longer in /opt/ion - DataChomp</title>
+  <title>Enums for when you just cant hande another foreign key - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="UPDATE on official repos &ndash; http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/ When you are getting started in &hellip;">
+  <meta name="description" content="If we get over the notion that all data is created equal, it opens up options for us.
+For example, your DBA wants some sort of data consistency and &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion">
+  <link rel="canonical" href="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">Passenger: No Longer in /opt/ion</h1>
+      <h1 class="entry-title">Enums for When You Just Cant Hande Another Foreign Key</h1>
     
     
       <p class="meta">
@@ -99,51 +100,88 @@
   
 
 
-<time datetime="2013-08-27T23:26:00-05:00" pubdate data-updated="true">Aug 27<span>th</span>, 2013</time>
+<time datetime="2014-01-11T10:11:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
+<div class="entry-content"><p>If we get over the notion that all data is created equal, it opens up options for us.
+For example, your DBA wants some sort of data consistency and integrity&hellip; both very good things
+but you are just making a quick little 1 off table that you don&rsquo;t want to sprawl to 4 or 5 tables with foreign keys.</p>
 
-<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
+<h4>enum my heart</h4>
 
-<h3>Magic Strings of Wonderful Glory</h3>
+<p>For these situations, I like to just use <a href="http://www.postgresql.org/docs/current/static/datatype-enum.html">postgres enums</a>. Check it out:</p>
 
-<p>After you get your feet under you, you might find yourself needing to use more than the base modules that come with the nginx inside Passenger. As I would go to install or update Passenger, I would end up having to run something like this:</p>
+<pre><code>create type verdict as enum ('gross', 'can eat', 'amazing');
 
-<pre><code>gem install passenger
+create table burritos (id serial not null primary key, title varchar(50), thoughts verdict not null);
+insert into burritos (title, thoughts) values ('road kill burrito', 'yummy');
 
-passenger-install-nginx-module --nginx-source-dir=/usr/src/nginx-1.5.3 ---with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with --without-http_scgi_module --without-http_uwsgi_module --without-http_fastcgi_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --with-http_realip_module --add-module=/opt/nginxmodules/headers-more
+insert into burritos (title, thoughts) values ('road kill burrito', 'gross');
+--Complete Failure
+
+insert into burritos (title, thoughts) values ('grande queso burrito', 'amazing');
+--Complete Awesome
 </code></pre>
 
-<p>This creates a few issues. Issue #1: I have to keep wget&#8217;ing new versions of source when I need to update.<br/>
-Issue #2: I have a completely different workflow/scripts for managing a passenger nginx instance than I do for a unicorn/puma instance. This variance drives me nuts and be a source of script churn.</p>
+<p>Sweet! We&rsquo;re getting the data we want in, it looks legit, and there is no querying of multiple tables to get the values back.
+Another benefit to this is that AppDev isn&rsquo;t continually questioning if they set up the FK correctly.</p>
 
-<h3>Antacids</h3>
+<h4>blowing in the winds of change</h4>
 
-<p>I kept thinking there had to be a better way. Then the sky hash parted and a beam of light shown directly on a ppa from the brightbox team. This package uses a traditional installation of nginx, which means that I can easily install the nginx-extras package and get all my extra modules I need for load balancing and nginx_status. Here is how I do it:</p>
+<p>But how maintainble is it? Say we had a less than ideal experience&hellip; one that requires a lawyer.  need to add to our list:</p>
 
-<pre><code>sudo apt-get install -y python-software-properties curl git-core  
-sudo apt-add-repository -y ppa:brightbox/passenger-experimental  
-sudo apt-get update
-
-sudo apt-get install -y nginx-full  
-sudo apt-get install -y nginx-extras  #extras headers and stuff  
-
-\curl -L https://get.rvm.io | bash  
-source ~/.profile  
-
-rvm install 2.0.0-p247  
-rvm --default use 2.0.0-p247  
-
-sudo service nginx restart  
+<pre><code>alter type verdict add value 'lawsuit' before 'gross';
+insert into burritos (title, thoughts) values ('putrid plate', 'lawsuit');
 </code></pre>
 
-<p>Most of how to do this is covered at:<br/>
-<a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
+<p>That was pretty easy, though I must say I&rsquo;m a little confused on exactly which values I have in my enum. Good thing we&rsquo;re in a database and can just query it!!!:</p>
+
+<pre><code>select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema
+from pg_type t 
+   inner join pg_enum e on t.oid = e.enumtypid  
+   inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+where t.typname = 'verdict' and n.nspname = 'public'
+</code></pre>
+
+<h4>re-fear-factor</h4>
+
+<p>If you are ok with the above code&hellip; then good on you. However, we might want to populate a dropdown or something else in our application based on these values. Neither your typical Rails Dev or ActiveRecord itself is going to try to implement the above without tears of saddness streaming down to their Mac. We can build a bridge by just making a simple view and assigning a self.table_name = to the following:</p>
+
+<pre><code>create view my_lovely_enums as 
+select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema 
+from pg_type t 
+    inner join pg_enum e on t.oid = e.enumtypid  
+    inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace
+where t.typname = 'verdict' and n.nspname = 'public';
+</code></pre>
+
+<p>Hardcoding &lsquo;verdict&rsquo; like that creates a pretty brittle where clause. I tend to remove that part and go a little more flexible with a predicate/scope to select your enum of choice:</p>
+
+<pre><code>create or replace view my_lovely_enums as 
+select t.typname as enum_name,  
+       e.enumlabel as enum_value,
+       n.nspname as enum_schema
+from pg_type t 
+    inner join pg_enum e on t.oid = e.enumtypid  
+    inner join pg_catalog.pg_namespace n ON n.oid = t.typnamespace;
+select * from my_lovely_enums where enum_name = 'verdict' and n.nspname = 'public';
+"verdict";"gross";"public"
+"verdict";"can eat";"public"
+"verdict";"lawsuit";"public"
+"verdict";"burrito dreams";"public"
+</code></pre>
+
+<p>For some more information on this topic, check out a lovely write up at <a href="http://postgresguide.com/sexy/enums.html">postgresguide.com</a>. The bottom of that article has this handy little  buyer-beware:<br/>
+&ldquo;At the time of this writing, Postgres does not provide a way to remove values from enums.&rdquo;
+While this approach can&rsquo;t be used for all situations, using it where you can get creates a tremendous amount of simplicity in your app without compromising integrity &ndash; affectionally known as a win-win.</p>
 </div>
 
 
@@ -166,7 +204,7 @@ sudo service nginx restart
   
 
 
-<time datetime="2013-08-27T23:26:00-05:00" pubdate data-updated="true">Aug 27<span>th</span>, 2013</time>
+<time datetime="2014-01-11T10:11:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2014</time>
       
 
 
@@ -174,7 +212,7 @@ sudo service nginx restart
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/" data-via="datachomp" data-counturl="http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/" data-via="datachomp" data-counturl="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/" >Tweet</a>
   
   
   
@@ -183,10 +221,8 @@ sudo service nginx restart
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/treadmill-desk-setup/" title="Previous Post: Treadmill Desk Setup">&laquo; Treadmill Desk Setup</a>
+        <a class="basic-alignment left" href="/archives/i-am-a-bad-blogger/" title="Previous Post: I am A bad blogger">&laquo; I am A bad blogger</a>
       
-      
-        <a class="basic-alignment right" href="/archives/extending-sequel-with-hstore/" title="Next Post: Extending Sequel with hstore">Extending Sequel with hstore &raquo;</a>
       
     </p>
   </footer>
@@ -256,8 +292,8 @@ sudo service nginx restart
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/';
-        var disqus_url = 'http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/';
+        var disqus_identifier = 'http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/';
+        var disqus_url = 'http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/';
         var disqus_script = 'embed.js';
       
     (function () {
