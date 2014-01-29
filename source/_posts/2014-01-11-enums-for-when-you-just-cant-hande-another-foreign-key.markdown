@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Enums for when you just cant hande another foreign key"
-date: 2014-01-11 10:11
+date: 2014-01-29 10:11
 comments: true
 categories: 
 ---
