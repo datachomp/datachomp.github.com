@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-01-29T13:28:04-06:00</updated>
+  <updated>2014-01-29T13:42:02-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Enums for when you just cant handle another foreign key]]></title>
-    <link href="http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key/"/>
+    <link href="http://datachomp.com/archives/enums-for-when-you-just-cant-handle-another-foreign-key/"/>
     <updated>2014-01-29T10:11:00-06:00</updated>
-    <id>http://datachomp.com/archives/enums-for-when-you-just-cant-hande-another-foreign-key</id>
+    <id>http://datachomp.com/archives/enums-for-when-you-just-cant-handle-another-foreign-key</id>
     <content type="html"><![CDATA[<p>If we get over the notion that all data is created equal, it opens up options for us.
 For example, your DBA wants some sort of data consistency and integrity&hellip; both very good things
 but you are just making a quick little 1 off table that you don&rsquo;t want to sprawl to 4 or 5 tables with foreign keys.</p>
