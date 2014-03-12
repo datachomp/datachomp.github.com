@@ -21,8 +21,17 @@ I wanted to start recording which books I've read.
 \---|\---|-- 2014 \---|\---|--  
 **AppDev:**  
 [Rails Recipes][recipe]  
-
 [recipe]: http://pragprog.com/book/rr2/rails-recipes
+<a href="http://www.amazon.com/gp/product/1449367615/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1449367615&linkCode=as2&tag=data03c5-20">Mining the Social Web: Data Mining Facebook, Twitter, and More</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=1449367615" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
+<a href="http://conqueringthecommandline.com/">Conquering The Command Line</a>  
+
+**Database:**  
+<a href="http://www.amazon.com/gp/product/B00BQ1Y9FY/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BQ1Y9FY&linkCode=as2&tag=data03c5-20">Hadoop: The Definitive Guide</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=B00BQ1Y9FY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
+
+**Misc:**  
+<a href="http://www.amazon.com/gp/product/0307390993/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0307390993&linkCode=as2&tag=data03c5-20">The Master Switch: The Rise and Fall of Information Empires (Vintage)</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=0307390993" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+
 
 \---|\---|-- 2013 \---|\---|--  
 **Database:**  
@@ -38,6 +47,7 @@ I wanted to start recording which books I've read.
 
 
 [Delivering Business Intelligence with Microsoft SQL Server 2012]: http://www.amazon.com/Delivering-Business-Intelligence-Microsoft-Server/dp/0071759387 "2012 BI Tools"  
+
 
 **AppDev:**  
 [Exceptional Ruby][1]  
