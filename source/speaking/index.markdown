@@ -11,7 +11,9 @@ footer: true
 Here are my plans for the years... I hope to catch you at one of the following:  
 
 \---|-- 2014 \---|--  
-Jan 09, 2012 - Tulsa SQL - SQL Server vs The World 
+Apr 22, 2014 - Lidnug - Postgres and .Net
+Mar 15, 2014 - Backyard.js - Building Your Community
+Jan 09, 2014 - Tulsa SQL - SQL Server vs The World 
 
 \---|-- 2013 \---|--  
 Nov 14, 2013 - OKC Ruby - Slinging data with Sequel  
