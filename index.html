@@ -9,8 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="If we get over the notion that all data is created equal, it opens up options for us.
-For example, your DBA wants some sort of data consistency and &hellip;">
+  <meta name="description" content="Since living in Oklahoma, I&rsquo;ve found one of the absolute best ways to vote is by getting registering for an absentee ballot. Oklahoma has &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,54 @@ For example, your DBA wants some sort of data consistency and &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-04-15T00:56:00-05:00" pubdate data-updated="true">Apr 15<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Since living in Oklahoma, I&rsquo;ve found one of the absolute best ways to vote is by getting registering for an absentee ballot. Oklahoma has pretty lax laws on this sort of thing so it&rsquo;s easier than you think. In addition, having an absentee ballot doesn&rsquo;t mean I mail in my vote. I still go to the poll, hand in my absentee ballot so they can destroy it, and vote like a normal downtrodden citizen.</p>
+
+<h4>What do I even vote for:</h4>
+
+<p>Oklahoma is a closed primary state. What this means is that as a registered as an Independent, I&rsquo;m only allowed to vote on a subset of items. Having a ballot sent to me when I&rsquo;m allowed to vote is a great time saver. It&rsquo;s also really handy when you&rsquo;re talking to a politician to let them know that you&rsquo;re not allowed to vote and let them move on to the proper class of citizenry.</p>
+
+<h4>Voting Matters:</h4>
+
+<p>When it comes to Federal politics, people will often lie to you and tell you that your vote matters. What they should really be telling you is that your vote only matters when it comes to local laws that actually affect you. For example, in Oklahoma, a 1% tax increase can pass with as little as +/&ndash; of 8 votes. While talking about flag burning is grounds for treason is quite fun, taking a few moments to control how your income is distributed in your community is likely more patriotic.</p>
+
+<h4>Lobbyotomy:</h4>
+
+<p>Being able to see my entire ballot before voting day lets me take 45 minutes or so to independently research information on the actual proposals on the ballot. Previous to this method, while I knew about some of the popular issues due to high dollar campaigns trying to buy my opinion, there were quite a few items on the ballot I had no idea about. I found this incredibly disheartening, and the beauty of the absentee ballot is that I&rsquo;m not longer surprised, second guessing, and leaving blank ballots because I can&rsquo;t quite parse the ridiculous lawyer speak.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -776,93 +823,6 @@ end
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-07T13:56:00-05:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
-
-<h4>Where oh where to begin</h4>
-
-<p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
-
-<pre><code>--Hello Table!
-CREATE TABLE burritoplaces
-(id serial PRIMARY KEY,
-establishment varchar(50) not null,
-lat double precision,
-lon double precision);  
---Hello Data!
-INSERT INTO burritoplaces(establishment, lat,lon)
-VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
-,('Locos Lobos', 35.496025,-97.510185)
-,('Captain Crustacean', 35.51468,-97.524347)
-,('Double Stuffers Cafe', 35.523762,-97.508039)
-,('Cafe Truncate of Watonga', 35.866413,-98.473206);
-</code></pre>
-
-<p>The data checks out:</p>
-
-<pre><code>-- all 5 entries
-SELECT * FROM burritoplaces;
-</code></pre>
-
-<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do it outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
-
-<pre><code>--turn on the magic
-CREATE EXTENSION cube;
-CREATE EXTENSION earthdistance;
-</code></pre>
-
-<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of the four countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
-
-<pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
-SELECT *, point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)::point AS burrito_distance
-FROM burritoplaces
-WHERE (point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)) &lt; 10 --feel free to play this!
-ORDER by burrito_distance;
-</code></pre>
-
-<p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
-
-<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
-
-<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
-FROM burritoplaces
-WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
-ORDER by burrito_distance;
-</code></pre>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/2/">&larr; Older</a>
@@ -882,6 +842,10 @@ ORDER by burrito_distance;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
@@ -895,10 +859,6 @@ ORDER by burrito_distance;
     
       <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
   </ul>

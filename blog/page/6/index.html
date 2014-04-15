@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Thanks to everyone who came to the OKCSQL  last night and endured my presentation.  We covered a lot of cool stuff and since I didn&rsquo;t have any &hellip;">
+  <meta name="description" content="Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off Stackoverflow.com Sadly, I didn&rsquo;t bookmark the link and upon &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,60 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/">My Subversion Ignore List for Visual Studio / Anhksvn</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-01-11T00:00:00-06:00" pubdate data-updated="true">Jan 11<span>th</span>, 2011</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Disclaimer: I didn&rsquo;t write/create these exclusions&hellip;I copied them off <a href="http://stackoverflow.com" title="StackOverflow.com">Stackoverflow.com</a> Sadly, I didn&rsquo;t bookmark the link and upon quick search, there were too many svn links for me to filter through.</p>
+
+<p><strong>UPDATE:</strong> Jim motivated me to actually spend the extra time to track down the actual links I used.  <a href="http://stackoverflow.com/questions/85353/best-general-svn-ignore-pattern" title="Link1">Link1</a> and  <a href="http://stackoverflow.com/questions/4375971/tortoise-svn-global-ignore-pattern" title="Link2">Link2</a></p>
+
+<p>I use  <a href="http://ankhsvn.open.collab.net/" title="AnkhSVN">AhnkSVN</a> as my visual studio source control plugin.  I right click on the solution,  select &lsquo;subversion&rsquo;,  select &lsquo;solution properties&rsquo;.  That brings up a box and you will want to click &lsquo;add&rsquo;.  From there,  select  svn.Ignore  and copy/paste the below:</p>
+
+<p>Solution Level:</p>
+
+<p>*.csproj.user Bin obj Obj Release debug Debug release</p>
+
+<p>Note: I don&rsquo;t use Reshaper, if you do, there are other exclusions you will want to add</p>
+
+<p>In <a href="http://tortoisesvn.tigris.org/" title="TortoiseSVN">Tortoisesvn</a>,  my exclusion list is :</p>
+
+<p><em>.o </em>.lo <em>.la </em>.al .libs <em>.so *.so.[0-9]* </em>.a <em>.pyc </em>.pyo <em>.rej </em>~ #<em># .#</em> .<em>.swp .DS_Store </em>.csproj.user Bin obj Obj Release debug Debug release *.suo</p>
+
+<p>When you go into your TortoiseSVN settings,  on the &lsquo;general&rsquo; tab,  copy/paste that into the  &#8217;Global Ignore Pattern:&lsquo; box.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -758,111 +812,6 @@ public partial class StoredProcedures
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-sql-clr-part-1/">Getting Started With SQL CLR Part 1</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-07-27T00:00:00-05:00" pubdate data-updated="true">Jul 27<span>th</span>, 2010</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>Start: Anyone who has done scripting tasks in SSIS knows how valuable being able to leverage .NET can be when you are building data solutions. Based on a recent presentation, by <a href="http://www.timmitchell.net/">Tim Mitchell</a>, I was encouraged to extend .NET past SSIS and start exploring SQL CLR. Let&rsquo;s get started:</p>
-
-<p>First, we need to enable CLR on our database:</p>
-
-<pre><code>sp_configure 'clr enabled', 1
-GO
-RECONFIGURE
-GO
-</code></pre>
-
-<p>Next, we fire up Visual Studio and create a Database project. C# is my language of choice so I choose it:<br/>
-<img src="http://images.datachomp.com/sqlserver/sqlclr/CreateProject.jpg" alt="CreateProject" /></p>
-
-<p>After that, it will likely ask you for some DB credentials, much like creating a datasource when you are doing other .net applications. Like other .NET solutions, you can right click on your project, go to properties and change your connection on the &lsquo;database&rsquo; tab. Once you get your project up, right click on add a new item, and select stored procedure. Give it a name bearing in mind that the name you give it will be what the procedure gets deployed as. Once created you will see that VS takes care of a lot of the plumbing for you:
-<code></p>
-
-<pre><code>using System;
-using System.Data;
-using System.Data.SqlClient;
-using System.Data.SqlTypes;
-using Microsoft.SqlServer.Server;
-
-
-public partial class StoredProcedures
-{
-    [Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_Chomp()
-    {
-        // Put your code here
-    }
-};
-</code></pre>
-
-<p></code></p>
-
-<p>Let&rsquo;s throw in some code:
-<code></p>
-
-<pre><code>[Microsoft.SqlServer.Server.SqlProcedure]
-    public static void clr_Chomp(out string Chomps)
-    {
-        Chomps = "Chomp Chomp Chomp Chomp";
-    }
-</code></pre>
-
-<p></code></p>
-
-<p>What did we add? We basically declared an output parameter (out string chomps), and then said that variable is just going to return the text &lsquo;Chomp&rsquo; X 4.<br/>
-Compile, and deploy. Gotcha &ndash; For those of us that use VS 2010 our default framework is 4.0 &hellip;. this won&rsquo;t jive in SQL Server so you will get a successful build, but a failed deployment. Follow the yellow brick errors and change your target framework down to 3.5 (if deploying to SQL Server 2008). Once that is done, it is time to see this guy in action!!!<br/>
-Make sure you are in the proper database and run it:
-<code></p>
-
-<pre><code>DECLARE @words VARCHAR(25)
-EXEC dbo.clr_Chomp @Chomps = @words OUTPUT
-SELECT @words
-</code></pre>
-
-<p></code></p>
-
-<p>and it should spit out some Chomps for you. If it worked, go reward yourself with some M&amp;M&rsquo;s. If it didn&rsquo;t work for you then:
-<code></p>
-
-<pre><code>GOTO START;
-</code></pre>
-
-<p></code>
-In Part 2, I will begin leaving the playground of basic examples and start showing real practical implementations of SQLCLR.<br/>
-In Part 3, I will likely look at performance and some other items to help round out the series.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/7/">&larr; Older</a>
@@ -884,6 +833,10 @@ In Part 3, I will likely look at performance and some other items to help round 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
@@ -897,10 +850,6 @@ In Part 3, I will likely look at performance and some other items to help round 
     
       <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
   </ul>

@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>DatabaseMail Man - DataChomp</title>
+  <title>Always Get An Absentee Ballot - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples: &mdash; &hellip;">
+  <meta name="description" content="Since living in Oklahoma, I&rsquo;ve found one of the absolute best ways to vote is by getting registering for an absentee ballot. Oklahoma has &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/databasemail-man">
+  <link rel="canonical" href="http://datachomp.com/archives/always-get-an-absentee-ballot">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">DatabaseMail Man</h1>
+      <h1 class="entry-title">Always Get an Absentee Ballot</h1>
     
     
       <p class="meta">
@@ -99,48 +99,26 @@
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2014-04-15T00:56:00-05:00" pubdate data-updated="true">Apr 15<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>Since living in Oklahoma, I&rsquo;ve found one of the absolute best ways to vote is by getting registering for an absentee ballot. Oklahoma has pretty lax laws on this sort of thing so it&rsquo;s easier than you think. In addition, having an absentee ballot doesn&rsquo;t mean I mail in my vote. I still go to the poll, hand in my absentee ballot so they can destroy it, and vote like a normal downtrodden citizen.</p>
 
-<p>Compared to email options presented in SQL Server 2000,   Databasemail in Sql Server 2005 rocks.  Here are some implementation examples:
-<code>
-&mdash; send a normal mail
-EXEC msdb.dbo.sp_send_dbmail
-@Profile_Name = @@ServerName
-,@recipients=&lsquo;name@domain.com;<a href="&#x6d;&#97;&#x69;&#x6c;&#116;&#111;&#58;&#x6e;&#x75;&#109;&#x62;&#101;&#114;&#x40;&#x63;&#x69;&#110;&#103;&#117;&#108;&#x61;&#114;&#109;&#101;&#46;&#x63;&#111;&#109;">&#110;&#117;&#x6d;&#x62;&#101;&#114;&#64;&#x63;&#105;&#110;&#103;&#x75;&#x6c;&#x61;&#114;&#x6d;&#x65;&#x2e;&#x63;&#x6f;&#x6d;</a>&rsquo;
-,@subject = &lsquo;Dev Transfer to 19&rsquo;
-,@body = &lsquo;Task Complete&rsquo;
-,@body_format = &lsquo;HTML&rsquo;
-&mdash; send with an attachment
-EXEC msdb.dbo.sp_send_dbmail
-@Profile_Name = @@SERVERNAME
-,@recipients=&lsquo;<a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x6e;&#97;&#x6d;&#x65;&#64;&#100;&#111;&#x6d;&#97;&#x69;&#110;&#x2e;&#x63;&#111;&#109;">&#110;&#x61;&#109;&#101;&#64;&#100;&#x6f;&#109;&#x61;&#105;&#110;&#46;&#99;&#111;&#109;</a>&rsquo;
-,@subject = &lsquo;Dev Transfer to 19&rsquo;
-,@body = &lsquo;Task Complete&rsquo;
-,@body_format = &lsquo;HTML&rsquo;
-,@file_attachments = @SourcePath;
-</code>
-/*<br/>
-&mdash;Odds and Ends<br/>
-If sending to multiple peeps and one fails to send&hellip; queued up and resends to all.</p>
+<h4>What do I even vote for:</h4>
 
-<p>I usually make a profile based on the machine name, so that for notifications, I can keep using @@servername and it be portable.</p>
+<p>Oklahoma is a closed primary state. What this means is that as a registered as an Independent, I&rsquo;m only allowed to vote on a subset of items. Having a ballot sent to me when I&rsquo;m allowed to vote is a great time saver. It&rsquo;s also really handy when you&rsquo;re talking to a politician to let them know that you&rsquo;re not allowed to vote and let them move on to the proper class of citizenry.</p>
 
-<p>&mdash; SMTP Authentication<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-07-02T08:08:10). Exception Message: Cannot send mails to mail server. (Mailbox unavailable. The server response was: 5.7.1 Unable to relay for <a href="&#x6d;&#x61;&#x69;&#x6c;&#x74;&#x6f;&#x3a;&#x6e;&#97;&#109;&#101;&#64;&#x64;&#111;&#109;&#x61;&#105;&#110;&#46;&#99;&#111;&#109;">&#x6e;&#97;&#x6d;&#101;&#64;&#x64;&#111;&#109;&#97;&#x69;&#110;&#x2e;&#99;&#x6f;&#109;</a>). )</p>
+<h4>Voting Matters:</h4>
 
-<p>&mdash; antivirus port 25 block<br/>
-The mail could not be sent to the recipients because of the mail server failure. (Sending Mail using Account 1 (2007-06-18T07:15:51). Exception Message: Could not connect to mail server. (An established connection was aborted by the software in your host machine). )</p>
+<p>When it comes to Federal politics, people will often lie to you and tell you that your vote matters. What they should really be telling you is that your vote only matters when it comes to local laws that actually affect you. For example, in Oklahoma, a 1% tax increase can pass with as little as +/&ndash; of 8 votes. While talking about flag burning is grounds for treason is quite fun, taking a few moments to control how your income is distributed in your community is likely more patriotic.</p>
 
-<p>&mdash;Select * from sysmail_allitems order by mailitem_id desc   &mdash; look up mails<br/>
-&mdash;Select * from sysmail_event_log WHERE mailitem_id in (95,94,93,97) &mdash; look up the mails details<br/>
-*/</p>
+<h4>Lobbyotomy:</h4>
+
+<p>Being able to see my entire ballot before voting day lets me take 45 minutes or so to independently research information on the actual proposals on the ballot. Previous to this method, while I knew about some of the popular issues due to high dollar campaigns trying to buy my opinion, there were quite a few items on the ballot I had no idea about. I found this incredibly disheartening, and the beauty of the absentee ballot is that I&rsquo;m not longer surprised, second guessing, and leaving blank ballots because I can&rsquo;t quite parse the ridiculous lawyer speak.</p>
 </div>
 
 
@@ -149,7 +127,7 @@ The mail could not be sent to the recipients because of the mail server failure.
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -163,21 +141,15 @@ The mail could not be sent to the recipients because of the mail server failure.
   
 
 
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+<time datetime="2014-04-15T00:56:00-05:00" pubdate data-updated="true">Apr 15<span>th</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/sql-server/'>SQL Server</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/databasemail-man/" data-via="datachomp" data-counturl="http://datachomp.com/archives/databasemail-man/" >Tweet</a>
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/always-get-an-absentee-ballot/" data-via="datachomp" data-counturl="http://datachomp.com/archives/always-get-an-absentee-ballot/" >Tweet</a>
   
   
   
@@ -186,14 +158,18 @@ The mail could not be sent to the recipients because of the mail server failure.
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/application-connection-ocd/" title="Previous Post: Application Connection OCD">&laquo; Application Connection OCD</a>
+        <a class="basic-alignment left" href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/" title="Previous Post: Enums for when you just cant handle another foreign key">&laquo; Enums for when you just cant handle another foreign key</a>
       
-      
-        <a class="basic-alignment right" href="/archives/msdn-on-the-down-low-bandwidth/" title="Next Post: MSDN on the down low bandwidth">MSDN on the down low bandwidth &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -252,7 +228,10 @@ The mail could not be sent to the recipients because of the mail server failure.
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.com/archives/always-get-an-absentee-ballot/';
+        var disqus_url = 'http://datachomp.com/archives/always-get-an-absentee-ballot/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

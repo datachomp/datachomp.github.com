@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="When I was in the .net world, I was pretty adamant about the importance of giving your App a nice application_name to help out your DBA. Now that I& &hellip;">
+  <meta name="description" content="Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,93 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/radius-queries-in-postgres/">Radius Queries in Postgres</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-07T13:56:00-05:00" pubdate data-updated="true">Oct 7<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Today, I found myself in a horrible situation. I was heading down i-235 and I became stricken with an insatiable burrito urge. All the apps on my phone were borked and all I had was my trusty Postgres database. I needed to find a burritos shop and I needed to find one fast.</p>
+
+<h4>Where oh where to begin</h4>
+
+<p>Luckily, I happen to know the latitude and longitude of all my favorite burrito places in Oklahoma City. I quickly add them to my database:</p>
+
+<pre><code>--Hello Table!
+CREATE TABLE burritoplaces
+(id serial PRIMARY KEY,
+establishment varchar(50) not null,
+lat double precision,
+lon double precision);  
+--Hello Data!
+INSERT INTO burritoplaces(establishment, lat,lon)
+VALUES ('Verde Bueno Burrito', 35.484388,-97.505035)
+,('Locos Lobos', 35.496025,-97.510185)
+,('Captain Crustacean', 35.51468,-97.524347)
+,('Double Stuffers Cafe', 35.523762,-97.508039)
+,('Cafe Truncate of Watonga', 35.866413,-98.473206);
+</code></pre>
+
+<p>The data checks out:</p>
+
+<pre><code>-- all 5 entries
+SELECT * FROM burritoplaces;
+</code></pre>
+
+<p>Perfect! All my favorite places are there but sadly, I can&rsquo;t do geospatial math in my head. I can&rsquo;t even really do it outside of my head so I&rsquo;m going to have to get some help. Enter the <a href="http://www.postgresql.org/docs/current/static/earthdistance.html">earthdistance</a> postgres extension and its helpful sibling &lsquo;cube&rsquo;:</p>
+
+<pre><code>--turn on the magic
+CREATE EXTENSION cube;
+CREATE EXTENSION earthdistance;
+</code></pre>
+
+<p>I&rsquo;m becoming so weak&hellip; I need to wrap this up. Since I live in one of the four countries in the world that uses the Imperial system of measurement, I need to figure out how to do this whole thing in miles. Skimming over the earthdistance documentation, it looks like I just need to use the point commands. I whip up a query that is as tech tasty as some carne asada:</p>
+
+<pre><code>-- my location on i-235 is a very hungry (35.512363,-97.515678)
+SELECT *, point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)::point AS burrito_distance
+FROM burritoplaces
+WHERE (point(-97.515678, 35.512363) &lt;@&gt; point(lon, lat)) &lt; 10 --feel free to play this!
+ORDER by burrito_distance;
+</code></pre>
+
+<p>This returns me everything that is less than 10 miles away and orders them by distance. I see that Captain Crustacian is a half mile away and they have amazing guacamole. Thank you Postgres, cube, and earthdistance. You have saved my life once again.</p>
+
+<p>If I lived anywhere else in the world, I would likely use meters and write the query as such:</p>
+
+<pre><code>SELECT *, earth_distance(ll_to_earth(35.512363,-97.515678), ll_to_earth(lat, lon)) as burrito_distance
+FROM burritoplaces
+WHERE earth_box(ll_to_earth(35.512363,-97.515678), 4000) @&gt; ll_to_earth(lat, lon)
+ORDER by burrito_distance;
+</code></pre>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -689,65 +776,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/top-10-reasons-i-like-postgres-over-sql-server/">Top 10 Reasons I Like Postgres Over SQL Server</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-04-07T10:46:00-05:00" pubdate data-updated="true">Apr 7<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p><img class="left" src="http://static.datachomp.com/robandguillaume.jpg" title="Rob and Guillaume" >
-While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chance to talk to my friend <a href="http://twitter.com/groques/">Guillaume Roques</a>. In addition to talking about SalesForce, we took advantage of our mutual .NET backgrounds to discuss Microsoft. We did the typically uncompromising praise of <a href="http://en.wikipedia.org/wiki/Scott_Guthrie">The Gu</a> and how far Azure has come along in the last 18 months&hellip; and of course we had to talk databases. Below is my quick little list of reasons I gave him as to why I&rsquo;m favoring Postgres over SQL Server from a technical/business aspect.</p>
-
-<br />
-
-
-
-
-<hr />
-
-
-<ol>
-<li><p>SQL Server still to this day deploys pessimistic concurrency out of the box. Anyone not aware of this &ldquo;feature&rdquo; starts out very disadvantaged on performance. This person will soon get an internet history filled with locking/blocking/deadlocking links. Postgres defaults to optimistic concurrency via its MVCC feature and is a joy to work with.</p></li>
-<li><p>Compression out of the box. With SQL Server, compression is an &ldquo;Enterprise Edition and Up&rdquo; feature which means you are spending the cost of at least 1 dev in order to get the ability to use compression. Once you have paid for that ability, you still have to figure out how to implement it. Postgres does this for you out of the box, automatically and for free.</p></li>
-<li><p>Concurrent Index Creation. You are going to find a recurring theme there&hellip;this is yet another feature that SQL Server is capable of doing, but only if you are able to afford the elite and affluent company of Enterprise Edition. Postgres has your back on this even if you left your wallet at home.</p></li>
-<li><p>Partitioning out of the box. Our data is growing and we need to do something about it, but perhaps we don&rsquo;t want to take on the drama of sharding yet. Partitioning can be a pretty good fix for this and with Postgres, unsurprisingly, you get it out of the box. As for SQL Server, basic table partitioning is only available in Enterprise Elite edition. Yep, you&rsquo;re writing huge checks to pull this off.</p></li>
-<li><p>Indexable functions &ndash; In Postgres, you can actually index certain functions and maintain sargability.  With SQL Server, you&rsquo;re stuck in the cruel world of table scans when this happens.</p></li>
-<li><p>Modules/Extensions &ndash; Tech moves fast. The fact that Postgres has an extensions system means that your DB platform can now match the innovations on your web stack. SQL Server has releases every 3 years&hellip; It quickly becomes your grandparents&#8217; database.</p></li>
-<li><p>Works everywhere &ndash; Linux, Mac, BSD, Windows&hellip; Postgres comes to you on the platform you want to code on. SQL Server is flexible in that it works on all 50 versions of Windows Vista, Windows 7, Windows 8.</p></li>
-<li><p>Arrays &ndash; Everyone loves arrays and they are a core part of programming&hellip;except in SQL Server, where they don&rsquo;t exist.</p></li>
-<li><p>JSON / V8 support &ndash; You can write/use JSON and Javascript on the client, server and even your database if you are using Postgres. SQL Server? I believe they are still fully invested in thinking that XML is the future.</p></li>
-<li><p>Unicode by default &ndash; No longer do you have to play the nvarchar / varchar implicit conversion game or have horrible string datatype mapping like you do in SQL Server. Postgres is UTF-8/varchar out of the box and wants nothing more than to give your app gigantic, unconditional data hugs.</p></li>
-</ol>
-
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/blog/page/3/">&larr; Older</a>
@@ -769,6 +797,10 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
@@ -782,10 +814,6 @@ While at <a href="http://waza.heroku.com/2013/">Waza</a> this year, I had a chan
     
       <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
   </ul>

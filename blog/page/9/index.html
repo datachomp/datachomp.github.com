@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="So I&rsquo;ve been working on a step by step on ELMAH and how to set it up for F5Compliant &hellip; when today I came across Scott Mitchels tutorial &hellip;">
+  <meta name="description" content="Do you have this problem:   Multiple connections from various applications and you don&rsquo;t know which is which.  There is a fix to this.  It &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -86,6 +86,61 @@
       
   <header>
     
+      <h1 class="entry-title"><a href="/archives/application-connection-ocd/">Application Connection OCD</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true">Jan 30<span>th</span>, 2010</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Do you have this problem:</p>
+
+<p> </p>
+
+<p><img src="http://images.datachomp.com/AppDev/ApplicationConnectionOCD.png" alt="" /></p>
+
+<p>Multiple connections from various applications and you don&rsquo;t know which is which.  There is a fix to this.  It involves telling the app dev team to create a nice clean connection string with the Application Name property being set. This gets double awesome when you add the hostname to the application name so you know exactly where in the webfarm something is coming from.</p>
+
+<p>Here is an example:</p>
+
+<p><code></p>
+
+<pre><code>&lt; connectionStrings&gt; 
+&lt;add name="PaymentsConnStr" connectionString="Data Source=SuperServer;Initial Catalog=DB_Name;MultipleActiveResultSets=True;Persist Security Info=True;User ID=user1;Password=password1;Application Name=OCD App;" providerName="System.Data.SqlClient"/&gt;
+&lt;/connectionStrings&gt;
+</code></pre>
+
+<p></code></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
       <h1 class="entry-title"><a href="/archives/all-your-errors-are-belong-to-us-elmah/">All Your Errors Are Belong to Us &#8211; ELMAH</a></h1>
     
     
@@ -140,6 +195,10 @@
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
@@ -153,10 +212,6 @@
     
       <li class="post">
         <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a>
       </li>
     
   </ul>
