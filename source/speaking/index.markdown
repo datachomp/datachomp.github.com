@@ -11,6 +11,7 @@ footer: true
 Here are my plans for the years... I hope to catch you at one of the following:  
 
 \---|-- 2014 \---|--  
+Aug 12, 2014 - ThatConf - Building Apps on the Postgres Framework  
 Jul   , 2014 - Backyardjs - Building Apps on the Postgres Framework  
 May 20, 2014 - OKCjs - Thoughtfully establishing Postgres as the best data store  
 May 16, 2014 - Kansas City (KcDc) - Nothing loves your app more than Postgres  
