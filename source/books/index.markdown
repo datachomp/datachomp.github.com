@@ -6,16 +6,15 @@ comments: false
 sharing: true
 footer: true
 ---
-# 
+#
 
-It is worth mentioning that in addition to reading, I spend a good chunk of time on sites like [Metacasts][], [CodeSchool][], [Railscasts][], [RubyTapas][].  
+It is worth mentioning that in addition to reading, I spend a good chunk of time on sites like [Metacasts][], [CodeSchool][], [RubyTapas][].  
 
 
 [Metacasts]: http://www.metacasts.tv/ "MetaCasts"
 [CodeSchool]: http://codeschool.com/ "CodeSchool"
-[Railscasts]: http://railscasts.com/ "Railscasts"
 [RubyTapas]: http://rubytapas.com/ "RubyTapas"
-  
+
 I wanted to start recording which books I've read.
 
 \---|\---|-- 2014 \---|\---|--  
@@ -24,6 +23,7 @@ I wanted to start recording which books I've read.
 [recipe]: http://pragprog.com/book/rr2/rails-recipes
 <a href="http://www.amazon.com/gp/product/1449367615/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1449367615&linkCode=as2&tag=data03c5-20">Mining the Social Web: Data Mining Facebook, Twitter, and More</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=1449367615" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
 <a href="http://conqueringthecommandline.com/">Conquering The Command Line</a>  
+<a href="http://pragprog.com/book/msraspi2/raspberry-pi-a-quick-start-guide">RaspberriPi a quickstart guide</a>  
 
 **Database:**  
 <a href="http://www.amazon.com/gp/product/B00BQ1Y9FY/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BQ1Y9FY&linkCode=as2&tag=data03c5-20">Hadoop: The Definitive Guide</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=B00BQ1Y9FY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
