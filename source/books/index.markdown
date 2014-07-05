@@ -140,8 +140,7 @@ Heroku Hackers Guide
 [SQL Server Statistics][41]  
 [Protecting SQL Server Data][42]![][43]  
 [Microsoft SQL Server 2008 Management and Administration][44]![][45]  
-SQL Server MVP Deep Dives Vol. 2
-
+SQL Server MVP Deep Dives Vol. 2  
  [29]: http://www.amazon.com/gp/product/0470484284/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=0470484284
  [30]: http://www.assoc-amazon.com/e/ir?t=&l=as2&o=1&a=0470484284&camp=217145&creative=399369
  [31]: http://www.amazon.com/gp/product/1597496251/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=217145&creative=399373&creativeASIN=1597496251
@@ -164,15 +163,12 @@ SQL Server MVP Deep Dives Vol. 2
 PostgreSQL 9 High Performance  
 PostgreSQL 9 Admin Cookbook  
 Writing PostgreSQL Applications  
-[The RavenDB Book][48]
+[The RavenDB Book][48]  
+The Little MongoDB Book - Karl Seguin  
 
  [46]: http://www.amazon.com/gp/product/1906966079/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=1906966079
  [47]: http://www.assoc-amazon.com/e/ir?t=&l=as2&o=1&a=1906966079&camp=217145&creative=399369
  [48]: http://ravendb.net/learn
-
- 
-
-The Little MongoDB Book - Karl Seguin
 
 **App Dev:**  
 [Pro ASP.NET MVC V2 Framework (Expert's Voice in .NET)][49]![][50]  
@@ -215,9 +211,8 @@ Taking Your Talent To The Web - Jeffrey Zeldman
 [The Art of Deception: Controlling the Human Element of Security][69]![][70]  
 [Confessions of a Public Speaker (English and English Edition)][71]![][72]  
 [The Cuckoo's Egg: Tracking a Spy Through the Maze of Computer Espionage][73]![][74]  
-[Freakonomics: A Rogue Economist Explores the Hidden Side of Everything (P.S.)][75]![][76]  
-[Getting Real][77]
-
+[Freakonomics: A Rogue Economist Explores the Hidden Side of Everything][75]![][76]  
+[Getting Real][77]  
  [69]: http://www.amazon.com/gp/product/076454280X/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=076454280X
  [70]: http://www.assoc-amazon.com/e/ir?t=&l=as2&o=1&a=076454280X&camp=217145&creative=399369
  [71]: http://www.amazon.com/gp/product/1449301959/ref=as_li_ss_tl?ie=UTF8&tag=data03c5-20&linkCode=as2&camp=217145&creative=399369&creativeASIN=1449301959
