@@ -22,14 +22,16 @@ It is worth mentioning that in addition to reading, I spend a good chunk of time
 <a href="http://conqueringthecommandline.com/">Conquering The Command Line</a>  
 <a href="http://pragprog.com/book/msraspi2/raspberry-pi-a-quick-start-guide">RaspberryPi a quickstart guide</a>  
 <a href="http://pragprog.com/book/bhgrunt/automate-with-grunt">Automate with Grunt: The Build Tool for JavaScript</a>  
-
+<a href="http://ebooks.codeship.io/efficiency-in-development-workflows-by-codeship">Efficiency in Development Workflows</a>  
+  
 **Database:**  
-<a href="http://www.amazon.com/gp/product/B00BQ1Y9FY/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BQ1Y9FY&linkCode=as2&tag=data03c5-20">Hadoop: The Definitive Guide</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=B00BQ1Y9FY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-
-
+<a href="http://www.amazon.com/gp/product/B00BQ1Y9FY/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=B00BQ1Y9FY&linkCode=as2&tag=data03c5-20">Hadoop: The Definitive Guide</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=B00BQ1Y9FY" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
+<a href="http://www.packtpub.com/postgresql-server-programming/book">Postgres Server Programming</a>  
+<a href="http://www.amazon.com/Microsoft-High-Performance-Functions-Developer-Reference/dp/0735658366/ref=sr_1_sc_1?s=books&ie=UTF8&qid=1404531395&sr=1-1-spell&keywords=microsoft+sqlserver+2012+high+performance+t-sql">SQL Server 2012 - High Performance t-sql using Window Functions</a>  
+  
 **Misc:**  
-<a href="http://www.amazon.com/gp/product/0307390993/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0307390993&linkCode=as2&tag=data03c5-20">The Master Switch: The Rise and Fall of Information Empires (Vintage)</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=0307390993" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-
+<a href="http://www.amazon.com/gp/product/0307390993/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0307390993&linkCode=as2&tag=data03c5-20">The Master Switch: The Rise and Fall of Information Empires</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=0307390993" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
+<a href="http://www.amazon.com/Snow-Crash-Bantam-Spectra-Book/dp/0553380958#">Snowcrash</a>  
 
 \---|\---|-- 2013 \---|\---|--  
 **Database:**  
