@@ -16,6 +16,9 @@ It is worth mentioning that in addition to reading, I spend a good chunk of time
 
 \---|\---|-- 2014 \---|\---|--  
 **AppDev:**  
+[POODR][poodr]  
+[poodr]: http://www.amazon.com/Practical-Object-Oriented-Design-Ruby-Addison-Wesley/dp/0321721330
+
 [Rails Recipes][recipe]  
 [recipe]: http://pragprog.com/book/rr2/rails-recipes
 <a href="http://www.amazon.com/gp/product/1449367615/ref=as_li_ss_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1449367615&linkCode=as2&tag=data03c5-20">Mining the Social Web: Data Mining Facebook, Twitter, and More</a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=data03c5-20&l=as2&o=1&a=1449367615" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />  
