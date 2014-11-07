@@ -9,7 +9,8 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Since living in Oklahoma, I&rsquo;ve found one of the absolute best ways to vote is by getting registering for an absentee ballot. Oklahoma has &hellip;">
+  <meta name="description" content="Tip 1: Don&rsquo;t follow verified people. Don&rsquo;t follow verified people/accounts if possible. Someone who has done enough ego stroking
+to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-11-05T09:17:40-06:00" pubdate data-updated="true">Nov 5<span>th</span>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h5>Tip 1: Don&rsquo;t follow verified people.</h5>
+
+<p>Don&rsquo;t follow verified people/accounts if possible. Someone who has done enough ego stroking
+to become verified, likely has a fair number of followers. Let those people filter out the good stuff for you. Rest assured, if one of those accounts says something good, it will surface.</p>
+
+<h5>Tip 2: Mute hashtags often</h5>
+
+<p>Amongst the chunks of good stuff on twitter are snowballs of drama and conferences/events you are not interested in. Luckily, most of these occurrences try to develop &lsquo;branding&rsquo; with a hashtag. Mute them.</p>
+
+<h5>Tip 3: Unfollow as easily as you follow</h5>
+
+<p>Sometimes you will have a friend or someone you know change careers. They might start consulting or some other endeavor that requires them to &lsquo;brand-build&rsquo;, self promote or just generally create a lot of noise. Unfollow them. If it is someone you have a close relationship with, like a spouse or something, just mute them. If you find yourself following someone that is generally pretty negative, just unfollow them unless they do it in a particularly clever manner.</p>
+
+<h5>Tip 4: Don&rsquo;t use the twitter website.</h5>
+
+<p>Find a twitter client that stops the promoted tweets, &lsquo;we think you like this&rsquo; tweets, blue-line/repeated conversation tweets, and the inane trending topics stuff. I use Tweetbot because I like how well it increases signal and decreases the above noise.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -755,74 +807,6 @@ Body: 1 &ndash; Rob Conery</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/helping-asset-pipeline-open-up-a-little/">Helping Asset Pipeline Open Up a Little</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-10-26T14:42:00-05:00" pubdate data-updated="true">Oct 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>A working Asset Pipeline can be a thing of beauty. A broken asset pipeline can be a horribly mean shut-in. One of my favorite ways for it to break in my Rails 3 app is the:</p>
-
-<pre><code>undefined method `directory?' for nil:NilClass
-rake aborted
-</code></pre>
-
-<p>Thanks AP, for breaking and basically telling me nothing. Luckily, it doesn&rsquo;t have to be this way. If we take a moment to stop and get to know AP, we can get it to open up and be more helpful to us. We start by setting our bundler editor in .bashrc by adding the following line:</p>
-
-<pre><code>export BUNDLER_EDITOR=subl   #I set mine to sublimetext
-</code></pre>
-
-<p>Next up, we hop into terminal and go for an in home visit right into the code itself:</p>
-
-<pre><code>bundle open sprockets  #sprockets is AP's birth name
-</code></pre>
-
-<p>Navigate to lib->sprockets->base.rb</p>
-
-<p>find your way to the &ldquo;def each_entry(root, &amp;block)&rdquo; section of code and you&rsquo;ll likely see a lack of error handling there. To fix it, I wrap a rescue around the &ldquo;directory?&rdquo; check like so:</p>
-
-<pre><code>begin
-    if stat(path).directory?
-      each_entry(path) do |subpath|
-        paths &lt;&lt; subpath
-      end
-    end
-    rescue
-      puts "Hey friend, I have an issue at: #{path}"
-    end
-end
-</code></pre>
-
-<p>This doesn&rsquo;t fix all of AP&rsquo;s problems, none of us are perfect, but it does coax the gem into letting us know where the problem is. Once we know where the problem is, we can work on it together rather than just throwing our arms up in the air and quitting.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -843,6 +827,10 @@ end
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
       </li>
     
@@ -856,10 +844,6 @@ end
     
       <li class="post">
         <a href="/archives/the-appdevs-are-idiots/">The AppDevs Are Idiots</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/getting-started-with-pgbouncer/">Getting Started With PGBouncer</a>
       </li>
     
   </ul>
@@ -915,5 +899,9 @@ end
 
 
 
+
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init(100787394); }catch(e){}</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100787394ns.gif" /></p></noscript>
 </body>
 </html>

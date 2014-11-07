@@ -5,11 +5,12 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Hey App, Quit Wasting My Time Sorting Your Data - DataChomp</title>
+  <title>Personal Twitter Tips for Maximum Happiness - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of &hellip;">
+  <meta name="description" content="Tip 1: Don&rsquo;t follow verified people. Don&rsquo;t follow verified people/accounts if possible. Someone who has done enough ego stroking
+to &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data">
+  <link rel="canonical" href="http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +84,7 @@
   
   <header>
     
-      <h1 class="entry-title">Hey App, Quit Wasting My Time Sorting Your Data</h1>
+      <h1 class="entry-title">Personal Twitter Tips for Maximum Happiness</h1>
     
     
       <p class="meta">
@@ -99,62 +100,29 @@
   
 
 
-<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true"></time>
+<time datetime="2014-11-05T09:17:40-06:00" pubdate data-updated="true">Nov 5<span>th</span>, 2014</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><h5>Tip 1: Don&rsquo;t follow verified people.</h5>
 
-<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
+<p>Don&rsquo;t follow verified people/accounts if possible. Someone who has done enough ego stroking
+to become verified, likely has a fair number of followers. Let those people filter out the good stuff for you. Rest assured, if one of those accounts says something good, it will surface.</p>
 
-<p><strong>Nut Kicking:</strong><br/>
-In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
+<h5>Tip 2: Mute hashtags often</h5>
 
-<p><strong>Code Please:</strong><br/>
-Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
-Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
-<code>SELECT  Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254;<br/>
-SELECT Name<br/>
-FROM dbo.Badges<br/>
-WHERE userid = 91254<br/>
-ORDER BY name DESC;</code>
-And this is the execution plan it creates:<br/>
-<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+<p>Amongst the chunks of good stuff on twitter are snowballs of drama and conferences/events you are not interested in. Luckily, most of these occurrences try to develop &lsquo;branding&rsquo; with a hashtag. Mute them.</p>
 
-<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
+<h5>Tip 3: Unfollow as easily as you follow</h5>
 
-<p><strong>Just Fix It</strong><br/>
-In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
+<p>Sometimes you will have a friend or someone you know change careers. They might start consulting or some other endeavor that requires them to &lsquo;brand-build&rsquo;, self promote or just generally create a lot of noise. Unfollow them. If it is someone you have a close relationship with, like a spouse or something, just mute them. If you find yourself following someone that is generally pretty negative, just unfollow them unless they do it in a particularly clever manner.</p>
 
-<p><code>
-public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
-{</p>
+<h5>Tip 4: Don&rsquo;t use the twitter website.</h5>
 
-<pre><code>var table = new Badges();
-var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
-return badges.OrderBy(x=&gt;x.Name);
-//return badges.OrderByDescending(x =&gt; x.Name);
-</code></pre>
-
-<p>}
-</code>
-That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
-
-<p><strong>Does this make us happy?</strong><br/>
-I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
-
-<p><strong>But But But, our servers are busy too!</strong><br/>
-Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
-
-<p>There are a ton of ways to do this:<br/>
-<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
-
-<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
+<p>Find a twitter client that stops the promoted tweets, &lsquo;we think you like this&rsquo; tweets, blue-line/repeated conversation tweets, and the inane trending topics stuff. I use Tweetbot because I like how well it increases signal and decreases the above noise.</p>
 </div>
 
 
@@ -163,7 +131,7 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -177,21 +145,15 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
   
 
 
-<time datetime="2012-01-29T00:00:00-06:00" pubdate data-updated="true"></time>
+<time datetime="2014-11-05T09:17:40-06:00" pubdate data-updated="true">Nov 5<span>th</span>, 2014</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/databases/'>databases</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" data-via="datachomp" data-counturl="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/" data-via="datachomp" data-counturl="http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/" >Tweet</a>
   
   
   
@@ -200,14 +162,18 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/git-and-red-gate-sql-source-control/" title="Previous Post: GIT and Red Gate SQL Source Control">&laquo; GIT and Red Gate SQL Source Control</a>
+        <a class="basic-alignment left" href="/archives/always-get-an-absentee-ballot/" title="Previous Post: Always Get An Absentee Ballot">&laquo; Always Get An Absentee Ballot</a>
       
-      
-        <a class="basic-alignment right" href="/archives/im-leaving-sql-server-for-postgres/" title="Next Post: I&#8217;m leaving SQL Server for Postgres">I&#8217;m leaving SQL Server for Postgres &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -263,7 +229,10 @@ Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the 
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/';
+        var disqus_url = 'http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

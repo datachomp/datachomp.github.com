@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2014-08-13T17:47:08-05:00</updated>
+  <updated>2014-11-06T22:04:02-06:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Personal Twitter Tips for Maximum Happiness]]></title>
+    <link href="http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/"/>
+    <updated>2014-11-05T09:17:40-06:00</updated>
+    <id>http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness</id>
+    <content type="html"><![CDATA[<h5>Tip 1: Don&rsquo;t follow verified people.</h5>
+
+<p>Don&rsquo;t follow verified people/accounts if possible. Someone who has done enough ego stroking
+to become verified, likely has a fair number of followers. Let those people filter out the good stuff for you. Rest assured, if one of those accounts says something good, it will surface.</p>
+
+<h5>Tip 2: Mute hashtags often</h5>
+
+<p>Amongst the chunks of good stuff on twitter are snowballs of drama and conferences/events you are not interested in. Luckily, most of these occurrences try to develop &lsquo;branding&rsquo; with a hashtag. Mute them.</p>
+
+<h5>Tip 3: Unfollow as easily as you follow</h5>
+
+<p>Sometimes you will have a friend or someone you know change careers. They might start consulting or some other endeavor that requires them to &lsquo;brand-build&rsquo;, self promote or just generally create a lot of noise. Unfollow them. If it is someone you have a close relationship with, like a spouse or something, just mute them. If you find yourself following someone that is generally pretty negative, just unfollow them unless they do it in a particularly clever manner.</p>
+
+<h5>Tip 4: Don&rsquo;t use the twitter website.</h5>
+
+<p>Find a twitter client that stops the promoted tweets, &lsquo;we think you like this&rsquo; tweets, blue-line/repeated conversation tweets, and the inane trending topics stuff. I use Tweetbot because I like how well it increases signal and decreases the above noise.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Always Get an Absentee Ballot]]></title>
@@ -861,52 +885,6 @@ Even when it comes to virtualization, gone are the days of heavy handed, GUI rid
 <p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
 
 <p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[More Nerdy Hipchat Emoticons]]></title>
-    <link href="http://datachomp.com/archives/more-nerdy-hipchat-emoticons/"/>
-    <updated>2013-04-17T22:43:00-05:00</updated>
-    <id>http://datachomp.com/archives/more-nerdy-hipchat-emoticons</id>
-    <content type="html"><![CDATA[<p>There are lots of reasons to love <a href="http://hipchat.com/">hipchat</a> and one of the more playful ones is the ability to upload/define custom emoticons. Builtin to hipchat are a variety of <a href="http://hipchat-emoticons.nyh.name/">default emoticons</a> but I needed something nerdier&hellip;</p>
-
-<p>Here is what I have so far:</p>
-
-<div style="text-align: center;">
-<table style="margin: 0px auto; table-layout: fixed; width: 650px;">
-<tr>
-<td>(angular)<br/><img src="http://static.datachomp.com/emoticons/angularjs.png" /></td><td>(css)<br/><img src="http://static.datachomp.com/emoticons/css.png" /></td><td>(jquery)<br/><img src="http://static.datachomp.com/emoticons/jquery.png" /></td><td>(js)<br/><img src="http://static.datachomp.com/emoticons/js.png" /></td>
-</tr>
-<td>(git)<br/><img src="http://static.datachomp.com/emoticons/git.png" /></td><td>(github)<br/><img src="http://static.datachomp.com/emoticons/github.png" /></td><td>(poshgit)<br/><img src="http://static.datachomp.com/emoticons/poshgit.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(postgres)<br/><img src="http://static.datachomp.com/emoticons/postgresql.jpeg" /></td><td>(redis)<br/><img src="http://static.datachomp.com/emoticons/redis.png" /></td><td>(sidekiq)<br/><img src="http://static.datachomp.com/emoticons/sidekiq.png" /></td><td>(servicestack)<br/><img src="http://static.datachomp.com/emoticons/servicestack.png" /></td>
-</tr>
-<tr>
-<td>(rails)<br/><img src="http://static.datachomp.com/emoticons/rails.png" /></td><td>(html5)<br/><img src="http://static.datachomp.com/emoticons/html5.png" /></td><td>(ruby)<br/><img src="http://static.datachomp.com/emoticons/ruby.png" /></td><td> </td>
-</tr>
-<tr>
-<td>(phonegap)<br/><img src="http://static.datachomp.com/emoticons/phonegap.png" /></td><td>(vs)<br/><img src="http://static.datachomp.com/emoticons/vs.png" /></td><td>(xamarin)<br/><img src="http://static.datachomp.com/emoticons/xamarinhq.png" /></td><td>(sublime)<br/><img src="http://static.datachomp.com/emoticons/sublimetext.png" /></td>
-</tr>
-
-<tr>
-<td>(grunt)<br/><img src="http://static.datachomp.com/emoticons/grunt.png" /></td><td>(yeoman)<br/><img src="http://static.datachomp.com/emoticons/yeoman.png" /></td><td>(bower)<br/><img src="http://static.datachomp.com/emoticons/bower.png" /></td><td>(ember)<br/><img src="http://static.datachomp.com/emoticons/emberjs.png" /></td>
-</tr>
-
-
-<tr>
-<td>(heroku)<br/><img src="http://static.datachomp.com/emoticons/heroku.jpg" /></td><td>(docker)<br/><img src="http://static.datachomp.com/emoticons/docker-whale.png" /></td><td>(jenkins)<br/><img src="http://static.datachomp.com/emoticons/jenkins.png" /></td><td>(azure)<br/><img src="http://static.datachomp.com/emoticons/azure.png" /></td>
-</tr>
-
-<tr>
-<td>(thunder)<br/><img src="http://static.datachomp.com/emoticons/thunder.png" /></td><td>(datachomp)<br/><img src="http://static.datachomp.com/emoticons/datachomp.png" /></td><td>(weed)<br/><img src="http://static.datachomp.com/emoticons/weed.gif" /></td><td>(okcruby)<br/><img src="http://static.datachomp.com/emoticons/okcruby.png" /></td>
-</tr>
-</table>
-</div>
-
-
-<p>Special thanks to <a href="https://twitter.com/motowilliams">@motowilliams</a> for a few of these</p>
 ]]></content>
   </entry>
   
