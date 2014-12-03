@@ -16,6 +16,8 @@ It is worth mentioning that in addition to reading, I spend a good chunk of time
 
 \---|\---|-- 2014 \---|\---|--  
 **AppDev:**  
+[geocoding on rails][railsgeocode]  
+[railsgeocode]: https://gumroad.com/l/geocoding-on-rails
 [automate with grunt][gruntomation]  
 [gruntomation]: https://pragprog.com/book/bhgrunt/automate-with-grunt
 [the rails 4 way][rails4way]  
