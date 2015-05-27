@@ -1,1 +1,32 @@
-[#<Jekyll::ContentFilters:0x007fd763b24728 @options=nil, @caption=nil, @lang=nil, @url=nil, @title=nil>]
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: uncategorized | DataChomp]]></title>
+  <link href="http://datachomp.com/blog/categories/uncategorized/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2015-05-26T22:54:10-05:00</updated>
+  <id>http://datachomp.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Stopping spam in Contact Form 7]]></title>
+    <link href="http://datachomp.com/archives/stopping-spam-in-contact-form-7/"/>
+    <updated>2013-02-20T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/stopping-spam-in-contact-form-7</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>This blog is still running on wordpress and one of the plugins I use is contact form 7. I enjoy having a contact form over pasting an email address because it lets me append any number of constants to the email sent to me for me to filter on later. The downside to this is that over the past week, I&rsquo;ve had around 2,000 spam entries and gmail hasn&rsquo;t caught all of them. Not being one to want to subject users to a painful CAPTCHA process, I found a simple work around by just running the form through akismet. All it took was changing the form to the following:<br/>
+Ha, having issues getting the code to display properly so just check this link:</p>
+
+<p><a href="http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/" title="How To Use Akismet Protected Contact Form">http://sproutnewmedia.com/how-to-use-akismet-protect-contact-form/</a></p>
+
+<p>Haven&rsquo;t had any spam since, form works fine, and no CAPTCHA&rsquo;s needed!</p>
+]]></content>
+  </entry>
+  
+</feed>

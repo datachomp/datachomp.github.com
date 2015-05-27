@@ -1,1 +1,224 @@
-[#<Jekyll::ContentFilters:0x007fd763b24728 @options=nil, @caption=nil, @lang=nil, @url=nil, @title=nil>]
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: appdev | DataChomp]]></title>
+  <link href="http://datachomp.com/blog/categories/appdev/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2015-05-26T22:54:10-05:00</updated>
+  <id>http://datachomp.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Running the right rubies on Heroku]]></title>
+    <link href="http://datachomp.com/archives/running-the-right-rubies-on-heroku/"/>
+    <updated>2013-02-20T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/running-the-right-rubies-on-heroku</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Being new to Ruby I have the luxury of running the latest rubies without much brownfield drama. With all the security concerns of late, I have never been more self righteous in my use of the latest and greatest in both rack and ruby. On my various servers, this has been very easy to do with RVM and my Gemfile. On Heroku, I realized that I had been running 1.9.2 instead of 1.9.3. The fix is easy enough though, as you just add which ruby you want to run to your Gemfile like so:<br/>
+<code>
+source "https://rubygems.org"
+ruby '1.9.3'
+</code></p>
+
+<p>You can get a list of the latest rubies supported by Heroku here:<br/>
+<a href="https://devcenter.heroku.com/articles/ruby-support#ruby-versions" title="Heroku Rubies">Heroku Rubies</a></p>
+
+<p>If you are an RVM user like myself, feel free to add an .rvmrc file that will match what version Heroku is on for even more consistency goodness.<br/>
+<code>
+rvm --create --rvmrc 1.9.3-p327@mycoolproject
+</code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[A little bit more about sorting]]></title>
+    <link href="http://datachomp.com/archives/a-little-bit-more-about-sorting/"/>
+    <updated>2012-12-01T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/a-little-bit-more-about-sorting</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
+
+<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
+
+<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
+
+<p><strong>Code Time<br/>
+Controller:</strong>
+<code></p>
+
+<pre><code>var burritos = db.Select("select name,price from burritos");
+var tacos = db.Select("select name,price from tacos");
+
+var viewModel = new viewmodel_Food
+{
+  burritos = burritos
+  , tacos = tacos
+};
+return View(viewModel);
+</code></pre>
+
+<p></code>
+<strong>View:</strong>
+<code></p>
+
+<pre><code>@model burritoroll.web.Models.viewmodel_Food
+@{
+    ViewBag.Title = "Index";
+}
+
+Index
+
+Can you dig our burritos?
+BurritoPrice
+
+
+
+Can you dig our tacos?
+
+
+  TacoPrice
+
+
+
+
+
+@section scripts{
+
+    function viewModel() {
+        var self = this;
+
+        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
+        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
+
+        var sortitFunction = function (a, b) {
+            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
+        };
+
+        self.tacosarray.sort(sortitFunction);
+        self.burritosarray.sort(sortitFunction);
+    }
+
+    ko.applyBindings(new viewModel());
+
+}
+</code></pre>
+
+<p></code></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
+    <link href="http://datachomp.com/archives/what-net-orm-should-i-use/"/>
+    <updated>2012-11-29T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/what-net-orm-should-i-use</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
+
+<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
+
+<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
+
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
+
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
+
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+
+<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
+
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+
+<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+
+<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+
+<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
+
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+
+<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
+
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
+
+<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
+
+<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
+
+<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Using Unicorn with Sinatra or Padrino on Heroku]]></title>
+    <link href="http://datachomp.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/"/>
+    <updated>2012-10-15T00:00:00-05:00</updated>
+    <id>http://datachomp.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>My apps on <a href="http://www.heroku.com/" title="Heroku">Heroku</a> have been cruising along ok using Thin as my rack server, but on my <a href="http://www.lowendbox.com/">VPS boxes</a>, <a href="http://unicorn.bogomips.org/" title="Unicorn">Unicorn</a>. I was hoping to keep a more consistent experience for myself and as it turns out, getting my Heroku apps to run on Unicorn is pretty simple and runs really fast.</p>
+
+<p>1st: I added a Unicorn config file: <strong>touch config/unicorn.rb</strong> and added the following:<br/>
+<code>worker_processes 3<br/>
+timeout 30<br/>
+preload_app true</code></p>
+
+<p>2nd: I added Unicorn to my GemFile:<br/>
+<code>#rack server<br/>
+gem &lsquo;unicorn&rsquo;</code>
+You will want to  &ldquo;bundle install&rdquo; after that step so  that it gets picked up and added to your Gemfile.lock</p>
+
+<p>3rd: I added a Procfile to the root of my app: <strong>touch Procfile</strong> and added the following:<br/>
+<code>web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb</code></p>
+
+<p>Commit it into Git, then git push heroku branchname and you are enjoying the sweet sweet threading love of Unicorn.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Content length issue on 404 pages in Padrino 10.7]]></title>
+    <link href="http://datachomp.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/"/>
+    <updated>2012-10-15T00:00:00-05:00</updated>
+    <id>http://datachomp.com/archives/content-length-issue-on-404-pages-in-padrino-10-7</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I&rsquo;ve been tooling around with <a href="http://www.padrinorb.com/" title="PadrinoRB">PadrinoRB</a> lately. Personally, it has been a nice mix of <a href="http://www.sinatrarb.com/" title="Sinatrarb">SinatraRB</a> and Rails. One of the annoying issues I&rsquo;ve hit is that when I define a view for my 404 errors:<br/>
+<code></p>
+
+<pre><code>error 404 do
+    response.status = 404
+    render 'errors/404', :layout=&gt;:applayout
+end
+</code></pre>
+
+<p></code></p>
+
+<p>It will only show 30 characters of the defined view. Luckily, in this day in age, Google has all the answers and I found out <a href="https://groups.google.com/forum/?fromgroups=#!topic/padrino/ThPy9U4sK4w" title="here">here</a> that in my Gemfile I need to define a certain version of Sinatra for this to work. So I popped open my Gemfile and added the following:<br/>
+<code></p>
+
+<pre><code>gem 'rake'
+gem 'sinatra', '1.3.2'
+gem 'sinatra-flash', :require =&gt; 'sinatra/flash'
+</code></pre>
+
+<p></code></p>
+
+<p>Once I locked in 1.3.2 instead of the 1.3.3 version of sinatra I was using, it worked like a charm and I stopped looking like a complete idiot that doesn&rsquo;t now how to serve up error pages properly.</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,540 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  
+  <url>
+    <loc>http://datachomp.com/archives/personal-twitter-tips-for-maximum-happiness/</loc>
+    <lastmod>2014-11-05T09:17:40-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/always-get-an-absentee-ballot/</loc>
+    <lastmod>2014-04-15T00:56:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/enums-for-when-you-just-cant-handle-another-foreign-key/</loc>
+    <lastmod>2014-01-29T10:11:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/i-am-a-bad-blogger/</loc>
+    <lastmod>2014-01-06T16:43:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/the-appdevs-are-idiots/</loc>
+    <lastmod>2013-12-20T23:28:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-pgbouncer/</loc>
+    <lastmod>2013-12-02T22:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/heroku-pg-extras-builds-bridges/</loc>
+    <lastmod>2013-11-20T19:10:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/sequel-and-postgres-range-types/</loc>
+    <lastmod>2013-11-15T21:20:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/writable-ctes-in-postgres/</loc>
+    <lastmod>2013-11-15T18:10:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/my-friend-rob/</loc>
+    <lastmod>2013-11-14T22:05:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/helping-asset-pipeline-open-up-a-little/</loc>
+    <lastmod>2013-10-26T14:42:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/radius-queries-in-postgres/</loc>
+    <lastmod>2013-10-07T13:56:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/application-name-in-sequel/</loc>
+    <lastmod>2013-10-02T09:22:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/postgres-dot-app-and-shared-preload-libraries/</loc>
+    <lastmod>2013-09-18T09:28:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/nginx-block-php-requests/</loc>
+    <lastmod>2013-09-13T22:28:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/extending-sequel-with-hstore/</loc>
+    <lastmod>2013-08-29T21:19:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/</loc>
+    <lastmod>2013-08-27T23:26:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/treadmill-desk-setup/</loc>
+    <lastmod>2013-08-09T10:05:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/no-longer-buying-aircraft-carriers/</loc>
+    <lastmod>2013-08-09T00:23:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/</loc>
+    <lastmod>2013-05-05T12:50:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/more-nerdy-hipchat-emoticons/</loc>
+    <lastmod>2013-04-17T22:43:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/top-10-reasons-i-like-postgres-over-sql-server/</loc>
+    <lastmod>2013-04-07T10:46:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/so-long-and-thanks-for-all-the-deadlocks/</loc>
+    <lastmod>2013-03-10T21:54:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/later-wordpress/</loc>
+    <lastmod>2013-03-10T15:25:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/stopping-spam-in-contact-form-7/</loc>
+    <lastmod>2013-02-20T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/running-the-right-rubies-on-heroku/</loc>
+    <lastmod>2013-02-20T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/a-little-bit-more-about-sorting/</loc>
+    <lastmod>2012-12-01T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/what-net-orm-should-i-use/</loc>
+    <lastmod>2012-11-29T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/using-unicorn-with-sinatra-or-padrino-on-heroku/</loc>
+    <lastmod>2012-10-15T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/content-length-issue-on-404-pages-in-padrino-10-7/</loc>
+    <lastmod>2012-10-15T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/ci-with-mvc4-and-linux-no-problem/</loc>
+    <lastmod>2012-05-02T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/running-asp-net-mvc4-on-ubuntu-12-04/</loc>
+    <lastmod>2012-04-24T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/</loc>
+    <lastmod>2012-03-13T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/im-leaving-sql-server-for-postgres/</loc>
+    <lastmod>2012-03-07T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/</loc>
+    <lastmod>2012-01-29T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/git-and-red-gate-sql-source-control/</loc>
+    <lastmod>2012-01-28T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/oklahoma-city-javascript-group/</loc>
+    <lastmod>2012-01-18T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/simple-talk-sql-test-write-up/</loc>
+    <lastmod>2011-12-16T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-postgres-and-mvc3/</loc>
+    <lastmod>2011-11-20T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/rock-out-with-your-procmon-out/</loc>
+    <lastmod>2011-07-26T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/osx-tools-i-use/</loc>
+    <lastmod>2011-07-21T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/why-red-gate-and-i-are-friends-with-benefits/</loc>
+    <lastmod>2011-06-29T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/</loc>
+    <lastmod>2011-06-04T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/windows-server-core-basic-operations/</loc>
+    <lastmod>2011-04-25T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/massive-and-using-multiple-args/</loc>
+    <lastmod>2011-04-14T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/default-backups-to-compressed-in-sql-server/</loc>
+    <lastmod>2011-04-07T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-massive-in-mvc3-part-2/</loc>
+    <lastmod>2011-02-19T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-massive-in-mvc3/</loc>
+    <lastmod>2011-02-18T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/security-and-code-analysis-tools-i-use/</loc>
+    <lastmod>2011-01-23T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/pack-the-powder-light-the-wick/</loc>
+    <lastmod>2011-01-23T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/deploy-mvc3-to-shared-hosting/</loc>
+    <lastmod>2011-01-23T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/my-subversion-ignore-list-for-visual-studio-anhksvn/</loc>
+    <lastmod>2011-01-11T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/sql-server-variety-hour/</loc>
+    <lastmod>2010-12-14T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/stored-procedure-output-params-and-return-values/</loc>
+    <lastmod>2010-10-24T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/virtual-victory-aws-gives-out-a-year-of-usage/</loc>
+    <lastmod>2010-10-23T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/lets-open-some-new-doors-mvc/</loc>
+    <lastmod>2010-09-28T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/early-mvc-pitfalls-shared-hosting-and-action-link/</loc>
+    <lastmod>2010-09-28T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/upload-file-to-s3-with-asp-net/</loc>
+    <lastmod>2010-09-21T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/installing-mongodb-on-ubuntu/</loc>
+    <lastmod>2010-09-04T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/jquery-cdn-failover/</loc>
+    <lastmod>2010-08-31T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-sql-clr-part-2/</loc>
+    <lastmod>2010-08-31T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-sql-clr-part-1/</loc>
+    <lastmod>2010-07-27T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/helper-classes/</loc>
+    <lastmod>2010-07-20T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/change-iphone-root-password-after-jailbreak/</loc>
+    <lastmod>2010-07-07T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/ssl-a-secure-way-to-waste-money/</loc>
+    <lastmod>2010-06-28T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/databasemail-time-to-clean-house/</loc>
+    <lastmod>2010-06-28T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/getting-started-with-solid-state-drives/</loc>
+    <lastmod>2010-06-26T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/ssis-and-the-embedded-delimiter-fail/</loc>
+    <lastmod>2010-05-31T00:00:00-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/how-to-test-email-with-port-25-blocked/</loc>
+    <lastmod>2010-02-21T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/sql-server-20052008-alert-pack/</loc>
+    <lastmod>2010-02-18T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/with-fruit-rollup/</loc>
+    <lastmod>2010-02-13T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/windows-tools-i-use/</loc>
+    <lastmod>2010-02-02T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/database-tools-i-use/</loc>
+    <lastmod>2010-02-02T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/appdev-tools-i-use/</loc>
+    <lastmod>2010-02-02T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/you-literaled-my-css/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/who-said-programmers-are-un-date-able/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/unregister-language-bar/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/tempdb-on-the-move/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/sql-report-server-outbound-email-configuration/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/msdn-on-the-down-low-bandwidth/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/databasemail-man/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/application-connection-ocd/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/archives/all-your-errors-are-belong-to-us-elmah/</loc>
+    <lastmod>2010-01-30T00:00:00-06:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  
+  <url>
+    <loc>http://datachomp.com/blog/archives/</loc>
+    <lastmod>2015-05-26T22:54:10-05:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/</loc>
+    <lastmod>2015-05-26T22:54:10-05:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/books/</loc>
+    <lastmod>2015-05-26T22:54:10-05:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/about/</loc>
+    <lastmod>2015-05-26T22:54:10-05:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://datachomp.com/speaking/</loc>
+    <lastmod>2015-05-26T22:54:10-05:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  
+</urlset>

@@ -1,1 +1,183 @@
-[#<Jekyll::ContentFilters:0x007fd763b24728 @options=nil, @caption=nil, @lang=nil, @url=nil, @title=nil>]
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: postgres | DataChomp]]></title>
+  <link href="http://datachomp.com/blog/categories/postgres/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2015-05-26T22:54:10-05:00</updated>
+  <id>http://datachomp.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
+    <link href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/"/>
+    <updated>2012-03-07T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/im-leaving-sql-server-for-postgres</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with Postgres and MVC3]]></title>
+    <link href="http://datachomp.com/archives/getting-started-with-postgres-and-mvc3/"/>
+    <updated>2011-11-20T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/getting-started-with-postgres-and-mvc3</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>&ldquo;<strong><em><a href="http://www.postgresql.org/">Postgres</a>? WTF man, you&rsquo;re a SQL Server DBA!</em></strong>&rdquo; It&rsquo;s true, I am a SQL Server DBA but even I have to admit that the Postgres team is doing some <a href="http://www.postgresql.org/about/featurematrix">wildy exciting stuff</a>. With that in mind, lets take a quick look at just how quickly we can replace SQL Server with a free/open full bore Enterprise database system like <a href="http://www.postgresql.org/">Postgres</a>.</p>
+
+<p>One of the first things you will notice is Postgres is way easier to install than SQL Server. The SQL Server install is born from a truck stop romance between TFS and Sharepoint that someone found in a garbage bag in a dumpster and burned to a DVD. Postgres takes a different angle and opts for a &lsquo;less is more&rsquo; type of approach. One of the big things you will want to pay attention to is the password you give the default &lsquo;postgres&rsquo; account. Think of him as the SA account in SQL Server as he too wields a mighty big stick.</p>
+
+<p>Once we finish the installer, lets open up pgAdmin III (henceforth known as pgAdmin). If you are accustomed to SSMS with SQL Server and always wished it went on a diet&hellip; then you might like pgAdmin. Be warned though, pgAdmin isn&rsquo;t SSMS on a diet&hellip; it is like SSMS with Anorexia. Once pgAdmin is opened and you are connected, then drill down to &lsquo;databases&rsquo; and do a &lsquo;new database&rsquo; and use the GUI to make your fancy new demo database, or just run the raw sql:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE DATABASE "Demo"
+
+3.    WITH ENCODING='UTF8'
+
+4.         OWNER=postgres
+
+5.         CONNECTION LIMIT=-1;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>Next, lets hop in that database and throw up some tables/data:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  CREATE TABLE "Colors"
+
+3.  &amp;#40;
+
+4.      colorid serial NOT NULL,
+
+5.      colorname character varying&amp;#40;50&amp;#41; NOT NULL,
+
+6.      constraint pk_colorid PRIMARY KEY &amp;#40;colorid&amp;#41;
+
+7.  &amp;#41;
+
+8.  WITH &amp;#40;OIDS=false&amp;#41;;
+
+9.  &amp;nbsp;
+
+10. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+11. VALUES &amp;#40;'red'&amp;#41;;
+
+12. INSERT INTO "Colors" &amp;#40;colorname&amp;#41;
+
+13. VALUES &amp;#40;'blue'&amp;#41;;
+
+14. SELECT * FROM "Colors";
+
+15. &amp;nbsp;
+</code></pre>
+
+<p>So why the quotes around the table names you might be asking&hellip; well, SQL Server has a bit of Honey Badger approach to what case you assign names and Postgres treats it like a pretty big deal. Luckily, overcoming it isn&rsquo;t a big deal, we just double quote it. Now, if you don&rsquo;t have years of tsql or <a href="http://en.wikipedia.org/wiki/CamelCase">camelcasing</a> drilled into your brain, you can easy just do everything in lower case and not fight the double quote dragon.<br/>
+What else sticks out there&hellip; oh Data Types! You will have to adjust to some variance in data types, but in a good way. Postgres has a lavish assortment of data types for you to fall in love with and one of which is using &lsquo;serial&rsquo; instead of the whole IDENTITY(1,1) you might be used to in SQL Server. There are also some really cool things called Sequences in Postgres which are blazing fast and give you the value of the ID before you insert it. DBAs like them because it can get you AppDevs away from fatty GUID primary keys.</p>
+
+<p>Fire up a new MVC3 app and hop into the Nuget console. From there, we&rsquo;re going to add our <a href="http://www.nuget.org/List/Packages/Npgsql">Postgre provider</a> with &ldquo;<strong>Install-Package Npgsql</strong>&rdquo;. Now that we have our vital provider assemblies, lets go mess around in the web.config.</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  
+
+3.      
+
+4.          
+
+5.              
+
+10.         
+
+11.     
+
+12. &amp;nbsp;
+
+13.     
+
+14.         
+
+15.     
+
+16. &amp;nbsp;
+</code></pre>
+
+<p>Yeah! We have our provider factory rocking and our connection string. Yes, I am using the postgres account in this demo and yes that is wrong/stupid, but I&rsquo;m having so much fun playing with the Postgres engine that I decided to take a shortcut there for this entry.</p>
+
+<p>So our color app is pretty quick and dirty. In keeping with that spirit, I&rsquo;m going to use <a href="https://github.com/robconery/massive">Massive</a> as my ORM of choice. It already has a <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> ready to go. <a href="https://github.com/toptensoftware/petapoco">PetaPoco</a> has some very nice Postgres options in it, but Massive is very quick/easy and the Expandos makes all the strong-typers uncomfortable and I love a good code-trolling.</p>
+
+<p>In the Model folder of our app, I create a new class file called Massive and I copy/paste the <a href="https://github.com/robconery/massive/blob/master/Massive.PostgreSQL.cs">Postgres version</a> into it, and I also created a new class file called &ldquo;Colors&rdquo; that I pasted the following in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.      public class Color : DynamicModel
+
+3.      &amp;#123;
+
+4.          public Color&amp;#40;&amp;#41; : base&amp;#40;"pg", "Colors", "colorid"&amp;#41; &amp;#123; &amp;#125;
+
+5.  &amp;nbsp;
+
+6.      &amp;#125;
+
+7.  &amp;nbsp;
+</code></pre>
+
+<p>All wired up! In the home controller, we&rsquo;ll throw some code to play with our table in:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  var table = [new][8] Color&amp;#40;&amp;#41;;
+
+3.  var colors = table.All&amp;#40;&amp;#41;;
+
+4.  ViewBag.colors = colors;
+
+5.  &amp;nbsp;
+</code></pre>
+
+<p>And then in our view:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  @foreach &amp;#40;var color in ViewBag.colors&amp;#41;
+
+3.  &amp;#123; 
+
+4.       @: @color.colorid @color.colorname
+
+5.  &amp;#125;
+
+6.  &amp;nbsp;
+</code></pre>
+
+<p>F5 and what do we get? BOOM!!! &ldquo;Error 42P01: relation "colors&rdquo; does not exist"<br/>
+So remember when I started our Colors table with a capital C? This is where it can come back to bite you&hellip; and also one of the reasons I absolutely love Micro-ORMs. Fast, malleable, and so easy a DBA can use it. Let&rsquo;s hop into Massive and throw some quotes around our table access:</p>
+
+<pre><code>1.  &amp;nbsp;
+
+2.  string sql = limit &gt;  ? "SELECT TOP "   limit   " {0} FROM "&amp;#123;1&amp;#125;" " : "SELECT {0} FROM "&amp;#123;1&amp;#125;" ";
+
+3.  &amp;nbsp;
+</code></pre>
+
+<p>and Viola! It works! In pretty much the time it takes to install SQL Server, we&rsquo;re already rocking our stunning and highly valuable colors app!</p>
+]]></content>
+  </entry>
+  
+</feed>

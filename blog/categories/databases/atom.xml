@@ -1,1 +1,208 @@
-[#<Jekyll::ContentFilters:0x007fd763b24728 @options=nil, @caption=nil, @lang=nil, @url=nil, @title=nil>]
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: databases | DataChomp]]></title>
+  <link href="http://datachomp.com/blog/categories/databases/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2015-05-26T22:54:10-05:00</updated>
+  <id>http://datachomp.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[What .NET ORM should I use?]]></title>
+    <link href="http://datachomp.com/archives/what-net-orm-should-i-use/"/>
+    <updated>2012-11-29T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/what-net-orm-should-i-use</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I get asked all the time &ldquo;What ORM should I use?&rdquo; I typically answer the person with some spaghetti types/talks which of course runs counter to the DRY principle. To help get away from that, I&rsquo;ll hash out some of my typical responses below. One thing to keep in mind when reading, is that all of the ORMs mentioned below are really good choices. I&rsquo;m &ldquo;picking&rdquo; one per situation as a way of helping someone avoid the paradox of choice.</p>
+
+<p><strong>&ldquo;Should I hand-roll my DAL?&rdquo;</strong></p>
+
+<p>No. Unless you just want an academic/code exercise. The libraries I&rsquo;ll mention in this post are already built, tested, fast and easy to use. If you are serious about building your application, don&rsquo;t waste time reinventing this wheel.</p>
+
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want something easy or rapid prototyping&rdquo;</strong></p>
+
+<p><a href="https://github.com/robconery/massive" title="Massive">Massive</a> &ndash; This ORM is simple to use, completely gets out of my way and lets me get right to building.</p>
+
+<p><strong>&ldquo;I don&rsquo;t fear dynamics and I want some codefirst action&rdquo;</strong></p>
+
+<p><a href="https://github.com/amirrajan/Oak" title="Oak">Oak</a> &ndash; One of my coding heroes <a href="http://www.amirrajan.net/" title="Amir">Amir Rajan</a> has gone and taken everything good about ActiveRecord and melded it with Massive.</p>
+
+<p><strong>&ldquo;I want POCOs, an old school feel and Stored Procs&rdquo;</strong></p>
+
+<p><a href="http://code.google.com/p/dapper-dot-net/" title="Dapper">Dapper</a> &ndash; When you need uncompromised speed and ease, Dapper is your tool. The Stackoverflow team uses it and that is one heck of a merit badge.</p>
+
+<p><strong>&ldquo;I want POCOs with some codefirst action&rdquo;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; ORMLite is a Post-CRUD augmentation to Dapper. In some ways, it is to Dapper what Oak is to Massive. Coded in awesome, covered in love.</p>
+
+<p><strong>&ldquo;I&rsquo;m using <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> or planning to&rdquo;</strong></p>
+
+<p><a href="https://github.com/ServiceStack/ServiceStack.OrmLite" title="OrmLite">OrmLite</a> &ndash; This one is kind of obvious as OrmLite is part of the <a href="http://servicestack.net/" title="ServiceStack">ServiceStack</a> family.</p>
+
+<p><strong>&ldquo;I am a huge fan of T4 and code gen&rdquo;</strong></p>
+
+<p><a href="http://www.toptensoftware.com/petapoco/" title="PetaPoco">PetaPoco</a> &ndash; PetaPoco is pretty fun regardless of your needs. If you are already pretty invested in T4 then this is for sure a love connection.</p>
+
+<p><strong>&ldquo;I want POCOs and I might be doing some MongoDB in my app&rdquo;</strong></p>
+
+<p><a href="https://github.com/markrendle/Simple.Data" title="Simple.Data">Simple.Data</a> &ndash; I have personally not used this one yet, but I always hear wonderful things about it.</p>
+
+<p><strong>&ldquo;My boss says we just have to use something ~Enterprisey~&rdquo;</strong></p>
+
+<p>Use OrmLite and tell them it is a MS ADO.NET CPT Gen2 Release of EntityFramework with Enhanced Cloud Coverage™ and Synergized Mix-ins™.</p>
+
+<p>While all these ORMs are pretty easy to use, you should always be doing yourself/your app (and of course your DBA) a favor and profile your DAL. I highly recommend <a href="http://www.ormprofiler.com/" title="ORMProfiler">ORMProfiler</a>. I think it supports most if not all of the above ORMs, has a low cost, and you get a ton of information from it.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
+    <link href="http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
+    <updated>2012-03-13T00:00:00-05:00</updated>
+    <id>http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>If you want the back story on what this topic is all about &ndash;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
+    <link href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/"/>
+    <updated>2012-03-07T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/im-leaving-sql-server-for-postgres</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hey App, quit wasting my time sorting your data]]></title>
+    <link href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/"/>
+    <updated>2012-01-29T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>An issue I run into quite a bit is unnecessary sorting in the database. I&rsquo;m not talking about the sort of &lsquo;Get last 5&rsquo; type of sorting where you need to sort to get a valid result set. I&rsquo;m talking about the &lsquo;<em>Hey Database! I want some data&hellip;and I&rsquo;ll probably throw some business logic in you&hellip; and while I&rsquo;m here, how about we throw the presentation layer in as well and you sort the results for our UI!</em>&rsquo;</p>
+
+<p><strong>Nut Kicking:</strong><br/>
+In the same way that AppDevs outnumber DBAs, infrastructure wise there are typically way more web/caching servers than there are database servers. This is mostly due to the fact that like a decent DBA, a decent database server is expensive. AppDevsWebservers in general are cheaper, have less memory and don&rsquo;t need to be as awesome as a DBAdatabase server.</p>
+
+<p><strong>Code Please:</strong><br/>
+Lets take a look at some execution plans/cost so you can view &lsquo;ORDER BY&rsquo; the same way I do.<br/>
+Below is a simple example of selecting some badges by userid, and then display them alphabetically for the user to view :<br/>
+<code>SELECT  Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254;<br/>
+SELECT Name<br/>
+FROM dbo.Badges<br/>
+WHERE userid = 91254<br/>
+ORDER BY name DESC;</code>
+And this is the execution plan it creates:<br/>
+<a href="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png"><img src="http://files.datachomp.com/AppDev/orderby/orderbyexecutionplan.png" alt="execplan" /></a></p>
+
+<p>On the bottom, do you see the glyph that is &ldquo;Sort Cost: 15%&rdquo;? As well as a difference of almost 10% in general between the two queries? Removing those &ldquo;sort&rdquo;(har har har) of thing adds up&hellip;like a lot.</p>
+
+<p><strong>Just Fix It</strong><br/>
+In C#, you have these things you can use called Ordered Enumerables and they are really easy to use&hellip; take a look:</p>
+
+<p><code>
+public IOrderedEnumerable<dynamic> GetBadgeByUserId(int badgeid)
+{</p>
+
+<pre><code>var table = new Badges();
+var badges = table.query("SELECT  Name FROM dbo.Badges WHERE userid = @0", args: badgeid);
+return badges.OrderBy(x=&gt;x.Name);
+//return badges.OrderByDescending(x =&gt; x.Name);
+</code></pre>
+
+<p>}
+</code>
+That wasn&rsquo;t too hard was it? In the above example, it is making a call to the DB (using <a href="https://github.com/robconery/massive">Massive</a>) and sucking the results into &lsquo;badges&rsquo;. That is where it breaks off its relationship with the database, and sorts the results in &lsquo;badges&rsquo; and returns them to whatever was calling it.</p>
+
+<p><strong>Does this make us happy?</strong><br/>
+I&rsquo;m happy because you&rsquo;re not putting extra load on the DB. You&rsquo;re happy because you have some sorted data and can close a help ticket&hellip; everyone wins right?</p>
+
+<p><strong>But But But, our servers are busy too!</strong><br/>
+Ahhh, but perhaps you&rsquo;re one of those clever AppDevs who says that if the DB is getting over worked, then the webservers are too! Since I don&rsquo;t have the webserver metrics, I can&rsquo;t really object to that. But what I can say is: &ldquo;<em>Yo, that&rsquo;s cool. Since you are a programmer&hellip;. program up some javascript to sort the results in the UI. Then, the webservers and the db can both go listen to dub step or whatever servers like to do in their spare time.</em>&rdquo;</p>
+
+<p>There are a ton of ways to do this:<br/>
+<a href="http://lmgtfy.com/?q=sort+a+table+with+jquery">http://lmgtfy.com/?q=sort+a+table+with+jquery</a></p>
+
+<p>Doing it on the front end also works great if you are stuck using some particular DALs or ORMs that take a bulimic approach to data retrieval IE &ndash; Eating everything in site and then barfing it out to the app.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
+    <link href="http://datachomp.com/archives/git-and-red-gate-sql-source-control/"/>
+    <updated>2012-01-28T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/git-and-red-gate-sql-source-control</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<h3>This post is over 2 years old and dealt with early versions of the product. A lot has changed since then.</h3>
+
+<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
+
+<p><strong>Install Git:</strong><br/>
+Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
+While you are mindlessly clicking &lsquo;next&rsquo; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png" alt="sourcecontrolcmd" width=100 height=100 /></a></p>
+
+<p><strong>Aside:</strong> I&rsquo;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&rsquo;t nearly as bad as you think once you get going.</p>
+
+<p><strong>Repo Hosting</strong><br/>
+Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
+
+<p><strong>Repo Man</strong><br/>
+In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
+Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" alt="folder layout" width=100 height=100 /></a><br/>
+You don&rsquo;t have to do it like that, but again, that is the way I currently like to do it.</p>
+
+<p><strong>Lets hook up the DB!</strong><br/>
+Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&rsquo;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
+From there, go to SSMS and link up the DB to your local repository:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" alt="repo linko" width=100 height=100 /></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" alt="repo linko" width=100 height=100 /></a></p>
+
+<p><strong>Command Line Interface &hellip; or whatever</strong><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
+Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
+Go into that branch: <code>git checkout dbobjects</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" alt="branchard" width=100 height=100 /></a></p>
+
+<p>Now, we go back to SSMS and commit our changes:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" alt="no hands!" width=100 height=100 /></a><br/>
+Cool! Our &ldquo;dbobjects&rdquo; branch has been committed locally, now we just need to merge it into our master branch!</p>
+
+<p>From there, go back to master: <code>git checkout master</code><br/>
+and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
+After we have merged, we can delete the branch we were working in by running:<br/>
+<code>git branch -d dbobjects</code>
+and the process will end up looking like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" alt="master merge" width=100 height=100 /></a></p>
+
+<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &ldquo;push"ing to the origin: <code>git push -u origin master</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" alt="origin" width=100 height=100 /></a></p>
+
+<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" alt="yay" width=100 height=100 /></a></p>
+
+<p>We can see them there for people pulling down changes. You&rsquo;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
+]]></content>
+  </entry>
+  
+</feed>

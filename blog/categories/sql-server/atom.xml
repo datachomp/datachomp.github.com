@@ -1,1 +1,157 @@
-[#<Jekyll::ContentFilters:0x007fd763b24728 @options=nil, @caption=nil, @lang=nil, @url=nil, @title=nil>]
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: sql server | DataChomp]]></title>
+  <link href="http://datachomp.com/blog/categories/sql-server/atom.xml" rel="self"/>
+  <link href="http://datachomp.com/"/>
+  <updated>2015-05-26T22:54:10-05:00</updated>
+  <id>http://datachomp.com/</id>
+  <author>
+    <name><![CDATA[Rob Sullivan]]></name>
+    <email><![CDATA[rob@datachomp.com]]></email>
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[TSQL Tuesday #28 &#8211; Jack of all Trades, Master of One]]></title>
+    <link href="http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one/"/>
+    <updated>2012-03-13T00:00:00-05:00</updated>
+    <id>http://datachomp.com/archives/tsql-tuesday-28-jack-of-all-trades-master-of-one</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>If you want the back story on what this topic is all about &ndash;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[I&#8217;m leaving SQL Server for Postgres]]></title>
+    <link href="http://datachomp.com/archives/im-leaving-sql-server-for-postgres/"/>
+    <updated>2012-03-07T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/im-leaving-sql-server-for-postgres</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>Ok, well I&rsquo;m not leaving SQL Server professionally (or financially!) but another relational database platform has clearly captured my heart. That platform is <a href="http://www.postgresql.org/">Postgres</a>! Through a combination of relentless potshots at MySQL and emotional bribes where I feign interest in Rails, I was able to trick <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob Conery</a> and the Tekpub team into not only moving Tekpub to Postgres but also let me record a <a href="http://tekpub.com/productions/pg">Postgres series</a> with them. In this series, we share the data love on a platform that is open, fast and incredibly flexible. The ease at which Postgres addresses many of the day to day issues I deal with as a SQL Server DBA is mouthwatering to say the least. Luckily for you, it isn&rsquo;t just about me or DBAs which is why the head App Dev(il) himself <a href="http://wekeroad.com/2012/03/08/something-borrowed-something-new/">Rob C</a> came along for the ride! He is quick to ask questions and to put in his tidbits and raise issues that would relate to you, the developer. That&rsquo;s right friends, it isn&rsquo;t just a series that shakes the hand of Postgres, we walk up and give it a big sloppy kiss. So check it out and have fun watching &ldquo;The Robs&rdquo; bring you a double felony of database knowledge.</p>
+
+<p><a href="http://tekpub.com/productions/pg">Hello Postgres</a></p>
+
+<p>Show notes and scripts will be put up on GitHub when I get back in town.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[GIT and Red Gate SQL Source Control]]></title>
+    <link href="http://datachomp.com/archives/git-and-red-gate-sql-source-control/"/>
+    <updated>2012-01-28T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/git-and-red-gate-sql-source-control</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<h3>This post is over 2 years old and dealt with early versions of the product. A lot has changed since then.</h3>
+
+<p>I am a huge fan of <a href="http://www.red-gate.com/products/sql-development/sql-source-control/">Red Gate SQL Source Control</a> because it makes source controlling/deploying your database easier. I am aware of the MS Database Projects abomination application and the short version on that is that I have deemed them unworthy for my use. There are lots of tutorials and examples of using RG SSC with centralized version control systems like <a href="http://subversion.tigris.org/">Subversion</a> or <a href="http://en.wikipedia.org/wiki/Nelson_Muntz">TFS</a> and it does work wonderfully with them. Recently, my workplace decided to ditch TFS and move to a more modern distributed version control named <a href="http://git-scm.com/">Git</a>. Like most disruptions to your workflow, there are a few growing pains. This post is going to cover installing Git on Widows, hooking it up to <a href="https://github.com/">github.com</a> and showing some basic actions as we change our database.</p>
+
+<p><strong>Install Git:</strong><br/>
+Download the <a href="http://code.google.com/p/msysgit/downloads/list?can=3">full installer for Git</a> and install it.<br/>
+While you are mindlessly clicking &lsquo;next&rsquo; make sure you integrate with CMD. This is critical for RG SSC and just a convenient thing to do in general. The important part will look like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/1install_cmd.png" alt="sourcecontrolcmd" width=100 height=100 /></a></p>
+
+<p><strong>Aside:</strong> I&rsquo;m a converted fan of <a href="https://github.com/dahlbyk/posh-git">posh-git</a>. Using things like the Git GUI or Tortoise GIT will be incredibly tempting, and perhaps for initial familiarization, it might be a good idea to use those to visualize some concepts. That being said, it is really in your best interest to move towards the CLI and posh-git is very helpful in that regard. It isn&rsquo;t nearly as bad as you think once you get going.</p>
+
+<p><strong>Repo Hosting</strong><br/>
+Once you have Git installed, you will want to hook up to some hosting. An incredibly popular and easy to use one is <a href="https://github.com/">Github.com</a> but there are <a href="http://git-scm.com/tools">plenty of others</a>.</p>
+
+<p><strong>Repo Man</strong><br/>
+In Github, you will want to create your repository and <a href="http://help.github.com/win-set-up-git/">assign your SSH keys</a>. This process can be a bit more than you are used to at first, but GitHub as great at giving you some hand holding instructions: <br/>
+Once the repo is initialized, I like to create a folder for the App and a folder for the database like so:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" title="folder layout" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/2folder_layout.png" alt="folder layout" width=100 height=100 /></a><br/>
+You don&rsquo;t have to do it like that, but again, that is the way I currently like to do it.</p>
+
+<p><strong>Lets hook up the DB!</strong><br/>
+Why use the Adventure Works database? Since it is a bit of a marketing database used to show both neat and inane features, we&rsquo;re hooking it up just to make sure all types of various objects work just fine with RG SQL Source Control.<br/>
+From there, go to SSMS and link up the DB to your local repository:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" title="repo linko" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/4hookupssc.png" alt="repo linko" width=100 height=100 /></a> <a href="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" title="repo linko" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/5configureforgit.png" alt="repo linko" width=100 height=100 /></a></p>
+
+<p><strong>Command Line Interface &hellip; or whatever</strong><br/>
+Back in powershell (or whatever client you are using) create a new branch for updating our proc.
+<code>git branch dbobjects</code>
+Note: We don&rsquo;t have to create a new branch. We could very easily just keep doing this in the &lsquo;master&rsquo; branch. I find that creating of the branches to be a good habit and a handy organizational tool. Branching is one of those features that really shines in Git so lets put it to use.<br/>
+Go into that branch: <code>git checkout dbobjects</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" title="branchard" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/6createbranch.png" alt="branchard" width=100 height=100 /></a></p>
+
+<p>Now, we go back to SSMS and commit our changes:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" title="no hands!" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/7addobjects.png" alt="no hands!" width=100 height=100 /></a><br/>
+Cool! Our &ldquo;dbobjects&rdquo; branch has been committed locally, now we just need to merge it into our master branch!</p>
+
+<p>From there, go back to master: <code>git checkout master</code><br/>
+and then merge into master our dbobjects branch: <code>git merge master dbobjects</code><br/>
+After we have merged, we can delete the branch we were working in by running:<br/>
+<code>git branch -d dbobjects</code>
+and the process will end up looking like this:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" title="master merge" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/9gotomasterandmerge.png" alt="master merge" width=100 height=100 /></a></p>
+
+<p>If you look on Github, you will see that nothing has changed there. Why is that? That is because all the work we have done has been locally. This is the essence and the speed of a distributed control system. We can commit, fix, break all we want without getting everyone else mad. However, at some point, we will need to send our changes off so that others on the team can use (laugh) at them. We do this by &ldquo;push"ing to the origin: <code>git push -u origin master</code><br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" title="origin" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/10pushtoorigin.png" alt="origin" width=100 height=100 /></a></p>
+
+<p>Now, if we look at Github, we see our changes in the main repository, and if we go to check it out again:<br/>
+<a href="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" title="yay" target="_blank"><img src="http://files.datachomp.com/SQLServer/rgssc/11alldoneyay.png" alt="yay" width=100 height=100 /></a></p>
+
+<p>We can see them there for people pulling down changes. You&rsquo;ve done it. Now you too can participate in the source control fun with the AppDevs and make nerdworthy comments about rebasing, merging and pushing master.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Simple-Talk &#8211; SQL Test write up]]></title>
+    <link href="http://datachomp.com/archives/simple-talk-sql-test-write-up/"/>
+    <updated>2011-12-16T00:00:00-06:00</updated>
+    <id>http://datachomp.com/archives/simple-talk-sql-test-write-up</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m anxious to see just how much David and his team can improve it.</p>
+
+<p><a href="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/" title="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/">http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/</a></p>
+
+<p>In other news, being published on Simple-Talk is also another thing <a href="http://troyhunt.com/" title="Troy Hunt">Troy Hunt</a> won&rsquo;t be able to 1-Up me with.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Tekpub &#8211; Full Throttle with Rob Sullivan show notes]]></title>
+    <link href="http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes/"/>
+    <updated>2011-06-04T00:00:00-05:00</updated>
+    <id>http://datachomp.com/archives/tekpub-full-throttle-with-rob-sullivan-show-notes</id>
+    <content type="html"><![CDATA[<h1></h1>
+
+<p>The question emails are starting to pile in (which is a good thing!) so this post is basically a way to centralize links/answers. In the show, I say a few times &ldquo;we&rsquo;ll see this later&rdquo; (like with SQL Server Profiler) and we never see it&hellip; that was mostly my fault. For some reason I kept thinking I would be able to squeeze 5 hours of content into 1 hour and was wrong. If there are aspects of SQL Server that you would like to see more of, as well as real world problems that you may have and would like to see solutions to, then let <a href="http://help.tekpub.com/">Tekpub know</a>. We&rsquo;ll see if we can hack out real world solutions wrapped in a warm blanket of statistics and opinion.</p>
+
+<p><strong>Questions:</strong>*<br/>
+<strong>How do you get the stats to appear in the &ldquo;messages&rdquo; window?</strong><br/>
+Those stats come from the following commands:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;<br/>
+If you don&rsquo;t want to turn it on for every query/window, you can do what I do and set them to always be on in Management studio, you can do this by :<br/>
+Tools &ndash;> Options &ndash;> Query Execution &ndash;> SQL Server &ndash;> Advanced<br/>
+then check:<br/>
+SET STATISTICS IO ON;<br/>
+SET STATISTICS TIME ON;
+<strong>Lock Pages in Memory, is that always good?</strong><br/>
+No, and perhaps I glossed over that section too much or technology changes too fast. While Lock Pages in Memory can be a wonderful setting, there are of course times when it can be pretty bad. You can read more about that here: <a href="http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/">http://sqlserverperformance.wordpress.com/2011/02/14/sql-server-and-the-lock-pages-in-memory-right-in-windows-server/</a>
+<strong>Why no filtered index on Posts?</strong><br/>
+In our first scenario, to get the front page up&hellip; we just went with the index that the engine suggested.. That got us up and running which is great, but there is room for improvement. To me, filtered indexes are more of a business rule decision and with enough time, if we saw that the load was heavy and predictable enough, we would have likely thrown a filtered index to satisfy the front page query.</p>
+
+<p><strong>What were you using for &ldquo;Intellisense&rdquo; in management studio?</strong> I am not extremely big on intellisense in general, however, I am kind of big on formatting and having a variety of administrative snippets at my finger tips. I use a 3rd party tool called Red-Gate SQL Prompt and have it moderately customized. Keep in mind, I really only use this type of product on data sets I am not very familiar with like the one in this demo. On datasets that I know pretty well, I find intellisense to really just get in the way and make me angry.</p>
+
+<p><strong>And the database?</strong> I am still working on a way to make the DB available. It is roughly 40GB raw, and 4GB compressed. If having the data is a big deal to you, hit me up on email and we can work something out (S3,FTP, yada yada yada)</p>
+
+<p><strong>Tech used in the series:</strong><br/>
+Visual Studio 2010 / MVC3 / EF 4.1<br/>
+SQL Server 2008 R2 / Management Studio<br/>
+<a href="http://www.red-gate.com/products/sql-development/sql-prompt/">Red Gate SQL Prompt</a> &ldquo;Intellisense&rdquo; and &ldquo;snippets&rdquo; in Management Studio<br/>
+<a href="http://www.sqlsentry.com/plan-explorer/sql-server-query-view.asp">SQL Sentry Plan Explorer</a> The fun/effective way to view execution plans<br/>
+<a href="http://efprof.com/">EF Profiler</a> The SQL Server friendly way to profile EF<br/>
+<a href="http://www.cpuid.com/softwares/cpu-z.html">CPU-Z</a> A tried and true hardware enthusiasts way of checking hardware specs.</p>
+
+<p><strong>Source code:</strong></p>
+]]></content>
+  </entry>
+  
+</feed>
