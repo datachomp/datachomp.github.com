@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-05-31T18:05:02-05:00</updated>
+  <updated>2015-05-31T18:07:22-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -18,7 +18,7 @@
     <link href="http://datachomp.com/archives/gaming-on-linux/"/>
     <updated>2015-05-31T18:02:30-05:00</updated>
     <id>http://datachomp.com/archives/gaming-on-linux</id>
-    <content type="html"><![CDATA[<p>Like a majority of gamers in the U.S. I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games:</p>
+    <content type="html"><![CDATA[<p>Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games:</p>
 
 <ul>
 <li>Team Fortress 2 (steam)</li>
@@ -38,7 +38,7 @@
 
 <p>Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
 
-<p>For playing Postgres, it is a little more invovled:</p>
+<p>For playing Postgres, it is a little more involved:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -54,7 +54,7 @@
 </span><span class='line'>sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
 
 
-<p>And lasty, we need to install minecraft.</p>
+<p>And lastly, we need to install minecraft.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -63,7 +63,7 @@
 
 
 <p>
-At this point, all your games should be ready to go and it just the trivial matter of making sure your video, network, display, sound, and peripheral drivers all work without problem.</p>
+At this point, all your games should be ready to go and it becomes the trivial matter of making sure your video, network, display, sound, and peripheral drivers all work without problem.</p>
 ]]></content>
   </entry>
   
