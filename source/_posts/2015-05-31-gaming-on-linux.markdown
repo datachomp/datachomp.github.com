@@ -34,4 +34,4 @@ And lastly, we need to install minecraft.
 sudo add-apt-repository ppa:minecraft-installer-peeps/minecraft-installer  
 sudo apt-get update && sudo apt-get install minecraft-installer  
 ```  
-At this point, all your games should be ready to go and it becomes the trivial task of making sure your video, network, display, sound, and peripheral drivers all work without problem.
+Quick and easy! Now, if you play the same games as me, all your games should be ready to go. The only thing left to do is the trivial task of making sure your video, network, display, sound, and peripheral drivers all work without problem.
