@@ -5,16 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Database Tools I Use - DataChomp</title>
+  <title>Gaming on Linux - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="This is a living document of tools I use:
-SQL Server-
-SQL Server 2000 Query Analyzer
-SQL Server 2005
-SQL Server 2008
-Red Gate Source Control &hellip;">
+  <meta name="description" content="Like a majority of gamers in the U.S. I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games: &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -23,7 +18,7 @@ Red Gate Source Control &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/database-tools-i-use">
+  <link rel="canonical" href="http://datachomp.com/archives/gaming-on-linux">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -88,7 +83,7 @@ Red Gate Source Control &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Database Tools I Use</h1>
+      <h1 class="entry-title">Gaming on Linux</h1>
     
     
       <p class="meta">
@@ -104,30 +99,59 @@ Red Gate Source Control &hellip;">
   
 
 
-<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true"></time>
+<time datetime="2015-05-31T18:02:30-05:00" pubdate data-updated="true">May 31<span>st</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><h1></h1>
+<div class="entry-content"><p>Like a majority of gamers in the U.S. I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games:</p>
 
-<p>This is a living document of tools I use:<br/>
-SQL Server-<br/>
-SQL Server 2000 Query Analyzer<br/>
-SQL Server 2005<br/>
-SQL Server 2008<br/>
-<a href="http://www.red-gate.com/products/solutions_for_sql/database_version_control.htm">Red Gate Source Control</a><br/>
-<a href="http://www.albahari.com/queryexpress.aspx">QueryExpress</a><br/>
-SQL Examiner- <a href="http://www.sqlaccessories.com/SQL_Examiner/  ">http://www.sqlaccessories.com/SQL_Examiner/  </a>
-SQLPing3- <a href="http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  ">http://www.sqlsecurity.com/Tools/FreeTools/tabid/65/Default.aspx  </a>
-<a href="http://www.codeplex.com/SqlLoadGenerator/">SQL Load Generator</a><br/>
-SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en">http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005b-84e4-4f24-8d65-cb53442d9e19&amp;displaylang=en</a></p>
+<ul>
+<li>Team Fortress 2 (steam)</li>
+<li>Torchlight II (steam)</li>
+<li>Faster Than Light (steam)</li>
+<li>System Shock 2 (steam)</li>
+<li>Postgres 9.4 (not steam)</li>
+<li>Minecraft (not steam)</li>
+</ul>
 
-<p><a href="http://www.sqlite.org/">SQLite</a><br/>
-<a href="http://www.postgresql.org/">PostGre</a><br/>
-<a href="http://www.mongodb.org/">MongoDB</a></p>
+
+<p>For all the steam games, the solution is pretty simple:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install steam</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
+
+<p>For playing Postgres, it is a little more invovled:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" &gt; /etc/apt/sources.list.d/pgdg.list
+</span><span class='line'>wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install pgdg-keyring
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And lasty, we need to install minecraft.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo add-apt-repository ppa:minecraft-installer-peeps/minecraft-installer  
+</span><span class='line'>sudo apt-get update && sudo apt-get install minecraft-installer  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+At this point, all your games should be ready to go and it just the trivial matter of making sure your video, network, display, sound, and peripheral drivers all work without problem.</p>
 </div>
 
 
@@ -136,7 +160,7 @@ SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005
       
   
 
-<span class="byline author vcard">Posted by <span class="fn">Rob</span></span>
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
 
       
 
@@ -150,21 +174,15 @@ SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005
   
 
 
-<time datetime="2010-02-02T00:00:00-06:00" pubdate data-updated="true"></time>
+<time datetime="2015-05-31T18:02:30-05:00" pubdate data-updated="true">May 31<span>st</span>, 2015</time>
       
-
-<span class="categories">
-  
-    <a class='category' href='/blog/categories/databases/'>databases</a>
-  
-</span>
 
 
     </p>
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/database-tools-i-use/" data-via="datachomp" data-counturl="http://datachomp.com/archives/database-tools-i-use/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/gaming-on-linux/" data-via="datachomp" data-counturl="http://datachomp.com/archives/gaming-on-linux/" >Tweet</a>
   
   
   
@@ -173,14 +191,18 @@ SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/appdev-tools-i-use/" title="Previous Post: AppDev Tools I Use">&laquo; AppDev Tools I Use</a>
+        <a class="basic-alignment left" href="/archives/personal-twitter-tips-for-maximum-happiness/" title="Previous Post: Personal Twitter Tips for Maximum Happiness">&laquo; Personal Twitter Tips for Maximum Happiness</a>
       
-      
-        <a class="basic-alignment right" href="/archives/windows-tools-i-use/" title="Next Post: Windows Tools I use">Windows Tools I use &raquo;</a>
       
     </p>
   </footer>
 </article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
 
@@ -236,7 +258,10 @@ SQLIO- <a href="http://www.microsoft.com/downloads/details.aspx?familyid=9a8b005
       var disqus_shortname = 'datachomp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.com/archives/gaming-on-linux/';
+        var disqus_url = 'http://datachomp.com/archives/gaming-on-linux/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

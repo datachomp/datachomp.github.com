@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-05-26T22:54:10-05:00</updated>
+  <updated>2015-05-31T18:03:58-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,60 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Gaming on Linux]]></title>
+    <link href="http://datachomp.com/archives/gaming-on-linux/"/>
+    <updated>2015-05-31T18:02:30-05:00</updated>
+    <id>http://datachomp.com/archives/gaming-on-linux</id>
+    <content type="html"><![CDATA[<p>Like a majority of gamers in the U.S. I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games:</p>
+
+<ul>
+<li>Team Fortress 2 (steam)</li>
+<li>Torchlight II (steam)</li>
+<li>Faster Than Light (steam)</li>
+<li>System Shock 2 (steam)</li>
+<li>Postgres 9.4 (not steam)</li>
+<li>Minecraft (not steam)</li>
+</ul>
+
+
+<p>For all the steam games, the solution is pretty simple:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install steam</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
+
+<p>For playing Postgres, it is a little more invovled:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" &gt; /etc/apt/sources.list.d/pgdg.list
+</span><span class='line'>wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install pgdg-keyring
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And lasty, we need to install minecraft.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo add-apt-repository ppa:minecraft-installer-peeps/minecraft-installer  
+</span><span class='line'>sudo apt-get update && sudo apt-get install minecraft-installer  </span></code></pre></td></tr></table></div></figure>
+
+
+<p>
+At this point, all your games should be ready to go and it just the trivial matter of making sure your video, network, display, sound, and peripheral drivers all work without problem.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Personal Twitter Tips for Maximum Happiness]]></title>
@@ -857,34 +911,6 @@ Having an OS with native virtual desktops is a complete joy. Sometimes I&rsquo;m
 Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
 
 <p>For me, Linux is clean and focused and Windows is <a href="http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg">Teletubbies</a>. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Quickly Migrate a DB From MySQL to Postgres]]></title>
-    <link href="http://datachomp.com/archives/quickly-migrate-a-db-from-mysql-to-postgres/"/>
-    <updated>2013-05-05T12:50:00-05:00</updated>
-    <id>http://datachomp.com/archives/quickly-migrate-a-db-from-mysql-to-postgres</id>
-    <content type="html"><![CDATA[<p>The more I&rsquo;m around people building apps in Ruby or ruining their quality of life with PHP, the more I&rsquo;m seeing them actually use MySQL for something other than punch lines. As someone dedicated to trying to make the world a better place, I began looking for some easy ways to migrate from MySQL to <a href="http://www.postgresql.org/">Postgres</a>. This post will will not even pretend to be an exhaustive list for how to do this, but more based around me having 15 minutes of free time and some internet.</p>
-
-<p>The first place I went looking was <a href="http://railscasts.com/episodes/342-migrating-to-postgresql">Railscasts</a> &ndash; They have a free intro episode to <a href="http://www.postgresql.org/">Postgres</a> and one of the tools they show is <a href="https://github.com/ricardochimal/taps">Taps</a>.  I gem&#8217;ed taps real quick and gave it a shot, but I couldn&rsquo;t get it to run due to port binding dependencies on my machine. No worries though, I still had plenty of tabs with search results so I moved on.</p>
-
-<p><a href="https://github.com/ddollar/valkyrie">Valkyrie</a> was the next option I tried. I gem&#8217;ed it up, pointed it at the DB&rsquo;s and then it barfed on a &lsquo;mysql&rsquo; dependency (not to be confused with mysql2 gem dependency). I installed the &lsquo;mysql&rsquo; gem, ran it again and voilà! Migration complete! The command issued was very simple:</p>
-
-<blockquote><p>valkyrie mysql://datachomp@localhost/seppuku?password=QuickAndPainless postgres://datachomp@127.0.0.1/seppuku</p></blockquote>
-
-<p>A couple things I like about Valkyrie:</p>
-
-<ul>
-<li>It is simple. I just provide a mysql source and postgres destination.</li>
-<li>It uses <a href="https://github.com/jeremyevans/sequel">Sequel</a>.</li>
-<li>I can keep re-running it without it duplicating source data.</li>
-</ul>
-
-
-<p>If you are needing something more hardcore than a 1 time migration, the ever resourceful <a href="http://www.craigkerstiens.com/">Craig Kerstiens</a> suggested I check out <a href="https://code.google.com/p/tungsten-replicator/">Tungsten-Replicator</a>. Tungsten will essentially set up a read slave from MySQL to Postgres. Obviously, setup/configuration is going to be a bit more involved with Tungsten than a ~Fire-and-Forget~ migration tool like Valkyrie but remember, you are doing it for a good cause.</p>
-
-<p>Now that you have seen an easy way to migrate away from MySQL, I encourage you to scan your network and start making the world a better place.</p>
 ]]></content>
   </entry>
   
