@@ -5,7 +5,7 @@ date: 2015-05-31 18:02:30 -0500
 comments: true
 categories:
 ---
-Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. My list of games:  
+Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I found the best Linux to use is one that is refered to as 'Trusty'. I didn't do a ton of research, but for the most part, all the Linuxes that "just work" get labeled 'Trusty'. My list of games:  
 
  * Team Fortress 2 (steam)
  * Torchlight II (steam)
