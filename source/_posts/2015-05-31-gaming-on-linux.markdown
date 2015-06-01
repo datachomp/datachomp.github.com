@@ -5,7 +5,7 @@ date: 2015-05-31 18:02:30 -0500
 comments: true
 categories:
 ---
-Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I found the best Linux to use is one that is refered to as 'Trusty'. I didn't do a ton of research, but for the most part, all the Linuxes that "just work" get labeled 'Trusty'. My list of games:  
+Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I found the best Linux to use is one that is referred to as 'Trusty'. I didn't do a ton of research, but for the most part, all the Linuxes that "just work" get labeled 'Trusty'. My list of games:  
 
  * Team Fortress 2 (steam)
  * Torchlight II (steam)
@@ -16,9 +16,9 @@ Like a majority of gamers in the U.S., I decided to make Linux (commonly called 
 
 For all the steam games, the solution is pretty simple:  
 ```  
-sudo apt-get install steam
+sudo apt-get install -y steam
 ```
-Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.  
+The magic sauce on the above command is the '-y'. If you are a software develop that uses git, you can think of '-y' as same type of 'Getting Things Done' shortcut as '-f'. Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.  
 
 For playing Postgres, it is a little more involved:  
 ```
@@ -34,4 +34,4 @@ And lastly, we need to install minecraft.
 sudo add-apt-repository ppa:minecraft-installer-peeps/minecraft-installer  
 sudo apt-get update && sudo apt-get install minecraft-installer  
 ```  
-Quick and easy! Now, if you play the same games as me, all your games should be ready to go. The only thing left to do is the trivial task of making sure your video, network, display, sound, and peripheral drivers all work without problem.
+Quick and easy! Now, if you play the same games as me, all your games should be ready to go. The only thing left to do is the trivial task of making sure your video, network, display, sound, and peripheral drivers all work without problems.
