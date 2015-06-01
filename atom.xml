@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-05-31T22:14:35-05:00</updated>
+  <updated>2015-05-31T22:16:03-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -36,7 +36,7 @@
 </pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install -y steam</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The magic sauce on the above command is the &lsquo;-y&rsquo;. If you are a software develop that uses git, you can think of &lsquo;-y&rsquo; as same type of &lsquo;Getting Things Done&rsquo; command as &lsquo;-f&rsquo;. Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
+<p>The magic sauce on the above command is the &lsquo;-y&rsquo;. If you are a software develop that uses git, you can think of &lsquo;-y&rsquo; as same type of &lsquo;Getting Things Done&rsquo; shortcut as &lsquo;-f&rsquo;. Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
 
 <p>For playing Postgres, it is a little more involved:</p>
 
