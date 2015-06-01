@@ -142,6 +142,18 @@
 </span><span class='line'>sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
 
 
+<p>I understand that above can be a bit intimidating or your RSI might be flaring, in which case you can run the following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>sudo bash &lt;(curl -s https://raw.github.com/pgexperts/add-pgdg-apt-repo/master/add-pgdg-apt-repo.sh)
+</span><span class='line'>sudo apt-get update
+</span><span class='line'>sudo apt-get install -y postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The above is running a random shell file from an elevated bash script. This could be a potential security problem, so always make sure you&rsquo;re calling random shell files with https.</p>
+
 <p>And lastly, we need to install minecraft.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
