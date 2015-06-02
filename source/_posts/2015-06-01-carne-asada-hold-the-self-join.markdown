@@ -8,7 +8,7 @@ categories:
 Since leaving the tech industry, I've been disrupting the food service sector with my reimaginification of the food truck. Basically, I serve freshly heated burritos out of the back of my car. The company is called "Uber-ritos" and things could not be any better... well actually, there is this one thing.
 
 #### Disrupting the Food Line
-The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres) there is still quite the penalty for wasting CPU cycles. Like most Enterprise system,s it has a very noticeable hot spot. Let us see if we can fix it!
+The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres), on old metal like that there is still quite the penalty for wasting CPU cycles. Like most Enterprise systems, it has a very noticeable hot spot. Let us see if we can fix it!
 
 #### Plumbing
 ```
