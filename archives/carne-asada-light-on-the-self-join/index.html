@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Carne Asada Light on the Self Join - DataChomp</title>
+  <meta name="author" content="Rob Sullivan">
+
+  
+  <meta name="description" content="Since I left the tech industry, I&rsquo;ve been disrupting the food service industry with my take on the food truck. Basically, I server fresh heated &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://datachomp.com/archives/carne-asada-light-on-the-self-join">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-1806527-13']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">DataChomp</a></h1>
+  
+    <h2>Chomping At The Bits</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:datachomp.com" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Home</a></li>
+  <li><a href="/blog/archives/">Archives</a></li>
+  <li><a href="/books">Books</a></li>
+  <li><a href="/speaking">Speaking/Travel</a></li>
+  <li><a href="/about">About</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Carne Asada Light on the Self Join</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T21:57:34-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Since I left the tech industry, I&rsquo;ve been disrupting the food service industry with my take on the food truck. Basically, I server fresh heated burritos out of the back of my car. The company is called &ldquo;Uber-ritos&rdquo; and things could not be any better&hellip; except for this one thing.</p>
+
+<h4>Disrupting the Food Line</h4>
+
+<p>The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres) there is still quite the penalty for wasting cycles. This leads us to the biggest waste currently &ndash; How I determine what is left to cook.</p>
+
+<h4>Plumbing</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE food_line(order_id int, step_number int, step_name text, completed_at timestamp);
+</span><span class='line'>INSERT INTO  food_line(order_id, step_number, step_name, completed_at)
+</span><span class='line'>VALUES (1, 1, 'heat tortilla', now()), (1, 2, 'load with food', null), (1,3, 'serve customer', null)
+</span><span class='line'>, (2, 1, 'heat tortilla', now()), (2, 2, 'load with food', now()), (2,3, 'serve customer', null)
+</span><span class='line'>, (3, 1, 'heat tortilla', now()), (3, 2, 'load with food', null), (3, 3, 'serve customer', null)
+</span><span class='line'>, (4, 1, 'heat tortilla', now()), (4, 2, 'load with food', null), (4, 3, 'serve customer', null)
+</span><span class='line'>, (5, 1, 'pour queso', now()), (5, 2, 'serve customer', null);</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SubQuery</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN
+</span><span class='line'>  (SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  group by order_id
+</span><span class='line'>  ) hu on fl.order_id = hu.order_id
+</span><span class='line'>          AND fl.step_number=hu.min_step_number
+</span><span class='line'>ORDER BY fl.order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Sort  (cost=48.68..48.69 rows=1 width=36)&rdquo; </strong><br/>
+Above is the first version of the &ldquo;What&rsquo;s left&rdquo; query and while it worked well enough, I didn&rsquo;t think it was that readable. I wanted a CTE version.</p>
+
+<h4>CTE</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN WITH last_step as (
+</span><span class='line'>  SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  GROUP BY order_id)
+</span><span class='line'>SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN last_step ls on fl.order_id = ls.order_id
+</span><span class='line'>         AND fl.step_number=ls.min_step_number
+</span><span class='line'>ORDER BY order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong> &ldquo;Sort  (cost=48.69..48.70 rows=1 width=36)&rdquo; </strong><br/>
+I find this version much more readable. I can alias the CTE and tweak the last step process. It also doesn&rsquo;t affect cost a whole heck of a lot&hellip;but cost is what I really need to lower.</p>
+
+<h4>Order Up!!!</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT order_id, step_name
+</span><span class='line'>FROM (
+</span><span class='line'>  SELECT order_id, step_name, row_number()
+</span><span class='line'>      OVER (PARTITION BY order_id ORDER BY step_number) as stuck_step
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE  completed_at is null) as data
+</span><span class='line'>WHERE stuck_step = 1
+</span><span class='line'>ORDER BY order_id</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Subquery Scan on data  (cost=20.46..20.62 rows=1 width=36)&rdquo;</strong><br/>
+Wow! Half the cost. This new found efficiency lets me serve an extra 15 burritos per lunch cycle which means more revenue! This additional income will let me decide if I want to pocket the extra money, or reinvest it back into the company. I might reinvest in something like upgrading the point of sale to a raspberry pi and fancy display.  With more horsepower I can tackle some of the items the business unit wants but customers hate &ndash; like facebook/twitter integration!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Rob Sullivan</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T21:57:34-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+      
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/carne-asada-light-on-the-self-join/" data-via="datachomp" data-counturl="http://datachomp.com/archives/carne-asada-light-on-the-self-join/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/archives/gaming-on-linux/" title="Previous Post: Gaming on Linux">&laquo; Gaming on Linux</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+<aside class="sidebar">
+	<a href="/"><img src="http://static.datachomp.com/datachomp.png" width="236" height="236" alt="Data Eating Alligator" /></a><br/>
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/archives/carne-asada-light-on-the-self-join/">Carne Asada Light on the Self Join</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/gaming-on-linux/">Gaming on Linux</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
+      </li>
+    
+      <li class="post">
+        <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2015 - Rob Sullivan - Hand-crafted in OK <img src="http://static.datachomp.com/ok.gif" height="15" width="15" /> - 
+  <span class="credit">Served by <a href="http://octopress.org">Octopress</a> and Github</span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'datachomp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://datachomp.com/archives/carne-asada-light-on-the-self-join/';
+        var disqus_url = 'http://datachomp.com/archives/carne-asada-light-on-the-self-join/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+
+<script src="//static.getclicky.com/js" type="text/javascript"></script>
+<script type="text/javascript">try{ clicky.init(100787394); }catch(e){}</script>
+<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/100787394ns.gif" /></p></noscript>
+</body>
+</html>

@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://datachomp.com/archives/carne-asada-light-on-the-self-join/</loc>
+    <lastmod>2015-06-01T21:57:34-05:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://datachomp.com/archives/gaming-on-linux/</loc>
     <lastmod>2015-05-31T18:02:30-05:00</lastmod>
     <priority>0.8</priority>
@@ -509,35 +515,35 @@
   
   <url>
     <loc>http://datachomp.com/blog/archives/</loc>
-    <lastmod>2015-05-31T22:40:09-05:00</lastmod>
+    <lastmod>2015-06-01T22:04:00-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://datachomp.com/</loc>
-    <lastmod>2015-05-31T22:40:09-05:00</lastmod>
+    <lastmod>2015-06-01T22:04:00-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://datachomp.com/books/</loc>
-    <lastmod>2015-05-31T22:40:09-05:00</lastmod>
+    <lastmod>2015-06-01T22:04:00-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://datachomp.com/about/</loc>
-    <lastmod>2015-05-31T22:40:09-05:00</lastmod>
+    <lastmod>2015-06-01T22:04:00-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   
   <url>
     <loc>http://datachomp.com/speaking/</loc>
-    <lastmod>2015-05-31T22:40:09-05:00</lastmod>
+    <lastmod>2015-06-01T22:04:00-05:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

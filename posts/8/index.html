@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Outside of the daily WTF&rsquo;s I create&hellip; one of the larger WTF&rsquo;s I know is the SQL Server team removing the built in alerts in SQL &hellip;">
+  <meta name="description" content="Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&rsquo;t a real deal breaker as &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,57 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/how-to-test-email-with-port-25-blocked/">How to Test Email With Port 25 Blocked</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-02-21T00:00:00-06:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&rsquo;t a real deal breaker as when I&rsquo;m coding/debugging I&rsquo;m just using a local webserver. However, when I am testing email functionality in an application things get a little more interesting. The fix I found for this involves how you specify the SMTP actions in the webconfig.</p>
+
+<p>In your Configuration section, you can specify either network delivery or a pickup location:<br/>
+<code></p>
+
+<pre><code>&lt;system.net&gt;
+    &lt;mailSettings&gt;   &lt;!--&lt;smtp deliveryMethod="SpecifiedPickupDirectory"&gt;&lt;specifiedPickupDirectory pickupDirectoryLocation="C:SubversionEmail" /&gt;&lt;/smtp&gt;--&gt; 
+        &lt;smtp deliveryMethod="Network"&gt;&lt;network host="datachomp.com" port="25" defaultCredentials="true" userName="Gator@example.com" password="email" /&gt;&lt;/smtp&gt; 
+    &lt;/mailSettings&gt;
+&lt;/system.net&gt;
+</code></pre>
+
+<p></code>
+At this point you just check the local directory for email when you are testing your application. If you don&rsquo;t have system for production deployments, then don&rsquo;t forget to change to the network delivery when you deploy.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -636,92 +687,6 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/sql-report-server-outbound-email-configuration/">SQL Report Server Outbound Email Configuration</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>So you get your handy dandy <a href="http://technet.microsoft.com/en-us/library/ms345234.aspx">SQL Server Report Server all set up for email</a> and are looking good then you go to have it email to an outbound address.  All of a sudden you get the &lsquo;The e-mail address of one or more recipients is not valid.&#8217;   While there could be a couple reasons for this issue, the main two I run into is SMTP authentication and user aliases.  The fix to both of these involves updating the ReportServer.Config file usually found in the filesystem with a folder structure resembling &ndash; &ldquo;c:program filesmicrosoft SQL ServerMSRS10.MSSQLSERVER&rdquo;</p>
-
-<p>You want to pop it open and then search for &ldquo;SMTPServer&rdquo; which will take you to something that looks like this:
-<code></p>
-
-<pre><code>&lt;RSEmailDPConfiguration&gt;
-&lt;SMTPServer&gt;email.example.com&lt;/SMTPServer&gt;
-&lt;SMTPServerPort&gt;&lt;/SMTPServerPort&gt;
-&lt;SMTPAccountName&gt;&lt;/SMTPAccountName&gt;
-&lt;SMTPConnectionTimeout&gt;&lt;/SMTPConnectionTimeout&gt;
-&lt;SMTPServerPickupDirectory&gt;&lt;/SMTPServerPickupDirectory&gt;
-&lt;SMTPUseSSL&gt;&lt;/SMTPUseSSL&gt;
-&lt;SendUsing&gt;2&lt;/SendUsing&gt;
-&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt;
-&lt;From&gt;MrMail@example.com&lt;/From&gt;
-&lt;EmbeddedRenderFormats&gt;&lt;RenderingExtension&gt;MHTML&lt;/RenderingExtension&gt;&lt;/EmbeddedRenderFormats&gt;
-&lt;PrivilegedUserRenderFormats&gt;&lt;/PrivilegedUserRenderFormats&gt;
-&lt;ExcludedRenderFormats&gt;&lt;RenderingExtension&gt;HTMLOWC&lt;/RenderingExtension&gt;
-&lt;RenderingExtension&gt;NULL&lt;/RenderingExtension&gt;&lt;RenderingExtension&gt;RGDI&lt;/RenderingExtension&gt;
-&lt;/ExcludedRenderFormats&gt;
-&lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
-&lt;DefaultHostName&gt;Example.com&lt;/DefaultHostName&gt;
-&lt;PermittedHosts&gt;&lt;/PermittedHosts&gt;
-&lt;/RSEmailDPConfiguration&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>The two fields you want to focus on are:<br/>
-<code></p>
-
-<pre><code>&lt;SMTPAuthenticate&gt;0&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;True&lt;/SendEmailToUserAlias&gt;
-</code></pre>
-
-<p></code>
-You will want to change these to
-<code></p>
-
-<pre><code>&lt;SMTPAuthenticate&gt;2&lt;/SMTPAuthenticate&gt; and &lt;SendEmailToUserAlias&gt;False&lt;/SendEmailToUserAlias&gt;
-</code></pre>
-
-<p></code>
-This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
-
-<p>This will let use the report servers service credentials to authenticate to the SMTP server. In addition, Report Server start using the actual email address instead of trying to turn everything into an alias depending on what you have populated for DefaultHostName.</p>
-
-<p>For more information about the report server configuration settings,  see here: <a href="http://msdn.microsoft.com/en-us/library/ms157273.aspx" title="ReportServer Configuration File">http://msdn.microsoft.com/en-us/library/ms157273.aspx</a></p>
-
-<p>This post also makes the assumption you do SMTP authenticate for outbound emails&hellip;. If you are unsure, then double check that you are not currently operating an open relay email server.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -744,6 +709,10 @@ This will let use the report servers service credentials to authenticate to the 
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/carne-asada-light-on-the-self-join/">Carne Asada Light on the Self Join</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/gaming-on-linux/">Gaming on Linux</a>
       </li>
     
@@ -757,10 +726,6 @@ This will let use the report servers service credentials to authenticate to the 
     
       <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
   </ul>

@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I &hellip;">
+  <meta name="description" content="Since I left the tech industry, I&rsquo;ve been disrupting the food service industry with my take on the food truck. Basically, I server fresh heated &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,141 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/carne-asada-light-on-the-self-join/">Carne Asada Light on the Self Join</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T21:57:34-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Since I left the tech industry, I&rsquo;ve been disrupting the food service industry with my take on the food truck. Basically, I server fresh heated burritos out of the back of my car. The company is called &ldquo;Uber-ritos&rdquo; and things could not be any better&hellip; except for this one thing.</p>
+
+<h4>Disrupting the Food Line</h4>
+
+<p>The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres) there is still quite the penalty for wasting cycles. This leads us to the biggest waste currently &ndash; How I determine what is left to cook.</p>
+
+<h4>Plumbing</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE food_line(order_id int, step_number int, step_name text, completed_at timestamp);
+</span><span class='line'>INSERT INTO  food_line(order_id, step_number, step_name, completed_at)
+</span><span class='line'>VALUES (1, 1, 'heat tortilla', now()), (1, 2, 'load with food', null), (1,3, 'serve customer', null)
+</span><span class='line'>, (2, 1, 'heat tortilla', now()), (2, 2, 'load with food', now()), (2,3, 'serve customer', null)
+</span><span class='line'>, (3, 1, 'heat tortilla', now()), (3, 2, 'load with food', null), (3, 3, 'serve customer', null)
+</span><span class='line'>, (4, 1, 'heat tortilla', now()), (4, 2, 'load with food', null), (4, 3, 'serve customer', null)
+</span><span class='line'>, (5, 1, 'pour queso', now()), (5, 2, 'serve customer', null);</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SubQuery</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN
+</span><span class='line'>  (SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  group by order_id
+</span><span class='line'>  ) hu on fl.order_id = hu.order_id
+</span><span class='line'>          AND fl.step_number=hu.min_step_number
+</span><span class='line'>ORDER BY fl.order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Sort  (cost=48.68..48.69 rows=1 width=36)&rdquo; </strong><br/>
+Above is the first version of the &ldquo;What&rsquo;s left&rdquo; query and while it worked well enough, I didn&rsquo;t think it was that readable. I wanted a CTE version.</p>
+
+<h4>CTE</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN WITH last_step as (
+</span><span class='line'>  SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  GROUP BY order_id)
+</span><span class='line'>SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN last_step ls on fl.order_id = ls.order_id
+</span><span class='line'>         AND fl.step_number=ls.min_step_number
+</span><span class='line'>ORDER BY order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong> &ldquo;Sort  (cost=48.69..48.70 rows=1 width=36)&rdquo; </strong><br/>
+I find this version much more readable. I can alias the CTE and tweak the last step process. It also doesn&rsquo;t affect cost a whole heck of a lot&hellip;but cost is what I really need to lower.</p>
+
+<h4>Order Up!!!</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT order_id, step_name
+</span><span class='line'>FROM (
+</span><span class='line'>  SELECT order_id, step_name, row_number()
+</span><span class='line'>      OVER (PARTITION BY order_id ORDER BY step_number) as stuck_step
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE  completed_at is null) as data
+</span><span class='line'>WHERE stuck_step = 1
+</span><span class='line'>ORDER BY order_id</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Subquery Scan on data  (cost=20.46..20.62 rows=1 width=36)&rdquo;</strong><br/>
+Wow! Half the cost. This new found efficiency lets me serve an extra 15 burritos per lunch cycle which means more revenue! This additional income will let me decide if I want to pocket the extra money, or reinvest it back into the company. I might reinvest in something like upgrading the point of sale to a raspberry pi and fancy display.  With more horsepower I can tackle some of the items the business unit wants but customers hate &ndash; like facebook/twitter integration!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -749,100 +884,6 @@ p options
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/writable-ctes-in-postgres/">Writable CTEs in Postgres</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-15T18:10:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Postgres is filled to the brim with awesome features, but they don&rsquo;t make sense for every occasion. I posted last night about my <a href="http://datachomp.com/archives/my-friend-rob/">Thankyou app</a> and it happens to have a use case for writable <a href="http://www.postgresql.org/docs/current/static/queries-with.html">CTEs (Common Table Expression)</a>.<br/>
-First, lets new up some data:</p>
-
-<pre><code>drop table if exists thanks;
-create table thanks (
-    id serial primary key,
-    who text not null,
-    picked boolean not null default 'false',
-    created_at date default now(),
-    last_picked date default '-infinity'
-);
-
-insert into thanks (who)
-values ('rob conery'), ('postgres'), ('sidekiq'), ('demis bellot'), ('sinatra')
-, ('josh berkus'), ('elizabeth naramore'), ('amir rajan'), ('sequel');
-
-select * from thanks;
-</code></pre>
-
-<p>Boom! This app selects a random person or project I&rsquo;m thankful for that hasn&rsquo;t already been picked or hasn&rsquo;t been picked in the last 9 months. Here it is in code form:</p>
-
-<pre><code>select * from thanks where picked = false or last_picked &lt; now() - interval '9 months';
-</code></pre>
-
-<p>Now we can put it in a normal CTE:</p>
-
-<pre><code>with guesswho as (
-    select * from thanks 
-    where picked = false or last_picked &lt; now() - interval '9 months')
-select guesswho.id, guesswho.who
-from guesswho;
-</code></pre>
-
-<p>Yes!!! Let&rsquo;s pick a random row. For our randomizer, I would like a lovely set of sequential id&rsquo;s I can pick from. Since we can&rsquo;t completely trust the primary key id&rsquo;s returned in our CTE (especially as rows start to get trimmed off), we&rsquo;re going to throw a row_number function on, as well as pass our first CTE into a second CTE to generate a random number based on the result set:</p>
-
-<pre><code>with guesswho as (
-    select ROW_NUMBER() OVER (ORDER BY id) as champs, * 
-    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
-, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
-select guesswho.id, guesswho.who
-from guesswho, onlyone
-where champs = onlyone.tops;
-</code></pre>
-
-<p>Yay!!! We&rsquo;re getting data we love on projects we love. But where does the writable CTE come into play? How cool would it be if we could also mark the record we&rsquo;re selecting as picked, so we don&rsquo;t have to make an additional call to the DB to flag afterwards? Check it out:</p>
-
-<pre><code>with guesswho as (select row_number() over (order by id) as champs, * 
-    from thanks where picked = false or last_picked &lt; now() - interval '9 months')
-, onlyone as (select trunc(random() * count(0) + 1) as tops from guesswho)
-
-, adios as (update thanks set picked = 'true', last_picked = now() from guesswho, onlyone where thanks.id = guesswho.id and 
-guesswho.champs = onlyone.tops RETURNING thanks.picked)
-
-select guesswho.id, guesswho.who
-from guesswho, onlyone, adios
-where champs = onlyone.tops;
-</code></pre>
-
-<p>So.Much.Awesome! Check out that 3rd CTE we added (adios), is using our previous CTE&rsquo;s, updating the row we chose, as well as providing a returning statement of what it updated. The returning statement provides context for what happened inside that writable CTE to alleviate confusion between table expresisons. Feel free to play with it on your own machine and especially change the data for the people or tech you&rsquo;re thankful for.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -863,6 +904,10 @@ where champs = onlyone.tops;
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/carne-asada-light-on-the-self-join/">Carne Asada Light on the Self Join</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/gaming-on-linux/">Gaming on Linux</a>
       </li>
     
@@ -876,10 +921,6 @@ where champs = onlyone.tops;
     
       <li class="post">
         <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/i-am-a-bad-blogger/">I Am a Bad Blogger</a>
       </li>
     
   </ul>

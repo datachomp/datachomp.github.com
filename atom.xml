@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-05-31T22:40:09-05:00</updated>
+  <updated>2015-06-01T22:04:00-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,114 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Carne Asada Light on the Self Join]]></title>
+    <link href="http://datachomp.com/archives/carne-asada-light-on-the-self-join/"/>
+    <updated>2015-06-01T21:57:34-05:00</updated>
+    <id>http://datachomp.com/archives/carne-asada-light-on-the-self-join</id>
+    <content type="html"><![CDATA[<p>Since I left the tech industry, I&rsquo;ve been disrupting the food service industry with my take on the food truck. Basically, I server fresh heated burritos out of the back of my car. The company is called &ldquo;Uber-ritos&rdquo; and things could not be any better&hellip; except for this one thing.</p>
+
+<h4>Disrupting the Food Line</h4>
+
+<p>The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres) there is still quite the penalty for wasting cycles. This leads us to the biggest waste currently &ndash; How I determine what is left to cook.</p>
+
+<h4>Plumbing</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE food_line(order_id int, step_number int, step_name text, completed_at timestamp);
+</span><span class='line'>INSERT INTO  food_line(order_id, step_number, step_name, completed_at)
+</span><span class='line'>VALUES (1, 1, 'heat tortilla', now()), (1, 2, 'load with food', null), (1,3, 'serve customer', null)
+</span><span class='line'>, (2, 1, 'heat tortilla', now()), (2, 2, 'load with food', now()), (2,3, 'serve customer', null)
+</span><span class='line'>, (3, 1, 'heat tortilla', now()), (3, 2, 'load with food', null), (3, 3, 'serve customer', null)
+</span><span class='line'>, (4, 1, 'heat tortilla', now()), (4, 2, 'load with food', null), (4, 3, 'serve customer', null)
+</span><span class='line'>, (5, 1, 'pour queso', now()), (5, 2, 'serve customer', null);</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>SubQuery</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN
+</span><span class='line'>  (SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  group by order_id
+</span><span class='line'>  ) hu on fl.order_id = hu.order_id
+</span><span class='line'>          AND fl.step_number=hu.min_step_number
+</span><span class='line'>ORDER BY fl.order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Sort  (cost=48.68..48.69 rows=1 width=36)&rdquo; </strong><br/>
+Above is the first version of the &ldquo;What&rsquo;s left&rdquo; query and while it worked well enough, I didn&rsquo;t think it was that readable. I wanted a CTE version.</p>
+
+<h4>CTE</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN WITH last_step as (
+</span><span class='line'>  SELECT order_id, min(step_number) as min_step_number
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE completed_at is null
+</span><span class='line'>  GROUP BY order_id)
+</span><span class='line'>SELECT fl.order_id, fl.step_name
+</span><span class='line'>FROM food_line fl
+</span><span class='line'>  INNER JOIN last_step ls on fl.order_id = ls.order_id
+</span><span class='line'>         AND fl.step_number=ls.min_step_number
+</span><span class='line'>ORDER BY order_id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong> &ldquo;Sort  (cost=48.69..48.70 rows=1 width=36)&rdquo; </strong><br/>
+I find this version much more readable. I can alias the CTE and tweak the last step process. It also doesn&rsquo;t affect cost a whole heck of a lot&hellip;but cost is what I really need to lower.</p>
+
+<h4>Order Up!!!</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT order_id, step_name
+</span><span class='line'>FROM (
+</span><span class='line'>  SELECT order_id, step_name, row_number()
+</span><span class='line'>      OVER (PARTITION BY order_id ORDER BY step_number) as stuck_step
+</span><span class='line'>  FROM food_line
+</span><span class='line'>  WHERE  completed_at is null) as data
+</span><span class='line'>WHERE stuck_step = 1
+</span><span class='line'>ORDER BY order_id</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>&ldquo;Subquery Scan on data  (cost=20.46..20.62 rows=1 width=36)&rdquo;</strong><br/>
+Wow! Half the cost. This new found efficiency lets me serve an extra 15 burritos per lunch cycle which means more revenue! This additional income will let me decide if I want to pocket the extra money, or reinvest it back into the company. I might reinvest in something like upgrading the point of sale to a raspberry pi and fancy display.  With more horsepower I can tackle some of the items the business unit wants but customers hate &ndash; like facebook/twitter integration!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Gaming on Linux]]></title>
@@ -892,37 +1000,6 @@ Since I know I will be tread&#8217;ing at some point in the day &ndash; and I kn
 Recently, I started adding games to the mix. If you are expecting to be able to play twitch games&hellip; Just stop that thought now. Any game that relies on twitch or precision is a no go. I&rsquo;m a huge fan of <a href="http://www.youtube.com/watch?v=VxeW6urxLfY">Skyrim</a> and rpg&rsquo;s in general, but my current schedule/commits don&rsquo;t really allow me much indulgence in those time sinks. However, the need for a game that doesn&rsquo;t require heavy precision + the 30 minute cutoff on my treadmill allows an incredible pairing to occur.</p>
 
 <p>Am I healthier because of my treadmill setup?  Maybe. Am I happier, more productive and having more fun? You bet!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[No Longer Buying Aircraft Carriers]]></title>
-    <link href="http://datachomp.com/archives/no-longer-buying-aircraft-carriers/"/>
-    <updated>2013-08-09T00:23:00-05:00</updated>
-    <id>http://datachomp.com/archives/no-longer-buying-aircraft-carriers</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m a hardware nut who likes both building and upgrading my dev boxes. I&rsquo;m getting ready to refresh my box this year and the biggest difference &ndash; I&rsquo;m no longer doing .NET/SQL Server. I&rsquo;m also not on Windows.</p>
-
-<p>So what&rsquo;s different?</p>
-
-<p><strong>Remoting</strong><br/>
-Instead of a laggy/sluggish RDP sessions doing password dances, I&rsquo;m all in with SSH and loving it.</p>
-
-<p><strong>IDE</strong><br/>
-Instead of the behemoth Visual Studio &ndash; I just use a text editor or bash or any number of focused tools that get out of my way.</p>
-
-<p><strong>Database</strong><br/>
-SQL Server is replaced with a lean Postgres and a tricked out <a href="http://www.craigkerstiens.com/2013/02/21/more-out-of-psql/">psql</a>. This still blows my mind and loving it every day.</p>
-
-<p><strong>OS</strong><br/>
-Instead of a fatty windows &ndash; I run <a href="http://www.ubuntu.com/">Ubuntu</a>. Ubuntu is not for everyone, I get that, so lets pretend that Ubuntu is some nasty monster &ndash; I can run <a href="http://crunchbang.org/">Crunchbang</a> and have a hyper focused OS that wants nothing more than to help me code. Speed wise, going from Windows 8 to something like <a href="http://crunchbang.org/">Crunchbang</a> is like going from a bicycle to a Ducati. The difference is further illustrated by the fact that I&rsquo;ve been able to install versions of Linux that have the same memory footprint as just the Activation/License checker on Windows. I&rsquo;ve often thought it would be cool if instead of more Windows Modern-UI for plebes, Microsoft had a more <a href="http://openbox.org/">OpenBox</a> type windows manager built on top of Server-Core. This would probably get me back on a Microsoft OS. Of course, by then, I might just be running everything off my <a href="http://www.indiegogo.com/projects/ubuntu-edge">phone</a>.</p>
-
-<p><strong>Virtual Desktops</strong><br/>
-Having an OS with native virtual desktops is a complete joy. Sometimes I&rsquo;m doing just data, sometimes I&rsquo;m wallowing around in code, other times I&rsquo;m browsing/social networking. Having dedicated desktops for this and not having to resort to &lsquo;I need a ton of monitors&rsquo; Windows syndrome has been a welcome change as well.</p>
-
-<p><strong>Virtuals</strong><br/>
-Even when it comes to virtualization, gone are the days of heavy handed, GUI ridden 4GB of ram windows VM&rsquo;s&hellip; I can do extremely light, fast Linux VM&rsquo;s and ssh to them. It feels seamless and a lot of fun. And no comment on how cheaply I can offload a nice virtual <a href="http://digitalocean.com">to the cloud</a> vs offloading Windows to the cloud.</p>
-
-<p>For me, Linux is clean and focused and Windows is <a href="http://i.telegraph.co.uk/multimedia/archive/01399/teletubbies_1399692c.jpg">Teletubbies</a>. As I go to build a new machine, breaking myself of the mentality of needing a 16 core, 24GB RAM dev box has been a welcome relief and it&rsquo;s nice to stop and smell the progress.</p>
 ]]></content>
   </entry>
   
