@@ -29,13 +29,13 @@ sudo apt-get install pgdg-keyring
 sudo apt-get update
 sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4
 ```
-I understand that above can be a bit intimidating or your RSI might be flaring, in which case you can run the following:
+I understand that the above can be a bit intimidating or perhaps your RSI might be flaring. In that case, you can run the following:
 ```
 sudo bash <(curl -s https://raw.github.com/pgexperts/add-pgdg-apt-repo/master/add-pgdg-apt-repo.sh)
 sudo apt-get update
 sudo apt-get install -y postgresql-9.4 postgresql-contrib-9.4
 ```
-The above is running a random shell file from an elevated bash script. This could be a potential security problem, so always make sure you're calling random shell files with https.  
+The above is running a random shell file from an elevated bash prompt. This could be a potential security problem, so always make sure you're calling random shell files with https.  
 
 And lastly, we need to install minecraft.
 ```
