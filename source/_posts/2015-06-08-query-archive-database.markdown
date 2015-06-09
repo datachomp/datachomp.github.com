@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Query Archive Database"
+title: "Query Archive Database, the apathetic way"
 date: 2015-06-08 23:23:54 -0500
 comments: true
 categories:
@@ -66,6 +66,8 @@ EXPLAIN SELECT * FROM total_sales ;
 ```
 
 Viola! It works! If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap or free. In this example, burrito_archive even lives on the same server, so you can imagine how performance amplifies as you get further from main datastore. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like [Octopus][1] or [additional decorators for your connection string/models][2].
+
+Note: This is just a real quick and dirty way of doing this with very low technical overhead. Yes, other options exist depending on a variety of factors.
 
 [1]: https://github.com/tchandy/octopus
 
