@@ -6,11 +6,11 @@ comments: true
 categories:
 ---
 
-When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’  This is in part because ~modern~ web frameworks like Ruby-on-Rails don’t always make multiple data sources a straight forward task. True to form, for every problem a web framework can create, postgres can usuallyly fix it.
+When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’  This is in part because ~modern~ web frameworks like Rack-on-Rails do not always make multiple data sources a straight forward task. True to form, for every problem a web framework can create, postgres can usually fix it.
 
-Say we have a main database ‘burrito_store’ and an archive database ‘burrito_archive’. Out solution will work whether ’burrito_archive’ could be on the same server, or it might be on a neighboring server, but for scenario, it will be on the same server.
+Say we have a main database - ‘burrito_store’ that holds the main transactions and an archive database ‘burrito_archive’ that holds stale records...ok, forget pretending, lets just get straight to code.
 
-#### Plumbing:
+#### Main Plumbing:
 ```
 CREATE DATABASE burrito_store;
 CREATE DATABASE burrito_archive;
@@ -50,7 +50,7 @@ SELECT id, customer_id, sale_amount, created_at, updated_at
 FROM sales order by id;
 ```
 
-At this point, we should be able to query and interact with the desired table from either database.  Now we can just create a basic view to make things easier for our poor application:  
+At this point, we should be able to query and interact with the desired table from either database. Now, we can just create a basic view to make things easier for our poor application:  
 ```
 CREATE VIEW total_sales as
 SELECT * from burrito_sales
@@ -65,4 +65,8 @@ EXPLAIN SELECT * FROM total_sales ;
 "        ->  Foreign Scan on sales_archive  (cost=100.00..157.25 rows=1575 width=28)"
 ```
 
-Viola!  It works. If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like Octopus or additional decorators for your connection string/models.
+Viola! It works! If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap or free. In this example, burrito_archive even lives on the same server, so you can imagine how performance amplifies as you get further from main datastore. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like [Octopus][1] or [additional decorators for your connection string/models][2].
+
+[1]: https://github.com/tchandy/octopus
+
+[2]: http://stackoverflow.com/questions/28485137/multiple-database-connection-in-rails-4/28490913#28490913
