@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Carne Asada Hold the Self Join - DataChomp</title>
+  <title>Query Archive Database - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Since leaving the tech industry, I&rsquo;ve been disrupting the food service sector with my reimaginification of the food truck. Basically, I serve &hellip;">
+  <meta name="description" content="When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’ This is in part &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/carne-asada-hold-the-self-join">
+  <link rel="canonical" href="http://datachomp.com/archives/query-archive-database">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Carne Asada Hold the Self Join</h1>
+      <h1 class="entry-title">Query Archive Database</h1>
     
     
       <p class="meta">
@@ -99,38 +99,18 @@
   
 
 
-<time datetime="2015-06-01T21:57:34-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+<time datetime="2015-06-08T23:23:54-05:00" pubdate data-updated="true">Jun 8<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Since leaving the tech industry, I&rsquo;ve been disrupting the food service sector with my reimaginification of the food truck. Basically, I serve freshly heated burritos out of the back of my car. The company is called &ldquo;Uber-ritos&rdquo; and things could not be any better&hellip; well actually, there is this one thing.</p>
+<div class="entry-content"><p>When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’  This is in part because ~modern~ web frameworks like Rack-on-Rails do not always make multiple data sources a straight forward task. True to form, for every problem a web framework can create, postgres can usually fix it.</p>
 
-<h4>Disrupting the Food Line</h4>
+<p>Say we have a main database &ndash; ‘burrito_store’ that holds the main transactions and an archive database ‘burrito_archive’ that holds stale records&hellip;ok, forget pretending, lets just get straight to code.</p>
 
-<p>The point of sale system in the back of my car runs off a repurposed TI-82. While it has everything one might need to run a legit company (keyboard/ display/postgres), on old metal like that there is still quite the penalty for wasting CPU cycles. Like most Enterprise systems, it has a very noticeable hot spot. Let us see if we can fix it!</p>
-
-<h4>Plumbing</h4>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE food_line(order_id int, step_number int, step_name text, completed_at timestamp);
-</span><span class='line'>INSERT INTO  food_line(order_id, step_number, step_name, completed_at)
-</span><span class='line'>VALUES (1, 1, 'heat tortilla', now()), (1, 2, 'load with food', null), (1,3, 'serve customer', null)
-</span><span class='line'>, (2, 1, 'heat tortilla', now()), (2, 2, 'load with food', now()), (2,3, 'serve customer', null)
-</span><span class='line'>, (3, 1, 'heat tortilla', now()), (3, 2, 'load with food', null), (3, 3, 'serve customer', null)
-</span><span class='line'>, (4, 1, 'heat tortilla', now()), (4, 2, 'load with food', null), (4, 3, 'serve customer', null)
-</span><span class='line'>, (5, 1, 'pour queso', now()), (5, 2, 'serve customer', null);</span></code></pre></td></tr></table></div></figure>
-
-
-<h4>SubQuery V1</h4>
+<h4>Main Plumbing:</h4>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -142,22 +122,37 @@
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT fl.order_id, fl.step_name
-</span><span class='line'>FROM food_line fl
-</span><span class='line'>  INNER JOIN
-</span><span class='line'>  (SELECT order_id, min(step_number) as min_step_number
-</span><span class='line'>  FROM food_line
-</span><span class='line'>  WHERE completed_at is null
-</span><span class='line'>  group by order_id
-</span><span class='line'>  ) hu on fl.order_id = hu.order_id
-</span><span class='line'>          AND fl.step_number=hu.min_step_number
-</span><span class='line'>ORDER BY fl.order_id;</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE DATABASE burrito_store;
+</span><span class='line'>CREATE DATABASE burrito_archive;
+</span><span class='line'>
+</span><span class='line'>\c burrito_store
+</span><span class='line'>CREATE TABLE burrito_sales (id serial primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales(customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>values(1, 123, now(), now()), (1, 123, now(), now()),(1, 123, now(), now())
+</span><span class='line'>,(2, 123, now(), now()),(2, 123, now(), now()) ,(2, 123, now(), now())
+</span><span class='line'>,(3, 123, now(), now()),(4, 123, now(), now())
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER archive
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_archive');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER archive OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales_archive (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER archive OPTIONS (schema_name 'public', table_name 'burrito_sales_archive');</span></code></pre></td></tr></table></div></figure>
 
 
-<p><strong>&ldquo;Sort  (cost=48.68..48.69 rows=1 width=36)&rdquo; </strong><br/>
-Above is the first version of the &ldquo;What&rsquo;s left&rdquo; query and while it worked well enough, I didn&rsquo;t think it was that readable. My business deserves a CTE version.</p>
-
-<h4>CTE Version</h4>
+<h4>On the archive database:</h4>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -169,22 +164,27 @@ Above is the first version of the &ldquo;What&rsquo;s left&rdquo; query and whil
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN WITH last_step as (
-</span><span class='line'>  SELECT order_id, min(step_number) as min_step_number
-</span><span class='line'>  FROM food_line
-</span><span class='line'>  WHERE completed_at is null
-</span><span class='line'>  GROUP BY order_id)
-</span><span class='line'>SELECT fl.order_id, fl.step_name
-</span><span class='line'>FROM food_line fl
-</span><span class='line'>  INNER JOIN last_step ls on fl.order_id = ls.order_id
-</span><span class='line'>         AND fl.step_number=ls.min_step_number
-</span><span class='line'>ORDER BY order_id;</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE burrito_sales_archive (id int primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER store
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_store');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER store OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER store OPTIONS (schema_name 'public', table_name 'burrito_sales');
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales_archive(id, customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>SELECT id, customer_id, sale_amount, created_at, updated_at
+</span><span class='line'>FROM sales order by id;</span></code></pre></td></tr></table></div></figure>
 
 
-<p><strong> &ldquo;Sort  (cost=48.69..48.70 rows=1 width=36)&rdquo; </strong><br/>
-I find this version much more readable. I can alias the CTE and tweak the last step process. It also doesn&rsquo;t affect cost a whole heck of a lot&hellip;but cost is what I really need to lower.</p>
-
-<h4>Order Up!!! Window Function</h4>
+<p>At this point, we should be able to query and interact with the desired table from either database. Now, we can just create a basic view to make things easier for our poor application:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -194,18 +194,23 @@ I find this version much more readable. I can alias the CTE and tweak the last s
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>EXPLAIN SELECT order_id, step_name
-</span><span class='line'>FROM (
-</span><span class='line'>  SELECT order_id, step_name, row_number()
-</span><span class='line'>      OVER (PARTITION BY order_id ORDER BY step_number) as stuck_step
-</span><span class='line'>  FROM food_line
-</span><span class='line'>  WHERE  completed_at is null) as data
-</span><span class='line'>WHERE stuck_step = 1
-</span><span class='line'>ORDER BY order_id</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE VIEW total_sales as
+</span><span class='line'>SELECT * from burrito_sales
+</span><span class='line'>UNION
+</span><span class='line'>SELECT * from sales_archive;
+</span><span class='line'>
+</span><span class='line'>EXPLAIN SELECT * FROM total_sales ;
+</span><span class='line'>"HashAggregate  (cost=248.19..277.94 rows=2975 width=28)"
+</span><span class='line'>"  Group Key: burrito_sales.id, burrito_sales.customer_id, burrito_sales.sale_amount, burrito_sales.created_at, burrito_sales.updated_at"
+</span><span class='line'>"  -&gt;  Append  (cost=0.00..211.00 rows=2975 width=28)"
+</span><span class='line'>"        -&gt;  Seq Scan on burrito_sales  (cost=0.00..24.00 rows=1400 width=28)"
+</span><span class='line'>"        -&gt;  Foreign Scan on sales_archive  (cost=100.00..157.25 rows=1575 width=28)"</span></code></pre></td></tr></table></div></figure>
 
 
-<p><strong>&ldquo;Subquery Scan on data  (cost=20.46..20.62 rows=1 width=36)&rdquo;</strong><br/>
-Wow! Half the cost! This new found efficiency lets me serve an extra 15 burritos per lunch cycle which means more revenue! This additional income will let me decide if I want to pocket the extra money, or reinvest it back into the company. I might reinvest in something like upgrading the point of sale to a raspberry pi and fancy display.  With more horsepower I can tackle some of the items the business unit wants but customers hate &ndash; like facebook/twitter integration!</p>
+<p>Viola! It works! If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap or free. In this example, burrito_archive even lives on the same server, so you can imagine how performance amplifies as you get further from main datastore. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like <a href="https://github.com/tchandy/octopus">Octopus</a> or <a href="http://stackoverflow.com/questions/28485137/multiple-database-connection-in-rails-4/28490913#28490913">additional decorators for your connection string/models</a>.</p>
 </div>
 
 
@@ -228,7 +233,7 @@ Wow! Half the cost! This new found efficiency lets me serve an extra 15 burritos
   
 
 
-<time datetime="2015-06-01T21:57:34-05:00" pubdate data-updated="true">Jun 1<span>st</span>, 2015</time>
+<time datetime="2015-06-08T23:23:54-05:00" pubdate data-updated="true">Jun 8<span>th</span>, 2015</time>
       
 
 
@@ -236,7 +241,7 @@ Wow! Half the cost! This new found efficiency lets me serve an extra 15 burritos
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/carne-asada-hold-the-self-join/" data-via="datachomp" data-counturl="http://datachomp.com/archives/carne-asada-hold-the-self-join/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/query-archive-database/" data-via="datachomp" data-counturl="http://datachomp.com/archives/query-archive-database/" >Tweet</a>
   
   
   
@@ -245,10 +250,8 @@ Wow! Half the cost! This new found efficiency lets me serve an extra 15 burritos
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/gaming-on-linux/" title="Previous Post: Gaming on Linux">&laquo; Gaming on Linux</a>
+        <a class="basic-alignment left" href="/archives/carne-asada-hold-the-self-join/" title="Previous Post: Carne Asada hold the self join">&laquo; Carne Asada hold the self join</a>
       
-      
-        <a class="basic-alignment right" href="/archives/query-archive-database/" title="Next Post: Query Archive Database">Query Archive Database &raquo;</a>
       
     </p>
   </footer>
@@ -315,8 +318,8 @@ Wow! Half the cost! This new found efficiency lets me serve an extra 15 burritos
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://datachomp.com/archives/carne-asada-hold-the-self-join/';
-        var disqus_url = 'http://datachomp.com/archives/carne-asada-hold-the-self-join/';
+        var disqus_identifier = 'http://datachomp.com/archives/query-archive-database/';
+        var disqus_url = 'http://datachomp.com/archives/query-archive-database/';
         var disqus_script = 'embed.js';
       
     (function () {

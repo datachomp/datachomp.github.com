@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="&ldquo;Postgres? WTF man, you&rsquo;re a SQL Server DBA!&rdquo; It&rsquo;s true, I am a SQL Server DBA but even I have to admit that the Postgres &hellip;">
+  <meta name="description" content="I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,48 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/simple-talk-sql-test-write-up/">Simple-Talk &#8211; SQL Test Write Up</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2011-12-16T00:00:00-06:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m anxious to see just how much David and his team can improve it.</p>
+
+<p><a href="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/" title="http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/">http://www.simple-talk.com/sql/sql-tools/sql-test-seeing-red-change-to-green/</a></p>
+
+<p>In other news, being published on Simple-Talk is also another thing <a href="http://troyhunt.com/" title="Troy Hunt">Troy Hunt</a> won&rsquo;t be able to 1-Up me with.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -795,80 +837,6 @@ Trust me, I am a DBA first ( and I imagine some of my code probably shows it) an
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3/">Getting Started With Massive in MVC3</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-02-18T00:00:00-06:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p><a href="http://blog.wekeroad.com/">Rob Conery</a> has created a new ORM of sorts   and as a DBA, I must say I like what I see so far.</p>
-
-<p>Getting started:  So some of you might be noob programmers like myself and after adding Massive to your MVC application via Nuget you become lost in space because it doesn&rsquo;t work.  The fix to this is rather easy,  just check the properties of the  Massive.cs file and make sure its build action is set to Compile&hellip; you might want to change the namespace as well depending on how picky you are with namespace juggling.</p>
-
-<p>We DBA&rsquo;s are a particularly picky bunch and one of the things we hate about ORM&#8217;s  is something called &lsquo;plan cache poisoning&rsquo;.  Want to know why your DBA hated Linq to SQL until  .NET 4 came out?  One of the reasons is &lsquo;plan cache poisoning&#8217;  which I will call PCP for short.   When you make a query to the database SQL Server compiles the that query into a plan so that the next time you go to run  it&hellip; it doesn&rsquo;t have to compile a new plan&hellip; it just pulls from its cache.  When it comes to  linq-sql and EF before  .net 4&hellip;.  they would pass a new string length depending upon the size of the string you are looking for.  So, if you have a table of contacts and want to pull someone up by first name&hellip;  it would compile a plan for &#8216;Rob&rsquo;, a plan for &lsquo;Robert&rsquo;,  a plan for &lsquo;Mike&rsquo; and so forth until you have exhausted all the different name lengths.    This sucks.   With Massive your  DBA won&rsquo;t wake up in cold sweats thinking about his beloved plan cache because of your ORM.</p>
-
-<p>To make  basic call with Massive on a Drinks Table (DrinkID, DrinkName) we do this:</p>
-
-<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
-
-2.  var drinks = table.All&amp;#40;&amp;#41;;
-</code></pre>
-
-<p>If you have done any Linq or EF you know that even a basic call like that is going to cause Linq or EF to create<br/>
-the ugliest looking t-sql it can by breaking out into extent aliases God knows what else it likes to do to say &lsquo;hey look at me&#8217;<br/>
-Does Massive have this problem? Nope, looking at profiler we get straight forward SQL &ndash;</p>
-
-<pre><code>1.  SELECT * FROM DRINKS
-</code></pre>
-
-<p>Well, that&rsquo;s cool and all if you want to start barfing out tables into your app, but how often to get to exercise such negligence?<br/>
-Rarely, so lets move to some conditions&hellip; lets look up a drink name:</p>
-
-<pre><code>1.  var table = [new][2] Drinks&amp;#40;&amp;#41;;
-
-2.  var drinks = table.All&amp;#40;where: "WHERE DrinkName=@0", args: "Fire Rock Pale Ale"&amp;#41;;
-</code></pre>
-
-<p>Knowing EF, we&rsquo;re likely going to have 15 lines of aliases and subqueries to run this most complicated of queries..<br/>
-In Massive, we get:</p>
-
-<pre><code>1.  EXEC SP_EXECUTESQL N'SELECT * FROM Drinks WHERE DrinkName=@0',N'@0 nvarchar(4000)',@=N'Fire Rock Pale Ale'
-</code></pre>
-
-<p>In addition to a simple to grok TSQL, we also start getting reusable query plans.</p>
-
-<p>More examples to come as I start to peel back the covers a bit on this new tool.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -891,6 +859,10 @@ In Massive, we get:</p>
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/query-archive-database/">Query Archive Database</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/carne-asada-hold-the-self-join/">Carne Asada Hold the Self Join</a>
       </li>
     
@@ -904,10 +876,6 @@ In Massive, we get:</p>
     
       <li class="post">
         <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
   </ul>

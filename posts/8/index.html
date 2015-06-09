@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Recently, I got rid of the business line to my house. The downside to this is losing ports 25 and 80. Port 80 isn&rsquo;t a real deal breaker as &hellip;">
+  <meta name="description" content="Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,50 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/ssis-and-the-embedded-delimiter-fail/">SSIS and the Embedded Delimiter Fail</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2010-05-31T00:00:00-05:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>Simple CSV file with some embedded delimiters. No big deal in SQL 2000 DTS right? Well, it&rsquo;s a huge deal in SQL Server 2005 and SQL Server 2005 SSIS. Of course, it is a bit of a mystery while they keep removing functionality but that isn&rsquo;t the point of this post. The point of this post is to show a solution&hellip;</p>
+
+<p>The solution comes by way of the Microsoft SQL Server Community Samples: Integration Services (yes, it is a long name for &lsquo;Look dudes! We are giving you a work around!&rsquo; but it works non the less).</p>
+
+<p><a href="http://sqlsrvintegrationsrv.codeplex.com/">http://sqlsrvintegrationsrv.codeplex.com/</a></p>
+
+<p>I tried the delimited file reader in a variety of scenarios and it passed with flying colors. How nice it is to be able do the same imports that were effortless in SQL 2000.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -628,65 +672,6 @@ GodMode.{ED7BA470-8E54-465E-825C-99712043E01C}</p>
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/tempdb-on-the-move/">TempDB on the Move</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2010-01-30T00:00:00-06:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p><code>
-By default, your tempDB files are in the following locations:  <br/>
-C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.mdf <br/>
-C:Program FilesMicrosoft SQL ServerMSSQL.1MSSQLDatatempdb.ldf</p>
-
-<p>The below commands will change the default tempDB locations for SQL Server <br/>
-and have it create the tempDB files there upon start up. <br/>
-</code>
-<code>
-USE master <br/>
-GO <br/>
-ALTER DATABASE tempdb MODIFY FILE (NAME = tempdev, FILENAME = &lsquo;E:Datatempdb.mdf&rsquo;)  <br/>
-GO  <br/>
-ALTER DATABASE tempdb MODIFY FILE (NAME = templog, FILENAME = &lsquo;F:Logtemplog.ldf&rsquo;)  <br/>
-GO
-</code>
-<code>
-You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p>
-
-<p>More reading on the topic:  <br/>
-<a href="http://www.databasejournal.com/features/mssql/article.php/3379901">http://www.databasejournal.com/features/mssql/article.php/3379901</a>  <br/>
-</code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/9">&larr; Older</a>
@@ -709,6 +694,10 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/query-archive-database/">Query Archive Database</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/carne-asada-hold-the-self-join/">Carne Asada Hold the Self Join</a>
       </li>
     
@@ -722,10 +711,6 @@ You will need to restart SQL Server for tempdb&rsquo;s file to actually move.</p
     
       <li class="post">
         <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
   </ul>

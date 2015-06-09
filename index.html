@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Since leaving the tech industry, I&rsquo;ve been disrupting the food service sector with my reimaginification of the food truck. Basically, I serve &hellip;">
+  <meta name="description" content="When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’ This is in part &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,146 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/query-archive-database/">Query Archive Database</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-08T23:23:54-05:00" pubdate data-updated="true">Jun 8<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’  This is in part because ~modern~ web frameworks like Rack-on-Rails do not always make multiple data sources a straight forward task. True to form, for every problem a web framework can create, postgres can usually fix it.</p>
+
+<p>Say we have a main database &ndash; ‘burrito_store’ that holds the main transactions and an archive database ‘burrito_archive’ that holds stale records&hellip;ok, forget pretending, lets just get straight to code.</p>
+
+<h4>Main Plumbing:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE DATABASE burrito_store;
+</span><span class='line'>CREATE DATABASE burrito_archive;
+</span><span class='line'>
+</span><span class='line'>\c burrito_store
+</span><span class='line'>CREATE TABLE burrito_sales (id serial primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales(customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>values(1, 123, now(), now()), (1, 123, now(), now()),(1, 123, now(), now())
+</span><span class='line'>,(2, 123, now(), now()),(2, 123, now(), now()) ,(2, 123, now(), now())
+</span><span class='line'>,(3, 123, now(), now()),(4, 123, now(), now())
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER archive
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_archive');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER archive OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales_archive (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER archive OPTIONS (schema_name 'public', table_name 'burrito_sales_archive');</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>On the archive database:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE burrito_sales_archive (id int primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER store
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_store');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER store OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER store OPTIONS (schema_name 'public', table_name 'burrito_sales');
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales_archive(id, customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>SELECT id, customer_id, sale_amount, created_at, updated_at
+</span><span class='line'>FROM sales order by id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, we should be able to query and interact with the desired table from either database. Now, we can just create a basic view to make things easier for our poor application:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE VIEW total_sales as
+</span><span class='line'>SELECT * from burrito_sales
+</span><span class='line'>UNION
+</span><span class='line'>SELECT * from sales_archive;
+</span><span class='line'>
+</span><span class='line'>EXPLAIN SELECT * FROM total_sales ;
+</span><span class='line'>"HashAggregate  (cost=248.19..277.94 rows=2975 width=28)"
+</span><span class='line'>"  Group Key: burrito_sales.id, burrito_sales.customer_id, burrito_sales.sale_amount, burrito_sales.created_at, burrito_sales.updated_at"
+</span><span class='line'>"  -&gt;  Append  (cost=0.00..211.00 rows=2975 width=28)"
+</span><span class='line'>"        -&gt;  Seq Scan on burrito_sales  (cost=0.00..24.00 rows=1400 width=28)"
+</span><span class='line'>"        -&gt;  Foreign Scan on sales_archive  (cost=100.00..157.25 rows=1575 width=28)"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Viola! It works! If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap or free. In this example, burrito_archive even lives on the same server, so you can imagine how performance amplifies as you get further from main datastore. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like <a href="https://github.com/tchandy/octopus">Octopus</a> or <a href="http://stackoverflow.com/questions/28485137/multiple-database-connection-in-rails-4/28490913#28490913">additional decorators for your connection string/models</a>.</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -789,101 +929,6 @@ sudo reboot #reboot the box to test it out
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/sequel-and-postgres-range-types/">Sequel and Postgres Range Types</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-15T21:20:00-06:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Like many rubyists, I have a hard time keeping up with which burrito truck is parked outside my house on any given day. In postgres, I&rsquo;ve solved this by entering the trucks and the duration they will be staying parked outside in my database:</p>
-
-<pre><code>CREATE TABLE burritotrucks
-(
-  id serial primary key,
-  truckname text not null,
-  onsite daterange not null --or tsrange if busy schedule
-);
-
-insert into burritotrucks (truckname, onsite)
-values ('thumpy tortillas', '[2013-11-15, 2013-11-17]'),
-('chompy delight', '[2013-11-15, 2013-11-17]'),
-('no dogs allowed', '[2013-11-16, 2013-11-21]'),
-('government cheese wagon', '[2013-11-11, 2013-11-14]'),
-('tortuga mochilla', '[2013-11-13, 2013-11-18]');
-</code></pre>
-
-<p>There are a variety of operators to query <a href="http://www.postgresql.org/docs/current/static/rangetypes.html">range types</a>, but for this example, I&rsquo;ll just be using the <a href="http://www.postgresql.org/docs/current/static/functions-range.html">contains operator</a>:</p>
-
-<pre><code>select * from burritotrucks where onsite @&gt; now()
-</code></pre>
-
-<p>Uh oh, it&rsquo;s not working. Unlike the other range types, date ranges require a little more finesse. Postgres doesn&rsquo;t quite trust the implicit conversion so we&rsquo;ll just do a little hand holding:</p>
-
-<pre><code>select * from burritotrucks where onsite @&gt; now()::date
-</code></pre>
-
-<p>It works! But how do we do this in our application with <a href="https://github.com/jeremyevans/sequel">Sequel</a>? First, we let <a href="https://github.com/jeremyevans/sequel">Sequel</a> know we&rsquo;re going to be using the range extensions:</p>
-
-<pre><code>Sequel.extension(:pg_range)
-DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
-, :database=&gt;'frontyard', :user=&gt;'dc')
-</code></pre>
-
-<p>We query the database:</p>
-
-<pre><code>options = DB[:burritotrucks].all
-p options
-</code></pre>
-
-<p>and we get the data. We can see how beautifuly <a href="https://github.com/jeremyevans/sequel">Sequel</a> handles the range type for us in the printed output and at this point we can get away with using our raw sql to get the data we need:</p>
-
-<pre><code>options = DB.fetch("select * from burritotrucks where onsite @&gt; now()::date").all
-p options
-</code></pre>
-
-<p>This works, but I can imagine many AppDevs becoming ill at the sight of SQL in their app. In order to appease both sides of the aisle, <a href="https://github.com/jeremyevans/sequel">Sequel</a> also has some pretty ruby friendly operators we can use by just adding the core_extensions as well as the range operators extension:</p>
-
-<pre><code>Sequel.extension(:core_extensions, :pg_range, :pg_range_ops)
-DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost'
-, :database=&gt;'frontyard', :user=&gt;'dc')
-</code></pre>
-
-<p>Now we can get much more ruby friendly queries. Note, We still need to cast for our date value but that is pretty trivial:</p>
-
-<pre><code>options = DB[:burritotrucks].where(:onsite.pg_range.contains(Sequel.cast(Date.today, Date))).all
-p options
-</code></pre>
-
-<p>People often ask me why I like <a href="https://github.com/jeremyevans/sequel">Sequel</a> so much and this is another great example why. It doesn&rsquo;t punish me for knowing SQL. It doesn&rsquo;t punish postgres for having so many amazing features and data types. It easily lets me know how many burrito trucks I have in my yard which is something you can not put a value on.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -904,6 +949,10 @@ p options
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/query-archive-database/">Query Archive Database</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/carne-asada-hold-the-self-join/">Carne Asada Hold the Self Join</a>
       </li>
     
@@ -917,10 +966,6 @@ p options
     
       <li class="post">
         <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/enums-for-when-you-just-cant-handle-another-foreign-key/">Enums for When You Just Cant Handle Another Foreign Key</a>
       </li>
     
   </ul>

@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-06-02T09:50:24-05:00</updated>
+  <updated>2015-06-09T13:02:46-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Query Archive Database]]></title>
+    <link href="http://datachomp.com/archives/query-archive-database/"/>
+    <updated>2015-06-08T23:23:54-05:00</updated>
+    <id>http://datachomp.com/archives/query-archive-database</id>
+    <content type="html"><![CDATA[<p>When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’  This is in part because ~modern~ web frameworks like Rack-on-Rails do not always make multiple data sources a straight forward task. True to form, for every problem a web framework can create, postgres can usually fix it.</p>
+
+<p>Say we have a main database &ndash; ‘burrito_store’ that holds the main transactions and an archive database ‘burrito_archive’ that holds stale records&hellip;ok, forget pretending, lets just get straight to code.</p>
+
+<h4>Main Plumbing:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE DATABASE burrito_store;
+</span><span class='line'>CREATE DATABASE burrito_archive;
+</span><span class='line'>
+</span><span class='line'>\c burrito_store
+</span><span class='line'>CREATE TABLE burrito_sales (id serial primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales(customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>values(1, 123, now(), now()), (1, 123, now(), now()),(1, 123, now(), now())
+</span><span class='line'>,(2, 123, now(), now()),(2, 123, now(), now()) ,(2, 123, now(), now())
+</span><span class='line'>,(3, 123, now(), now()),(4, 123, now(), now())
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER archive
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_archive');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER archive OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales_archive (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER archive OPTIONS (schema_name 'public', table_name 'burrito_sales_archive');</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>On the archive database:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE TABLE burrito_sales_archive (id int primary key, customer_id int, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'>
+</span><span class='line'>CREATE EXTENSION postgres_fdw;
+</span><span class='line'>CREATE SERVER store
+</span><span class='line'> FOREIGN DATA WRAPPER postgres_fdw
+</span><span class='line'>  OPTIONS (host 'localhost', port '5432', dbname 'burrito_store');
+</span><span class='line'>
+</span><span class='line'>CREATE USER MAPPING FOR public SERVER store OPTIONS (user 'rob');
+</span><span class='line'>CREATE FOREIGN TABLE sales (id int, customer_id integer, sale_amount int, created_at timestamp, updated_at timestamp)
+</span><span class='line'> SERVER store OPTIONS (schema_name 'public', table_name 'burrito_sales');
+</span><span class='line'>
+</span><span class='line'>INSERT INTO burrito_sales_archive(id, customer_id, sale_amount, created_at, updated_at)
+</span><span class='line'>SELECT id, customer_id, sale_amount, created_at, updated_at
+</span><span class='line'>FROM sales order by id;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, we should be able to query and interact with the desired table from either database. Now, we can just create a basic view to make things easier for our poor application:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>CREATE VIEW total_sales as
+</span><span class='line'>SELECT * from burrito_sales
+</span><span class='line'>UNION
+</span><span class='line'>SELECT * from sales_archive;
+</span><span class='line'>
+</span><span class='line'>EXPLAIN SELECT * FROM total_sales ;
+</span><span class='line'>"HashAggregate  (cost=248.19..277.94 rows=2975 width=28)"
+</span><span class='line'>"  Group Key: burrito_sales.id, burrito_sales.customer_id, burrito_sales.sale_amount, burrito_sales.created_at, burrito_sales.updated_at"
+</span><span class='line'>"  -&gt;  Append  (cost=0.00..211.00 rows=2975 width=28)"
+</span><span class='line'>"        -&gt;  Seq Scan on burrito_sales  (cost=0.00..24.00 rows=1400 width=28)"
+</span><span class='line'>"        -&gt;  Foreign Scan on sales_archive  (cost=100.00..157.25 rows=1575 width=28)"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Viola! It works! If you look at the cost of the foreign scan, you will see that this operation doesn’t come cheap or free. In this example, burrito_archive even lives on the same server, so you can imagine how performance amplifies as you get further from main datastore. That may or may not be important to you at this time and at a minimum, this strategy can at least get your Proof of Concept going while you check out gems like <a href="https://github.com/tchandy/octopus">Octopus</a> or <a href="http://stackoverflow.com/questions/28485137/multiple-database-connection-in-rails-4/28490913#28490913">additional decorators for your connection string/models</a>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Carne Asada Hold the Self Join]]></title>
@@ -968,38 +1081,6 @@ sudo service nginx restart
 
 <p>Most of how to do this is covered at:<br/>
 <a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Treadmill Desk Setup]]></title>
-    <link href="http://datachomp.com/archives/treadmill-desk-setup/"/>
-    <updated>2013-08-09T10:05:00-05:00</updated>
-    <id>http://datachomp.com/archives/treadmill-desk-setup</id>
-    <content type="html"><![CDATA[<p>For quite a few months now, I&rsquo;ve been playing around with a treadmill
-desk. I have a pretty large hydraulic desk from <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Geek Desk</a> that I have
-partitioned into 2 workstations:</p>
-
-<p><a href="http://images.datachomp.com/treadmill/desktop.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_desktop.jpg" title="On Top of The Desk World" alt="On Top of The Desk World" Height="200" Width="400" /></a></p>
-
-
-<p><strong>What is This?</strong><br/>
-On the left is my coding/recording station, and on the right is my learning/gaming station.
-When I&rsquo;m simply consuming content, I can easily work on my treadmill station. For $200, I bought a <a href="http://www.amazon.com/gp/product/B004TGWUPE/ref=oh_details_o02_s00_i00?ie=UTF8&amp;psc=1">Confidence Power Plus</a> treadmill that I <a href="http://www.treadmilldeskdiary.com/setting-up-my-confidence-power-plus-treadmill-for-a-desk/">mostly disassembled</a> and slid under the desk. I have a master power switch I can trigger with my foot, and speed controls I can use from the desktop. The treadmill shuts itself off after 30 minutes of use which allows for a very lo-fi pomodoro system. When I first started on the treadmill station, which has no guard rails mind you, I had to go extremely slow and couldn&rsquo;t focus much on walking or consuming. Give it a bit though and the treadmill part falls right into muscle memory.</p>
-
-<p><a href="http://images.datachomp.com/treadmill/underview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_underview.jpg" title="Under the hood" alt="Under the hood" Height="200" Width="400" /></a></p>
-
-
-<p><strong>These Reboots Were Made For Walking</strong><br/>
-Since I know I will be tread&#8217;ing at some point in the day &ndash; and I know it will kill itself every 30 minutes &ndash; I&rsquo;ve been using tools like <a href="http://getpocket.com/">Pocket</a> and stuff to help me avoid distractions on my ~creation station~ because I know I can just punt it right over to the treadmill box and consume a lot of content distraction free. I am finally reaching a point where I can read at 2.8 mph, and watch screencasts at 4 mph. This makes me a huge fan of screencasts&hellip; They are better for me.</p>
-
-<p><a href="http://images.datachomp.com/treadmill/fullview.jpg" target="_blank"><img src="http://images.datachomp.com/treadmill/small_fullview.jpg" title="Back That Desk Up" alt="Back that Desk Up" Height="400" Width="200" /></a></p>
-
-
-<p><strong>tail -m thedragon</strong><br/>
-Recently, I started adding games to the mix. If you are expecting to be able to play twitch games&hellip; Just stop that thought now. Any game that relies on twitch or precision is a no go. I&rsquo;m a huge fan of <a href="http://www.youtube.com/watch?v=VxeW6urxLfY">Skyrim</a> and rpg&rsquo;s in general, but my current schedule/commits don&rsquo;t really allow me much indulgence in those time sinks. However, the need for a game that doesn&rsquo;t require heavy precision + the 30 minute cutoff on my treadmill allows an incredible pairing to occur.</p>
-
-<p>Am I healthier because of my treadmill setup?  Maybe. Am I happier, more productive and having more fun? You bet!</p>
 ]]></content>
   </entry>
   
