@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-06-09T13:05:43-05:00</updated>
+  <updated>2015-06-09T13:07:10-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -14,7 +14,7 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Query Archive Database]]></title>
+    <title type="html"><![CDATA[Query Archive Database, the Apathetic Way]]></title>
     <link href="http://datachomp.com/archives/query-archive-database/"/>
     <updated>2015-06-08T23:23:54-05:00</updated>
     <id>http://datachomp.com/archives/query-archive-database</id>
