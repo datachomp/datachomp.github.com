@@ -5,11 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Gaming on Linux - DataChomp</title>
+  <title>Getting Postgres Version With Golang - DataChomp</title>
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I &hellip;">
+  <meta name="description" content="I&rsquo;ve been looking at some monitoring solutions for my network at home. I&rsquo;ve used nagios in the past but it has quite a few drawbacks. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -18,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://datachomp.com/archives/gaming-on-linux">
+  <link rel="canonical" href="http://datachomp.com/archives/getting-postgres-version-with-golang">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="DataChomp" type="application/atom+xml">
@@ -83,7 +83,7 @@
   
   <header>
     
-      <h1 class="entry-title">Gaming on Linux</h1>
+      <h1 class="entry-title">Getting Postgres Version With Golang</h1>
     
     
       <p class="meta">
@@ -99,34 +99,16 @@
   
 
 
-<time datetime="2015-05-31T18:02:30-05:00" pubdate data-updated="true">May 31<span>st</span>, 2015</time>
+<time datetime="2015-06-19T16:49:12-05:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>Like a majority of gamers in the U.S., I decided to make Linux (commonly called Ubuntu in Europe) my main gaming Operating System. In my research, I found the best Linux to use is one that is referred to as &lsquo;Trusty&rsquo;. I didn&rsquo;t do a ton of research, but for the most part, all the Linuxes that &ldquo;just work&rdquo; get labeled &lsquo;Trusty&rsquo;. My list of games:</p>
+<div class="entry-content"><p>I&rsquo;ve been looking at some monitoring solutions for my network at home. I&rsquo;ve used nagios in the past but it has quite a few drawbacks. Most noticably, the whole fact that it doesn&rsquo;t scale to millions of nodes or use a popular javascript framework for its front end pretty much makes it a no-go for my home network. Thanks to my background in technology, I know that the next best option is to just write something myself. As I stated earlier, nagios is a no-go and I need something that is&hellip; so I chose go-lang. The fact that go is in the name tells me it will work. Let&rsquo;s get started!</p>
 
-<ul>
-<li>Team Fortress 2 (steam)</li>
-<li>Torchlight II (steam)</li>
-<li>Faster Than Light (steam)</li>
-<li>System Shock 2 (steam)</li>
-<li>Postgres 9.4 (not steam)</li>
-<li>Minecraft (not steam)</li>
-</ul>
-
-
-<p>For all the steam games, the solution is pretty simple:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo apt-get install -y steam</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The magic sauce on the above command is the &lsquo;-y&rsquo;. If you are a software develop that uses git, you can think of &lsquo;-y&rsquo; as same type of &lsquo;Getting Things Done&rsquo; shortcut as &lsquo;-f&rsquo;. Once you get steam installed, it is just a matter of clicking all over the place to get the above games installed.</p>
-
-<p>For playing Postgres, it is a little more involved:</p>
+<h4>Plumbing:</h4>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -134,36 +116,75 @@
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
 <span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo echo "deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" &gt; /etc/apt/sources.list.d/pgdg.list
-</span><span class='line'>wget --quiet -O - http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc | sudo apt-key add -
-</span><span class='line'>sudo apt-get update
-</span><span class='line'>sudo apt-get install pgdg-keyring
-</span><span class='line'>sudo apt-get update
-</span><span class='line'>sudo apt-get -y install postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install go
+</span><span class='line'>mkdir ~/go
+</span><span class='line'>export GOPATH=~/go
+</span><span class='line'>export PATH=$PATH:$GOPATH/bin
+</span><span class='line'>go get github.com/lib/pq
+</span><span class='line'>mkdir gogios && cd gogios
+</span><span class='line'>touch gogios.go</span></code></pre></td></tr></table></div></figure>
 
 
-<p>I understand that the above can be a bit intimidating or perhaps your RSI might be flaring. In that case, you can run the following:</p>
+<h4>Now we code:</h4>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo bash &lt;(curl -s https://raw.github.com/pgexperts/add-pgdg-apt-repo/master/add-pgdg-apt-repo.sh)
-</span><span class='line'>sudo apt-get update
-</span><span class='line'>sudo apt-get install -y postgresql-9.4 postgresql-contrib-9.4</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package main
+</span><span class='line'>import (
+</span><span class='line'>  _ "github.com/lib/pq"
+</span><span class='line'>  "database/sql"
+</span><span class='line'>  "fmt"
+</span><span class='line'>  "log"
+</span><span class='line'>)
+</span><span class='line'>
+</span><span class='line'>func main() {
+</span><span class='line'>  db, err := sql.Open("postgres", "user=rob dbname=postgres sslmode=disable")
+</span><span class='line'>  if err != nil {
+</span><span class='line'>    log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var version string
+</span><span class='line'>  err = db.QueryRow("select version()").Scan(&version)
+</span><span class='line'>  if err != nil {
+</span><span class='line'>      log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>  fmt.Println(version)
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
 
 
-<p>The above is running a random shell file from an elevated bash prompt. This could be a potential security problem, so always make sure you&rsquo;re calling random shell files with https.</p>
-
-<p>And lastly, we need to install minecraft.</p>
+<h4>Run it:</h4>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>sudo add-apt-repository ppa:minecraft-installer-peeps/minecraft-installer  
-</span><span class='line'>sudo apt-get update && sudo apt-get install minecraft-installer  </span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class=''><span class='line'>go run gogios.go</span></code></pre></td></tr></table></div></figure>
 
 
-<p>
-Quick and easy! Now, if you play the same games as me, all your games should be ready to go. The only thing left to do is the trivial task of making sure your video, network, display, sound, and peripheral drivers all work without problems.</p>
+<h4>Output:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PostgreSQL 9.4.4 on x86_64-apple-darwin14.3.0, compiled by Apple LLVM version 6.1.0 (clang-602.0.49) (based on LLVM 3.6.0svn), 64-bit</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, while we haven&rsquo;t replaced 100% of nagios, we&rsquo;re off to a great start and probably only have a few hundred hours of coding left. Good thing it is the weekend!</p>
 </div>
 
 
@@ -186,7 +207,7 @@ Quick and easy! Now, if you play the same games as me, all your games should be 
   
 
 
-<time datetime="2015-05-31T18:02:30-05:00" pubdate data-updated="true">May 31<span>st</span>, 2015</time>
+<time datetime="2015-06-19T16:49:12-05:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
       
 
 
@@ -194,7 +215,7 @@ Quick and easy! Now, if you play the same games as me, all your games should be 
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/gaming-on-linux/" data-via="datachomp" data-counturl="http://datachomp.com/archives/gaming-on-linux/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://datachomp.com/archives/getting-postgres-version-with-golang/" data-via="datachomp" data-counturl="http://datachomp.com/archives/getting-postgres-version-with-golang/" >Tweet</a>
   
   
   
@@ -203,10 +224,8 @@ Quick and easy! Now, if you play the same games as me, all your games should be 
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/archives/personal-twitter-tips-for-maximum-happiness/" title="Previous Post: Personal Twitter Tips for Maximum Happiness">&laquo; Personal Twitter Tips for Maximum Happiness</a>
+        <a class="basic-alignment left" href="/archives/query-archive-database/" title="Previous Post: Query Archive Database, the apathetic way">&laquo; Query Archive Database, the apathetic way</a>
       
-      
-        <a class="basic-alignment right" href="/archives/carne-asada-hold-the-self-join/" title="Next Post: Carne Asada hold the self join">Carne Asada hold the self join &raquo;</a>
       
     </p>
   </footer>
@@ -273,8 +292,8 @@ Quick and easy! Now, if you play the same games as me, all your games should be 
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://datachomp.com/archives/gaming-on-linux/';
-        var disqus_url = 'http://datachomp.com/archives/gaming-on-linux/';
+        var disqus_identifier = 'http://datachomp.com/archives/getting-postgres-version-with-golang/';
+        var disqus_url = 'http://datachomp.com/archives/getting-postgres-version-with-golang/';
         var disqus_script = 'embed.js';
       
     (function () {

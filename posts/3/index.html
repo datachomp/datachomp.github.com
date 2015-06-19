@@ -9,8 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="For quite a few months now, I&rsquo;ve been playing around with a treadmill
-desk. I have a pretty large hydraulic desk from Geek Desk that I have &hellip;">
+  <meta name="description" content="UPDATE on official repos &ndash; http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/ When you are getting started in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -81,6 +80,79 @@ desk. I have a pretty large hydraulic desk from Geek Desk that I have &hellip;">
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/phusion-passenger-is-no-longer-in-opt-ion/">Passenger: No Longer in /opt/ion</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-08-27T23:26:00-05:00" pubdate data-updated="true">Aug 27<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
+
+<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
+
+<h3>Magic Strings of Wonderful Glory</h3>
+
+<p>After you get your feet under you, you might find yourself needing to use more than the base modules that come with the nginx inside Passenger. As I would go to install or update Passenger, I would end up having to run something like this:</p>
+
+<pre><code>gem install passenger
+
+passenger-install-nginx-module --nginx-source-dir=/usr/src/nginx-1.5.3 ---with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with --without-http_scgi_module --without-http_uwsgi_module --without-http_fastcgi_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --with-http_realip_module --add-module=/opt/nginxmodules/headers-more
+</code></pre>
+
+<p>This creates a few issues. Issue #1: I have to keep wget&#8217;ing new versions of source when I need to update.<br/>
+Issue #2: I have a completely different workflow/scripts for managing a passenger nginx instance than I do for a unicorn/puma instance. This variance drives me nuts and be a source of script churn.</p>
+
+<h3>Antacids</h3>
+
+<p>I kept thinking there had to be a better way. Then the sky hash parted and a beam of light shown directly on a ppa from the brightbox team. This package uses a traditional installation of nginx, which means that I can easily install the nginx-extras package and get all my extra modules I need for load balancing and nginx_status. Here is how I do it:</p>
+
+<pre><code>sudo apt-get install -y python-software-properties curl git-core  
+sudo apt-add-repository -y ppa:brightbox/passenger-experimental  
+sudo apt-get update
+
+sudo apt-get install -y nginx-full  
+sudo apt-get install -y nginx-extras  #extras headers and stuff  
+
+\curl -L https://get.rvm.io | bash  
+source ~/.profile  
+
+rvm install 2.0.0-p247  
+rvm --default use 2.0.0-p247  
+
+sudo service nginx restart  
+</code></pre>
+
+<p>Most of how to do this is covered at:<br/>
+<a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -573,111 +645,6 @@ rvm --create --rvmrc 1.9.3-p327@mycoolproject
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/a-little-bit-more-about-sorting/">A Little Bit More About Sorting</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-01T00:00:00-06:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>As a big fan of not <a href="http://datachomp.com/archives/hey-app-quit-wasting-my-time-sorting-your-data/" title="Don't waste my time">sorting in the database</a> when I don&rsquo;t have to, I have often resorted to heavy handed javascript libraries like <a href="http://datatables.net/" title="datatables.net">datatables.net</a>. I do this in large part because I am just awful at javascript and the libs typically already exists. As long as the database is saving a few cycles who cares about the client right?!?!</p>
-
-<p>This time of year is all about giving, so I thought I would try to find a better/lighter way of doing this. A few googles later, I found the <a href="http://tablesorter.com/docs/" title="tablesorter">tablesorter</a> lib and this looked like a pretty decent compromise.</p>
-
-<p>Thinking I was onto something, I ran the idea by my resident javascript expert Michael Sarchet (<a href="http://www.michaelsarchet.com/" title="ha mikes blog">b</a> / <a href="https://twitter.com/msarchet" title="Mike">t</a>). His response was so simple and on point that I was slightly offended I hadn&rsquo;t thought of it. &ldquo;I just use <a href="http://knockoutjs.com/" title="KnockoutJS">Knockout</a> for that.&rdquo; Advantages of this are that I&rsquo;m not having to keep up with another lib (knockout is a default lib in MVC4) and this solution will be able to apply to collections outside of just a table. Thus, another life skill was born.</p>
-
-<p><strong>Code Time<br/>
-Controller:</strong>
-<code></p>
-
-<pre><code>var burritos = db.Select("select name,price from burritos");
-var tacos = db.Select("select name,price from tacos");
-
-var viewModel = new viewmodel_Food
-{
-  burritos = burritos
-  , tacos = tacos
-};
-return View(viewModel);
-</code></pre>
-
-<p></code>
-<strong>View:</strong>
-<code></p>
-
-<pre><code>@model burritoroll.web.Models.viewmodel_Food
-@{
-    ViewBag.Title = "Index";
-}
-
-Index
-
-Can you dig our burritos?
-BurritoPrice
-
-
-
-Can you dig our tacos?
-
-
-  TacoPrice
-
-
-
-
-
-@section scripts{
-
-    function viewModel() {
-        var self = this;
-
-        self.tacosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.tacos.ToArray())));
-        self.burritosarray = ko.observableArray(@Html.Raw(Json.Encode(Model.burritos.ToArray())));
-
-        var sortitFunction = function (a, b) {
-            return a.name.toLowerCase() == b.name.toLowerCase() ? 0 : a.name.toLowerCase() &lt; b.name.toLowerCase() ? -1 : 1;
-        };
-
-        self.tacosarray.sort(sortitFunction);
-        self.burritosarray.sort(sortitFunction);
-    }
-
-    ko.applyBindings(new viewModel());
-
-}
-</code></pre>
-
-<p></code></p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/4">&larr; Older</a>
@@ -700,6 +667,10 @@ Can you dig our tacos?
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/getting-postgres-version-with-golang/">Getting Postgres Version With Golang</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/query-archive-database/">Query Archive Database, the Apathetic Way</a>
       </li>
     
@@ -713,10 +684,6 @@ Can you dig our tacos?
     
       <li class="post">
         <a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
       </li>
     
   </ul>

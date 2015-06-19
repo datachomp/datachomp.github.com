@@ -4,7 +4,7 @@
   <title><![CDATA[DataChomp]]></title>
   <link href="http://datachomp.com/atom.xml" rel="self"/>
   <link href="http://datachomp.com/"/>
-  <updated>2015-06-09T13:07:10-05:00</updated>
+  <updated>2015-06-19T16:56:14-05:00</updated>
   <id>http://datachomp.com/</id>
   <author>
     <name><![CDATA[Rob Sullivan]]></name>
@@ -12,6 +12,93 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting Postgres Version With Golang]]></title>
+    <link href="http://datachomp.com/archives/getting-postgres-version-with-golang/"/>
+    <updated>2015-06-19T16:49:12-05:00</updated>
+    <id>http://datachomp.com/archives/getting-postgres-version-with-golang</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been looking at some monitoring solutions for my network at home. I&rsquo;ve used nagios in the past but it has quite a few drawbacks. Most noticably, the whole fact that it doesn&rsquo;t scale to millions of nodes or use a popular javascript framework for its front end pretty much makes it a no-go for my home network. Thanks to my background in technology, I know that the next best option is to just write something myself. As I stated earlier, nagios is a no-go and I need something that is&hellip; so I chose go-lang. The fact that go is in the name tells me it will work. Let&rsquo;s get started!</p>
+
+<h4>Plumbing:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install go
+</span><span class='line'>mkdir ~/go
+</span><span class='line'>export GOPATH=~/go
+</span><span class='line'>export PATH=$PATH:$GOPATH/bin
+</span><span class='line'>go get github.com/lib/pq
+</span><span class='line'>mkdir gogios && cd gogios
+</span><span class='line'>touch gogios.go</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Now we code:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package main
+</span><span class='line'>import (
+</span><span class='line'>  _ "github.com/lib/pq"
+</span><span class='line'>  "database/sql"
+</span><span class='line'>  "fmt"
+</span><span class='line'>  "log"
+</span><span class='line'>)
+</span><span class='line'>
+</span><span class='line'>func main() {
+</span><span class='line'>  db, err := sql.Open("postgres", "user=rob dbname=postgres sslmode=disable")
+</span><span class='line'>  if err != nil {
+</span><span class='line'>    log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var version string
+</span><span class='line'>  err = db.QueryRow("select version()").Scan(&version)
+</span><span class='line'>  if err != nil {
+</span><span class='line'>      log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>  fmt.Println(version)
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Run it:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>go run gogios.go</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Output:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PostgreSQL 9.4.4 on x86_64-apple-darwin14.3.0, compiled by Apple LLVM version 6.1.0 (clang-602.0.49) (based on LLVM 3.6.0svn), 64-bit</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, while we haven&rsquo;t replaced 100% of nagios, we&rsquo;re off to a great start and probably only have a few hundred hours of coding left. Good thing it is the weekend!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Query Archive Database, the Apathetic Way]]></title>
@@ -1037,52 +1124,6 @@ DB = Sequel.connect(:adapter=&gt;'postgres', :host=&gt; 'localhost', :database=&
 <h3>Be still my beating DAL</h3>
 
 <p>I love this! We can now build as fast as we want with semi structured data&hellip; and when our data becomes important and matures a little bit, we can easily break into relational schemas &ndash; Just as God intended.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Passenger: No Longer in /opt/ion]]></title>
-    <link href="http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion/"/>
-    <updated>2013-08-27T23:26:00-05:00</updated>
-    <id>http://datachomp.com/archives/phusion-passenger-is-no-longer-in-opt-ion</id>
-    <content type="html"><![CDATA[<p>UPDATE on official repos &ndash; <a href="http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/">http://blog.phusion.nl/2013/09/11/debian-and-ubuntu-packages-for-phusion-passenger/</a></p>
-
-<p>When you are getting started in the world of Ruby web dev, one of the best things you can do is deploy to <a href="http://heroku.com">Heroku</a>.  However, if you find yourself having to deploy to a <a href="http://linode.com">VPS</a>, one of next best things you can do is use <a href="https://www.phusionpassenger.com/">Phusion Passenger</a>. It is an incredibly low friction application server for rack apps (and other things).</p>
-
-<h3>Magic Strings of Wonderful Glory</h3>
-
-<p>After you get your feet under you, you might find yourself needing to use more than the base modules that come with the nginx inside Passenger. As I would go to install or update Passenger, I would end up having to run something like this:</p>
-
-<pre><code>gem install passenger
-
-passenger-install-nginx-module --nginx-source-dir=/usr/src/nginx-1.5.3 ---with-http_ssl_module --with-http_gzip_static_module --with-http_stub_status_module --with --without-http_scgi_module --without-http_uwsgi_module --without-http_fastcgi_module --without-mail_pop3_module --without-mail_imap_module --without-mail_smtp_module --with-http_realip_module --add-module=/opt/nginxmodules/headers-more
-</code></pre>
-
-<p>This creates a few issues. Issue #1: I have to keep wget&#8217;ing new versions of source when I need to update.<br/>
-Issue #2: I have a completely different workflow/scripts for managing a passenger nginx instance than I do for a unicorn/puma instance. This variance drives me nuts and be a source of script churn.</p>
-
-<h3>Antacids</h3>
-
-<p>I kept thinking there had to be a better way. Then the sky hash parted and a beam of light shown directly on a ppa from the brightbox team. This package uses a traditional installation of nginx, which means that I can easily install the nginx-extras package and get all my extra modules I need for load balancing and nginx_status. Here is how I do it:</p>
-
-<pre><code>sudo apt-get install -y python-software-properties curl git-core  
-sudo apt-add-repository -y ppa:brightbox/passenger-experimental  
-sudo apt-get update
-
-sudo apt-get install -y nginx-full  
-sudo apt-get install -y nginx-extras  #extras headers and stuff  
-
-\curl -L https://get.rvm.io | bash  
-source ~/.profile  
-
-rvm install 2.0.0-p247  
-rvm --default use 2.0.0-p247  
-
-sudo service nginx restart  
-</code></pre>
-
-<p>Most of how to do this is covered at:<br/>
-<a href="http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install">http://www.modrails.com/documentation/Users%20guide%20Nginx.html#rubygems_generic_install</a></p>
 ]]></content>
   </entry>
   

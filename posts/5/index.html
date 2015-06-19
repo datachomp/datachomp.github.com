@@ -9,7 +9,8 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="I had the pleasure of being able to write up a delightfully ephemeral piece on SQL Test for Simple-Talk. This is a fun little tool and I&rsquo;m &hellip;">
+  <meta name="description" content="A new user group is starting in Oklahoma City and it is one I find
+completely fascinating&hellip; a Javascript group! With the monumental surge in &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +81,59 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/oklahoma-city-javascript-group/">Oklahoma City JavaScript Group</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-01-18T00:00:00-06:00" pubdate data-updated="true"></time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><h1></h1>
+
+<p>A <a href="http://okcjs.com/">new user group is starting in Oklahoma City</a> and it is one I find<br/>
+completely fascinating&hellip; a Javascript group! With the monumental surge in popularity of Javascript over the past year or so, this type of group is a can&rsquo;t miss.</p>
+
+<p>Who should attend you might ask? <strong>All of us</strong> in the tech field because it is pretty much everywhere now. Even a database douche bag like myself is attending because I have finally accepted that Javascript is inescapable. Javascript is all over the web, going to be all over the desktop with Windows 8, appearing in the mobile markets, and starting to take over the back end with rad technologies like <a href="http://nodejs.org/">NodeJS</a>.</p>
+
+<p>I&rsquo;m a complete noob with Javascript and I feel completely comfortable coming to this group because with as fast as this technology is moving, we&rsquo;re all noobs and need to learn from each other. This group will not waste your time because</p>
+
+<p><strong>Learning is cumulative.</strong></p>
+
+<p>As a speed freak, my primary interest lies in <a href="http://nodejs.org/">NodeJS</a>, but I know for a fact that I will learn something to help me with Node from <a href="http://www.vancelucas.com/">Vance</a> talking about BDD testing with a testing framework called <a href="http://pivotal.github.com/jasmine/">Jasmine</a>. That is just how it works. He gives, I take, and down the road I give back. Even if you don&rsquo;t know or care a thing about Javascript, it can be a good networking opportunity with some of the people in our community that have a true passion for tech and are trying to push tech boundaries. If that doesn&rsquo;t interest you, you can <a href="http://i.imgur.com/0cFLk.gif">lurk in the back and watch me </a>ask stupid questions as I try and get the info to the highly firewall&#8217;ed learning center that is my brain&hellip; or just show up for a free lunch. You have options.</p>
+
+<p>If you don&rsquo;t go or don&rsquo;t plan to go&hellip;no worries. I&rsquo;ll still love you (as a friend), but in our very fluid industry, dropping an hour a month of your time on something like this is an incredibly way to not go stagnant.</p>
+
+<p>The first meeting is <strong>January 24th from 11:30-12:30</strong> at the <a href="http://okccoco.com/">OKC CoCo</a>. Come say hi and most importantly&hellip;. help me learn this stuff!</p>
+
+<p>For more information, hit up <a href="http://okcjs.com/" title="http://okcjs.com/">http://okcjs.com/</a></p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -673,170 +727,6 @@ GO
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/getting-started-with-massive-in-mvc3-part-2/">Getting Started With Massive in MVC3 &#8211; Part 2</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2011-02-19T00:00:00-06:00" pubdate data-updated="true"></time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><h1></h1>
-
-<p>If you read over my first post on this you probably have some questions going through your mind&hellip;. I know I did&hellip; So lets ask them:</p>
-
-<p><strong>Rob, your queries make no sense to me because I have no idea about this &lsquo;drinks&rsquo; table you&rsquo;re hitting.</strong><br/>
-I agree. When I start to play with something I tend to use very simple databases that I know for simplicity. From here on, I&rsquo;ll be using <a href="http://msftdbprodsamples.codeplex.com/releases/view/59211">Adventure Works 2008 R2</a></p>
-
-<p><strong>All this stuff is dynamic and I don&rsquo;t know how to deal with it.</strong> I&rsquo;m just as strongly typed as the next guy so this was an emotional hurdle. But we&rsquo;re not here for therapy so lets code using one of my favorite examples &ndash; Credit Cards!<br/>
-Class:
-<code></p>
-
-<pre><code>public class CreditCard : DynamicModel
-    {  public CreditCard()  : base("AW_Sales_ConnStr")
-        { 
-            PrimaryKeyField = "CreditCardID"; 
-        }
-    }
-</code></pre>
-
-<p></code>
-ViewModel:
-<code></p>
-
-<pre><code>public class CreditCardViewModel
-    {public IEnumerable&lt;Cards&gt;{ get; set; } }
-</code></pre>
-
-<p></code>
-Controller:
-<code></p>
-
-<pre><code>public ActionResult Index()
-{
-      var table = new CreditCard();
-      var cards = table.All();
-
-    var viewModel = new CreditCardViewModel
-    {
-          Cards = cards
-         };
-    return View(viewModel);
-}
-</code></pre>
-
-<p></code>
-View:
-<code></p>
-
-<pre><code>@model Kona.Web.Models.CreditCardViewModel
-@{ViewBag.Title = "Adventure Works Card Stealer";}
-
-&lt;table&gt;
-@foreach (var item in Model.Cards)
-{
-&lt;tbody&gt;
-&lt;tr&gt;
-&lt;td&gt;@item.CardType&lt;/td&gt;
-&lt;td&gt;@item.CardNumber&lt;/td&gt;
-&lt;td&gt;@item.ExpMonth&lt;/td&gt;
-&lt;td&gt;@item.ExpYear&lt;/td&gt;
-&lt;/tr&gt;
-}&lt;/tbody&gt;
-&lt;/table&gt;
-</code></pre>
-
-<p></code></p>
-
-<p>So 2 seconds after this works, I hope that you are feeling very uncomfortable about presenting Credit Card numbers or even pulling them. That is a good thing&hellip;. So since we have a special case where we care a whole bunch about not returning that data&hellip; lets change our controller:
-<code></p>
-
-<pre><code>var table = new CreditCard();
-//var cards = table.All();
-var cards = table.Query(@"SELECT CardType, ExpMonth ,ExpYear from CreditCard");
-</code></pre>
-
-<p></code>
-Sweet! it compiles, we&rsquo;re ready to check in and go grab a beer right? Heh, nope&hellip;. refresh your app:<br/>
-<em>&lsquo;System.Dynamic.ExpandoObject&rsquo; does not contain a definition for &lsquo;CardNumber&rsquo;</em></p>
-
-<p>So we update our view&hellip;.
-<code></p>
-
-<pre><code>{
-@item.CardType
-@item.ExpMonth
-@item.ExpYear
-}
-</code></pre>
-
-<p></code></p>
-
-<p>and all is well again.</p>
-
-<p>Make no mistake about it&hellip; Massive will give you all the rope you want to easily swing around your apps data jungle&hellip; it will also give you all the rope you want to hang yourself if that is what you choose to do with it. Which is precisely why I like it. I feel like Entity Framework4 (<a href="http://thisdeveloperslife.com/post/1-0-8-motivation">And don&rsquo;t get me wrong, I like EF4</a>) is a micromanaging boss that wants to check my every move. Massive is like the boss that gives me a task and trusts that I&rsquo;ll get it done.</p>
-
-<p>Welcome to dynamic!</p>
-
-<p>One last bit because this is getting lengthy:<br/>
-<strong>Credit cards in AdventureWorks 2008 R2 are locked into a Sales schema and I can&rsquo;t figure out how make my class take &ldquo;advantage&rdquo; of that</strong><br/>
-This is a fun thing we DBA&rsquo;s like to do for the sole purpose of driving AppDev&rsquo;s nuts (with just some oh so minor security and organizational reasoning behind it). In our Credit Card model we can update to specify the TableName. Also, I use a special connection string:
-<code></p>
-
-<pre><code>public CreditCard() : base("AW_Sales_ConnStr")
-        { 
-            TableName = "[Sales].[CreditCard]";
-            PrimaryKeyField = "CreditCardID"; 
-        }
-</code></pre>
-
-<p></code></p>
-
-<p>That setting in the base() maps to my web.config:
-<code></p>
-
-<pre><code>add name="AW_Sales_ConnStr" connectionString="Data Source=localhost;Initial Catalog=AdventureWorks2008R2;User ID=aw_Kona_Sales;Password=Sales_Password;Application Name=KonaSales;" providerName="System.Data.SqlClient"
-</code></pre>
-
-<p></code></p>
-
-<p>and in SQL Server this maps to the Sales Schema (key part being the specification of a Default_Schema:
-<code></p>
-
-<pre><code>CREATE USER [aw_Kona_Sales] FOR LOGIN [aw_Kona_Sales] WITH DEFAULT_SCHEMA=[Sales]
-</code></pre>
-
-<p></code></p>
-
-<p>Last thing, I promise &hellip; In my first post, I included how the commands were rendering out in the SQL Server. I didn&rsquo;t this time because this edition is more focused on a &ldquo;getting things done in MVC&rdquo; side of things.<br/>
-Trust me, I am a DBA first ( and I imagine some of my code probably shows it) and I am still profiling every single thing I do with Massive looking for problems.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/6">&larr; Older</a>
@@ -859,6 +749,10 @@ Trust me, I am a DBA first ( and I imagine some of my code probably shows it) an
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/getting-postgres-version-with-golang/">Getting Postgres Version With Golang</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/query-archive-database/">Query Archive Database, the Apathetic Way</a>
       </li>
     
@@ -872,10 +766,6 @@ Trust me, I am a DBA first ( and I imagine some of my code probably shows it) an
     
       <li class="post">
         <a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
       </li>
     
   </ul>

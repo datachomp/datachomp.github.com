@@ -9,7 +9,7 @@
   <meta name="author" content="Rob Sullivan">
 
   
-  <meta name="description" content="When talking to people about data archival strategies, a question that comes up regularly is ‘how do I even get the archived data?’ This is in part &hellip;">
+  <meta name="description" content="I&rsquo;ve been looking at some monitoring solutions for my network at home. I&rsquo;ve used nagios in the past but it has quite a few drawbacks. &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -80,6 +80,120 @@
     <div id="content">
       <div class="blog-index">
   
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/archives/getting-postgres-version-with-golang/">Getting Postgres Version With Golang</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-19T16:49:12-05:00" pubdate data-updated="true">Jun 19<span>th</span>, 2015</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I&rsquo;ve been looking at some monitoring solutions for my network at home. I&rsquo;ve used nagios in the past but it has quite a few drawbacks. Most noticably, the whole fact that it doesn&rsquo;t scale to millions of nodes or use a popular javascript framework for its front end pretty much makes it a no-go for my home network. Thanks to my background in technology, I know that the next best option is to just write something myself. As I stated earlier, nagios is a no-go and I need something that is&hellip; so I chose go-lang. The fact that go is in the name tells me it will work. Let&rsquo;s get started!</p>
+
+<h4>Plumbing:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>brew install go
+</span><span class='line'>mkdir ~/go
+</span><span class='line'>export GOPATH=~/go
+</span><span class='line'>export PATH=$PATH:$GOPATH/bin
+</span><span class='line'>go get github.com/lib/pq
+</span><span class='line'>mkdir gogios && cd gogios
+</span><span class='line'>touch gogios.go</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Now we code:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>package main
+</span><span class='line'>import (
+</span><span class='line'>  _ "github.com/lib/pq"
+</span><span class='line'>  "database/sql"
+</span><span class='line'>  "fmt"
+</span><span class='line'>  "log"
+</span><span class='line'>)
+</span><span class='line'>
+</span><span class='line'>func main() {
+</span><span class='line'>  db, err := sql.Open("postgres", "user=rob dbname=postgres sslmode=disable")
+</span><span class='line'>  if err != nil {
+</span><span class='line'>    log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>
+</span><span class='line'>  var version string
+</span><span class='line'>  err = db.QueryRow("select version()").Scan(&version)
+</span><span class='line'>  if err != nil {
+</span><span class='line'>      log.Fatal(err)
+</span><span class='line'>  }
+</span><span class='line'>  fmt.Println(version)
+</span><span class='line'>}</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Run it:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>go run gogios.go</span></code></pre></td></tr></table></div></figure>
+
+
+<h4>Output:</h4>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>PostgreSQL 9.4.4 on x86_64-apple-darwin14.3.0, compiled by Apple LLVM version 6.1.0 (clang-602.0.49) (based on LLVM 3.6.0svn), 64-bit</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, while we haven&rsquo;t replaced 100% of nagios, we&rsquo;re off to a great start and probably only have a few hundred hours of coding left. Good thing it is the weekend!</p>
+</div>
+  
+  
+
+
+    </article>
   
   
     <article>
@@ -856,81 +970,6 @@ sudo reboot #reboot the box to test it out
 
     </article>
   
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/archives/heroku-pg-extras-builds-bridges/">Heroku Pg-extras Builds Bridges</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-20T19:10:00-06:00" pubdate data-updated="true">Nov 20<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It starts with the all too familiar &ldquo;I think my database is running slow&rdquo; and ends with the AppDev and myself speaking different languages, yelling at each and saying hurtful things&hellip; all the while the app and db sit in their servers neglected and needing love.</p>
-
-<h3>pg_therapy</h3>
-
-<p>While many of us that live in the database layer have tricked out <a href="https://github.com/datachomp/dotfiles/blob/master/.psqlrc">.psqlrc</a> files, I rarely find AppDevs with the same. Let me stress that this is perfectly ok!!! But having some really ugly diagnostic queries aliased in your .psqlrc is incredibly helpful. Majority of the AppDevs I talk to concerned about their db also happen to be running on Heroku. To accomodate its users, Heroku has put out a very helpful plugin to their toolbelt called <a href="https://github.com/heroku/heroku-pg-extras">pg-extras</a>. I love this tool because it gets the AppDev and I on a common language. They don&rsquo;t get scared by hairy SQL statement and it&rsquo;s consistent from app to app. Check it out:</p>
-
-<h3>Pump you up</h3>
-
-<p>Installation is a breeze:</p>
-
-<pre><code>heroku plugins:install git://github.com/heroku/heroku-pg-extras.git
-</code></pre>
-
-<p>Using it a breeze:</p>
-
-<pre><code>heroku pg:bloat  #one of my favorites!
-</code></pre>
-
-<p>When I run that, it tells me that I didn&rsquo;t specify a database:<br/>
-! Unknown database. Valid options are: HEROKU_POSTGRESQL_BLACK_URL, HEROKU_POSTGRESQL_PINK_URL</p>
-
-<p>I run it again with the proper db:</p>
-
-<pre><code>heroku pg:bloat HEROKU_POSTGRESQL_BLACK_URL
-</code></pre>
-
-<p>Now I have an easy to use snapshot of our database that has an incredibly low barrier of entry to execute for myself or anyone. Let&rsquo;s say that the person running it doesn&rsquo;t trust me or perhaps I&rsquo;m in a burrito coma, they can always refer to the <a href="https://devcenter.heroku.com/articles/heroku-postgres-database-tuning">heroku database tuning site</a> and get sound information.</p>
-
-<h3>Dude, I don&rsquo;t even have time for that.</h3>
-
-<p>Maybe the above is a bit too much to stomach. That&rsquo;s cool, we&rsquo;ll just flip another easy switch:</p>
-
-<pre><code>heroku addons:add librato
-</code></pre>
-
-<p><a href="http://librato.com">Librato</a> is a beautiful dashboard that is fun to look at, easy to use and will give us some historical context for troubleshooting the typically ill fated &ldquo;I think my database is slow&rdquo; situation. What is nice about tooling like Librato is not only does it show our db stats, we also get the context of the Application(Dyno&rsquo;s, router latency, etc). For more information on this, checkout Craig Kerstiens post on <a href="https://postgres.heroku.com/blog/past/2013/10/9/monitoring_your_heroku_postgres_database/">Monitoring with Librato</a>.</p>
-
-<h3>Hugs and Queries</h3>
-
-<p>I love this type of solution because it gets us looking at hard numbers and can easily as well as objectively say it is the DBs fault, the Apps fault, heroku&rsquo;s fault, or no ones fault and everything is fine. Librato and Postgres don&rsquo;t keep track of our egos, our mood or our fatigue &ndash; they keep us honest and on topics that really matter&hellip; something we all could use a little more of.</p>
-</div>
-  
-  
-
-
-    </article>
-  
   <div class="pagination">
     
       <a class="prev" href="/posts/2">&larr; Older</a>
@@ -951,6 +990,10 @@ sudo reboot #reboot the box to test it out
   <ul id="recent_posts">
     
       <li class="post">
+        <a href="/archives/getting-postgres-version-with-golang/">Getting Postgres Version With Golang</a>
+      </li>
+    
+      <li class="post">
         <a href="/archives/query-archive-database/">Query Archive Database, the Apathetic Way</a>
       </li>
     
@@ -964,10 +1007,6 @@ sudo reboot #reboot the box to test it out
     
       <li class="post">
         <a href="/archives/personal-twitter-tips-for-maximum-happiness/">Personal Twitter Tips for Maximum Happiness</a>
-      </li>
-    
-      <li class="post">
-        <a href="/archives/always-get-an-absentee-ballot/">Always Get an Absentee Ballot</a>
       </li>
     
   </ul>
